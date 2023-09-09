@@ -79,7 +79,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("user not found", 404))
     }
     const resetToken = await user.getResetPasswordToken()
-    console.log(resetToken)
+    console.log(resetToken) 
 
     await user.save({ validateBeforeSave: false })
 
@@ -106,5 +106,41 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
         await user.save({ validateBeforeSave: false });
         return next(new ErrorHandler(error, 500));
     }
+
+})
+
+
+//Reset password======================================================================
+exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
+
+    // creating token hash
+    const resetPasswordToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
+
+    //find user having reset hashed token and whose expiry time is grater than current data
+    const user = await User.findOne({
+        resetPasswordToken, resetPasswordExpire: { $gt: Date.now() },
+    });
+
+
+    //check user exists
+    if (!user) {
+        return next(new ErrorHandler("Reset Password Token is invalid or has been expired", 400))
+    }
+
+    //check bot pass and Cpass which will be sent by the user
+    if (req.body.password !== req.body.confirmPassword) {
+        return next(new ErrorHandler("Password does not password", 400));
+    }
+
+    //if passwords match and setted undefined for resetTokens because no further usage
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    //save after changes in mongodb 
+    await user.save();
+
+
+    sendToken(user, 200, res);
 
 })
