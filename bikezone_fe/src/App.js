@@ -19,7 +19,8 @@ function App() {
   const location = useLocation();
 
   // Conditionally render Header and Footer based on the route path
-  const renderHeaderAndFooter = !location.pathname.startsWith("/register") && !location.pathname.startsWith("/login");
+  const renderHeaderAndFooter = !location.pathname.startsWith("/register")
+   && !location.pathname.startsWith("/login");
 
   return (
     <>
