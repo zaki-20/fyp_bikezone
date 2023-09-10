@@ -17,9 +17,9 @@ const FeaturedProducts = () => {
             <div className="flex overflow-x-scroll no-scrollbar pb-10 px-4">
                 <div className="flex flex-nowrap  ml-10 gap-10">
                     {
-                        motorbikeProducts.map((product) => {
+                        motorbikeProducts.map((product, index) => {
                             return (
-                                <ProductCard product={product} />
+                                <ProductCard key={index} product={product} />
                             )
                         })
                     }

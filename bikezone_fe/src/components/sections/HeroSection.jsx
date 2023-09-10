@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { TypeAnimation } from 'react-type-animation';
 
 
@@ -48,18 +49,18 @@ const HeroSection = () => {
                         illo tenetur fuga ducimus numquam ea!
                     </p>
                     <div className="mt-8 flex flex-wrap gap-4 text-center">
-                        <a
-                            href="#"
+                        <Link
+                            to="#"
                             className="block w-full rounded border bg-[#122222] px-12 py-3 text-sm font-medium text-white shadow hover:bg-[#122222] hover:bg-[#122222]/60 order sm:w-auto duration-300"
                         >
                             Get Started
-                        </a>
-                        <a
-                            href="#"
+                        </Link>
+                        <Link
+                            to="#"
                             className="block w-full rounded border bg-white px-12 py-3 text-sm font-medium hover:bg-white/40 sm:w-auto duration-300 "
                         >
                             Learn More
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/cards/ProductCard'
 import { motorbikeProducts } from '../Utils/productData'
-
-
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllProducts } from '../features/product/product.thunk'
 
 
 const FeaturedProductsPage = () => {
+
+  const dispatch = useDispatch()
+
+  const { products, length } = useSelector(state => state.products)
+  console.log("products", products)
+
+  useEffect(() => {
+    dispatch(getAllProducts())
+  }, [dispatch])
+
   return (
     <div className='bg-[#def5f596]'>
       <div className="container mx-auto px-4 py-8 ">
@@ -13,18 +23,13 @@ const FeaturedProductsPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols3 xl:grid-cols-4 gap-5">
 
           {
-            motorbikeProducts.map((product) => {
+            products?.products?.map((product, index) => {
               return (
-                <ProductCard product={product} />
+                <ProductCard key={index} product={product} />
               )
             })
           }
           {/* <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
