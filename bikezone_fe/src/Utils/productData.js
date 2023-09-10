@@ -3,6 +3,7 @@ export const motorbikeProducts = [
         name: "Helmet",
         description: "A high-quality helmet for motorbike riders.",
         price: 100,
+        brand: "suzuki",
         ratings: 4.5,
         images: "img.png",
         category: "Safety",
@@ -13,6 +14,7 @@ export const motorbikeProducts = [
         name: "Engine",
         description: "Powerful motorbike engine for enhanced performance.",
         price: 1500,
+        brand: "suzuki",
         ratings: 4.8,
         images: [
             {
@@ -28,6 +30,7 @@ export const motorbikeProducts = [
         name: "Gloves",
         description: "Durable gloves for a better grip while riding.",
         price: 40,
+        brand: "suzuki",
         ratings: 4.2,
         images: [
             {
@@ -44,6 +47,7 @@ export const motorbikeProducts = [
         description: "Complete gear set for motorbike enthusiasts.",
         price: 300,
         ratings: 4.6,
+        brand: "suzuki",
         images: [
             {
                 public_id: "gearset_image",
@@ -59,6 +63,7 @@ export const motorbikeProducts = [
         description: "Enhance the sound and performance with this exhaust system.",
         price: 250,
         ratings: 4.3,
+        brand: "suzuki",
         images: [
             {
                 public_id: "exhaust_image",
@@ -74,6 +79,7 @@ export const motorbikeProducts = [
         description: "High-performance brake kit for better stopping power.",
         price: 180,
         ratings: 4.7,
+        brand: "suzuki",
         images: [
             {
                 public_id: "brakekit_image",
@@ -89,6 +95,7 @@ export const motorbikeProducts = [
         description: "Stylish and protective riding jacket for all weather conditions.",
         price: 120,
         ratings: 4.4,
+        brand: "suzuki",
         images: [
             {
                 public_id: "jacket_image",
@@ -104,6 +111,7 @@ export const motorbikeProducts = [
         description: "Bright LED lights for improved visibility and style.",
         price: 50,
         ratings: 4.0,
+        brand: "suzuki",
         images: [
             {
                 public_id: "ledlights_image",
@@ -119,6 +127,7 @@ export const motorbikeProducts = [
         description: "Comfortable handlebar grips for a better riding experience.",
         price: 30,
         ratings: 4.1,
+        brand: "suzuki",
         images: [
             {
                 public_id: "grips_image",
@@ -134,6 +143,7 @@ export const motorbikeProducts = [
         description: "Durable chain and sprocket kit for smooth power transfer.",
         price: 90,
         ratings: 4.5,
+        brand: "suzuki",
         images: [
             {
                 public_id: "chainkit_image",
