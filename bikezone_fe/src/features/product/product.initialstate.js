@@ -5,6 +5,7 @@ const initialProductState = {
     isError: false,
     isSuccess: false,
     message: '',
+    length: null
 };
 
 export default initialProductState;

@@ -6,7 +6,6 @@ import productService from "./product.service"
 export const getAllProducts = createAsyncThunk('products/getAllProducts', async (_, thunkAPI) => {
     try {
         return await productService.getAllProducts()
-        
     } catch (error) {
         const message =
             (error.response && error.response.data && error.response.data.message) || error.message ||

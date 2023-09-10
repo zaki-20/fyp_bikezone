@@ -9,12 +9,13 @@ const FeaturedProductsPage = () => {
 
   const dispatch = useDispatch()
 
-  const { products, length } = useSelector(state => state.products)
-  console.log("products", products)
 
   useEffect(() => {
     dispatch(getAllProducts())
-  }, [dispatch])
+  }, [])
+
+  const { isError, isLoading, isSuccess, message, length, products } = useSelector((state) => state.products)
+  
 
   return (
     <div className='bg-[#def5f596]'>
@@ -23,7 +24,7 @@ const FeaturedProductsPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols3 xl:grid-cols-4 gap-5">
 
           {
-            products?.products?.map((product, index) => {
+            products?.map((product, index) => {
               return (
                 <ProductCard key={index} product={product} />
               )
