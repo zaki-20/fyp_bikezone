@@ -3,7 +3,7 @@ import ProductCard from '../components/cards/ProductCard'
 // import { motorbikeProducts } from '../Utils/productData'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../features/product/product.thunk'
-import Loader from './Loader'
+import Loader from './shared/Loader'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -17,7 +17,7 @@ const FeaturedProductsPage = () => {
     dispatch(getAllProducts())
   }, [])
 
-  const { isError, isLoading,  isSuccess, message, length, products } = useSelector((state) => state.products)
+  const { isError, isLoading, isSuccess, message, length, products } = useSelector((state) => state.product)
   // Function to show an error toast
   const showErrorToast = () => {
     toast.error(message);

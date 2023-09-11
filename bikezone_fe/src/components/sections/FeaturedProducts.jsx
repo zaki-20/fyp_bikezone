@@ -4,6 +4,7 @@ import ProductCard from '../cards/ProductCard'
 import { Link } from 'react-router-dom'
 import { getAllProducts } from '../../features/product/product.thunk'
 import { useDispatch, useSelector } from 'react-redux'
+import CardLoading from '../../pages/shared/CardLoading'
 
 
 const FeaturedProducts = () => {
@@ -14,7 +15,17 @@ const FeaturedProducts = () => {
         dispatch(getAllProducts())
     }, [])
 
-    const { isError, isLoading, isSuccess, message, length, products } = useSelector((state) => state.products)
+    const { isError, isLoading, isSuccess, message, length, products } = useSelector((state) => state.product)
+
+    if (isLoading) {
+        return (
+            <>
+                <div className="flex flex-col bg-[#def5f596]">
+                    <CardLoading />
+                </div>
+            </>
+        )
+    }
 
 
     return (

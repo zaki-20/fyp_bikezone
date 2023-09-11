@@ -11,7 +11,7 @@ const ProductDetail = () => {
         dispatch(getProductDetail(id))
     }, []);
 
-    const { message, status,  statusCode, product } = useSelector(state => state.products)
+    const { message, status,  statusCode, product } = useSelector(state => state.product)
 
     console.log(product)
     return (
@@ -31,7 +31,7 @@ const ProductDetail = () => {
                         <div className="w-full px-4 md:w-1/2 ">
                             <div className="lg:pl-20">
                                 <div className="mb-5 ">
-                                    <span className="text-lg font-medium text-rose-500 dark:text-rose-200">New</span>
+                                    <span className="text-lg font-medium text-rose-500 dark:text-rose-200">{`${product.brand} - ${product.category}`}</span>
                                     <h2 className="max-w-xl mt-2 mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
                                         {product.name}</h2>
                                     <div className="flex items-center mb-6">
