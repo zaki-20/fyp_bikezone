@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactStars from "react-rating-stars-component";
-import {BsStarFill, BsStarHalf, BsStar} from "react-icons/bs"
+import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
 import { Link } from 'react-router-dom';
 
 
 
-const ProductCard = ({product}) => {
+const ProductCard = ({ product }) => {
     //for star rating
     const options = {
         edit: false,
@@ -19,7 +19,7 @@ const ProductCard = ({product}) => {
     return (
 
         <div className="w-[300px] bg-[#aaeeee] shadow-md rounded-lg dark:bg-gray-800 dark:border-gray-700">
-            <Link to="#">
+            <Link to={`product/${product._id}`}>
                 <img className="rounded-t-lg p-8 object-cover w-full h-52" src="helmet.jpg" alt="productImage" />
             </Link>
             <div className="px-5 pb-5">
@@ -27,7 +27,7 @@ const ProductCard = ({product}) => {
                     <h3 className="text-gray-900 font-semibold text-lg tracking-tight dark:text-white">{product.name}</h3>
                 </Link>
                 <div className="flex items-center mt-2.5 mb-5">
-                <ReactStars  {...options}/>
+                    <ReactStars  {...options} />
                 </div>
                 <div className="flex items-center justify-between">
                     <span className="text-xl font-bold text-gray-900 dark:text-white">{product.price}</span>

@@ -1,6 +1,6 @@
 
 const initialAuthState = {
-    products: [],
+    user: user ? user : null,
     isLoading: false,
     isError: false,
     isSuccess: false,

@@ -12,9 +12,13 @@ const sendToken = (user, statusCode, res) => {
     }
 
     res.status(statusCode).cookie("token", token, option).json({
-        success: true,
-        user,
-        token
+        statusCode: statusCode,
+        status: true,
+        message: "Success",
+        payload: {
+            user,
+            token
+        }
     })
 }
 

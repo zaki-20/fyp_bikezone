@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProductDetail } from '../features/product/product.thunk';
+import { useParams } from 'react-router-dom';
 
 const ProductDetail = () => {
+    const dispatch = useDispatch()
+    const { id } = useParams();
+
+    useEffect(() => {
+        dispatch(getProductDetail(id))
+    }, []);
+
+    const { message, status,  statusCode, product } = useSelector(state => state.products)
+
+    console.log(product)
     return (
         <div>
-            <div className="overflow-hidden bg-[#def5f596] py-11 font-poppins dark:bg-gray-800">
+          {
+            product && (
+                <div className="overflow-hidden bg-[#def5f596] py-11 font-poppins dark:bg-gray-800">
                 <div className="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
                     <div className="flex flex-wrap -mx-4">
                         <div className="w-full px-4 md:w-1/2 ">
@@ -18,7 +33,7 @@ const ProductDetail = () => {
                                 <div className="mb-5 ">
                                     <span className="text-lg font-medium text-rose-500 dark:text-rose-200">New</span>
                                     <h2 className="max-w-xl mt-2 mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
-                                        Engine 70cc</h2>
+                                        {product.name}</h2>
                                     <div className="flex items-center mb-6">
                                         <ul className="flex mr-2">
                                             <li>
@@ -50,18 +65,18 @@ const ProductDetail = () => {
                                                 </a>
                                             </li>
                                         </ul>
-                                        <p className="text-xs dark:text-gray-400 ">(2 customer reviews)</p>
+                                        <p className="text-xs dark:text-gray-400 ">({product.numOfReviews} customer reviews)</p>
                                     </div>
 
                                     <p className="inline-block mb-5 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
-                                        <span>$1000.99</span>
+                                        <span>{product.price}</span>
                                     </p>
-                                    <p className="text-green-600 dark:text-green-300 ">7 in stock</p>
+                                    <p className="text-green-600 dark:text-green-300 ">{product.Stock} in stock</p>
                                 </div>
 
 
                                 <div className="w-32 mb-6 ">
-                                    <label htmlFor className="w-full text-xl font-semibold text-gray-700 dark:text-gray-400">Quantity</label>
+                                    <label htmlFor className="w-full text-xl font-semibold text-gray-700 dark:text-gray-400">{product.quantity}</label>
                                     <div className="relative flex flex-row w-full h-10 mt-4 bg-transparent rounded-lg">
                                         <button className="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400">
                                             <span className="m-auto text-2xl font-thin">-</span>
@@ -73,8 +88,7 @@ const ProductDetail = () => {
                                     </div>
                                 </div>
                                 <p className="max-w-md mb-8 text-gray-700 dark:text-gray-400">
-                                    Lorem ispum dor amet Lorem ispum dor amet Lorem ispum dor amet Lorem ispum dor amet
-                                    Lorem ispum dor amet Lorem ispum dor amet Lorem ispum dor amet Lorem ispum dor amet
+                                    {product.description}
                                 </p>
                                 <div className="flex flex-wrap items-center -mx-4 ">
                                     <button className="flex items-center justify-center w-full p-4 text-[#122222] border border-[#122222] rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
@@ -86,6 +100,8 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
+            )
+          }
 
         </div>
     )

@@ -13,7 +13,7 @@ import AboutUs from "./pages/AboutUs";
 import ProductDetail from "./pages/ProductDetail";
 import AddProduct from "./pages/AddProduct";
 import Cart from "./pages/Cart";
-
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [show,setShow] = useState(true);
@@ -36,7 +36,7 @@ function App() {
           <Route path="login" element={<LoginForm />} />
           <Route path="contact" element={<ContactUs />} />
           <Route path="about" element={<AboutUs />} />
-          <Route path="product" element={<ProductDetail />} />
+          <Route path="product/:id" element={<ProductDetail />} />
           <Route path="addproduct" element={<AddProduct />} />
           <Route path="cart" element={<Cart />} />
           <Route path="*" element={<ErrorPage setShow={setShow} />} />
