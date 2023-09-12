@@ -70,7 +70,7 @@ const ContactUs = () => {
                                 <div class="w-full">
                                     <h4 class="text-dark mb-1 text-xl font-bold">Our Location</h4>
                                     <p class="text-body-color text-base">
-                                        99 S.t Jomblo Park Pekanbaru 28292. Indonesia
+                                        99 S.t shadara mor Park Pekanbaru 28292. Lahore
                                     </p>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@ const ContactUs = () => {
                                 </div>
                                 <div class="w-full">
                                     <h4 class="text-dark mb-1 text-xl font-bold">Email Address</h4>
-                                    <p class="text-body-color text-base">info@yourdomain.com</p>
+                                    <p class="text-body-color text-base">bikezone@gmail.com</p>
                                 </div>
                             </div>
                         </div>

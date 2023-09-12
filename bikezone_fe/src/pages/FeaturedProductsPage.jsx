@@ -51,6 +51,7 @@ const FeaturedProductsPage = () => {
           }
 
         </div>
+        
       </div>
     </>
 

@@ -13,7 +13,7 @@ class ApiFeatres {
                 },
             }
             : {};
-        
+
         this.query = this.query.find({ ...keyword });
         return this;
     }

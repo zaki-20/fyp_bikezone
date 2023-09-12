@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 
 const ErrorPage = (props) => {
 
-    useEffect(()=>{
+    useEffect(() => {
         props.setShow(false);
-    },[])
+    }, [])
     return (
         <div>
             <div class="h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]">

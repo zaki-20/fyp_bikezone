@@ -10,6 +10,7 @@ const HomePage = () => {
       <MetaData title={"BIKEZONE"}/>
       <HeroSection />
       <FeaturedProducts />
+    
     </div>
   )
 }
