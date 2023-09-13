@@ -3,9 +3,9 @@ import axios from "axios";
 const API_URL = 'http://localhost:4000/api/v1/'
 
 //getAllProducts
-const getAllProducts = async () => {
+const getAllProducts = async (keyword='') => {
     // console.log("helo from service before axios")
-    const response = await axios.get(API_URL + "products")
+    const response = await axios.get(API_URL + `products?keyword=${keyword}`)
     return response.data
 }
 

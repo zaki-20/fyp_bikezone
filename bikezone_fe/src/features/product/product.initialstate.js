@@ -1,7 +1,7 @@
 
 const initialProductState = {
     products: [],
-    product:null,
+    productDetails:null,
     isLoading: false,
     isError: false,
     isSuccess: false,
