@@ -7,9 +7,7 @@ const productSlice = createSlice({
     initialState: initialProductState,
     reducers: {
         // reset: (state) => initialProductState
-        reset: (state) =>{
-            state.message = '';
-        }
+        reset: (state) => initialProductState
     },
     extraReducers: (builder) => {
         builder
@@ -18,18 +16,22 @@ const productSlice = createSlice({
             })
             .addCase(getAllProducts.fulfilled, (state, action) => {
                 // console.log("The action is:", { action })
+                state.isError = false
                 state.isLoading = false
                 state.isSuccess = true
                 state.products = action.payload.payload.products.products
                 state.length = action.payload.payload.products.length
                 state.resultPerPage = action.payload.payload.products.resultPerPage
                 state.message = action.payload.message
-                console.log(action.payload.message)
+                state.productsCount = action.payload.payload.products.productsCount
+                // console.log(action.payload.message)
             })
             .addCase(getAllProducts.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
-                state.message = action.payload.message
+                state.message = action.payload.error
+                console.log(action.payload.error)
+
             })
             .addCase(getProductDetail.pending, (state) => {
                 state.isLoading = true

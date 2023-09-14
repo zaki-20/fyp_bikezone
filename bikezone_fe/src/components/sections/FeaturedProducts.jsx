@@ -12,7 +12,7 @@ const FeaturedProducts = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getAllProducts())
+        dispatch(getAllProducts({}))
     }, [])
 
     const { isError, isLoading, isSuccess, message, length, products } = useSelector((state) => state.product)
@@ -23,6 +23,14 @@ const FeaturedProducts = () => {
                 <div className="flex flex-col bg-[#def5f596]">
                     <CardLoading />
                 </div>
+            </>
+        )
+    }
+
+    if(isError){
+        return(
+            <>
+                <div>Error happend</div>
             </>
         )
     }

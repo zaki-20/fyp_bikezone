@@ -6,7 +6,10 @@ const initialProductState = {
     isError: false,
     isSuccess: false,
     message: '',
-    length: null
+    length: null,
+    productsCount:null,
+    resultPerPage:null
+    
 };
 
 export default initialProductState;
