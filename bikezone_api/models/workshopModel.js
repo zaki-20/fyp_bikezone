@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose =  require("mongoose");
 
 const workshopSchema = new mongoose.Schema({
   name: {
@@ -10,7 +10,7 @@ const workshopSchema = new mongoose.Schema({
     required: true,
   },
   city: {
-    type: Number,
+    type: String,
     required: true,
   },
   contact: {
@@ -21,13 +21,18 @@ const workshopSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
+  // owner: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  //   required: true,
+  // },
   timeSlots: [
     {
+      // user: {
+      //   type: mongoose.Schema.Types.ObjectId,
+      //   ref: "User",
+      //   required: true,
+      // },
       startTime: {
         type: Date,
         required: true,
@@ -40,4 +45,4 @@ const workshopSchema = new mongoose.Schema({
   ],
 });
 
-export const Workshop = mongoose.model("Workshop", workshopSchema);
+module.exports = mongoose.model("Workshop", workshopSchema);
