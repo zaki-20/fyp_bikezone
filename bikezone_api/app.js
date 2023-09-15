@@ -15,12 +15,14 @@ const productRoute = require("./routes/productRoute");
 const userRoute = require("./routes/userRoute");
 const orderRoute = require("./routes/orderRoute");
 const workshopRoute = require("./routes/workshopRoute");
+const rentBikeRoute = require("./routes/rentBikeRoute");
 
 
 app.use("/api/v1", productRoute);
 app.use("/api/v1", userRoute);
 app.use("/api/v1", orderRoute);
 app.use("/api/v1", workshopRoute);
+app.use("/api/v1", rentBikeRoute);
 
 
 //middleware for error
