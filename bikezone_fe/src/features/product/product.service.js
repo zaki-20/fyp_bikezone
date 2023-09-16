@@ -3,10 +3,16 @@ import axios from "axios";
 const API_URL = 'http://localhost:4000/api/v1/'
 
 //getAllProducts
-const getAllProducts = async (keyword , currentPage ) => {
+const getAllProducts = async (keyword, currentPage, price, category, ratings) => {
     // console.log("helo from service before axios")
-    const response = await axios.get(API_URL + `products?keyword=${keyword}&page=${currentPage}`)
-    console.log(keyword, "&", currentPage)
+    const response =
+        await axios.get(API_URL + `products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`)
+
+        if(category){
+            const response =
+            await axios.get(API_URL + `products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`)
+            return response.data
+        }
     return response.data
 }
 

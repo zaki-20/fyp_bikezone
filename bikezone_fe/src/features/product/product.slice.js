@@ -24,6 +24,7 @@ const productSlice = createSlice({
                 state.resultPerPage = action.payload.payload.products.resultPerPage
                 state.message = action.payload.message
                 state.productsCount = action.payload.payload.products.productsCount
+                state.filteredProductsCount = action.payload.payload.products.filteredProductsCount
                 // console.log(action.payload.message)
             })
             .addCase(getAllProducts.rejected, (state, action) => {

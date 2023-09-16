@@ -4,13 +4,13 @@ const { createRentBike, getAllRentBikes, getRentBikeDetails, updateRentBike, del
 const router = express.Router();
 
 //create new rentBike ad
-router.route("/rentbike/new").post(createRentBike);
+router.route("/rentbike/new").post(isAuthenticatedUser, createRentBike);
 router.route("/rentbikes").get(getAllRentBikes);
 
 router.route("/rentbike/:id")
     .get(getRentBikeDetails)
-    .put(updateRentBike)
-    .delete(deleteRentBike);
+    .put(isAuthenticatedUser, updateRentBike)
+    .delete(isAuthenticatedUser, deleteRentBike);
 
 
 

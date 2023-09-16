@@ -7,7 +7,6 @@ import Footer from "./components/Footer";
 import Register from "./pages/Register";
 import LoginForm from "./pages/LoginForm";
 import ErrorPage from "./pages/shared/ErrorPage";
-import Loader from "./pages/shared/Loader";
 import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
 import ProductDetail from "./pages/ProductDetail";

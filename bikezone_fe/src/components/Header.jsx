@@ -1,21 +1,19 @@
 import React from 'react';
-import { AiFillHeart, AiFillBell } from 'react-icons/ai';
-import { motion } from 'framer-motion';
-import { FaShoppingCart, FaMotorcycle } from 'react-icons/fa';
+
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
     <nav className="bg-[#122222] border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           {/* <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" /> */}
           <span className="self-center text-2xl font-medium tracking-widest whitespace-nowrap text-yellow-400">BIKEZONE</span>
-        </a>
+        </Link>
         <div className="flex items-center md:order-2">
           <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-            <span className="sr-only">Open user menu</span>
-            <img className="w-8 h-8 rounded-full" src="favicon.ico" alt="user photo" />
+            <span className="sr-only"></span>
+            <img className="w-8 h-8 rounded-full" src="favicon.ico" alt="user-piLink" />
           </button>
           {/* Dropdown menu */}
           <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
@@ -25,16 +23,16 @@ const Header = () => {
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
               </li>
               <li>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</Link>
               </li>
               <li>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
+                <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</Link>
               </li>
               <li>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
               </li>
             </ul>
           </div>

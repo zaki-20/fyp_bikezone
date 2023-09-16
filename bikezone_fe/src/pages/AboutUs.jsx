@@ -77,7 +77,7 @@ const AboutUs = () => {
                             </Link>
                         </div>
                         <div className="relative w-full px-4 mb-10 md:w-1/2 lg:mb-0">
-                            <img src="https://i.postimg.cc/HsSPvTq8/pexels-fauxels-3184357.jpg" alt className="relative z-40 object-cover w-full rounded-md md:h-96 h-44" />
+                            <img src="https://i.postimg.cc/HsSPvTq8/pexels-fauxels-3184357.jpg" alt="" className="relative z-40 object-cover w-full rounded-md md:h-96 h-44" />
                             <div className="absolute top-0 right-0 items-center justify-center hidden -mt-16 lg:inline-flex">
 
                             </div>

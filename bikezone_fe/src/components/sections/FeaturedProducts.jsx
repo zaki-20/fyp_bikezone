@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { motorbikeProducts } from '../../Utils/productData'
 import ProductCard from '../cards/ProductCard'
 import { Link } from 'react-router-dom'
 import { getAllProducts } from '../../features/product/product.thunk'
@@ -13,9 +12,9 @@ const FeaturedProducts = () => {
 
     useEffect(() => {
         dispatch(getAllProducts({}))
-    }, [])
+    }, [dispatch])
 
-    const { isError, isLoading, isSuccess, message, length, products } = useSelector((state) => state.product)
+    const { isError, isLoading, products } = useSelector((state) => state.product)
 
     if (isLoading) {
         return (

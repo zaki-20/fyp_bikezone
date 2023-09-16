@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
 
     return (
 
-        <div className="w-[300px] bg-[#aaeeee] shadow-md rounded-lg dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-[250px] bg-[#aaeeee] shadow-md rounded-lg dark:bg-gray-800 dark:border-gray-700">
             <div onClick={clicker} >
                 <img className="rounded-t-lg p-8 object-cover w-full h-52" src="helmet.jpg" alt="productImage" />
             </div>

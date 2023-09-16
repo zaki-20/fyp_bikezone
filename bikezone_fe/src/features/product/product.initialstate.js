@@ -8,7 +8,8 @@ const initialProductState = {
     message: '',
     length: null,
     productsCount:null,
-    resultPerPage:null
+    resultPerPage:null,
+    filteredProductsCount:null
     
 };
 

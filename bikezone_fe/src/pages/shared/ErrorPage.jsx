@@ -6,7 +6,7 @@ const ErrorPage = (props) => {
 
     useEffect(() => {
         props.setShow(false);
-    }, [])
+    }, [props])
     return (
         <div>
             <div class="h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]">

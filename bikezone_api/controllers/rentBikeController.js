@@ -88,9 +88,7 @@ exports.getAllRentBikes = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getRentBikeDetails = catchAsyncErrors(async (req, res, next) => {
-
     const rentAdId = req.params.id;
-
     const rentBike = await RentBike.findById(rentAdId);
 
     if (!rentBike) {

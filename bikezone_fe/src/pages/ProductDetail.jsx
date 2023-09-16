@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProductDetail } from '../features/product/product.thunk';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Carousal from '../components/Carousal';
 import Loader from './shared/Loader';
 import ReviewCard from '../components/ReviewCard';
@@ -9,11 +9,11 @@ import ReactStars from "react-rating-stars-component";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import MetaData from '../components/MetaData';
 
 
 const ProductDetail = () => {
 
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     const { id } = useParams();
 
@@ -21,7 +21,7 @@ const ProductDetail = () => {
         dispatch(getProductDetail(id))
     }, [dispatch, id]);
 
-    const { isError, isSuccess, message, isLoading, productDetails } = useSelector(state => state.product)
+    const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
 
     const showErrorToast = () => {
         toast.error(message);
@@ -52,10 +52,11 @@ const ProductDetail = () => {
             <span> {isError && showErrorToast()} </span>
         </>
     }
-    
+
 
     return (
         <div>
+            <MetaData title={`${productDetails?.name} -- BIKEZONE`} />
 
             {
                 !isLoading && productDetails && (
@@ -118,7 +119,7 @@ const ProductDetail = () => {
                                             {productDetails.description}
                                         </p>
                                         <div className="flex flex-wrap items-center -mx-4 ">
-                                            <button  className="flex items-center justify-center w-full p-4 text-[#122222] border border-[#122222] rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                                            <button className="flex items-center justify-center w-full p-4 text-[#122222] border border-[#122222] rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
                                                 Add to Cart
                                             </button>
                                         </div>
