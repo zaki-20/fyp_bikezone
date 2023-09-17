@@ -20,10 +20,12 @@
   "homepage": "https://github.com/zaki-20/fyp_bikezone#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.40.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.0",
     "nodemailer": "^6.9.5",

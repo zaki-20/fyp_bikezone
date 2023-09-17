@@ -150,9 +150,9 @@ const ContactUs = () => {
                                         placeholder="Your Email"
                                         class="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none"
                                     />
-                                     {errors.email && touched.email ? (
-                                            <p className="text-red-600 animate-pulse">{errors.email}</p>
-                                        ) : null}
+                                    {errors.email && touched.email ? (
+                                        <p className="text-red-600 animate-pulse">{errors.email}</p>
+                                    ) : null}
                                 </div>
                                 <div class="mb-6">
                                     <input
@@ -164,9 +164,9 @@ const ContactUs = () => {
                                         placeholder="Your subject"
                                         class="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none"
                                     />
-                                      {errors.subject && touched.subject ? (
-                                            <p className="text-red-600 animate-pulse">{errors.subject}</p>
-                                        ) : null}
+                                    {errors.subject && touched.subject ? (
+                                        <p className="text-red-600 animate-pulse">{errors.subject}</p>
+                                    ) : null}
                                 </div>
                                 <div class="mb-6">
                                     <textarea
@@ -178,9 +178,9 @@ const ContactUs = () => {
                                         placeholder="Your Message"
                                         class="text-body-color border-[f0f0f0] focus:border-primary w-full resize-none rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none"
                                     ></textarea>
-                                      {errors.message && touched.message ? (
-                                            <p className="text-red-600 animate-pulse">{errors.message}</p>
-                                        ) : null}
+                                    {errors.message && touched.message ? (
+                                        <p className="text-red-600 animate-pulse">{errors.message}</p>
+                                    ) : null}
                                 </div>
                                 <div>
                                     <button

@@ -1,6 +1,6 @@
 
 const initialAuthState = {
-    user: user ? user : null,
+    user: null,
     isLoading: false,
     isError: false,
     isSuccess: false,

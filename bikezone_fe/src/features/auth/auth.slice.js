@@ -1,33 +1,50 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllProducts } from "./product.thunk";
-import initialProductState from "./product.initialstate";
+import { register, login } from "./auth.thunk";
+import initialAuthState from "./auth.initialstate";
 
 const authSlice = createSlice({
     name: "auth",
-    initialState: initialProductState,
+    initialState: initialAuthState,
     reducers: {
-
+        // reset: (state) => initialProductState
+        reset: (state) => initialAuthState
     },
     extraReducers: (builder) => {
         builder
+            .addCase(register.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.user = action.payload.payload.user
+                state.message = action.payload.message
+            })
+            .addCase(register.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload.error
+                state.user = null
+            })
             .addCase(login.pending, (state) => {
                 state.isLoading = true
             })
             .addCase(login.fulfilled, (state, action) => {
-                console.log("The action is:", { action })
-                state.user = action.payload.payload.user
                 state.isLoading = false
-                state.message = action.payload.payload.message
                 state.isSuccess = true
-                state.message = action.message
+                state.user = action.payload.payload.user
+                state.message = action.payload.message
             })
-            .addCase(getAllProducts.rejected, (state, action) => {
+            .addCase(login.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
-                state.message = action.payload
+                state.message = action.payload.error
+                state.user = null
             })
+            
 
     }
 })
+export const { reset } = authSlice.actions
 
-export default productSlice.reducer
+export default authSlice.reducer

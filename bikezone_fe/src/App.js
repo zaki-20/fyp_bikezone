@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 import FeaturedProductsPage from "./pages/FeaturedProductsPage";
 import HomePage from "./pages/HomePage";
@@ -15,18 +15,23 @@ import Cart from "./pages/Cart";
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const [show, setShow] = useState(true);
-  // Get the current location using useLocation
-  const location = useLocation();
 
+
+
+  const [show, setShow] = useState(true);
+
+  // Get the current location using useLocation
+  // const location = useLocation();
 
   // Conditionally render Header and Footer based on the route path
-  const renderHeaderAndFooter = !location.pathname.startsWith("/register")
-    && !location.pathname.startsWith("/login");
+  // const renderHeaderAndFooter = !location.pathname.startsWith("/register")
+  //   && !location.pathname.startsWith("/login");
 
   return (
     <>
-      {renderHeaderAndFooter && show && <Header />}
+
+      {/* {renderHeaderAndFooter && <Header />} */}
+      <Header />
       <Routes>
         <Route path="/" element={<Outlet />}>
           <Route index element={<HomePage />} />
@@ -38,12 +43,13 @@ function App() {
           <Route path="product/:id" element={<ProductDetail />} />
           <Route path="addproduct" element={<AddProduct />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="*" element={<ErrorPage setShow={setShow} />} />
+          <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
+      <Footer />
 
-      {renderHeaderAndFooter && show && <Footer />}
-      {/* <Loader /> */}
+      {/* {renderHeaderAndFooter && <Footer />} */}
+
 
 
     </>
