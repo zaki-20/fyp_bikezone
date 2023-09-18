@@ -42,6 +42,7 @@ const FeaturedProductsPage = () => {
 
 
   if (isError) {
+    // console.log("featuredProduct")
     toast.error(message);
     dispatch(reset())
   }

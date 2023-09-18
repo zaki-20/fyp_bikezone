@@ -23,6 +23,8 @@ const schema = yup.object({
 
 const Register = () => {
 
+    const [avatar, setAvatar] = useState("/helmet.jpg");
+
     const initialValues = {
         firstname: "",
         lastname: "",
@@ -30,10 +32,11 @@ const Register = () => {
         password: "",
         // confirmPassword: "",
     };
-    
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    //idr nichy touched k bad agar profile karni upload -> setFieldValue
 
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
         useFormik({
@@ -41,18 +44,29 @@ const Register = () => {
             validationSchema: schema,
             validateOnChange: true,
             validateOnBlur: false,
+
             //// By disabling validation onChange and onBlur formik will validate on submit.
             onSubmit: (values, action) => {
-                console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", values);
+
                 //// to get rid of all the values after submitting the form
-                dispatch(register(values))
+                const userData = { ...values, avatar }; // Include the profile image in the user data
+                console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", userData);
+                dispatch(register(userData));
 
             },
         });
 
-   
+
     // useSelector((state) => console.log(state.auth))
 
+    // Handle file input change
+    // const handleImageUpload = (event) => {
+    //     const file = event.target.files[0];
+    //     setFieldValue('avatar', file);
+    //     setAvatar(URL.createObjectURL(file));
+
+    //     console.log(file)
+    // };
 
 
 
@@ -104,7 +118,7 @@ const Register = () => {
                                         ) : null}
                                     </div>
                                 </div>
-                                <div className="flex -mx-3">
+                                <div className="flex -mx-3 ">
                                     <div className="w-full px-3 mb-5">
                                         <label htmlFor className="text-xs font-semibold px-1">Email</label>
                                         <div className="flex">
@@ -139,6 +153,27 @@ const Register = () => {
                                         ) : null}
                                     </div>
                                 </div>
+
+                                {/* <div className="flex -mx-3 items-center">
+                               
+                                    <div className="w-full px-3 mb-5">
+
+                                        <label htmlFor="profileImage" className="text-xs font-semibold px-1">
+                                            Profile Image
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="profileImage"
+                                            name="profileImage"
+                                            onChange={handleImageUpload}
+                                            className="w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        />
+                                    </div>
+                                    {avatar && (
+                                        <img className="w-10 h-10 rounded-full" src="/helmet.jpg" alt="Rounded avatar" />
+                                    )}
+                                </div> */}
+
                                 {/* <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-12">
                                         <label htmlFor className="text-xs font-semibold px-1">Confirm Password</label>
@@ -156,6 +191,7 @@ const Register = () => {
                                         ) : null}
                                     </div>
                                 </div> */}
+
                                 <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-5">
                                         <button type='submit' className="block w-full max-w-xs mx-auto bg-[#122222]  text-white rounded-lg px-3 py-3 font-semibold">REGISTER NOW</button>

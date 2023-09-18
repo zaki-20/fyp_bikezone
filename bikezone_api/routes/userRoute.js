@@ -23,7 +23,7 @@ router.route("/admin/user/:id")
     .put(isAuthenticatedUser, authorizeRoles("admin"), updateUserProfile)
     .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser)
 
-router.route("/logout").post(logout)
+router.route("/logout").get(logout)
 
 
 

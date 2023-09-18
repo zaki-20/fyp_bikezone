@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { logout } from '../features/auth/auth.thunk';
+import { reset } from '../features/auth/auth.slice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Header = () => {
 
+  const dispatch = useDispatch()
   const location = useLocation();
+  const navigate = useNavigate()
 
   // Define routes where you want to hide the header content
   const hideHeaderRoutes = ['/login', '/register'];
@@ -13,10 +19,20 @@ const Header = () => {
   // Check if the current route is in the hideHeaderRoutes array
   const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+  const { user, isLoading, isError, isSuccess, message,logoutSuccess } = useSelector((state) => state.auth)
 
-  useEffect(() => {
-  }, [user]);
+
+  const logoutHandle = () => {
+    dispatch(logout())
+  }
+
+  useEffect(()=>{
+   if(logoutSuccess){
+    toast.success(message);
+    dispatch(reset())
+   }
+    navigate('/')
+  },[message,logoutSuccess])
 
   return (
     <nav className={shouldHideHeader ? `hidden` : `bg-[#122222] border-gray-200 dark:bg-gray-900`}>
@@ -34,27 +50,43 @@ const Header = () => {
             <img className="w-8 h-8 rounded-full" src="favicon.ico" alt="user-piLink" />
           </button>
           {/* Dropdown menu */}
-          <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+          <div className="z-50 hidden my-4 min-w-[200px] text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+            {
 
-            <div className="px-4 py-3">
-              <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-              <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
-            </div>
+              user ? (
+                <>
+                  <div className="px-4 py-3">
+                    <span className="block text-sm text-gray-900 dark:text-white">{`${user.firstname} ${user.lastname}`}</span>
+                    <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{user.email}</span>
+                  </div>
 
-            <ul className="py-2" aria-labelledby="user-menu-button">
-              <li>
-                <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</Link>
-              </li>
-              <li>
-                <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</Link>
-              </li>
-              <li>
-                <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
-              </li>
-            </ul>
+                  <ul className="py-2" aria-labelledby="user-menu-button">
+                    {
+                      user?.role === 'admin' && (
+                        <li>
+                          <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
+                        </li>
+                      )
+                    }
+                    <li>
+                      <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Account</Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Orders</Link>
+                    </li>
+                    <li>
+                      <div onClick={logoutHandle} className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</div>
+                    </li>
+                  </ul>
+                </>
+              ) : (
+                <div className="px-4 py-3">
+                  <span className="block text-sm text-gray-900 dark:text-white">{`please login`}</span>
+                </div>
+              )
+            }
+
+
           </div>
           <button data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
             <span className="sr-only">Open main menu</span>
@@ -74,6 +106,7 @@ const Header = () => {
             <li>
               <Link to="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-[#122222] hover:text-white md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</Link>
             </li>
+           
             <li>
               <Link to="/login" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-[#122222] hover:text-white md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">login</Link>
             </li>
@@ -83,6 +116,8 @@ const Header = () => {
           </ul>
         </div>
       </div>
+      <ToastContainer position='top-center' /> {/* Add ToastContainer at the end of your component */}
+
     </nav>
 
 

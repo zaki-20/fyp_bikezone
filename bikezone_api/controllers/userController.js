@@ -4,23 +4,29 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const cloudinary = require("cloudinary");
+
 
 
 
 //create user  with jwt
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-    const { firstname,lastname, email, password } = req.body
+
+    // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    //     folder: "avatars",
+    //     width: 150,
+    //     crop: "scale",
+    //   });
+
+    const { firstname, lastname, email, password } = req.body
     const user = await User.create({
         firstname, lastname, email, password,
         // avatar: {
-        //     public_id: "this is a sample id",
-        //     url: "profilePicUrl"
+        //     public_id: myCloud.public_id,
+        //     url: myCloud.secure_url
         // }
     })
-
     sendToken(user, 200, res)
-  
-
 })
 
 //login user 
@@ -61,8 +67,9 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
     });
 
     res.status(200).json({
-        success: true,
-        message: "Logged Out",
+        statusCode: 200,
+        status: true,
+        message: "Your Account is Logout Successfully",
     });
 });
 
@@ -144,9 +151,17 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user.id);
 
+    //check user exists
+    if (!user) {
+        return next(new ErrorHandler("user not found..", 404))
+    }
     res.status(200).json({
-        success: true,
-        user,
+        statusCode: 200,
+        status: true,
+        message: "user detail successfully fetched",
+        payload: {
+            user
+        }
     });
 });
 

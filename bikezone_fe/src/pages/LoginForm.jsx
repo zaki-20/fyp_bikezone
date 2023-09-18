@@ -46,16 +46,19 @@ const LoginForm = () => {
     const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
 
-
     useEffect(() => {
         if (isError) {
+            console.log(message,"useeffect iserror")
             toast.error(message);
             dispatch(reset())
         }
         if (isSuccess) {
+            toast.success(message);
+            console.log(message,"useeffect isSuccess")
             navigate('/')
         }
-    }, [dispatch, isError, isSuccess, message,navigate])
+
+    }, [dispatch, isError, isSuccess, message, navigate, user])
 
     return (
         <>
