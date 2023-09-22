@@ -21,6 +21,7 @@ const orderRoute = require("./routes/orderRoute");
 const workshopRoute = require("./routes/workshopRoute");
 const rentBikeRoute = require("./routes/rentBikeRoute");
 
+//api routes 
 
 app.use("/api/v1", productRoute);
 app.use("/api/v1", userRoute);
