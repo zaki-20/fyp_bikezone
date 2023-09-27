@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL = 'http://localhost:4000/api/v1/'
-
+ 
 //getAllProducts
 const getAllProducts = async (keyword, currentPage, price, category, ratings) => {
     // console.log("helo from service before axios")

@@ -5,7 +5,7 @@ import FeaturedProductsPage from "./pages/FeaturedProductsPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer";
 import Register from "./pages/Register";
-import LoginForm from "./pages/LoginForm";
+import LoginForm from "./pages/user/LoginForm";
 import { useCookies } from "react-cookie"
 import ErrorPage from "./pages/shared/ErrorPage";
 import ContactUs from "./pages/ContactUs";
@@ -16,6 +16,7 @@ import Cart from "./pages/Cart";
 import 'react-toastify/dist/ReactToastify.css';
 import { loadUser } from "./features/auth/auth.thunk";
 import { useDispatch, useSelector } from "react-redux";
+import UserProfile from "./pages/user/UserProfile";
 
 function App() {
   const [cookies] = useCookies(["token"]);
@@ -53,6 +54,9 @@ function App() {
           <Route path="product/:id" element={<ProductDetail />} />
           <Route path="addproduct" element={<AddProduct />} />
           <Route path="cart" element={<Cart />} />
+
+          <Route path="profile" element={<UserProfile />} />
+          
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

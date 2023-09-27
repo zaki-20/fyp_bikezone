@@ -35,8 +35,8 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     statusCode: 200,
     status: true,
-    message: "All products have been fetched!",
-    payload: {
+    message: "All products have been fetched!", 
+    payload: { 
       products: {
         products,
         length: products.length,

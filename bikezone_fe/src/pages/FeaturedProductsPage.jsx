@@ -41,18 +41,17 @@ const FeaturedProductsPage = () => {
 
 
 
-  if (isError) {
-    // console.log("featuredProduct")
-    toast.error(message);
-    dispatch(reset())
-  }
-
-
-
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+      dispatch(reset())
+    }
+  }, [isError])
+  
   const setCurrentPageNo = (e) => {
     setCurrentPage(e)
   }
-
+ 
   const priceHandler = (event, newPrice) => {
     setPrice(newPrice)
   }
@@ -101,7 +100,7 @@ const FeaturedProductsPage = () => {
                   <h1 className="text-3xl font-semibold mb-4">Featured Products</h1>
                   {/* Show error toast when isError is true */}
 
-                  <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:bg-red-600 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                  <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
 
                     {products &&
                       products?.map((product, index) => {

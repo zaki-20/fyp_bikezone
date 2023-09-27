@@ -30,4 +30,4 @@ module.exports = (err, req, res, next) => {
         success: false,
         error: err.message
     })
-}
+} 

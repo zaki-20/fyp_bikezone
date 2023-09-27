@@ -4,7 +4,7 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
-const cloudinary = require("cloudinary");
+const  cloudinary  = require("cloudinary");
 
 
 
@@ -12,19 +12,19 @@ const cloudinary = require("cloudinary");
 //create user  with jwt
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
-    // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    //     folder: "avatars",
-    //     width: 150,
-    //     crop: "scale",
-    //   });
-
+    console.log(req.file)
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+    });
     const { firstname, lastname, email, password } = req.body
     const user = await User.create({
         firstname, lastname, email, password,
-        // avatar: {
-        //     public_id: myCloud.public_id,
-        //     url: myCloud.secure_url
-        // }
+        avatar: {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url
+        }
     })
     sendToken(user, 200, res)
 })
@@ -158,7 +158,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         statusCode: 200,
         status: true,
-        message: "user detail successfully fetched",
+        message: null,
         payload: {
             user
         }

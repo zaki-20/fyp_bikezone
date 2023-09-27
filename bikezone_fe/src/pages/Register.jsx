@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 // Import  image
 import shadowBikeImage from '../assets/shadow-bike.png';
 import { register } from '../features/auth/auth.thunk';
+import { reset } from '../features/auth/auth.slice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 
 
@@ -14,6 +17,8 @@ const schema = yup.object({
     lastname: yup.string().required('Last name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
     password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    avatar: yup.mixed().required('Avatar is required'), // Add validation for the avatar field
+
     // confirmPassword: yup
     //     .string()
     //     .oneOf([yup.ref('password'), null], 'Passwords must match')
@@ -23,52 +28,60 @@ const schema = yup.object({
 
 const Register = () => {
 
-    const [avatar, setAvatar] = useState("/helmet.jpg");
+    // const [avatar, setAvatar] = useState(null);
 
     const initialValues = {
         firstname: "",
         lastname: "",
         email: "",
         password: "",
+        avatar: null,
         // confirmPassword: "",
     };
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    //idr nichy touched k bad agar profile karni upload -> setFieldValue
 
-    const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+
+    const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
             initialValues,
             validationSchema: schema,
             validateOnChange: true,
             validateOnBlur: false,
+            onSubmit: async (values) => {
+                console.log(values, "register from subir formik")
 
-            //// By disabling validation onChange and onBlur formik will validate on submit.
-            onSubmit: (values, action) => {
+                const formData = new FormData();
+                formData.append('firstname', values.firstname);
+                formData.append('lastname', values.lastname);
+                formData.append('email', values.email);
+                formData.append('password', values.password);
+                formData.append('avatar', values.avatar); // Append the avatar field
 
-                //// to get rid of all the values after submitting the form
-                const userData = { ...values, avatar }; // Include the profile image in the user data
-                console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", userData);
-                dispatch(register(userData));
+                dispatch(register(formData));
 
             },
         });
 
 
-    // useSelector((state) => console.log(state.auth))
-
-    // Handle file input change
-    // const handleImageUpload = (event) => {
-    //     const file = event.target.files[0];
-    //     setFieldValue('avatar', file);
-    //     setAvatar(URL.createObjectURL(file));
-
-    //     console.log(file)
-    // };
+    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
 
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+            dispatch(reset())
+        }
+        if (isSuccess) {
+            toast.success(message);
+            navigate('/')
+        }
+
+    }, [dispatch, isError, isSuccess, message, navigate, user])
+
+   
 
     return (
         <div>
@@ -83,10 +96,10 @@ const Register = () => {
                                 <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
                                 <p>Enter your information to register</p>
                             </div>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} encType="multipart/form-data">
                                 <div className="flex -mx-3">
                                     <div className="w-1/2 px-3 mb-5">
-                                        <label htmlFor className="text-xs font-semibold px-1">First name</label>
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">First name</label>
                                         <div className="flex">
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-account-outline text-gray-400 text-lg" /></div>
                                             <input
@@ -103,7 +116,7 @@ const Register = () => {
                                         ) : null}
                                     </div>
                                     <div className="w-1/2 px-3 mb-5">
-                                        <label htmlFor className="text-xs font-semibold px-1">Last name</label>
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">Last name</label>
                                         <div className="flex">
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-account-outline text-gray-400 text-lg" /></div>
                                             <input type="text" id='lastname'
@@ -120,7 +133,7 @@ const Register = () => {
                                 </div>
                                 <div className="flex -mx-3 ">
                                     <div className="w-full px-3 mb-5">
-                                        <label htmlFor className="text-xs font-semibold px-1">Email</label>
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">Email</label>
                                         <div className="flex">
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg" /></div>
                                             <input
@@ -138,7 +151,7 @@ const Register = () => {
                                 </div>
                                 <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-5">
-                                        <label htmlFor className="text-xs font-semibold px-1">Password</label>
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">Password</label>
                                         <div className="flex">
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg" /></div>
                                             <input
@@ -154,25 +167,26 @@ const Register = () => {
                                     </div>
                                 </div>
 
-                                {/* <div className="flex -mx-3 items-center">
-                               
+                                <div className="flex -mx-3 items-center">
                                     <div className="w-full px-3 mb-5">
-
-                                        <label htmlFor="profileImage" className="text-xs font-semibold px-1">
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">
                                             Profile Image
                                         </label>
                                         <input
                                             type="file"
-                                            id="profileImage"
-                                            name="profileImage"
-                                            onChange={handleImageUpload}
+                                            id="avatar"
+                                            name="avatar"
+                                            onChange={(e) => setFieldValue('avatar', e.currentTarget.files[0])}
                                             className="w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                                         />
+                                        {/* {errors.avatar && touched.avatar ? (
+                                            <p className="text-red-600 animate-pulse">{errors.avatar}</p>
+                                        ) : null} */}
                                     </div>
-                                    {avatar && (
+                                    {/* {values.avatar && (
                                         <img className="w-10 h-10 rounded-full" src="/helmet.jpg" alt="Rounded avatar" />
-                                    )}
-                                </div> */}
+                                    )} */}
+                                </div>
 
                                 {/* <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-12">
@@ -208,6 +222,7 @@ const Register = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer position='top-center' /> {/* Add ToastContainer at the end of your component */}
 
         </div>
     )

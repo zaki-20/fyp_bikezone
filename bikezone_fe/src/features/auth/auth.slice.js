@@ -6,8 +6,15 @@ const authSlice = createSlice({
     name: "auth",
     initialState: initialAuthState,
     reducers: {
-        // reset: (state) => initialProductState
-        reset: (state) => initialAuthState
+        reset: (state) => {
+            state.user = null
+            state.isLoading = false
+            state.isError = false
+            state.isSuccess = false
+            state.message = ''
+            state.logoutSuccess = false
+        },
+        
     },
     extraReducers: (builder) => {
         builder
@@ -32,18 +39,17 @@ const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
+                state.isError = false
                 state.user = action.payload.payload.user
                 state.message = action.payload.message
-                console.log(action.payload.message, "login")
 
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
-                state.message = action.payload.error
                 state.isSuccess = false
                 state.user = null
-                // state.logoutSuccess = false
+                state.message = action.payload.error
             })
             .addCase(loadUser.pending, (state) => {
                 state.isLoading = true
@@ -51,9 +57,9 @@ const authSlice = createSlice({
             .addCase(loadUser.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
+                state.isError = false
                 state.user = action.payload.payload.user
                 state.message = action.payload.message
-                console.log(action.payload, "loaduser fulfilled action.payload")
             })
             .addCase(loadUser.rejected, (state, action) => {
                 state.isLoading = false
@@ -61,7 +67,6 @@ const authSlice = createSlice({
                 state.isSuccess = false
                 state.message = action.payload.error //need checking
                 state.user = null
-                console.log(action.payload, "loaduser reject")
             })
             .addCase(logout.fulfilled, (state, action) => {
 

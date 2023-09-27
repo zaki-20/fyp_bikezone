@@ -3,13 +3,13 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { Link, useNavigate } from 'react-router-dom';
 // Import  image
-import shadowBikeImage from '../assets/shadow-bike.png';
-import { login } from '../features/auth/auth.thunk';
+import shadowBikeImage from '../../assets/shadow-bike.png';
+import { login } from '../../features/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import { reset } from '../features/auth/auth.slice';
-import Loader from './shared/Loader';
+import { reset } from '../../features/auth/auth.slice';
+import Loader from '../shared/Loader';
 
 
 
@@ -20,9 +20,27 @@ const schema = yup.object({
 
 
 const LoginForm = () => {
+    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        if (isError) {
+            console.log(isError, "error")
+            toast.error(message);
+            dispatch(reset())
+            console.log(isError, "error")
+        }
+
+        if (isSuccess) {
+            // toast.dismiss();
+            toast.success(message);
+            navigate('/')
+            console.log(isError, "success")
+        }
+
+    }, [dispatch, isError, isSuccess, navigate, message, user])
     const initialValues = {
         email: "",
         password: "",
@@ -36,29 +54,14 @@ const LoginForm = () => {
             validateOnBlur: false,
             //// By disabling validation onChange and onBlur formik will validate on submit.
             onSubmit: (values, action) => {
-                console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", values);
-                //// to get rid of all the values after submitting the form
                 dispatch(login(values))
                 action.resetForm();
             },
         });
 
-    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
 
-    useEffect(() => {
-        if (isError) {
-            console.log(message,"useeffect iserror")
-            toast.error(message);
-            dispatch(reset())
-        }
-        if (isSuccess) {
-            toast.success(message);
-            console.log(message,"useeffect isSuccess")
-            navigate('/')
-        }
 
-    }, [dispatch, isError, isSuccess, message, navigate, user])
 
     return (
         <>
