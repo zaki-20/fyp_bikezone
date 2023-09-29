@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../shared/Loader';
 import { Link } from 'react-router-dom';
+import MetaData from '../../components/MetaData';
 
 const UserProfile = () => {
 
@@ -10,6 +11,7 @@ const UserProfile = () => {
     return (
 
         <>
+            <MetaData title={"profile"} />
             <div className="md:p-16 p-4">
                 <div className="p-8 bg-white shadow mt-2 md:mt-20">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -36,9 +38,11 @@ const UserProfile = () => {
                         </div>
                     </div>
 
+                    <div className='flex justify-center items-center text-2xl font-semibold mt-4'>
+                        <h1>{`${user?.firstname} ${user?.lastname}`}</h1>
+                    </div>
 
-
-                    <div className="mt-20  pb-12 grid grid-cols-2 gap-10">
+                    <div className="mt-12 pb-12 grid grid-cols-2 gap-10">
                         <div className="mx-auto">
                             <p className="font-bold text-gray-600 mt-3">Joined on</p>
                             <p className="font-bold text-gray-600 mt-3">Email</p>
@@ -49,9 +53,12 @@ const UserProfile = () => {
                         </div>
                     </div>
                     <div className="flex justify-center">
-                        <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-                            Change password
-                        </button>
+                        <Link to='/update/password'>
+                            <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                                Change password
+                            </button>
+                        </Link>
+
                     </div>
                 </div>
             </div>

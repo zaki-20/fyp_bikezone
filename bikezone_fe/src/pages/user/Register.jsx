@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import shadowBikeImage from '../../assets/shadow-bike.png';
 import { register } from '../../features/auth/auth.thunk';
 import { reset } from '../../features/auth/auth.slice';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
 
@@ -26,6 +26,9 @@ const schema = yup.object({
 
 const Register = () => {
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const initialValues = {
         firstname: "",
         lastname: "",
@@ -33,9 +36,6 @@ const Register = () => {
         password: "",
         confirmPassword: "",
     };
-
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
 
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
@@ -144,11 +144,13 @@ const Register = () => {
                                         <div className="flex">
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg" /></div>
                                             <input
+                                                id='password'
+                                                type="password"
                                                 name='password'
                                                 value={values.password}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                id='password' type="password" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************" />
+                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************" />
                                         </div>
                                         {errors.password && touched.password ? (
                                             <p className="text-red-600 animate-pulse">{errors.password}</p>

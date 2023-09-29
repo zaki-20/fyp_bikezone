@@ -166,7 +166,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 });
 
 // update User password
-exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => { 
     const user = await User.findById(req.user.id).select("+password");
 
     //check old password 
@@ -196,8 +196,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
 // update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-            return next(new ErrorHandler("password does not match", 400))
-
+    
     const newUserData = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,

@@ -10,6 +10,8 @@ import { updateProfile } from "../../features/auth/auth.thunk";
 import { loadUser } from "../../features/auth/auth.thunk";
 import { useEffect } from "react";
 import { reset } from "../../features/auth/auth.slice";
+import MetaData from "../../components/MetaData";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
     firstname: yup.string(),
@@ -19,6 +21,7 @@ const schema = yup.object({
 
 
 const EditProfile = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const { user, isLoading, isError, message, updateProfile: uProfile, isSuccess } = useSelector((state) => state.auth)
 
@@ -44,11 +47,11 @@ const EditProfile = () => {
             },
         });
 
-    console.log(message, "messsage")
-    console.log(isLoading, "loading")
-    console.log(isSuccess, "success")
-    console.log(isError, "error")
-    console.log(uProfile, "update")
+    // console.log(message, "messsage")
+    // console.log(isLoading, "loading")
+    // console.log(isSuccess, "success")
+    // console.log(isError, "error")
+    // console.log(uProfile, "update")
 
     useEffect(() => {
         if (isError) {
@@ -58,6 +61,8 @@ const EditProfile = () => {
         }
         if (uProfile) {
             toast.success(message);
+            dispatch(reset())
+            navigate('/profile')
         }
 
     }, [isError, uProfile])
@@ -82,7 +87,10 @@ const EditProfile = () => {
     // }
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+   <>
+         <MetaData title={"update profile"} />
+
+         <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                     Edit Profile
@@ -164,6 +172,7 @@ const EditProfile = () => {
                 </div>
             </div>
         </div>
+   </>
     );
 };
 

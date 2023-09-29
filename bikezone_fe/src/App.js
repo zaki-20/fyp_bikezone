@@ -23,6 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from "./components/route/ProtectedRoute";
 import Dashboard from "./pages/admin/Dashboard";
 import EditProfile from "./pages/user/EditProfile";
+import UpdatePassword from "./pages/user/UpdatePassword";
 
 function App() {
 
@@ -57,8 +58,10 @@ function App() {
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
 
+        {/* protected routes */}
         <Route exact path="/profile" element={<ProtectedRoute Component={UserProfile} />} />
         <Route exact path="/me/update" element={<ProtectedRoute Component={EditProfile} />} />
+        <Route exact path="/update/password" element={<ProtectedRoute Component={UpdatePassword} />} />
 
         <Route path="/*" element={<ErrorPage />} />
 
