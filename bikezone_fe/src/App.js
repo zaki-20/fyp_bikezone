@@ -1,71 +1,73 @@
 import Header from "./components/Header";
-import { useEffect, useState } from "react";
-import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 import FeaturedProductsPage from "./pages/FeaturedProductsPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer";
-import Register from "./pages/Register";
-import LoginForm from "./pages/user/LoginForm";
-import { useCookies } from "react-cookie"
 import ErrorPage from "./pages/shared/ErrorPage";
 import ContactUs from "./pages/ContactUs";
+import Register from "./pages/user/Register";
 import AboutUs from "./pages/AboutUs";
+import LoginForm from "./pages/user/LoginForm";
 import ProductDetail from "./pages/ProductDetail";
+import UserProfile from "./pages/user/UserProfile";
 import AddProduct from "./pages/AddProduct";
 import Cart from "./pages/Cart";
-import 'react-toastify/dist/ReactToastify.css';
-import { loadUser } from "./features/auth/auth.thunk";
+
 import { useDispatch, useSelector } from "react-redux";
-import UserProfile from "./pages/user/UserProfile";
+import { useEffect } from "react";
+import { Outlet, Route, Routes } from "react-router-dom";
+import { useCookies } from "react-cookie"
+
+import { loadUser } from "./features/auth/auth.thunk";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import ProtectedRoute from "./components/route/ProtectedRoute";
+import Dashboard from "./pages/admin/Dashboard";
+import EditProfile from "./pages/user/EditProfile";
 
 function App() {
+
+  const { user } = useSelector((state) => state.auth)
+
   const [cookies] = useCookies(["token"]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const savedToken = cookies.token;
-    console.log(savedToken);
-    if (savedToken) {
+
+    if (savedToken && !user) {
       dispatch(loadUser());
+      console.log(savedToken, "console token on render");
     }
-  }, [cookies, dispatch]);
+  }, [cookies, dispatch, user]);
 
 
-  // Get the current location using useLocation
-  // const location = useLocation();
-
-  // Conditionally render Header and Footer based on the route path
-  // const renderHeaderAndFooter = !location.pathname.startsWith("/register")
-  //   && !location.pathname.startsWith("/login");
 
   return (
     <>
-
-      {/* {renderHeaderAndFooter && <Header />} */}
       <Header />
       <Routes>
-        <Route path="/" element={<Outlet />}>
-          <Route index element={<HomePage />} />
-          <Route path="featuredproducts" element={<FeaturedProductsPage />} />
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<LoginForm />} />
-          <Route path="contact" element={<ContactUs />} />
-          <Route path="about" element={<AboutUs />} />
-          <Route path="product/:id" element={<ProductDetail />} />
-          <Route path="addproduct" element={<AddProduct />} />
-          <Route path="cart" element={<Cart />} />
+        <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/featuredproducts" element={<FeaturedProductsPage />} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/login" element={<LoginForm />} />
+        <Route exact path="/contact" element={<ContactUs />} />
+        <Route exact path="/about" element={<AboutUs />} />
+        <Route exact path="/product/:id" element={<ProductDetail />} />
+        <Route exact path="/addproduct" element={<AddProduct />} />
+        <Route exact path="/cart" element={<Cart />} />
+        <Route exact path="/dashboard" element={<Dashboard />} />
 
-          <Route path="profile" element={<UserProfile />} />
-          
-          <Route path="*" element={<ErrorPage />} />
-        </Route>
+        <Route exact path="/profile" element={<ProtectedRoute Component={UserProfile} />} />
+        <Route exact path="/me/update" element={<ProtectedRoute Component={EditProfile} />} />
+
+        <Route path="/*" element={<ErrorPage />} />
+
+
       </Routes>
       <Footer />
 
-      {/* {renderHeaderAndFooter && <Footer />} */}
 
-
-
+      <ToastContainer position='top-center' />
     </>
   );
 }

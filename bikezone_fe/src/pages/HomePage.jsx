@@ -4,15 +4,11 @@ import FeaturedProducts from '../components/sections/FeaturedProducts'
 import MetaData from '../components/MetaData'
 
 const HomePage = () => {
-
-
-
   return (
     <div>
-      <MetaData title={"BIKEZONE"}/>
+      <MetaData title={"BIKEZONE"} />
       <HeroSection />
       <FeaturedProducts />
-    
     </div>
   )
 }

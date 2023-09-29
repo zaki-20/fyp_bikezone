@@ -4,7 +4,7 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
-const  cloudinary  = require("cloudinary");
+const cloudinary = require("cloudinary");
 
 
 
@@ -12,20 +12,20 @@ const  cloudinary  = require("cloudinary");
 //create user  with jwt
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
-    console.log(req.file)
-    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: "avatars",
-        width: 150,
-        crop: "scale",
-    });
     const { firstname, lastname, email, password } = req.body
+
+
     const user = await User.create({
         firstname, lastname, email, password,
-        avatar: {
-            public_id: myCloud.public_id,
-            url: myCloud.secure_url
-        }
+      
     })
+    // const message = `Thank you ${firstname} ${lastname} for joining BIKEZONE `
+    await sendEmail({
+        email: email,
+        subject: `Bikezone Registration`,
+        firstname,
+        lastname
+    }, 'html');
     sendToken(user, 200, res)
 })
 
@@ -196,8 +196,11 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
 // update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+            return next(new ErrorHandler("password does not match", 400))
+
     const newUserData = {
-        name: req.body.name,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
         email: req.body.email,
     };
 
@@ -210,7 +213,12 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     });
 
     res.status(200).json({
-        success: true,
+        statusCode: 200,
+        status: true,
+        message: "your profile has been updated",
+        payload: {
+            user
+        }
     });
 
 })

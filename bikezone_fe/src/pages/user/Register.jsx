@@ -4,10 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // Import  image
-import shadowBikeImage from '../assets/shadow-bike.png';
-import { register } from '../features/auth/auth.thunk';
-import { reset } from '../features/auth/auth.slice';
-import { ToastContainer, toast } from 'react-toastify';
+import shadowBikeImage from '../../assets/shadow-bike.png';
+import { register } from '../../features/auth/auth.thunk';
+import { reset } from '../../features/auth/auth.slice';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
 
@@ -17,32 +17,25 @@ const schema = yup.object({
     lastname: yup.string().required('Last name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
     password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-    avatar: yup.mixed().required('Avatar is required'), // Add validation for the avatar field
-
-    // confirmPassword: yup
-    //     .string()
-    //     .oneOf([yup.ref('password'), null], 'Passwords must match')
-    //     .required('Confirm Password is required'),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm Password is required'),
 }).required();
 
 
 const Register = () => {
-
-    // const [avatar, setAvatar] = useState(null);
 
     const initialValues = {
         firstname: "",
         lastname: "",
         email: "",
         password: "",
-        avatar: null,
-        // confirmPassword: "",
+        confirmPassword: "",
     };
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
-
 
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
@@ -51,16 +44,8 @@ const Register = () => {
             validateOnChange: true,
             validateOnBlur: false,
             onSubmit: async (values) => {
-                console.log(values, "register from subir formik")
 
-                const formData = new FormData();
-                formData.append('firstname', values.firstname);
-                formData.append('lastname', values.lastname);
-                formData.append('email', values.email);
-                formData.append('password', values.password);
-                formData.append('avatar', values.avatar); // Append the avatar field
-
-                dispatch(register(formData));
+                dispatch(register(values));
 
             },
         });
@@ -79,9 +64,9 @@ const Register = () => {
             navigate('/')
         }
 
-    }, [dispatch, isError, isSuccess, message, navigate, user])
+    }, [isError, isSuccess])
 
-   
+
 
     return (
         <div>
@@ -105,8 +90,8 @@ const Register = () => {
                                             <input
                                                 type="text"
                                                 id='firstname'
-                                                value={values.firstname}
                                                 name='firstname'
+                                                value={values.firstname}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="John" />
@@ -119,7 +104,9 @@ const Register = () => {
                                         <label htmlFor="true" className="text-xs font-semibold px-1">Last name</label>
                                         <div className="flex">
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-account-outline text-gray-400 text-lg" /></div>
-                                            <input type="text" id='lastname'
+                                            <input
+                                                type="text"
+                                                id='lastname'
                                                 name='lastname'
                                                 value={values.lastname}
                                                 onChange={handleChange}
@@ -138,10 +125,12 @@ const Register = () => {
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg" /></div>
                                             <input
                                                 name='email'
+                                                type="email"
+                                                id='email'
                                                 value={values.email}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                type="email" id='email' className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com" />
+                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com" />
                                         </div>
                                         {errors.email && touched.email ? (
                                             <p className="text-red-600 animate-pulse">{errors.email}</p>
@@ -166,7 +155,7 @@ const Register = () => {
                                         ) : null}
                                     </div>
                                 </div>
-
+                                {/* 
                                 <div className="flex -mx-3 items-center">
                                     <div className="w-full px-3 mb-5">
                                         <label htmlFor="true" className="text-xs font-semibold px-1">
@@ -179,18 +168,18 @@ const Register = () => {
                                             onChange={(e) => setFieldValue('avatar', e.currentTarget.files[0])}
                                             className="w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                                         />
-                                        {/* {errors.avatar && touched.avatar ? (
+                                        {errors.avatar && touched.avatar ? (
                                             <p className="text-red-600 animate-pulse">{errors.avatar}</p>
-                                        ) : null} */}
+                                        ) : null}
                                     </div>
-                                    {/* {values.avatar && (
+                                    {values.avatar && (
                                         <img className="w-10 h-10 rounded-full" src="/helmet.jpg" alt="Rounded avatar" />
-                                    )} */}
-                                </div>
+                                    )}
+                                </div> */}
 
-                                {/* <div className="flex -mx-3">
+                                <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-12">
-                                        <label htmlFor className="text-xs font-semibold px-1">Confirm Password</label>
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">Confirm Password</label>
                                         <div className="flex">
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg" /></div>
                                             <input
@@ -204,7 +193,7 @@ const Register = () => {
                                             <p className="text-red-600 animate-pulse">{errors.confirmPassword}</p>
                                         ) : null}
                                     </div>
-                                </div> */}
+                                </div>
 
                                 <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-5">
@@ -222,7 +211,6 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer position='top-center' /> {/* Add ToastContainer at the end of your component */}
 
         </div>
     )

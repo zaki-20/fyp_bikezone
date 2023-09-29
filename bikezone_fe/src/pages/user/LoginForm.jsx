@@ -20,32 +20,29 @@ const schema = yup.object({
 
 
 const LoginForm = () => {
-    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+    const { user, isLoading, isError, isSuccess, message, logoutSuccess } = useSelector((state) => state.auth)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+
     useEffect(() => {
         if (isError) {
-            console.log(isError, "error")
             toast.error(message);
             dispatch(reset())
-            console.log(isError, "error")
         }
+    }, [isError])
 
+    useEffect(() => {
         if (isSuccess) {
-            // toast.dismiss();
             toast.success(message);
             navigate('/')
-            console.log(isError, "success")
         }
-
-    }, [dispatch, isError, isSuccess, navigate, message, user])
+    }, [isSuccess])
     const initialValues = {
         email: "",
         password: "",
     };
-
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
         useFormik({
             initialValues,
@@ -58,10 +55,6 @@ const LoginForm = () => {
                 action.resetForm();
             },
         });
-
-
-
-
 
     return (
         <>
@@ -139,7 +132,6 @@ const LoginForm = () => {
                                 </div>
                             </div>
                         </div>
-                        <ToastContainer position='top-center' /> {/* Add ToastContainer at the end of your component */}
 
                     </div>
                 )

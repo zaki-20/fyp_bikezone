@@ -5,7 +5,8 @@ const initialAuthState = {
     isError: false,
     isSuccess: false,
     message: '',
-    logoutSuccess: false
+    logoutSuccess: false,
+    updateProfile: false
 };
 
 export default initialAuthState;

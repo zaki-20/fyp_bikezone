@@ -4,26 +4,13 @@ const API_URL = 'http://localhost:4000/api/v1/'
 
 //register user
 const register = async (userData) => {
-
-    console.log(" in service above", userData)
-    const config = { headers: { "Content-Type": "application/json" } };
     const response = await axios.post(API_URL + 'register', userData, { withCredentials: true })
-
-    // if (response.data) {
-    //     localStorage.setItem('user', JSON.stringify(response.data))
-    // }
-
     return response.data
 }
 
 //login user
 const login = async (userData) => {
-
     const response = await axios.post(API_URL + 'login', userData, { withCredentials: true })
-
-    // if (response.data) {
-    //     localStorage.setItem('user', JSON.stringify(response.data))
-    // }
     return response.data
 }
 
@@ -40,11 +27,17 @@ const logout = async () => {
     return response.data
 }
 
+//update user
+const updateProfile = async (userData) => {
+    const response = await axios.put(API_URL + 'me/update', userData, { withCredentials: true })
+    return response.data
+}
+
 const authService = {
     register,
     login,
     loadUser,
-    logout
-
+    logout,
+    updateProfile
 }
 export default authService
