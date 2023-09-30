@@ -65,7 +65,7 @@ function App() {
 
 
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
-        <Route exact path="/password/reset" element={<ResetPassword />} />
+        <Route exact path="/password/reset/:token" element={<ResetPassword />} />
 
         {/* protected routes */}
         <Route exact path="/profile" element={<ProtectedRoute Component={UserProfile} />} />

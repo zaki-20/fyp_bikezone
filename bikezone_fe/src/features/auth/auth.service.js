@@ -23,7 +23,6 @@ const loadUser = async () => {
 // Logout user
 const logout = async () => {
     const response = await axios.get(API_URL + 'logout', { withCredentials: true })
-    console.log(response.data, "logout response data")
     return response.data
 }
 
@@ -45,6 +44,12 @@ const forgotPassword = async (email) => {
     return response.data
 }
 
+//forgot password 
+const resetPassword = async (passwords, token) => {
+    const response = await axios.put(API_URL + `password/reset/${token}`, passwords, { withCredentials: true })
+    return response.data
+}
+
 const authService = {
     register,
     login,
@@ -52,6 +57,7 @@ const authService = {
     logout,
     updateProfile,
     updatePassword,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 }
 export default authService

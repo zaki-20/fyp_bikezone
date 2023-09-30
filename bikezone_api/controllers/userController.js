@@ -49,7 +49,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     if (!isPasswordMatch) {
         return next(new ErrorHandler("invalid email or password", 401))
     }
-    const msg = "logged in successfully successfully"
+    const msg = "logged in successfully "
 
     sendToken(user, 200, res, msg)
 
@@ -89,8 +89,8 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
     await user.save({ validateBeforeSave: false })
 
-    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
-    // console.log(req.get("host"))
+    // const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
     const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`;
 
@@ -107,7 +107,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
             message: `Email sent to ${user.email} successfully`,
             payload: {}
         });
-        
+
     } catch (error) {
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
@@ -136,20 +136,21 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     }
 
     //check bot pass and Cpass which will be sent by the user
-    if (req.body.password !== req.body.confirmPassword) {
+    if (req.body.newPassword !== req.body.confirmPassword) {
         return next(new ErrorHandler("Password does not password", 400));
     }
 
     //if passwords match and setted undefined for resetTokens because no further usage
-    user.password = req.body.password;
+    user.newPassword = req.body.password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 
     //save after changes in mongodb 
     await user.save();
 
+    const msg = "password resetted successfully"
 
-    sendToken(user, 200, res);
+    sendToken(user, 200, res, msg);
 
 })
 

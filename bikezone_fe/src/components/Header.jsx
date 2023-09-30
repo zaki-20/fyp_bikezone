@@ -23,10 +23,6 @@ const Header = () => {
   const { user, message, logoutSuccess } = useSelector((state) => state.auth)
 
 
-  // useEffect(() => {
-
-  // }, [user])
-
   const logoutHandle = () => {
     dispatch(logout())
     // .then(() => {
@@ -38,7 +34,6 @@ const Header = () => {
   useEffect(() => {
     if (logoutSuccess) {
       console.log("success logout")
-      toast.success(message);
       dispatch(reset())
       navigate('/')
     }
