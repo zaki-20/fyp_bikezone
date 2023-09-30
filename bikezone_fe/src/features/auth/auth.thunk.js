@@ -24,6 +24,7 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
         return thunkAPI.rejectWithValue(message)
     }
 })
+
 //loadUser user
 export const loadUser = createAsyncThunk('auth/loadUser', async (_, thunkAPI) => {
     try {
@@ -52,6 +53,16 @@ export const updatePassword = createAsyncThunk('auth/updatePassword', async (pas
     } catch (error) {
         const message =
             error.response.data
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//Forgot Password
+export const forgotPassword = createAsyncThunk('auth/forgotPassword', async (email, thunkAPI) => {
+    try {
+        return await authService.forgotPassword(email)
+    } catch (error) {
+        const message = error.response.data
         return thunkAPI.rejectWithValue(message)
     }
 })

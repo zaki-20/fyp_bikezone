@@ -99,12 +99,15 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
             email: user.email,
             subject: `Bikezone Password Recovery`,
             message,
-        });
+        }, 'text');
 
         res.status(200).json({
-            success: true,
+            statusCode: 200,
+            status: true,
             message: `Email sent to ${user.email} successfully`,
+            payload: {}
         });
+        
     } catch (error) {
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
@@ -294,3 +297,17 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
         message: "User Deleted Successfully",
     });
 });
+
+
+
+// Delete All Users (except admin)
+exports.deleteAllUsers = catchAsyncErrors(async (req, res, next) => {
+    // Delete all users except those with the "admin" role
+    await User.deleteMany({ role: { $ne: 'admin' } });
+
+    res.status(200).json({
+        success: true,
+        message: "All non-admin users have been deleted successfully",
+    });
+});
+

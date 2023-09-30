@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, login, loadUser, logout, updateProfile, updatePassword } from "./auth.thunk";
+import { register, login, loadUser, logout, updateProfile, updatePassword, forgotPassword } from "./auth.thunk";
 import initialAuthState from "./auth.initialstate";
 
 const authSlice = createSlice({
@@ -107,7 +107,21 @@ const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload.error
                 state.isUpdate = false
-                console.log(action.payload.error, "update pass rehected")
+            })
+            .addCase(forgotPassword.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(forgotPassword.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.message = action.payload.message
+            })
+            .addCase(forgotPassword.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.isSuccess = false
+                state.message = action.payload.error
             })
             .addCase(logout.fulfilled, (state, action) => {
 

@@ -38,20 +38,16 @@ const EditProfile = () => {
             validationSchema: schema,
             validateOnChange: true,
             validateOnBlur: false,
-            onSubmit: async (values) => {
+            onSubmit: async (values, action) => {
                 await dispatch(updateProfile(values))
                 if (isUpdate) {
                     dispatch(loadUser())
                 }
+                action.resetForm();
 
             },
         });
 
-    // console.log(message, "messsage")
-    // console.log(isLoading, "loading")
-    // console.log(isSuccess, "success")
-    // console.log(isError, "error")
-    // console.log(uProfile, "update")
 
     useEffect(() => {
         if (isError) {
