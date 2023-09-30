@@ -25,6 +25,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import EditProfile from "./pages/user/EditProfile";
 import UpdatePassword from "./pages/user/UpdatePassword";
 import ForgotPassword from "./pages/user/ForgotPassword";
+import ResetPassword from "./pages/user/ResetPassword";
 
 function App() {
 
@@ -57,18 +58,22 @@ function App() {
         <Route exact path="/product/:id" element={<ProductDetail />} />
         <Route exact path="/addproduct" element={<AddProduct />} />
         <Route exact path="/cart" element={<Cart />} />
+
+
+        {/* admin routes */}
         <Route exact path="/dashboard" element={<Dashboard />} />
 
 
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
+        <Route exact path="/password/reset" element={<ResetPassword />} />
 
         {/* protected routes */}
         <Route exact path="/profile" element={<ProtectedRoute Component={UserProfile} />} />
         <Route exact path="/me/update" element={<ProtectedRoute Component={EditProfile} />} />
         <Route exact path="/update/password" element={<ProtectedRoute Component={UpdatePassword} />} />
 
+        {/* error page */}
         <Route path="/*" element={<ErrorPage />} />
-
 
       </Routes>
       <Footer />

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik';
 import * as yup from "yup";
-// import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // Import  image
 import forgetpic from '../../assets/forget-pass2.jpg';
 import { forgotPassword } from '../../features/auth/auth.thunk';
