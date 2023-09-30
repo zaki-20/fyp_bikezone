@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css'
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { updatePassword } from '../../features/auth/auth.thunk';
+import { reset } from '../../features/auth/auth.slice';
 
 const schema = yup.object({
     oldPassword: yup.string().min(6, 'Password must be at least 6 characters').required('old Password is required'),
@@ -27,15 +29,37 @@ const UpdatePassword = () => {
         confirmPassword: "",
     };
 
-    const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
+    const { isLoading, isError, message, isUpdate } = useSelector((state) => state.auth)
+
+
+    const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
         useFormik({
             initialValues,
             validationSchema: schema,
             validateOnChange: true,
             validateOnBlur: false,
-            onSubmit:  (values) => {
+            onSubmit: (values) => {
+                dispatch(updatePassword(values))
             },
         });
+
+    console.log(isUpdate)
+
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+            console.log(message)
+            dispatch(reset())
+        }
+        if (isUpdate) {
+            toast.success(message);
+            dispatch(reset())
+            navigate('/profile')
+        }
+
+    }, [isError, isUpdate])
+
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, login, loadUser, logout, updateProfile } from "./auth.thunk";
+import { register, login, loadUser, logout, updateProfile, updatePassword } from "./auth.thunk";
 import initialAuthState from "./auth.initialstate";
 
 const authSlice = createSlice({
@@ -13,7 +13,7 @@ const authSlice = createSlice({
             state.isSuccess = false
             state.message = ''
             state.logoutSuccess = false
-            state.updateProfile = false
+            state.isUpdate = false
         },
     },
     extraReducers: (builder) => {
@@ -79,15 +79,35 @@ const authSlice = createSlice({
                 state.isSuccess = true
                 state.isError = false
                 state.message = action.payload.message
-                state.updateProfile = true
+                state.isUpdate = true
             })
             .addCase(updateProfile.rejected, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = false
                 state.isError = true
                 state.message = action.payload.error
-                state.updateProfile = false
+                state.isUpdate = false
                 console.log(action.payload.error)
+            })
+            .addCase(updatePassword.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+                state.isUpdate = false
+            })
+            .addCase(updatePassword.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.message = action.payload.message
+                state.isUpdate = true
+            })
+            .addCase(updatePassword.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+                state.isUpdate = false
+                console.log(action.payload.error, "update pass rehected")
             })
             .addCase(logout.fulfilled, (state, action) => {
 

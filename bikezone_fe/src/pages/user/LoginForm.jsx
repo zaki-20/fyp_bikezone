@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import shadowBikeImage from '../../assets/shadow-bike.png';
 import { login } from '../../features/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { reset } from '../../features/auth/auth.slice';
 import Loader from '../shared/Loader';
@@ -39,10 +39,12 @@ const LoginForm = () => {
             navigate('/')
         }
     }, [isSuccess])
+
     const initialValues = {
         email: "",
         password: "",
     };
+    
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
         useFormik({
             initialValues,

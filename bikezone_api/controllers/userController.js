@@ -17,7 +17,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
     const user = await User.create({
         firstname, lastname, email, password,
-      
+
     })
     // const message = `Thank you ${firstname} ${lastname} for joining BIKEZONE `
     await sendEmail({
@@ -26,7 +26,9 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         firstname,
         lastname
     }, 'html');
-    sendToken(user, 200, res)
+
+    const msg = "registered successfully"
+    sendToken(user, 200, res, msg)
 })
 
 //login user 
@@ -47,8 +49,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     if (!isPasswordMatch) {
         return next(new ErrorHandler("invalid email or password", 401))
     }
+    const msg = "logged in successfully successfully"
 
-    sendToken(user, 200, res)
+    sendToken(user, 200, res, msg)
 
     // const token = user.getJWTToken()
 
@@ -166,7 +169,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 });
 
 // update User password
-exports.updatePassword = catchAsyncErrors(async (req, res, next) => { 
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user.id).select("+password");
 
     //check old password 
@@ -185,18 +188,23 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     user.password = req.body.newPassword;
     await user.save()
 
-    res.status(200).json({
-        success: true,
-        user,
-    });
+    // res.status(200).json({
+    //     statusCode: 200,
+    //     status: true,
+    //     message: "password has been updated",
+    //     payload: {
+    //         user
+    //     }
+    // });
+    const msg = "password updated successfully"
 
-    sendToken(user, 200, res);
+    sendToken(user, 200, res, msg);
 
 });
 
 // update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-    
+
     const newUserData = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,

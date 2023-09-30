@@ -24,6 +24,7 @@ import ProtectedRoute from "./components/route/ProtectedRoute";
 import Dashboard from "./pages/admin/Dashboard";
 import EditProfile from "./pages/user/EditProfile";
 import UpdatePassword from "./pages/user/UpdatePassword";
+import ForgotPassword from "./pages/user/ForgotPassword";
 
 function App() {
 
@@ -57,6 +58,9 @@ function App() {
         <Route exact path="/addproduct" element={<AddProduct />} />
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
+
+
+        <Route exact path="/forgot-password" element={<ForgotPassword />} />
 
         {/* protected routes */}
         <Route exact path="/profile" element={<ProtectedRoute Component={UserProfile} />} />

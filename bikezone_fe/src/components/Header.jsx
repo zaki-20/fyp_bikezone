@@ -11,11 +11,11 @@ import { Backdrop } from '@mui/material';
 const Header = () => {
 
   const dispatch = useDispatch()
-  const location = useLocation();
   const navigate = useNavigate()
-
+  
+  const location = useLocation();
   // Define routes where you want to hide the header content
-  const hideHeaderRoutes = ['/login', '/register', '/dashboard'];
+  const hideHeaderRoutes = ['/login', '/register', '/dashboard','/forgot-password','/me/update', '/update/password'];
 
   // Check if the current route is in the hideHeaderRoutes array
   const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
@@ -23,9 +23,9 @@ const Header = () => {
   const { user, message, logoutSuccess } = useSelector((state) => state.auth)
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, [user])
+  // }, [user])
 
   const logoutHandle = () => {
     dispatch(logout())

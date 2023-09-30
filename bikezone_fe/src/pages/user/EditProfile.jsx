@@ -14,16 +14,16 @@ import MetaData from "../../components/MetaData";
 import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
-    firstname: yup.string(),
-    lastname: yup.string(),
-    email: yup.string().email('Invalid email'),
+    firstname: yup.string().required('firstname is required'),
+    lastname: yup.string().required('lastname is required'),
+    email: yup.string().email('Invalid email').required('email is required'),
 });
 
 
 const EditProfile = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { user, isLoading, isError, message, updateProfile: uProfile, isSuccess } = useSelector((state) => state.auth)
+    const { user, isLoading, isError, message, isUpdate, isSuccess } = useSelector((state) => state.auth)
 
     const initialValues = {
         firstname: user?.firstname,
@@ -40,7 +40,7 @@ const EditProfile = () => {
             validateOnBlur: false,
             onSubmit: async (values) => {
                 await dispatch(updateProfile(values))
-                if (uProfile) {
+                if (isUpdate) {
                     dispatch(loadUser())
                 }
 
@@ -59,13 +59,13 @@ const EditProfile = () => {
             console.log(message)
             dispatch(reset())
         }
-        if (uProfile) {
+        if (isUpdate) {
             toast.success(message);
             dispatch(reset())
             navigate('/profile')
         }
 
-    }, [isError, uProfile])
+    }, [isError, isUpdate])
 
 
     if (isLoading) {

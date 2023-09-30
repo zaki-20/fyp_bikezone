@@ -33,11 +33,18 @@ const updateProfile = async (userData) => {
     return response.data
 }
 
+//update password
+const updatePassword = async (passwords) => {
+    const response = await axios.put(API_URL + 'password/update', passwords, { withCredentials: true })
+    return response.data
+}
+
 const authService = {
     register,
     login,
     loadUser,
     logout,
-    updateProfile
+    updateProfile,
+    updatePassword
 }
 export default authService
