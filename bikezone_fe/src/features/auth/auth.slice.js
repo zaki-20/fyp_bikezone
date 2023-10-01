@@ -137,6 +137,7 @@ const authSlice = createSlice({
                 state.isError = true
                 state.isSuccess = false
                 state.message = action.payload.error
+
             })
             .addCase(logout.fulfilled, (state, action) => {
 

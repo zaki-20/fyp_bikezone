@@ -26,8 +26,8 @@ const FeaturedProducts = () => {
         )
     }
 
-    if(isError){
-        return(
+    if (isError) {
+        return (
             <>
                 <div>Error happend</div>
             </>
@@ -47,8 +47,8 @@ const FeaturedProducts = () => {
             <div className="flex overflow-x-scroll no-scrollbar pb-10 px-4">
                 <div className="flex flex-nowrap  ml-10 gap-10">
                     {Array.isArray(products) && products.length > 0 ? (
-                        products.map((product, index) => {
-                            return <ProductCard key={index} product={product} />;
+                        products.map((product) => {
+                            return <ProductCard key={product._id} product={product} />;
                         })
                     ) : (
                         <div>No products available.</div>

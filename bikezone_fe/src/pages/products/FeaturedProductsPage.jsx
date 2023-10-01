@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import ProductCard from '../components/cards/ProductCard'
+import ProductCard from '../../components/cards/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProducts } from '../features/product/product.thunk'
-import Loader from './shared/Loader'
+import { getAllProducts } from '../../features/product/product.thunk'
+import Loader from '../shared/Loader'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { reset } from '../features/product/product.slice'
+import { reset } from '../../features/product/product.slice'
 import Pagination from "react-js-pagination"
 import { Slider, Typography } from '@mui/material';
-import MetaData from '../components/MetaData'
-
+import MetaData from '../../components/MetaData'
 
 
 const categories = [
@@ -37,21 +36,22 @@ const FeaturedProductsPage = () => {
 
   useEffect(() => {
     dispatch(getAllProducts({ keyword, currentPage, price, category, ratings }))
-  }, [dispatch, productsCount, resultPerPage, currentPage, keyword, price, category, ratings])
-
+  }, [])
 
 
   useEffect(() => {
     if (isError) {
+      console.log(message, "featured products page")
       toast.error(message);
       dispatch(reset())
     }
-  }, [isError])
-  
+
+  }, [isError, message, dispatch])
+
   const setCurrentPageNo = (e) => {
     setCurrentPage(e)
   }
- 
+
   const priceHandler = (event, newPrice) => {
     setPrice(newPrice)
   }
@@ -69,7 +69,6 @@ const FeaturedProductsPage = () => {
 
   }
 
-
   return (
     <>
       <MetaData title={"PRODUCTS -- BIKEZONE"} />
@@ -77,7 +76,7 @@ const FeaturedProductsPage = () => {
 
       <div className='flex md:mx-0 md:justify-start min-h-screen justify-center bg-[#def5f596] '>
 
-        <div className=' md:w-[80%] '>
+        <div className=' md:w-3/4 '>
           <div className="  px-2 py-8 ">
 
             <form onSubmit={searchSubmitHandler} className="mb-4">
@@ -93,7 +92,6 @@ const FeaturedProductsPage = () => {
 
             </form>
 
-
             {
               isLoading ? (<Loader />) : (
                 <>
@@ -103,22 +101,20 @@ const FeaturedProductsPage = () => {
                   <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
 
                     {products &&
-                      products?.map((product, index) => {
+                      products?.map((product) => {
                         return (
-                          <ProductCard key={index} product={product} />
+                          <ProductCard key={product._id} product={product} />
                         )
                       })
                     }
                   </div>
-                  <ToastContainer position='top-center' /> {/* Add ToastContainer at the end of your component */}
-
                 </>
               )
             }
 
           </div>
 
-          <div className='md:w-[200px] w-[140px] border-2 md:absolute static right-0 px-2 mx-4 top-64 '>
+          <div className='md:w-1/5 border-2 md:absolute static right-0 px-2 mx-4 top-64 '>
             <div className=' border-black my-2 '>
               <h1 className="font-semibold text-black"> Price</h1>
               <Slider
@@ -134,17 +130,16 @@ const FeaturedProductsPage = () => {
             <div className=' border my-2'>
               <h1 className="font-semibold text-black"> Categories</h1>
               <ul className="categoryBox">
-                {categories.map((category) => (
+                {categories.map((category, index) => (
                   <li
+                    key={index}
                     className="category-link"
-                    key={category}
                     onClick={() => setCategory(category)}
                   >
                     {category}
                   </li>
                 ))}
               </ul>
-
             </div>
             <fieldset>
               <Typography component="legend">Ratings Above</Typography>
@@ -189,17 +184,7 @@ const FeaturedProductsPage = () => {
           }
 
         </div>
-
-
-
-        {/* /--------------------------- */}
       </div>
-
-
-
-
-
-
     </>
 
   )

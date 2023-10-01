@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import FeaturedProductsPage from "./pages/FeaturedProductsPage";
+import FeaturedProductsPage from "./pages/products/FeaturedProductsPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer";
 import ErrorPage from "./pages/shared/ErrorPage";
@@ -7,10 +7,10 @@ import ContactUs from "./pages/ContactUs";
 import Register from "./pages/user/Register";
 import AboutUs from "./pages/AboutUs";
 import LoginForm from "./pages/user/LoginForm";
-import ProductDetail from "./pages/ProductDetail";
+import ProductDetail from "./pages/products/ProductDetail";
 import UserProfile from "./pages/user/UserProfile";
 import AddProduct from "./pages/AddProduct";
-import Cart from "./pages/Cart";
+import Cart from "./pages/products/Cart";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -29,7 +29,7 @@ import ResetPassword from "./pages/user/ResetPassword";
 
 function App() {
 
-  const { user } = useSelector((state) => state.auth)
+  const { user, resetToken } = useSelector((state) => state.auth)
 
   const [cookies] = useCookies(["token"]);
   const dispatch = useDispatch();

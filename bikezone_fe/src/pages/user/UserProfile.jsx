@@ -18,7 +18,7 @@ const UserProfile = () => {
                         <div className="space-x-8 flex justify-center md:flex-col md:order-1 order-2 md:items-center">
                             <Link to='/me/update'>
                                 <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-                                    Edit Profile
+                                    My Orders
                                 </button>
                             </Link>
                         </div>

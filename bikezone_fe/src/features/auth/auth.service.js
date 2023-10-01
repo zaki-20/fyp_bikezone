@@ -44,9 +44,10 @@ const forgotPassword = async (email) => {
     return response.data
 }
 
-//forgot password 
-const resetPassword = async (passwords, token) => {
-    const response = await axios.put(API_URL + `password/reset/${token}`, passwords, { withCredentials: true })
+//reset password 
+const resetPassword = async (newPassword, confirmPassword, token) => {
+    // console.log(token, "token")
+    const response = await axios.put(API_URL + `password/reset/${token}`, { newPassword, confirmPassword }, { withCredentials: true })
     return response.data
 }
 

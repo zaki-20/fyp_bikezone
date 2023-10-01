@@ -140,17 +140,24 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Password does not password", 400));
     }
 
+
     //if passwords match and setted undefined for resetTokens because no further usage
-    user.newPassword = req.body.password;
+    user.password = req.body.newPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 
     //save after changes in mongodb 
     await user.save();
 
-    const msg = "password resetted successfully"
+    // const msg = "password resetted successfully"
+    // sendToken(user, 200, res, msg);
 
-    sendToken(user, 200, res, msg);
+    res.status(200).json({
+        statusCode: 200,
+        status: true,
+        message: `password resetted successfully`,
+        payload: {}
+    });
 
 })
 

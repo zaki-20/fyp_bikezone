@@ -24,16 +24,11 @@ const Header = () => {
 
 
   const logoutHandle = () => {
-    dispatch(logout())
-    // .then(() => {
-    //   dispatch(reset())
-    //   navigate('/');
-    // })
+    dispatch(logout()) 
   }
 
   useEffect(() => {
     if (logoutSuccess) {
-      console.log("success logout")
       dispatch(reset())
       navigate('/')
     }

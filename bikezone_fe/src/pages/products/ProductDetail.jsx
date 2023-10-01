@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductDetail } from '../features/product/product.thunk';
+import { getProductDetail } from '../../features/product/product.thunk';
 import { useParams } from 'react-router-dom';
-import Carousal from '../components/Carousal';
-import Loader from './shared/Loader';
-import ReviewCard from '../components/ReviewCard';
+import Carousal from '../../components/Carousal';
+import Loader from '../shared/Loader';
+import ReviewCard from '../../components/cards/ReviewCard';
 import ReactStars from "react-rating-stars-component";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import MetaData from '../components/MetaData';
+import MetaData from '../../components/MetaData';
 
 
 const ProductDetail = () => {
@@ -26,8 +26,6 @@ const ProductDetail = () => {
     const showErrorToast = () => {
         toast.error(message);
     };
-
-
 
     //for star rating
     const options = {
@@ -53,11 +51,9 @@ const ProductDetail = () => {
         </>
     }
 
-
     return (
         <div>
             <MetaData title={`${productDetails?.name} -- BIKEZONE`} />
-
             {
                 !isLoading && productDetails && (
                     <div className="overflow-hidden bg-[#def5f596] py-11 font-poppins dark:bg-gray-800">
@@ -79,7 +75,6 @@ const ProductDetail = () => {
                                                 </Carousel> */}
 
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +99,7 @@ const ProductDetail = () => {
 
 
                                         <div className="w-32 mb-6 ">
-                                            <label htmlFor className="w-full text-xl font-semibold text-gray-700 dark:text-gray-400">{productDetails.quantity}</label>
+                                            <label htmlFor="true" className="w-full text-xl font-semibold text-gray-700 dark:text-gray-400">{productDetails.quantity}</label>
                                             <div className="relative flex flex-row w-full h-10 mt-4 bg-transparent rounded-lg">
                                                 <button className="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400">
                                                     <span className="m-auto text-2xl font-thin">-</span>
@@ -127,8 +122,6 @@ const ProductDetail = () => {
                                     </div>
 
                                 </div>
-
-
                             </div>
                         </div>
                         <div >
@@ -142,9 +135,7 @@ const ProductDetail = () => {
                                         productDetails.reviews && productDetails.reviews[0] ? (
                                             productDetails.reviews && productDetails.reviews.map((review) => {
                                                 return (<>
-                                                    <ReviewCard review={review} />
-                                                    <ReviewCard review={review} />
-                                                    <ReviewCard review={review} />
+                                                    <ReviewCard key={review._id} review={review} />
                                                 </>
                                                 )
                                             })
@@ -160,7 +151,6 @@ const ProductDetail = () => {
                     </div>
                 )
             }
-            <ToastContainer position='top-center' />
         </div>
     )
 }

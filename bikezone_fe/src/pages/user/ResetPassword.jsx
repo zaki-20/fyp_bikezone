@@ -8,10 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { reset } from '../../features/auth/auth.slice';
-import Loader from '../shared/Loader';
 
 const schema = yup.object({
-    newPassword: yup.string().min(6, 'Password must be at least 6 characters').required('New Password is required'),
+    newPassword: yup.string().min(8, 'Password must be at least 8 characters').required('New Password is required'),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
@@ -38,9 +37,10 @@ const ResetPassword = () => {
             validationSchema: schema,
             validateOnChange: true,
             validateOnBlur: false,
-            //// By disabling validation onChange and onBlur formik will validate on submit.
             onSubmit: (values, action) => {
-                dispatch(resetPassword({ values, token }))
+                console.log(values)
+                const { newPassword, confirmPassword } = values;
+                dispatch(resetPassword({ newPassword, confirmPassword, token }))
                 action.resetForm();
             },
         });
@@ -79,12 +79,12 @@ const ResetPassword = () => {
                                             <div className="flex">
                                                 <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg" /></div>
                                                 <input
+                                                    type="password"
                                                     name='newPassword'
+                                                    id='newPassword'
                                                     value={values.newPassword}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    type="password"
-                                                    id='newPassword'
                                                     className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com" />
                                             </div>
                                             {errors.newPassword && touched.newPassword ? (
@@ -96,12 +96,12 @@ const ResetPassword = () => {
                                             <div className="flex">
                                                 <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg" /></div>
                                                 <input
+                                                    type="password"
                                                     name='confirmPassword'
+                                                    id='confirmPassword'
                                                     value={values.confirmPassword}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    type="password"
-                                                    id='confirmPassword'
                                                     className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com" />
                                             </div>
                                             {errors.confirmPassword && touched.confirmPassword ? (
