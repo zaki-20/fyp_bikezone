@@ -12,19 +12,23 @@ const Header = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  
+
   const location = useLocation();
   // Define routes where you want to hide the header content
-  const hideHeaderRoutes = ['/login', '/register', '/dashboard','/forgot-password','/me/update', '/update/password'];
+  const hideHeaderRoutes = ['/login', '/register', '/dashboard', '/forgot-password', '/me/update', '/update/password'];
+
+  const isResetPasswordPage = location.pathname.startsWith('/password/reset/');
 
   // Check if the current route is in the hideHeaderRoutes array
   const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
+
+
 
   const { user, message, logoutSuccess } = useSelector((state) => state.auth)
 
 
   const logoutHandle = () => {
-    dispatch(logout()) 
+    dispatch(logout())
   }
 
   useEffect(() => {
@@ -38,7 +42,7 @@ const Header = () => {
   return (
     <>
 
-      <nav className={shouldHideHeader ? `hidden` : `bg-[#122222]  border-gray-200 dark:bg-gray-900`}>
+      <nav className={shouldHideHeader || isResetPasswordPage ? `hidden` : `bg-[#122222]  border-gray-200 dark:bg-gray-900`}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
           <Link to="/" className="flex items-center">

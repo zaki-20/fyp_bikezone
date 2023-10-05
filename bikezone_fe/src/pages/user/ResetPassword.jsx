@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { useNavigate, useParams } from 'react-router-dom';
 import resetImg from '../../assets/reset.png';
-import {  resetPassword } from '../../features/auth/auth.thunk';
+import { resetPassword } from '../../features/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
@@ -38,7 +38,7 @@ const ResetPassword = () => {
             validateOnChange: true,
             validateOnBlur: false,
             onSubmit: (values, action) => {
-                console.log(values)
+                // console.log(values)
                 const { newPassword, confirmPassword } = values;
                 dispatch(resetPassword({ newPassword, confirmPassword, token }))
                 action.resetForm();
@@ -85,7 +85,7 @@ const ResetPassword = () => {
                                                     value={values.newPassword}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com" />
+                                                    className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" />
                                             </div>
                                             {errors.newPassword && touched.newPassword ? (
                                                 <p className="text-red-600 animate-pulse">{errors.newPassword}</p>
@@ -102,7 +102,7 @@ const ResetPassword = () => {
                                                     value={values.confirmPassword}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com" />
+                                                    className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" />
                                             </div>
                                             {errors.confirmPassword && touched.confirmPassword ? (
                                                 <p className="text-red-600 animate-pulse">{errors.confirmPassword}</p>

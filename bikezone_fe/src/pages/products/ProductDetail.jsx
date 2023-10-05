@@ -1,27 +1,44 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductDetail } from '../../features/product/product.thunk';
+import { addItemsToCart, getProductDetail } from '../../features/product/product.thunk';
 import { useParams } from 'react-router-dom';
 import Carousal from '../../components/Carousal';
 import Loader from '../shared/Loader';
 import ReviewCard from '../../components/cards/ReviewCard';
 import ReactStars from "react-rating-stars-component";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MetaData from '../../components/MetaData';
+import { addToCart } from '../../features/product/product.slice';
 
 
 const ProductDetail = () => {
-
-    const dispatch = useDispatch()
     const { id } = useParams();
+
+    const [quantity, setQuantity] = useState(1)
+    const dispatch = useDispatch()
+
 
     useEffect(() => {
         dispatch(getProductDetail(id))
     }, [dispatch, id]);
 
     const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
+
+
+    const increaseQuantity = () => {
+        if (productDetails.Stock <= quantity) return;
+        const qty = quantity + 1;
+        setQuantity(qty)
+    };
+
+    const decreaseQuantity = () => {
+        if (quantity <= 1) return;
+        const qty = quantity - 1;
+        setQuantity(qty)
+    };
+
 
     const showErrorToast = () => {
         toast.error(message);
@@ -50,6 +67,25 @@ const ProductDetail = () => {
             <span> {isError && showErrorToast()} </span>
         </>
     }
+
+    const cartHandler = () => {
+        const product = JSON.parse(localStorage.getItem('cartItems'))
+
+        if (productDetails) {
+            const item = {
+                product: productDetails,
+                quantity: quantity,
+            };
+            // console.log({ productDetailsId: productDetails._id, quantity });            
+            // dispatch(addItemsToCart({ productDetailsId: productDetails._id, quantity }));
+            dispatch(addToCart(item))
+            toast.success("item added to the cart")
+        } else {
+            toast.error("not available in stock")
+        }
+
+    };
+
 
     return (
         <div>
@@ -91,21 +127,22 @@ const ProductDetail = () => {
                                                 <p className="text-xs dark:text-gray-400 ">({productDetails.numOfReviews} customer reviews)</p>
                                             </div>
 
-                                            <p className="inline-block mb-5 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
-                                                <span>{productDetails.price}</span>
+                                            <p className="flex items-end gap-2 mb-5 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
+                                                <span>{productDetails.price} </span>
+                                                <span className='text-xl'>Rs/-</span>
                                             </p>
                                             <p className={productDetails.Stock < 0 ? `text-red-500 font-bold` : `font-bold text-green-600`}>{productDetails.Stock < 0 ? "Out Of Stock" : "In Stock"} </p>
                                         </div>
 
 
-                                        <div className="w-32 mb-6 ">
+                                        <div className="w-32  mb-6 border-gray-500 border-2 rounded ">
                                             <label htmlFor="true" className="w-full text-xl font-semibold text-gray-700 dark:text-gray-400">{productDetails.quantity}</label>
-                                            <div className="relative flex flex-row w-full h-10 mt-4 bg-transparent rounded-lg">
-                                                <button className="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400">
+                                            <div className="relative flex flex-row w-full h-10  bg-transparent rounded-lg">
+                                                <button onClick={decreaseQuantity} className="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400">
                                                     <span className="m-auto text-2xl font-thin">-</span>
                                                 </button>
-                                                <input type="number" className="flex border-none items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-300 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black" placeholder={1} />
-                                                <button className="w-20 h-full text-gray-600 bg-gray-300 rounded-r outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-400">
+                                                <input type="number" readOnly className="flex cursor-not-allowed border-none items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-300 text-md " value={quantity} />
+                                                <button onClick={increaseQuantity} className="w-20 h-full text-gray-600 bg-gray-300 rounded-r outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-400">
                                                     <span className="m-auto text-2xl font-thin">+</span>
                                                 </button>
                                             </div>
@@ -114,7 +151,7 @@ const ProductDetail = () => {
                                             {productDetails.description}
                                         </p>
                                         <div className="flex flex-wrap items-center -mx-4 ">
-                                            <button className="flex items-center justify-center w-full p-4 text-[#122222] border border-[#122222] rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                                            <button onClick={cartHandler} className="flex items-center justify-center w-full p-4 text-[#122222] border border-[#122222] rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
                                                 Add to Cart
                                             </button>
                                         </div>

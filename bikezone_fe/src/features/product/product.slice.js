@@ -6,8 +6,49 @@ const productSlice = createSlice({
     name: "products",
     initialState: initialProductState,
     reducers: {
-        // reset: (state) => initialProductState
-        reset: (state) => initialProductState
+        reset: (state) => {
+            state.products = []
+            state.productDetails = null
+            state.isLoading = false
+            state.isError = false
+            state.isSuccess = false
+            state.message = ''
+            state.length = null
+            state.productsCount = null
+            state.resultPerPage = null
+            state.filteredProductsCount = null
+        },
+
+        resetCart: (state) => {
+            state.cartItems = []
+        },
+
+        addToCart: (state, action) => {
+            const { product, quantity } = action.payload;
+
+            const isItemExist = state.cartItems.find((item) => item._id === product._id);
+
+            if (isItemExist) {
+                // If the item already exists in the cart, update the quantity
+                state.cartItems = state.cartItems.map((item) =>
+                    item._id === isItemExist._id
+                        ? {  ...item, quantity: item.quantity + quantity  }
+                        : item
+                );
+            } else {
+                // If the item is not in the cart, add it with the quantity
+                state.cartItems.push({ ...product, quantity  });
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        },
+        removeFromCart: (state, action) => {
+            state.cartItems = state.cartItems.filter(
+                (i) => i.product !== action.payload
+            );
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -54,6 +95,6 @@ const productSlice = createSlice({
     }
 })
 
-export const { reset } = productSlice.actions
+export const { reset, addToCart } = productSlice.actions
 
 export default productSlice.reducer

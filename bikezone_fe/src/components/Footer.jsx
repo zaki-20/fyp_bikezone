@@ -12,12 +12,14 @@ const Footer = () => {
   // Define routes where you want to hide the header content
   const hideFooterRoutes = ['/login', '/register', '/dashboard', '/forgot-password', '/me/update', '/update/password'];
 
+  const isResetPasswordPage = location.pathname.startsWith('/password/reset/');
+
   // Check if the current route is in the hideHeaderRoutes array
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
 
   return (
     <div>
-      <div className={shouldHideFooter ? 'hidden': `w-full py-16 px-4 grid lg:grid-cols-3 gap-6 text-white bg-[#122222]`}>
+      <div className={shouldHideFooter || isResetPasswordPage ? 'hidden' : `w-full py-16 px-4 grid lg:grid-cols-3 gap-6 text-white bg-[#122222]`}>
         <div>
           <h1 className='w-full text-3xl font-bold text-yellow-400'>
             BikeZone
