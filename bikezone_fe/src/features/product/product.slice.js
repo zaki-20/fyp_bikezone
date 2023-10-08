@@ -21,30 +21,53 @@ const productSlice = createSlice({
 
         resetCart: (state) => {
             state.cartItems = []
+            localStorage.removeItem('cartItems'); 
         },
 
         addToCart: (state, action) => {
             const { product, quantity } = action.payload;
+            console.log(product, quantity, "product, quantity")
 
-            const isItemExist = state.cartItems.find((item) => item._id === product._id);
 
-            if (isItemExist) {
+            const existingItem = state.cartItems.find((item) => item._id === product._id);
+
+            if (existingItem) {
                 // If the item already exists in the cart, update the quantity
-                state.cartItems = state.cartItems.map((item) =>
-                    item._id === isItemExist._id
-                        ? {  ...item, quantity: item.quantity + quantity  }
-                        : item
-                );
+                existingItem.quantity += quantity;
             } else {
                 // If the item is not in the cart, add it with the quantity
-                state.cartItems.push({ ...product, quantity  });
+                state.cartItems.push({ ...product, quantity });
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        },
+        addToCartByQuantity: (state, action) => {
+            const { product, quantity } = action.payload;
+            const existingItem = state.cartItems.find((item) => item._id === product._id);
+
+            if (existingItem) {
+                // If the item already exists in the cart, update the quantity
+                existingItem.quantity = quantity;
+                console.log(existingItem,"addddddddddd")
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        },
+        removeFromCartByQuantity: (state, action) => {
+            const { product, quantity } = action.payload;
+            const existingItem = state.cartItems.find((item) => item._id === product._id);
+
+            if (existingItem) {
+                // If the item already exists in the cart, update the quantity
+                existingItem.quantity = quantity;
             }
 
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         },
         removeFromCart: (state, action) => {
+            console.log(action.payload,'axtion.payload = id')
             state.cartItems = state.cartItems.filter(
-                (i) => i.product !== action.payload
+                (i) => i._id !== action.payload
             );
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
 
@@ -95,6 +118,6 @@ const productSlice = createSlice({
     }
 })
 
-export const { reset, addToCart } = productSlice.actions
+export const { reset, addToCart, resetCart,addToCartByQuantity, removeFromCartByQuantity, removeFromCart } = productSlice.actions
 
 export default productSlice.reducer

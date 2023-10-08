@@ -1,78 +1,117 @@
 import React from 'react'
 import { MdDelete } from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart, addToCartByQuantity, removeFromCart, removeFromCartByQuantity, resetCart } from '../../features/product/product.slice'
+import { toast } from 'react-toastify'
 
 const Cart = () => {
+    const dispatch = useDispatch()
+
+    const { cartItems } = useSelector(state => state.product)
+
+
+    const increaseQuantity = (item) => {
+
+        if (item.Stock <= item.quantity) {
+            toast.error("not enough items")
+        } else {
+            const newQty = item.quantity + 1;
+            const update = { ...item, quantity: newQty }
+            const newItem = {
+                product: update,
+                quantity: newQty
+            }
+            dispatch(addToCartByQuantity(newItem));
+        }
+    };
+    const decreaseQuantity = (item) => {
+
+        if (item.quantity <= 1) {
+            toast.error("cart must contain atleast one item!")
+        } else {
+            const newQty = item.quantity - 1;
+            const update = { ...item, quantity: newQty }
+            const newItem = {
+                product: update,
+                quantity: newQty
+            }
+            dispatch(removeFromCartByQuantity(newItem));
+        }
+    };
+
+    const removeCartItem = (id) => {
+        dispatch(removeFromCart(id))
+        toast.success("Item removed from cart");
+    }
+
+    const clearCart = () => {
+        dispatch(resetCart())
+        toast.error("Your cart is empty")
+    }
+
     return (
         <div>
             <div className="bg-gray-100 pt-20">
+
                 <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
                 <div className="mx-auto max-w-5xl justify-center pb-5 px-6 md:flex md:space-x-6 xl:px-0">
-                    <div className="rounded-lg md:w-2/3 overflow-y-scroll   max-h-[600px]">
-                        
-                        <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-                            <img src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="product-pic" className="w-full rounded-lg sm:w-40" />
-                            <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                                <div className="mt-5 sm:mt-0">
-                                    <h2 className="text-lg font-bold text-gray-900">Honda engine 70cc</h2>
-                                    <p className="mt-1 text-xs text-gray-700">6,000 Rs/-</p>
-                                </div>
-                                <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-                                    <div className="flex items-center border-gray-100">
-                                        <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"> - </span>
-                                        <input className="h-8 w-12 border bg-white text-center text-xs outline-none appearance-none" type="number" value="1" min={1} />
-                                        <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"> + </span>
+                    <div className="rounded-lg md:w-2/3 overflow-y-scroll max-h-[600px]">
+
+                        {cartItems.map((item) => (
+                            <div key={item._id} className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+                                <img src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="product-pic" className="w-full rounded-lg sm:w-40" />
+                                <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+                                    <div className="mt-5 sm:mt-0">
+
+                                        <h2 className="text-lg font-bold text-gray-900">{item.name}</h2>
+                                        <p className="mt-1 text-xs text-gray-700">{item.price} Rs/-</p>
                                     </div>
-                                    <div className="flex items-center space-x-4">
-                                        <p className="text-sm">12,000 Rs/-</p>
-                                        <MdDelete size={30} className='text-red-600' />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-                            <img src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="product-img" className="w-full rounded-lg sm:w-40" />
-                            <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                                <div className="mt-5 sm:mt-0">
-                                    <h2 className="text-lg font-bold text-gray-900">Honda engine 70cc</h2>
-                                    <p className="mt-1 text-xs text-gray-700">6,000 Rs/-</p>
-                                </div>
-                                <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-                                    <div className="flex items-center border-gray-100">
-                                        <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"> - </span>
-                                        <input className="h-8 w-12 border bg-white text-center text-xs outline-none appearance-none" type="number" value="1" min={1} />
-                                        <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"> + </span>
-                                    </div>
-                                    <div className="flex items-center space-x-4">
-                                        <p className="text-sm">12,000 Rs/-</p>
-                                        <MdDelete size={30} className='text-red-600' />
+                                    <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                                        <div className="flex items-center border-gray-100">
+                                            <span onClick={() => decreaseQuantity(item)} className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"> - </span>
+                                            <input className="h-8 w-12 border bg-white text-center text-xs outline-none appearance-none" value={item.quantity} readOnly/>
+                                            <span onClick={() => increaseQuantity(item)} className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"> + </span>
+                                        </div>
+                                        <div className="flex items-center space-x-4">
+                                            <p className="text-sm">{item.price * item.quantity} Rs/-</p>
+                                            <MdDelete onClick={() => removeCartItem(item._id)} size={30} className='text-red-600' />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                       
+                        ))
+                        }
 
                     </div>
                     {/* Subtotal */}
                     <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
                         <div className="mb-2 flex justify-between">
                             <p className="text-gray-700">Subtotal</p>
-                            <p className="text-gray-700">$129.99</p>
+                            <p className="text-gray-700">{cartItems.reduce(
+                                    (acc, item) => acc + item.quantity * item.price, 0
+                                )} Rs/-</p>
                         </div>
                         <div className="flex justify-between">
                             <p className="text-gray-700">Shipping</p>
-                            <p className="text-gray-700">$4.99</p>
+                            <p className="text-gray-700">499 Rs/-</p>
                         </div>
                         <hr className="my-4" />
                         <div className="flex justify-between">
-                            <p className="text-lg font-bold">Total</p>
+                            <p className="text-lg font-bold">Gross Total</p>
                             <div className>
-                                <p className="mb-1 text-lg font-bold">$134.98 USD</p>
-                                <p className="text-sm text-gray-700">including VAT</p>
+                                <p className="mb-1 text-lg font-bold">{cartItems.reduce(
+                                    (acc, item) => acc + item.quantity * item.price, 0
+                                ) + 499} Rs/-
+                                </p>
+                                {/* <p className="text-sm text-gray-700">including VAT</p> */}
                             </div>
                         </div>
-                        <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+                        <button  className="mt-6 w-full hover:text-yellow-400 py-2 bg-gray-900 text-white rounded font-medium  ">Check out</button>
                     </div>
                 </div>
+                <button onClick={clearCart} className='px-4 hover:text-yellow-400 py-2 bg-gray-900 text-white text-sm rounded m-4'>
+                    clear cart
+                </button>
             </div>
 
 

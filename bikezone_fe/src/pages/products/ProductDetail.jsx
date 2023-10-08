@@ -33,12 +33,13 @@ const ProductDetail = () => {
         setQuantity(qty)
     };
 
+
+
     const decreaseQuantity = () => {
         if (quantity <= 1) return;
         const qty = quantity - 1;
         setQuantity(qty)
     };
-
 
     const showErrorToast = () => {
         toast.error(message);
@@ -69,23 +70,31 @@ const ProductDetail = () => {
     }
 
     const cartHandler = () => {
-        const product = JSON.parse(localStorage.getItem('cartItems'))
-
         if (productDetails) {
             const item = {
                 product: productDetails,
                 quantity: quantity,
             };
-            // console.log({ productDetailsId: productDetails._id, quantity });            
-            // dispatch(addItemsToCart({ productDetailsId: productDetails._id, quantity }));
-            dispatch(addToCart(item))
-            toast.success("item added to the cart")
+
+            // Get cart items from local storage
+            const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+
+            // Check if the product with the same ID already exists in the cart
+            const existingItem = storedCartItems.find((cartItem) => cartItem._id === productDetails._id);
+
+
+            if (productDetails.Stock > (existingItem ? (existingItem.quantity + quantity) : (quantity))) {
+
+                dispatch(addToCart(item));
+                toast.success("Item added to the cart");
+            } else {
+                toast.error("Not available in stock huhu");
+            }
         } else {
-            toast.error("not available in stock")
+            toast.error("not available in stock haha")
         }
-
     };
-
 
     return (
         <div>
