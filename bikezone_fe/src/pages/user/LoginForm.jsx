@@ -127,7 +127,7 @@ const LoginForm = () => {
                                         {/* Already have an account? Sign in */}
                                         <div className="text-center mt-3">
                                             <p>
-                                                Dont have an account? <Link href="/login" className='text-[#122222] underline'>Sign up</Link>
+                                                Dont have an account? <Link to="/register" className='text-[#122222] underline'>Sign up</Link>
                                             </p>
                                         </div>
                                     </div>

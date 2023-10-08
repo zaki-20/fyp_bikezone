@@ -206,7 +206,7 @@ const Register = () => {
                             {/* Already have an account? Sign in */}
                             <div className="text-center mt-3">
                                 <p>
-                                    Already have an account? <Link href="/login" className='text-[#122222] underline'>Sign in</Link>
+                                    Already have an account? <Link to="/login" className='text-[#122222] underline'>Sign in</Link>
                                 </p>
                             </div>
                         </div>
