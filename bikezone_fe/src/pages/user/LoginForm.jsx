@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 // Import  image
 import shadowBikeImage from '../../assets/shadow-bike.png';
 import { login } from '../../features/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { reset } from '../../features/auth/auth.slice';
 import Loader from '../shared/Loader';
@@ -24,7 +24,10 @@ const LoginForm = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const location = useLocation()
 
+    const redirect = location.search ? location.search.split('=')[1] : '/account'
+    console.log(redirect, "-->login REDIRECT")
 
     useEffect(() => {
         if (isError) {
@@ -36,15 +39,15 @@ const LoginForm = () => {
     useEffect(() => {
         if (isSuccess) {
             toast.success(message);
-            navigate('/')
+            navigate(redirect)
         }
-    }, [isSuccess])
+    }, [isSuccess, redirect])
 
     const initialValues = {
         email: "",
         password: "",
     };
-    
+
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
         useFormik({
             initialValues,

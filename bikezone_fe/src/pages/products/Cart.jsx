@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, addToCartByQuantity, removeFromCart, removeFromCartByQuantity, resetCart } from '../../features/product/product.slice'
 import { toast } from 'react-toastify'
 import EmptyCart from '../../components/cards/EmptyCart'
+import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const { cartItems } = useSelector(state => state.product)
 
@@ -48,6 +50,10 @@ const Cart = () => {
     const clearCart = () => {
         dispatch(resetCart())
         toast.error("Your cart is empty")
+    }
+
+    const checkoutHandler = () => {
+        navigate('/login?redirect=/shipping')
     }
 
     return (
@@ -107,7 +113,7 @@ const Cart = () => {
                                 {/* <p className="text-sm text-gray-700">including VAT</p> */}
                             </div>
                         </div>
-                        <button className="mt-6 w-full hover:text-yellow-400 py-2 bg-gray-900 text-white rounded font-medium  ">Check out</button>
+                        <button onClick={checkoutHandler} className="mt-6 w-full hover:text-yellow-400 py-2 bg-gray-900 text-white rounded font-medium  ">Check out</button>
                     </div>
                 </div>
                 <button onClick={clearCart} className='px-4 hover:text-yellow-400 py-2 bg-gray-900 text-white text-sm rounded m-4'>

@@ -26,6 +26,8 @@ import EditProfile from "./pages/user/EditProfile";
 import UpdatePassword from "./pages/user/UpdatePassword";
 import ForgotPassword from "./pages/user/ForgotPassword";
 import ResetPassword from "./pages/user/ResetPassword";
+import Shipping from "./pages/products/Shipping";
+import ConfirmOrder from "./pages/products/ConfirmOrder";
 
 function App() {
 
@@ -71,6 +73,8 @@ function App() {
         <Route exact path="/profile" element={<ProtectedRoute Component={UserProfile} />} />
         <Route exact path="/me/update" element={<ProtectedRoute Component={EditProfile} />} />
         <Route exact path="/update/password" element={<ProtectedRoute Component={UpdatePassword} />} />
+        <Route exact path="/shipping" element={<ProtectedRoute Component={Shipping} />} />
+        <Route exact path="/order/confirm" element={<ProtectedRoute Component={ConfirmOrder} />} />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

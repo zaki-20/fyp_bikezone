@@ -21,7 +21,7 @@ const productSlice = createSlice({
 
         resetCart: (state) => {
             state.cartItems = []
-            localStorage.removeItem('cartItems'); 
+            localStorage.removeItem('cartItems');
         },
 
         addToCart: (state, action) => {
@@ -48,7 +48,7 @@ const productSlice = createSlice({
             if (existingItem) {
                 // If the item already exists in the cart, update the quantity
                 existingItem.quantity = quantity;
-                console.log(existingItem,"addddddddddd")
+                console.log(existingItem, "addddddddddd")
             }
 
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
@@ -65,12 +65,15 @@ const productSlice = createSlice({
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         },
         removeFromCart: (state, action) => {
-            console.log(action.payload,'axtion.payload = id')
             state.cartItems = state.cartItems.filter(
                 (i) => i._id !== action.payload
             );
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
 
+        },
+        shippingInfo: (state, action) => {
+            // state.shippingInfo = action.payload
+            localStorage.setItem('shippingInfo', JSON.stringify(action.payload));
         },
     },
     extraReducers: (builder) => {
@@ -118,6 +121,6 @@ const productSlice = createSlice({
     }
 })
 
-export const { reset, addToCart, resetCart,addToCartByQuantity, removeFromCartByQuantity, removeFromCart } = productSlice.actions
+export const { reset, addToCart, resetCart, addToCartByQuantity, removeFromCartByQuantity, removeFromCart, shippingInfo } = productSlice.actions
 
 export default productSlice.reducer
