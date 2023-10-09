@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { shippingInfo } from '../../features/product/product.slice';
 import CheckoutSteps from '../../components/CheckoutSteps';
+import MetaData from '../../components/MetaData';
 
 
 const schema = yup.object({
@@ -57,7 +58,7 @@ const Shipping = () => {
 
     return (
         <>
-            {/* <MetaData title="Shipping Details" /> */}
+            <MetaData title="Shipping Details" />
             <CheckoutSteps activeStep={0} />
 
             <div className="min-w-screen min-h-screen flex items-center justify-center px-5 py-5">

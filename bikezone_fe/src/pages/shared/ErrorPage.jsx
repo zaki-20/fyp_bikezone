@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useEffect } from 'react'
 
 const ErrorPage = () => {
 
@@ -29,8 +28,7 @@ const ErrorPage = () => {
                     <Link to={'/'}
                         className="relative inline-block text-sm font-medium text-yellow-400 group active:text-yellow-400 focus:outline-none"
                     >
-                        <span
-                            className="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-yellow-400 group-hover:translate-y-0 group-hover:translate-x-0"
+                        <span className="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-yellow-400 group-hover:translate-y-0 group-hover:translate-x-0"
                         ></span>
 
                         <span className="relative block px-8 py-3 bg-[#1A2238] border border-current">

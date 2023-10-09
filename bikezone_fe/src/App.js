@@ -13,7 +13,7 @@ import AddProduct from "./pages/AddProduct";
 import Cart from "./pages/products/Cart";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
 import { useCookies } from "react-cookie"
 
@@ -28,8 +28,20 @@ import ForgotPassword from "./pages/user/ForgotPassword";
 import ResetPassword from "./pages/user/ResetPassword";
 import Shipping from "./pages/products/Shipping";
 import ConfirmOrder from "./pages/products/ConfirmOrder";
+import axios from "axios";
+import Payment from "./pages/payment/Payment";
+
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApiKey() {
+    const { data } = await axios.get("http://localhost:4000/api/v1/stripeapikey", { withCredentials: true });
+    setStripeApiKey(data.stripeApiKey);
+  }
+
 
   const { user, resetToken } = useSelector((state) => state.auth)
 
@@ -42,9 +54,13 @@ function App() {
     if (savedToken && !user) {
       dispatch(loadUser());
       console.log(savedToken, "console token on render");
+      getStripeApiKey()
     }
   }, [cookies, dispatch, user]);
 
+  // useEffect(() => {
+  //   getStripeApiKey()
+  // }, [])
 
 
   return (
@@ -75,6 +91,16 @@ function App() {
         <Route exact path="/update/password" element={<ProtectedRoute Component={UpdatePassword} />} />
         <Route exact path="/shipping" element={<ProtectedRoute Component={Shipping} />} />
         <Route exact path="/order/confirm" element={<ProtectedRoute Component={ConfirmOrder} />} />
+
+
+
+        <Route exact path="/process/payment" element={
+          stripeApiKey && (
+            <Elements stripe={loadStripe(stripeApiKey)}>
+              <ProtectedRoute Component={Payment} />
+            </Elements>
+          )} 
+          />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

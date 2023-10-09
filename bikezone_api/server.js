@@ -1,5 +1,4 @@
 const app = require('./app')
-const dotenv = require('dotenv');
 const cloudinary = require('cloudinary')
 const connectDatabase = require('./config/database');
 
@@ -9,11 +8,6 @@ process.on('uncaughtException', (err) => {
     console.log("shutting down the server due to uncaught exception..");
     process.exit(1);
 })
-
-
-
-//config env
-dotenv.config({ path: "bikezone_api/config/config.env" })
 
 //connection to the database
 connectDatabase()
