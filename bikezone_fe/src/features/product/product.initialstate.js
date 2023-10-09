@@ -2,7 +2,7 @@
 const storedCartItems = localStorage.getItem('cartItems');
 const initialCartItems = storedCartItems ? JSON.parse(storedCartItems) : [];
 
-const storedShippingInfo = localStorage.getItem('shippiInfo');
+const storedShippingInfo = localStorage.getItem('shippingInfo');
 const initialShippingInfo = storedShippingInfo ? JSON.parse(storedShippingInfo) : {};
 
 

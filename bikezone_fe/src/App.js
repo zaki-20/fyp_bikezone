@@ -70,7 +70,7 @@ function App() {
         <Route exact path="/password/reset/:token" element={<ResetPassword />} />
 
         {/* protected routes */}
-        <Route exact path="/profile" element={<ProtectedRoute Component={UserProfile} />} />
+        <Route exact path="/account" element={<ProtectedRoute Component={UserProfile} />} />
         <Route exact path="/me/update" element={<ProtectedRoute Component={EditProfile} />} />
         <Route exact path="/update/password" element={<ProtectedRoute Component={UpdatePassword} />} />
         <Route exact path="/shipping" element={<ProtectedRoute Component={Shipping} />} />

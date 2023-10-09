@@ -90,7 +90,7 @@ const Header = () => {
                         )
                       }
                       <li>
-                        <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Account</Link>
+                        <Link to="/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Account</Link>
                       </li>
                       <li>
                         <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Orders</Link>
