@@ -2,7 +2,7 @@
 const initialOrderState = {
     order: null,
     orders: [],
-    orderDeatil: null,
+    orderDetails: null,
     isLoading: false,
     isError: false,
     isSuccess: false,

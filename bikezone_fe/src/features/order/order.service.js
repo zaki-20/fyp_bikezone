@@ -15,8 +15,15 @@ const myOrders = async () => {
     return response.data
 }
 
+//get order details 
+const getOrderDetails = async (id) => {
+    const response = await axios.get(API_URL + `order/${id}`, { withCredentials: true })
+    return response.data
+}
+
 const orderService = {
     createOrder,
-    myOrders
+    myOrders,
+    getOrderDetails
 }
 export default orderService

@@ -35,6 +35,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import MyOrders from "./pages/products/MyOrders";
+import OrderDetails from "./pages/products/OrderDetails";
 
 
 function App() {
@@ -86,6 +87,8 @@ function App() {
 
           {/* admin routes */}
         <Route exact path="/dashboard" element={<Dashboard />} />
+        
+        <Route exact path="/orderDetail" element={<OrderDetails />} />
 
 
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
@@ -98,6 +101,7 @@ function App() {
         <Route exact path="/shipping" element={<ProtectedRoute Component={Shipping} />} />
         <Route exact path="/order/confirm" element={<ProtectedRoute Component={ConfirmOrder} />} />
         <Route exact path="/orders" element={<ProtectedRoute Component={MyOrders} />} />
+        {/* <Route exact path="/order/:id" element={<ProtectedRoute Component={OrderDetails} />} /> */}
 
 
 

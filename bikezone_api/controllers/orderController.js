@@ -57,9 +57,13 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
     }
 
     res.status(200).json({
+        statusCode: 200,
         status: true,
-        order
-    })
+        message: `order fetched sucessfully`,
+        payload: {
+            order
+        }
+    });
 })
 
 //get logged in user order

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createOrder, myOrders } from "./order.thunk";
+import { createOrder, getOrderDetails, myOrders } from "./order.thunk";
 import initialOrderState from './order.initialstate'
 
 const orderSlice = createSlice({
@@ -42,6 +42,21 @@ const orderSlice = createSlice({
                 state.message = action.payload.message
             })
             .addCase(myOrders.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload.error
+                state.order = null
+            })
+            .addCase(getOrderDetails.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getOrderDetails.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.orderDetails = action.payload.payload.order
+                state.message = action.payload.message
+            })
+            .addCase(getOrderDetails.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error

@@ -23,3 +23,14 @@ export const myOrders = createAsyncThunk('order/myOrders', async (_, thunkAPI) =
         return thunkAPI.rejectWithValue(message)
     }
 })
+
+//my orders 
+export const getOrderDetails = createAsyncThunk('order/getOrderDetails', async (id, thunkAPI) => {
+    try {
+        return await orderService.getOrderDetails(id)
+    } catch (error) {
+        const message =
+            error.response.data
+        return thunkAPI.rejectWithValue(message)
+    }
+})
