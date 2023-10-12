@@ -25,9 +25,13 @@ const productSlice = createSlice({
         },
 
         addToCart: (state, action) => {
-            const { product, quantity } = action.payload;
-            console.log(product, quantity, "product, quantity")
-
+            let { product, quantity } = action.payload;
+            // let { name, _id, price } = product
+            // product = {
+            //     name,
+            //     product: _id,
+            //     price
+            // }
 
             const existingItem = state.cartItems.find((item) => item._id === product._id);
 

@@ -18,6 +18,8 @@ import {
     useElements,
 } from "@stripe/react-stripe-js";
 import axios from 'axios';
+import { reset } from '../../features/order/order.slice';
+import { createOrder } from '../../features/order/order.thunk';
 
 
 const Payment = () => {
@@ -31,10 +33,22 @@ const Payment = () => {
 
     const { user } = useSelector((state) => state.auth)
     const { cartItems, shippingInfo } = useSelector((state) => state.product)
+    const { isLoading, isError, message } = useSelector((state) => state.order)
 
     const paymentData = {
         amount: Math.round(orderInfo.totalPrice * 100),
     };
+
+   
+    const order = {
+        shippingInfo,
+        orderItems: cartItems,
+        itemsPrice: orderInfo.subtotal,
+        taxPice: orderInfo.tax,
+        shippingPrice: orderInfo.shippingCharges,
+        totalPrice: orderInfo.totalPrice
+    }
+
 
     const submitHandler = async (e) => {
         e.preventDefault()
@@ -72,6 +86,12 @@ const Payment = () => {
                 alert.error(result.error.message);
             } else {
                 if (result.paymentIntent.status === "succeeded") {
+                    order.paymentInfo = {
+                        id: result.paymentIntent.id,
+                        status: result.paymentIntent.status,
+                    };
+
+                    dispatch(createOrder(order));
                     navigate('/success')
                 } else {
                     toast.error("There's some issue while processing payment ");
@@ -83,6 +103,14 @@ const Payment = () => {
             toast.error = error.response.data.message
         }
     }
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message)
+            dispatch(reset())
+        }
+    }, [isError])
+
 
     return (
         <>

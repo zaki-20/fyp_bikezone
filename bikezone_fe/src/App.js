@@ -33,6 +33,9 @@ import Payment from "./pages/payment/Payment";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import PaymentSuccess from "./pages/payment/PaymentSuccess";
+import MyOrders from "./pages/products/MyOrders";
+
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -74,11 +77,14 @@ function App() {
         <Route exact path="/contact" element={<ContactUs />} />
         <Route exact path="/about" element={<AboutUs />} />
         <Route exact path="/product/:id" element={<ProductDetail />} />
+
         <Route exact path="/addproduct" element={<AddProduct />} />
+
         <Route exact path="/cart" element={<Cart />} />
+        <Route exact path="/success" element={<PaymentSuccess />} />
 
 
-        {/* admin routes */}
+          {/* admin routes */}
         <Route exact path="/dashboard" element={<Dashboard />} />
 
 
@@ -91,6 +97,7 @@ function App() {
         <Route exact path="/update/password" element={<ProtectedRoute Component={UpdatePassword} />} />
         <Route exact path="/shipping" element={<ProtectedRoute Component={Shipping} />} />
         <Route exact path="/order/confirm" element={<ProtectedRoute Component={ConfirmOrder} />} />
+        <Route exact path="/orders" element={<ProtectedRoute Component={MyOrders} />} />
 
 
 
@@ -99,8 +106,8 @@ function App() {
             <Elements stripe={loadStripe(stripeApiKey)}>
               <ProtectedRoute Component={Payment} />
             </Elements>
-          )} 
-          />
+          )}
+        />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

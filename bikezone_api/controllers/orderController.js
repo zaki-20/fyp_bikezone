@@ -13,6 +13,17 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
         totalPrice,
     } = req.body;
 
+    //  let { _id, name, price, quantity } = orderitem
+
+    // const orderItems = {
+    //     product: _id,
+    //     name,
+    //     price,
+    //     quantity
+    // }
+
+    // console.log(orderItems)
+
     const order = await Order.create({
         shippingInfo,
         orderItems,
@@ -26,9 +37,14 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     });
 
     res.status(201).json({
-        success: true,
-        order,
+        statusCode: 201,
+        status: true,
+        message: `order created successfully`,
+        payload: {
+            order
+        }
     });
+
 })
 
 
@@ -51,9 +67,13 @@ exports.myOrder = catchAsyncErrors(async (req, res, next) => {
 
     const orders = await Order.find({ user: req.user._id });
 
-    res.status(200).json({
-        success: true,
-        orders,
+    res.status(201).json({
+        statusCode: 200,
+        status: true,
+        message: `order created successfully`,
+        payload: {
+            orders
+        }
     });
 });
 
@@ -107,7 +127,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
 //Fucntion for update stock===========
 async function updateStock(id, quantity, next) {
-    
+
     const product = await Product.findById(id);
 
     // if (quantity > product.Stock) {    
@@ -116,7 +136,7 @@ async function updateStock(id, quantity, next) {
     product.Stock -= quantity;
 
     await product.save({ validateBeforeSave: false });
-} 
+}
 
 // delete Order -- Admin
 exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {

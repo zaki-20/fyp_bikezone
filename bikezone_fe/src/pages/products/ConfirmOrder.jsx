@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import CheckoutSteps from '../../components/CheckoutSteps'
 import { useNavigate } from 'react-router-dom'
@@ -29,7 +29,7 @@ const ConfirmOrder = () => {
         sessionStorage.setItem('orderInfo', JSON.stringify(data))
         navigate('/process/payment')
     }
-
+   
     return (
         <div>
             <CheckoutSteps activeStep={1} />

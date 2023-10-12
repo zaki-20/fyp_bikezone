@@ -29,13 +29,10 @@ export const getProductDetail = createAsyncThunk('products/getProductDetail', as
 export const addItemsToCart = createAsyncThunk('products/addItemsToCart', async ({ id, quantity }, thunkAPI) => {
     try {
         const state = thunkAPI.getState();
-        console.log(state.product.cartItems)
         localStorage.setItem("cartItems", JSON.stringify(state));
 
     } catch (error) {
-        console.log(error)
         const message = error.response.data
-        console.log(message)
         return thunkAPI.rejectWithValue(message)
     }
 })

@@ -16,7 +16,7 @@ const UserProfile = () => {
                 <div className="p-8 bg-white shadow mt-2 md:mt-20">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="space-x-8 flex justify-center md:flex-col md:order-1 order-2 md:items-center">
-                            <Link to='/me/update'>
+                            <Link to='/orders'>
                                 <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
                                     My Orders
                                 </button>
