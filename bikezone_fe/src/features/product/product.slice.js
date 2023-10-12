@@ -76,7 +76,7 @@ const productSlice = createSlice({
 
         },
         shippingInfo: (state, action) => {
-            // state.shippingInfo = action.payload
+            state.shippingInfo = action.payload
             localStorage.setItem('shippingInfo', JSON.stringify(action.payload));
         },
     },

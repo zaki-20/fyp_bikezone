@@ -1,7 +1,8 @@
 
 const initialOrderState = {
     order: null,
-    orders:[],
+    orders: [],
+    orderDeatil: null,
     isLoading: false,
     isError: false,
     isSuccess: false,

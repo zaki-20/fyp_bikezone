@@ -20,11 +20,11 @@ const MyOrders = () => {
 
 
     const columns = [
-        { field: "id", headerClassName:"bg-gray-900 text-yellow-400 text-lg", headerName: "Order ID", minWidth: 300, flex: 1 },
+        { field: "id", headerClassName: "bg-gray-900 text-yellow-400 text-lg", headerName: "Order ID", minWidth: 300, flex: 1 },
 
         {
             field: "status",
-            headerClassName:"bg-gray-900 text-yellow-400 text-lg",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Status",
             minWidth: 150,
             flex: 0.5,
@@ -36,7 +36,7 @@ const MyOrders = () => {
         },
         {
             field: "itemsQty",
-            headerClassName:"bg-gray-900 text-yellow-400 text-lg",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Items Qty",
             type: "number",
             minWidth: 150,
@@ -45,7 +45,7 @@ const MyOrders = () => {
 
         {
             field: "amount",
-            headerClassName:"bg-gray-900 text-yellow-400 text-lg",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Amount",
             type: "number",
             minWidth: 270,
@@ -54,7 +54,7 @@ const MyOrders = () => {
 
         {
             field: "actions",
-            headerClassName:"bg-gray-900 text-yellow-400 text-lg",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             flex: 0.3,
             headerName: "Actions",
             minWidth: 150,
@@ -68,6 +68,7 @@ const MyOrders = () => {
 
                 );
             },
+            cellClassName: "text-blue-500"
         },
     ];
     const rows = []
@@ -99,15 +100,15 @@ const MyOrders = () => {
                 <div className="myOrdersPage h-screen">
                     <MetaData title={`${user?.firstname + " " + user?.lastname} - Orders`} />
                     <DataGrid
-                      sx={{
-                        boxShadow: 2,
-                        border: 2,
-                        borderColor: 'primary.light',
-                        '& .MuiDataGrid-cell:hover': {
-                          color: 'blue',
-                        },
-                      }}
-                        rows = { rows }
+                        sx={{
+                            boxShadow: 2,
+                            border: 2,
+                            borderColor: 'primary.light',
+                            '& .MuiDataGrid-cell:hover': {
+                                color: 'blue',
+                            },
+                        }}
+                        rows={rows}
                         columns={columns}
                         pageSize={10}
                         disableSelectionOnClick
@@ -115,7 +116,7 @@ const MyOrders = () => {
                         autoHeight
                     />
 
-                    <Typography id="myOrdersHeading">{user?.firstname + " " + user?.lastname}'s Orders</Typography>
+                    <span className='text-gray-900 font-semibold'>{user?.firstname + " " + user?.lastname}'s Orders</span>
                 </div>
             )}
         </div>

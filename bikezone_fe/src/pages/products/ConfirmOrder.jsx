@@ -7,7 +7,7 @@ const ConfirmOrder = () => {
     const navigate = useNavigate()
 
     const { user } = useSelector(state => state.auth)
-    const { cartItems, shippingInfo } = useSelector(state => state.product)
+    const { cartItems, shippingInfo, isLoading } = useSelector(state => state.product)
 
 
     const subtotal = cartItems.reduce(
@@ -16,7 +16,7 @@ const ConfirmOrder = () => {
     const shippingCharges = subtotal > 2000 ? 0 : 400;
     const tax = subtotal * 0.18;
     const totalPrice = subtotal + shippingCharges + tax;
-    const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}`
+    const address = `${shippingInfo?.address}, ${shippingInfo?.city}, ${shippingInfo?.state}, ${shippingInfo?.pinCode}`
 
 
     const proceedToPayment = () => {
@@ -29,7 +29,7 @@ const ConfirmOrder = () => {
         sessionStorage.setItem('orderInfo', JSON.stringify(data))
         navigate('/process/payment')
     }
-   
+
     return (
         <div>
             <CheckoutSteps activeStep={1} />
@@ -46,18 +46,16 @@ const ConfirmOrder = () => {
                                 <span className="text-gray-600">{`${user?.firstname} ${user?.lastname}`}</span>
                             </div>
 
-                            {/* Phone */}
-                            <div className="flex justify-between mx-4 ">
-                                <span className="text-gray-700 text-sm font-bold">Phone:</span>
-                                <span className="text-gray-600">{shippingInfo.phoneNo}</span>
-                            </div>
+                                <div className="flex justify-between mx-4 ">
+                                    <span className="text-gray-700 text-sm font-bold">Phone:</span>
+                                    <span className="text-gray-600">{shippingInfo?.phoneNo}</span>
+                                </div>
 
-                            {/* Address */}
-                            <div className="flex justify-between mx-4">
-                                <span className="text-gray-700 text-sm font-bold">Address:</span>
-                                <span className="text-gray-600">{address}</span>
-                            </div>
-
+                                <div className="flex justify-between mx-4">
+                                    <span className="text-gray-700 text-sm font-bold">Address:</span>
+                                    <span className="text-gray-600">{address}</span>
+                                </div>
+                           
 
                         </div>
                     </div>

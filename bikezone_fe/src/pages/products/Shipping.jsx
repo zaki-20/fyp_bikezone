@@ -48,9 +48,9 @@ const Shipping = () => {
             validateOnChange: true,
             validateOnBlur: false,
             onSubmit: async (values) => {
-                dispatch(shippingInfo(values))
-                navigate('/order/confirm')
-
+                    await dispatch(shippingInfo(values))
+                    navigate('/order/confirm')
+              
             },
         });
 
