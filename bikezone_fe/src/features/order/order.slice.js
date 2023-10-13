@@ -7,7 +7,8 @@ const orderSlice = createSlice({
     initialState: initialOrderState,
     reducers: {
         reset: (state) => {
-            state.order = null
+            state.orders = []
+            state.orderDetails = null
             state.isLoading = false
             state.isError = false
             state.isSuccess = false
@@ -24,7 +25,7 @@ const orderSlice = createSlice({
                 state.isSuccess = true
                 state.order = action.payload.payload.order
                 state.message = action.payload.message
-                console.log(action.payload.payload.order)
+                // console.log(action.payload.payload.order)
             })
             .addCase(createOrder.rejected, (state, action) => {
                 state.isLoading = false
@@ -45,7 +46,7 @@ const orderSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error
-                state.order = null
+                state.orders = null
             })
             .addCase(getOrderDetails.pending, (state) => {
                 state.isLoading = true
@@ -60,7 +61,7 @@ const orderSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error
-                state.order = null
+                state.orderDetails = null
             })
               
     }
