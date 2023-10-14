@@ -12,20 +12,77 @@ import 'react-toastify/dist/ReactToastify.css';
 import MetaData from '../../components/MetaData';
 import { addToCart } from '../../features/product/product.slice';
 
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import { Rating } from '@mui/material';
+import { createReview } from '../../features/review/review.thunk';
+import { reset } from '../../features/review/review.slice';
+
 
 const ProductDetail = () => {
+
     const { id } = useParams();
+
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    const [open, setOpen] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState("");
+
+
 
     const [quantity, setQuantity] = useState(1)
     const dispatch = useDispatch()
 
+    //===================================================================
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const reviewSubmitHandler = () => {
+
+
+        const reviewData = {
+            rating, comment, productId: id
+        }
+        // const myForm = new FormData();
+
+        // myForm.set("rating", rating);
+        // myForm.set("comment", comment);
+        // myForm.set("productId", id);
+
+        dispatch(createReview(reviewData))
+        setOpen(false);
+    };
+
+
+    //=====================================================================
+
+    const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
+    const { isError: reviewError, message: reviewMsg, isLoading: reviewLoad, isSuccess } = useSelector(state => state.review)
 
     useEffect(() => {
         dispatch(getProductDetail(id))
-    }, [dispatch, id]);
+    }, [dispatch, id, isSuccess]);
 
-    const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
+    useEffect(() => {
+        if (reviewError) {
+            toast.error(reviewMsg)
+            reset()
+        }
 
+    }, [reviewError])
 
     const increaseQuantity = () => {
         if (productDetails.Stock <= quantity) return;
@@ -44,6 +101,8 @@ const ProductDetail = () => {
     const showErrorToast = () => {
         toast.error(message);
     };
+
+
 
     //for star rating
     const options = {
@@ -68,6 +127,9 @@ const ProductDetail = () => {
             <span> {isError && showErrorToast()} </span>
         </>
     }
+
+
+
 
     const cartHandler = () => {
         if (productDetails) {
@@ -95,6 +157,8 @@ const ProductDetail = () => {
             toast.error("not available in stock haha")
         }
     };
+
+
 
     return (
         <div>
@@ -126,9 +190,11 @@ const ProductDetail = () => {
                                 <div className="w-full px-4 md:w-1/2 ">
                                     <div className="lg:pl-20">
                                         <div className="mb-5 ">
+                                            <p className='text-xs text-gray-400'>product #: {productDetails._id}</p>
                                             <span className="text-lg font-medium text-rose-500 dark:text-rose-200">{`${productDetails.brand} - ${productDetails.category}`}</span>
                                             <h2 className="max-w-xl mt-2 mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
                                                 {productDetails.name}</h2>
+
                                             <div className="flex items-center mb-6 gap-4">
 
                                                 <ReactStars  {...options} />
@@ -163,6 +229,9 @@ const ProductDetail = () => {
                                             <button onClick={cartHandler} className="flex items-center justify-center w-full p-4 text-[#122222] border border-[#122222] rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
                                                 Add to Cart
                                             </button>
+                                            <button onClick={handleClickOpen} className="flex mt-2 items-center justify-center w-full p-4 text-[#122222] border border-[#122222] rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                                                Submit Review
+                                            </button>
                                         </div>
 
                                     </div>
@@ -170,11 +239,53 @@ const ProductDetail = () => {
                                 </div>
                             </div>
                         </div>
+                        <div>
+
+                            <Dialog
+                                fullScreen={fullScreen}
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="responsive-dialog-title"
+                            >
+                                <DialogTitle id="responsive-dialog-title">
+                                    {"Submit your review here"}
+                                </DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText className='flex flex-col items-start'>
+                                        <Rating
+                                            itemType='number'
+                                            onChange={(e) => setRating(parseFloat(e.target.value))}
+                                            value={rating}
+                                            size="large"
+                                            className="mb-4"
+                                        />
+
+                                        <textarea
+                                            className="w-full p-2 border rounded-lg focus:ring focus:ring-indigo-300"
+                                            cols="30"
+                                            rows="5"
+                                            value={comment}
+                                            onChange={(e) => setComment(e.target.value)}
+                                            placeholder="Enter your comment..."
+
+                                        ></textarea>
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color='error' autoFocus onClick={handleClose}>
+                                        Cancel
+                                    </Button>
+                                    <Button color='success' onClick={reviewSubmitHandler} autoFocus>
+                                        Submit
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                        </div>
                         <div >
-                            <div className='font-bold  flex bg-gray-50 justify-center py-6 '>
+                            <div className='font-bold  shadow-2xl  flex bg-gray-50 justify-center mx-6 py-6 '>
                                 <div className='border-b-2 w-[15%] text-2xl py-2 text-center'>Reviews</div>
                             </div>
-                            <div className="flex overflow-x-scroll bg-gray-50 no-scrollbar pb-10 px-4">
+                            <div className="flex overflow-x-scroll  shadow-xl bg-gray-50 no-scrollbar mx-6  pb-10 px-4">
                                 <div className="flex ml-10 gap-10 ">
 
                                     {

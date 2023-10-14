@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import reviewService from "./review.service";
 
 //createOrder 
-export const createReview = createAsyncThunk('review/createReview', async (review, thunkAPI) => {
+export const createReview = createAsyncThunk('review/createReview', async (reviewData, thunkAPI) => {
     try {
-        return await reviewService.createOrder(review)
+        console.log(reviewData)
+        return await reviewService.createReview(reviewData)
     } catch (error) {
-        const message =
-            error.response.data
+        const message = error.response.data
         return thunkAPI.rejectWithValue(message)
     }
 })

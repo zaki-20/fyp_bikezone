@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createOrder} from "./order.thunk";
+import { createReview} from "./review.thunk";
 import initialReviewState from './review.initialstate'
 
 const reviewSlice = createSlice({
@@ -7,7 +7,6 @@ const reviewSlice = createSlice({
     initialState: initialReviewState,
     reducers: {
         reset: (state) => {
-            state.review = null
             state.isLoading = false
             state.isError = false
             state.isSuccess = false
@@ -18,6 +17,8 @@ const reviewSlice = createSlice({
         builder
             .addCase(createReview.pending, (state) => {
                 state.isLoading = true
+                state.isSuccess = false
+
             })
             .addCase(createReview.fulfilled, (state, action) => {
                 state.isLoading = false
@@ -27,7 +28,7 @@ const reviewSlice = createSlice({
             .addCase(createReview.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
-                state.message = action.payload.error
+                state.message = action.payload
             })
          
     }

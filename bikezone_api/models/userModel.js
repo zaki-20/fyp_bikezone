@@ -9,13 +9,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please Enter Your firstname"],
         maxLength: [15, "Name cannot exceed 15 characters"],
-        minLength: [4, "firstname should have more than 4 characters"],
+        minLength: [3, "firstname should have more than 4 characters"],
     },
     lastname: {
         type: String,
         required: [true, "Please Enter Your lastname"],
         maxLength: [15, "Name cannot exceed 15 characters"],
-        minLength: [4, "fisrtname should have more than 4 characters"],
+        minLength: [3, "fisrtname should have more than 4 characters"],
     },
     email: {
         type: String,

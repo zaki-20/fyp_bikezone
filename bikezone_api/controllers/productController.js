@@ -35,8 +35,8 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     statusCode: 200,
     status: true,
-    message: "All products have been fetched!", 
-    payload: { 
+    message: "All products have been fetched!",
+    payload: {
       products: {
         products,
         length: products.length,
@@ -109,7 +109,8 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
   const review = {
     user: req.user._id,
-    name: req.user.name,
+    firstname: req.user.firstname,
+    lastname: req.user.lastname,
     rating: Number(rating),
     comment,
   };
@@ -141,7 +142,10 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   await product.save({ validateBeforeSave: false });
 
   res.status(200).json({
-    success: true,
+    statusCode: 200,
+    status: true,
+    message: "your review have been submitted!",
+    payload: {}
   });
 });
 

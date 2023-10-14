@@ -2,12 +2,14 @@ import React from 'react'
 import ReactStars from "react-rating-stars-component";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate()
 
+    // const {  productDetails } = useSelector(state => state.product)
 
     //for star rating
     const options = {
@@ -35,6 +37,8 @@ const ProductCard = ({ product }) => {
                 </Link>
                 <div className="flex items-center mt-2.5 mb-5">
                     <ReactStars  {...options} />
+                    <span className='ml-1'> ({product.numOfReviews} reviews)</span>
+
                 </div>
                 <div className="flex items-center justify-between">
                     <span className="text-xl font-bold text-gray-900 dark:text-white">{product.price}</span>
