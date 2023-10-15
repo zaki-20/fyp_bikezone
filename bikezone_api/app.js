@@ -24,6 +24,7 @@ const orderRoute = require("./routes/orderRoute");
 const workshopRoute = require("./routes/workshopRoute");
 const rentBikeRoute = require("./routes/rentBikeRoute");
 const paymentRoute = require("./routes/paymentRoute");
+const blogRoute = require("./routes/blogRoute");
 
 
 app.use("/api/v1", productRoute);
@@ -32,6 +33,7 @@ app.use("/api/v1", orderRoute);
 app.use("/api/v1", workshopRoute);
 app.use("/api/v1", rentBikeRoute);
 app.use("/api/v1", paymentRoute);
+app.use("/api/v1", blogRoute);
 
 
 //middleware for error
