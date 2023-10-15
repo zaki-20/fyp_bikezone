@@ -12,7 +12,7 @@ export const getAllProducts = createAsyncThunk('products/getAllProducts', async 
     }
 })
 
-// get all goals
+// get all products
 export const getProductDetail = createAsyncThunk('products/getProductDetail', async (id, thunkAPI) => {
     try {
         return await productService.getProductDetail(id)

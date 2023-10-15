@@ -128,10 +128,10 @@ const ContactUs = () => {
                                 <div class="mb-6 ">
                                     <input
 
+                                        type="text"
                                         name='name'
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        type="text"
                                         value={values.name}
                                         placeholder="Your Name"
                                         class="text-body-color border-[f0f0f0]  focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none"

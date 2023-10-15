@@ -28,9 +28,11 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 //loadUser user
 export const loadUser = createAsyncThunk('auth/loadUser', async (_, thunkAPI) => {
     try {
+
         return await authService.loadUser()
     } catch (error) {
-        const message = error.response.data
+        console.log(error)
+        const message = error.response.data || error.response.data.message || error.response
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -68,7 +70,7 @@ export const forgotPassword = createAsyncThunk('auth/forgotPassword', async (ema
 })
 
 //Reset Password
-export const resetPassword = createAsyncThunk('auth/resetPassword', async ({newPassword, confirmPassword, token}, thunkAPI) => {
+export const resetPassword = createAsyncThunk('auth/resetPassword', async ({ newPassword, confirmPassword, token }, thunkAPI) => {
     try {
         // console.log(passwords, "passwords")
         return await authService.resetPassword(newPassword, confirmPassword, token)

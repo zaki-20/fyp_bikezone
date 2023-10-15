@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from "../shared/Loader"
 
 
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { updateProfile } from "../../features/auth/auth.thunk";
 import { loadUser } from "../../features/auth/auth.thunk";

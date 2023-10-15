@@ -1,9 +1,66 @@
-import React from 'react';
-// Import  image
-import addBlog from '../../assets/addblog.png';
-import {BsArrowRight} from "react-icons/bs"
+import React, { useEffect, useState } from 'react';
+import { useFormik } from 'formik';
+import * as yup from "yup";
+import { BsArrowRight } from "react-icons/bs"
+import { createBlogPost } from '../../features/blog/blog.thunk';
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import { reset } from '../../features/blog/blog.slice';
+
+
+
+const schema = yup.object({
+    title: yup
+        .string()
+        .required('name is required'),
+    description: yup
+        .string()
+        .max(1500, 'character imit exceed')
+        .required('descripton is required'),
+})
 
 const CreateBlogPost = () => {
+    const dispatch = useDispatch()
+
+    const { isError, isSuccess, message } = useSelector((state) => state.blog)
+
+    const initialValues = {
+        title: "",
+        description: "",
+    };
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message)
+            reset()
+        }
+
+    }, [isError, message, isSuccess])
+
+    const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+        useFormik({
+            initialValues,
+            validationSchema: schema,
+            validateOnChange: true,
+            validateOnBlur: false,
+            //// By disabling validation onChange and onBlur formik will validate on submit.
+            onSubmit: async (values, action) => {
+                const trimmedValues = {
+                    title: values.title.trim(),
+                    description: values.description.trim(),
+                };
+                action.resetForm();
+                await dispatch(createBlogPost(trimmedValues))
+                if (isSuccess) {
+                    toast.success(message)
+                }
+            },
+        });
+
+
+
+
     return (
         <div className="py-20 dark:text-gray-50">
             <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
@@ -44,28 +101,42 @@ const CreateBlogPost = () => {
 
                 </div>
 
-                <form noValidate="" className="flex flex-col py-6 shadow-xl justify-center rounded-md space-y-6 md:py-0 md:px-6">
+                <form onSubmit={handleSubmit} noValidate="" className="flex flex-col py-6 shadow-xl justify-center rounded-md space-y-6 md:py-0 md:px-6">
                     <h1 className="text-3xl text-center font-bold text-yellow-400 mb-4 text-robotic">
                         Create Your Post
                     </h1>
                     <label className="block">
                         <span className="mb-1">Title</span>
                         <input
+                            name='title'
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.title}
                             type="text"
                             placeholder="Enter your post title"
                             className="block w-full rounded-md focus:ring focus:border-transparent focus:ring-yellow-400 shadow-sm  dark:bg-gray-800"
                         />
+                        {errors.title && touched.title ? (
+                            <p className="text-red-600 animate-pulse">{errors.title}</p>
+                        ) : null}
                     </label>
                     <label className="block">
                         <span className="mb-1">Description</span>
                         <textarea
+                            name='description'
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.description}
                             rows="3"
                             placeholder="Enter your post description..."
                             className="block w-full rounded-md focus:ring focus:border-transparent focus:ring-yellow-400  dark:bg-gray-800"
                         ></textarea>
+                        {errors.description && touched.description ? (
+                            <p className="text-red-600 animate-pulse">{errors.description}</p>
+                        ) : null}
                     </label>
                     <button
-                        type="button"
+                        type="submit"
                         className="self-center  bg-gray-900 text-white hover:text-yellow-400 py-2 px-6 w-full my-2 text-lg rounded  dark:bg-violet-400 dark:text-gray-900 "
                     >
                         Post
