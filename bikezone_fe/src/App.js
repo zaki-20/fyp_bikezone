@@ -36,6 +36,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import MyOrders from "./pages/products/MyOrders";
 import OrderDetails from "./pages/products/OrderDetails";
+import CreateBlogPost from "./pages/blog/CreateBlogPost";
 
 
 function App() {
@@ -102,6 +103,9 @@ function App() {
         <Route exact path="/order/confirm" element={<ProtectedRoute Component={ConfirmOrder} />} />
         <Route exact path="/orders" element={<ProtectedRoute Component={MyOrders} />} />
         <Route exact path="/order/:id" element={<ProtectedRoute Component={OrderDetails} />} />
+
+        {/* Blog routes */}
+        <Route exact path="/createblog" element={<ProtectedRoute Component={CreateBlogPost} />} />
 
 
 
