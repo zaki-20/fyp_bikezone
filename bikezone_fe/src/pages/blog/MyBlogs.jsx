@@ -34,6 +34,8 @@ const BlogPage = () => {
     }, [isError])
 
 
+
+
     const filteredAndSortedBlogPosts = blogPosts
         .filter((post) =>
             post.title.toLowerCase().includes(searchTerm.toLowerCase())

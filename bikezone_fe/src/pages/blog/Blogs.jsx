@@ -126,8 +126,9 @@ const Blogs = () => {
                                         </span>
                                         <span className="text-sm">{format(item.createdAt)}</span>
                                     </div>
-                                    <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                        <a href="#">{item.title}</a>
+                                    <h2 className="flex gap-4 items-center">
+                                        <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.title}</h1>
+                                        <h1 className='mb-2 text-sm text-gray-600 dark:text-white'>( {item.category} )</h1>
                                     </h2>
                                     <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
                                         {item.description.length > 300 ? `${item.description.slice(0, 300)}...` : item.description}

@@ -6,14 +6,14 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 //create blog post
 exports.createBlog = catchAsyncErrors(async (req, res, next) => {
 
-    const { title, description } = req.body;
+    const { title, description, category } = req.body;
     const user = req.user;
 
     const blog = await Blog.create({
         title,
         description,
+        category,
         user: user._id,
-
     });
 
     res.status(201).json({
@@ -99,7 +99,7 @@ exports.getAllBlogs = catchAsyncErrors(async (req, res, next) => {
 
 exports.deleteAllBlogs = catchAsyncErrors(async (req, res, next) => {
     await Blog.deleteMany({});
-    
+
     res.status(200).json({
         statusCode: 200,
         success: true,

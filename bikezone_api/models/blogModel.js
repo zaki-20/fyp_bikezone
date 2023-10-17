@@ -5,6 +5,10 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    category: {
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
         required: true,
@@ -17,7 +21,7 @@ const blogSchema = new mongoose.Schema({
     likes: {
         type: Array,
         default: []
-    }, 
+    },
 
     createdAt: {
         type: Date,
