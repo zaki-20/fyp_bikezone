@@ -6,6 +6,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.1",
+    "@material-tailwind/react": "^2.1.2",
     "@mui/icons-material": "^5.14.12",
     "@mui/material": "^5.14.8",
     "@mui/x-data-grid": "^6.16.1",

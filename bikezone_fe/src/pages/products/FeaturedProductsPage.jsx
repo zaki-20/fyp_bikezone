@@ -3,7 +3,7 @@ import ProductCard from '../../components/cards/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../features/product/product.thunk'
 import Loader from '../shared/Loader'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { reset } from '../../features/product/product.slice'
 import Pagination from "react-js-pagination"

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import paymentPic from '../../assets/payment.jpg';
 
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
 import MetaData from '../../components/MetaData';
 import CheckoutSteps from '../../components/CheckoutSteps';
 

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createBlogPost, myBlogPosts } from "./blog.thunk";
+import { createBlogPost, getAllBlogPosts, getSingleBlogPosts, likeDisLikeBlogPost, myBlogPosts } from "./blog.thunk";
 import initialBlogState from './blog.initialstate'
 
 const blogSlice = createSlice({
@@ -12,6 +12,7 @@ const blogSlice = createSlice({
             state.isSuccess = false
             state.message = ''
             state.blogPosts = []
+            state.blogPost = null
         },
     },
     extraReducers: (builder) => {
@@ -50,7 +51,60 @@ const blogSlice = createSlice({
                 state.message = action.payload.error
                 state.blogPosts = []
             })
-           
+            .addCase(getAllBlogPosts.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+
+            })
+            .addCase(getAllBlogPosts.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+                state.blogPosts = action.payload.payload.blogs
+            })
+            .addCase(getAllBlogPosts.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+                state.blogPosts = []
+            })
+            .addCase(getSingleBlogPosts.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+
+            })
+            .addCase(getSingleBlogPosts.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.message = action.payload.message
+                state.blogPost = action.payload.payload.blog
+            })
+            .addCase(getSingleBlogPosts.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+                state.blogPost = null
+            })
+            .addCase(likeDisLikeBlogPost.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+
+            })
+            .addCase(likeDisLikeBlogPost.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(likeDisLikeBlogPost.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+            })
+
     }
 })
 export const { reset } = blogSlice.actions

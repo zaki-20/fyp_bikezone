@@ -39,6 +39,7 @@ import OrderDetails from "./pages/products/OrderDetails";
 import CreateBlogPost from "./pages/blog/CreateBlogPost";
 import MyBlogs from "./pages/blog/MyBlogs";
 import GetSingleBlog from "./pages/blog/GetSingleBlog";
+import Blogs from "./pages/blog/Blogs";
 
 
 function App() {
@@ -88,9 +89,9 @@ function App() {
         <Route exact path="/success" element={<PaymentSuccess />} />
 
 
-          {/* admin routes */}
+        {/* admin routes */}
         <Route exact path="/dashboard" element={<Dashboard />} />
-        
+
         {/* <Route exact path="/orderDetail" element={<OrderDetails />} /> */}
 
 
@@ -110,6 +111,7 @@ function App() {
         <Route exact path="/blog/new" element={<ProtectedRoute Component={CreateBlogPost} />} />
         <Route exact path="/blog/me" element={<ProtectedRoute Component={MyBlogs} />} />
         <Route exact path="/blog/:id" element={<ProtectedRoute Component={GetSingleBlog} />} />
+        <Route exact path="/blogs" element={<ProtectedRoute Component={Blogs} />} />
 
         <Route exact path="/process/payment" element={
           stripeApiKey && (

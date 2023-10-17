@@ -12,8 +12,8 @@ const UserProfile = () => {
 
         <>
             <MetaData title={"profile"} />
-            <div className="md:p-16 p-4">
-                <div className="p-8 bg-white shadow mt-2 md:mt-20">
+            <div className="md:p-16 p-4 bg-[#def5f596]">
+                <div className="p-8 bg-[#d9fafa96] shadow-md mt-2 md:mt-20">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="space-x-8 flex justify-center md:flex-col md:order-1 order-2 md:items-center">
                             <Link to='/orders'>

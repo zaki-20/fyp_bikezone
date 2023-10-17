@@ -4,9 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../features/auth/auth.thunk';
 import { reset } from '../features/auth/auth.slice';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Backdrop } from '@mui/material';
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
+} from "@material-tailwind/react";
 
 const Header = () => {
 
@@ -109,11 +115,7 @@ const Header = () => {
                 )
               }
 
-
             </div>
-
-
-
 
             <button data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
               <span className="sr-only">Open main menu</span>
@@ -125,65 +127,58 @@ const Header = () => {
 
 
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-[#122222] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="flex flex-col  items-center font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-[#122222] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-                <Link to="/" className="block py-2 pl-3 pr-4 rounded hover:text-yellow-400  md:text-white md:p-0 md:hover:bg-transparent md:dark:text-blue-500" aria-current="page">Home</Link>
+                <Link to="/" className="block py-2 pl-3 pr-2 rounded hover:text-yellow-400  md:text-white md:p-0 md:hover:bg-transparent md:dark:text-blue-500" aria-current="page">Home</Link>
               </li>
               <li>
-                <Link to="/about" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</Link>
+                <Link to="/about" className=" block py-2 pl-3 pr-2 text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</Link>
               </li>
 
-
-              <button id="multiLevelDropdownButton" data-dropdown-toggle="dropdown" className="text-white hover:text-yellow-400 flex items-center" type="button">services <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-              </svg>
-              </button>
-
-              {/* Dropdown menu */}
-              <div id="dropdown" className="z-10 hidden bg-white divide-y  divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="multiLevelDropdownButton">
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                  </li>
-                  <li>
-                    <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown" data-dropdown-placement="right-start" type="button" className="flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Blog<svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m1 9 4-4-4-4" />
-                    </svg>
+              <li>
+                <Menu>
+                  <MenuHandler>
+                    <button
+                      className=" block py-2 pl-3 pr-2 text-gray-900  hover:text-yellow-400  md:text-white  dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 middle none center   transition-all  active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 "
+                    >Services
                     </button>
+                  </MenuHandler>
+                  <MenuList>
+                    <MenuItem>Menu Item 1</MenuItem>
+                    <MenuItem>Menu Item 2</MenuItem>
+                    <Menu placement="right-start" offset={15}>
+                      <MenuHandler>
+                        <MenuItem>Blog</MenuItem>
+                      </MenuHandler>
+                      <MenuList>
+                        <Link to={'blog/new'}>
+                          <MenuItem>Create Blog Post</MenuItem>
+                        </Link>
 
-                    <div id="doubleDropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                      <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="doubleDropdownButton">
-                        <li>
-                          <Link to="/blog/new" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Create Blog Post</Link>
-                        </li>
-                        <li>
-                          <Link to="/blog/me" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Posts</Link>
-                        </li>
-                        <li>
-                          <Link to="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Billing</Link>
-                        </li>
-                        <li>
-                          <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Rewards</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                  </li>
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-                  </li>
-                </ul>
-              </div>
+                        <Link to={'blog/me'}>
+                          <MenuItem>My Blog</MenuItem>
+                        </Link>
 
+                        <Link to={'blogs'}>
+                          <MenuItem>Blogs</MenuItem>
+                        </Link>
+
+                      </MenuList>
+                    </Menu>
+                    <MenuItem>Menu Item 3</MenuItem>
+                  </MenuList>
+                </Menu>
+
+              
+
+              </li>
 
 
               <li>
-                <Link to="/login" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">later</Link>
+                <Link to="/login" className="block py-2 pl-3 pr-2 text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">later</Link>
               </li>
               <li>
-                <Link to="/contact" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</Link>
+                <Link to="/contact" className="block py-2 pl-3 pr-2 text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</Link>
               </li>
             </ul>
           </div>
@@ -197,3 +192,7 @@ const Header = () => {
 }
 
 export default Header;
+
+
+
+

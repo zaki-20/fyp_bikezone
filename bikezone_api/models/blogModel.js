@@ -14,13 +14,11 @@ const blogSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    like: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Store user references who liked the blog
-    comment: [
-        {
-            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // User who commented
-            text: String,
-        },
-    ],
+    likes: {
+        type: Array,
+        default: []
+    }, 
+
     createdAt: {
         type: Date,
         default: Date.now,

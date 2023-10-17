@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { BsArrowRight } from "react-icons/bs"
 import { createBlogPost } from '../../features/blog/blog.thunk';
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
 import { reset } from '../../features/blog/blog.slice';
-
-
 
 const schema = yup.object({
     title: yup
@@ -16,27 +13,27 @@ const schema = yup.object({
         .required('name is required'),
     description: yup
         .string()
-        .max(1500, 'character imit exceed')
+        .max(4000, 'character imit exceed')
         .required('descripton is required'),
 })
 
 const CreateBlogPost = () => {
+
     const dispatch = useDispatch()
 
     const { isError, isSuccess, message } = useSelector((state) => state.blog)
-
     const initialValues = {
         title: "",
         description: "",
     };
 
+
     useEffect(() => {
         if (isError) {
             toast.error(message)
-            reset()
+            dispatch(reset())
         }
-
-    }, [isError, message, isSuccess])
+    }, [isError])
 
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
         useFormik({
@@ -45,24 +42,19 @@ const CreateBlogPost = () => {
             validateOnChange: true,
             validateOnBlur: false,
             //// By disabling validation onChange and onBlur formik will validate on submit.
-            onSubmit: async (values, action) => {
+            onSubmit: (values, action) => {
                 const trimmedValues = {
                     title: values.title.trim(),
                     description: values.description.trim(),
                 };
+                dispatch(createBlogPost(trimmedValues))
+                toast.success("post created")
                 action.resetForm();
-                await dispatch(createBlogPost(trimmedValues))
-                if (isSuccess) {
-                    toast.success(message)
-                }
             },
         });
 
-
-
-
     return (
-        <div className="py-20 dark:text-gray-50">
+        <div className="py-20 bg-[#def5f596] dark:text-gray-50">
             <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
                 <div className="py-10 md:py-0 md:px-6 shadow-xl bg-gray-100 dark:bg-gray-800 rounded-md">
                     <h1 className="text-4xl font-bold text-yellow-400 my-4 text-robotic">

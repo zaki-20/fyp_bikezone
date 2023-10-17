@@ -27,7 +27,7 @@ exports.createRentBike = catchAsyncErrors(async (req, res, next) => {
 
 });
 
-exports.updateRentBike = catchAsyncErrors( async (req, res, next) => {
+exports.updateRentBike = catchAsyncErrors(async (req, res, next) => {
     let rentBike = await RentBike.findById(req.params.id)
 
     if (!rentBike) {
@@ -54,19 +54,19 @@ exports.updateRentBike = catchAsyncErrors( async (req, res, next) => {
 });
 
 exports.deleteRentBike = async (req, res, next) => {
- 
+
     const rentAdId = req.params.id;
 
     const deletedRentBike = await RentBike.findByIdAndDelete(rentAdId);
 
     if (!deletedRentBike) {
-      return next(new ErrorHandler("Rental bike ad not found", 404));
+        return next(new ErrorHandler("Rental bike ad not found", 404));
     }
 
     res.status(200).json({
-      statusCode: 200,
-      success: true,
-      message: "Rent ad deleted successfully",
+        statusCode: 200,
+        success: true,
+        message: "Rent ad deleted successfully",
     });
 };
 

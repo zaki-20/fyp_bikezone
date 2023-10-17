@@ -34,7 +34,7 @@ const ConfirmOrder = () => {
         <div>
             <CheckoutSteps activeStep={1} />
 
-            <div className=" sm:px-10 lg:px-20 md:flex flex-none justify-between gap-8 xl:px-32">
+            <div className="bg-[#def5f596] sm:px-10 lg:px-20 md:flex flex-none justify-between gap-8 xl:px-32">
                 <div className="px-4 py-8 md:w-2/3 w-full">
                     <div className=''>
                         <p className="text-xl font-medium">Shipping Detail</p>

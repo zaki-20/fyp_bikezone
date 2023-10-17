@@ -62,7 +62,7 @@ const Shipping = () => {
             <CheckoutSteps activeStep={0} />
 
             <div className="min-w-screen min-h-screen flex items-center justify-center px-5 py-5">
-                <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: 1000 }}>
+                <div className="bg-[#def5f596] text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: 1000 }}>
                     <div className="md:flex w-full">
                         <div className="hidden md:block w-1/2 bg-gray-200 p-6 ">
                             <img src={shippingPic} alt="loginbike" className='w-full mt-24 rounded-3xl ' />

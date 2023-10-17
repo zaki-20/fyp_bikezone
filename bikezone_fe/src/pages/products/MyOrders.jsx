@@ -94,7 +94,7 @@ const MyOrders = () => {
     }, [dispatch, isError, user]);
 
     return (
-        <div className='bg-sky-100 p-16'>
+        <div className='bg-[#def5f596] p-16'>
 
             {isLoading ? (<Loader />) : (
                 <div className="myOrdersPage h-screen">
