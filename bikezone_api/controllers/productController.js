@@ -215,11 +215,37 @@ exports.getRatingProducts = async (req, res, next) => {
 
   const products = await Product.find({ ratings: { $gte: minRating } });
 
+  if (!products) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
   res.status(200).json({
     statusCode: 200,
     status: true,
     message: "Rating products retrieved!",
-    payload: {products}
+    payload: { products }
   });
 
 };
+
+
+// get reviewd products
+exports.getProductsWithReviews = async (req, res, next) => {
+
+  const products = await Product.find({ reviews: { $exists: true, $not: { $size: 0 } } });
+
+  if (!products) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+
+  res.status(200).json({
+    statusCode: 200,
+    status: true,
+    message: "Reviewd products retrieved!",
+    payload: { products }
+  });
+
+};
+
+
+
+

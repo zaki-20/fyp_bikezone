@@ -29,10 +29,17 @@ const getRatedProducts = async () => {
     return response.data
 }
 
+//get top rated products
+const getReviewedProducts = async () => {
+    const response = await axios.get(API_URL + `products/reviewed`)
+    return response.data
+}
+
 
 const productService = {
     getAllProducts,
     getProductDetail,
-    getRatedProducts
+    getRatedProducts,
+    getReviewedProducts
 }
 export default productService

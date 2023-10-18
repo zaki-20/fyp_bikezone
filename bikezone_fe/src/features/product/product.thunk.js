@@ -36,6 +36,19 @@ export const getRatedProducts = createAsyncThunk('products/getRatedProducts', as
     }
 })
 
+
+// get all reviewed  products
+export const getReviewedProducts = createAsyncThunk('products/getReviewedProducts', async (_, thunkAPI) => {
+    try {
+        return await productService.getReviewedProducts()
+    } catch (error) {
+        const message =
+            (error.response && error.response.data && error.response.data.message) || error.message ||
+            error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 //cart===================================
 // add items in cart
 export const addItemsToCart = createAsyncThunk('products/addItemsToCart', async ({ id, quantity }, thunkAPI) => {
