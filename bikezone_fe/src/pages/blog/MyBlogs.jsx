@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Loader from '../shared/Loader';
-import { myBlogPosts } from '../../features/blog/blog.thunk';
+import { myBlogPosts, likeDisLikeBlogPost } from '../../features/blog/blog.thunk';
 import { reset } from '../../features/blog/blog.slice';
 import { format } from "timeago.js";
 import { Link } from 'react-router-dom';
@@ -12,10 +12,15 @@ import { FcSearch } from 'react-icons/fc'
 
 
 const BlogPage = () => {
+    const motorbikeCategories = [
+        "Motorbike Reviews", "Maintenance and Repairs", "Motorbike Accessories", "Customization and Modifications", "Motorbike Safety", "Travel and Adventure", "Upcoming Models", "Riding Tips and Techniques", "Motorbike Events and Shows", "Top 10 Lists", "Motorbike Gear Guides", "Motorbike Industry News", "Vintage and Classic Bikes", "Motorbike Racing", "Motorbike Technology", "Environmental Concerns"
+    ];
 
 
     const [searchTerm, setSearchTerm] = useState(''); // For search input
     const [sortCriteria, setSortCriteria] = useState(''); // For sorting criteria
+    const [categoryFilter, setCategoryFilter] = useState(''); // For filtering by category
+
 
     const dispatch = useDispatch()
     const { isLoading, isError, isSuccess, message, blogPosts } = useSelector((state) => state.blog)
@@ -37,9 +42,12 @@ const BlogPage = () => {
 
 
     const filteredAndSortedBlogPosts = blogPosts
-        .filter((post) =>
-            post.title.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+        .filter((post) => {
+            // Filter by title and category
+            const titleMatch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
+            const categoryMatch = !categoryFilter || post.category === categoryFilter;
+            return titleMatch && categoryMatch;
+        })
         .sort((a, b) => {
             if (sortCriteria === 'title') {
                 return a.title.localeCompare(b.title);
@@ -48,6 +56,12 @@ const BlogPage = () => {
                 return new Date(b.createdAt) - new Date(a.createdAt);
             }
         });
+
+
+    const handleLike = async (blogId) => {
+        await dispatch(likeDisLikeBlogPost(blogId))
+        dispatch(myBlogPosts());
+    }
 
     return (
         <>
@@ -82,6 +96,19 @@ const BlogPage = () => {
                                         <option value="">Sort by Date</option>
                                         <option value="title">Sort by Title</option>
                                     </select>
+                                    <select
+                                        value={categoryFilter}
+                                        onChange={(e) => setCategoryFilter(e.target.value)}
+                                        className="md:ml-4 py-2 px-4 md:w-min w-full  rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring focus:ring-primary-400 dark:bg-gray-800 dark:text-gray-400 dark:focus:ring-primary-300"
+                                    >
+                                        <option value="">All Categories</option>
+
+                                        {motorbikeCategories.map((item, index) => (
+                                            <option key={index}>{item}</option>
+                                        ))}
+
+                                        {/* Add more category options here */}
+                                    </select>
                                 </div>
                             </div>
                             <div class="grid gap-8 lg:grid-cols-2">
@@ -94,14 +121,16 @@ const BlogPage = () => {
                                             </span>
                                             <span className="text-sm">{format(item.createdAt)}</span>
                                         </div>
-                                        <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="#">{item.title}</a></h2>
-                                        <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
+                                        <div className="flex flex-col justify-center items-start">
+                                            <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.title}</h1>
+                                            <h1 className='mb-2 text-sm self-end text-gray-600 dark:text-white'>( {item.category} )</h1>
+                                        </div>                                        <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
                                             {item.description}
                                         </p>
                                         <div className="flex justify-between items-center">
                                             <div className='flex'>
                                                 {/* <AiFillHeart size={22}/> */}
-                                                <AiOutlineHeart size={22} />
+                                                <AiOutlineHeart size={22} onClick={() => handleLike(item?._id)} />
                                                 <span className='mx-1'>{item.likes.length} likes</span>
 
                                             </div>

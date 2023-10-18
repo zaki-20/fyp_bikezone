@@ -53,11 +53,24 @@ export const likeDisLikeBlogPost = createAsyncThunk('blog/likeDisLikeBlogPost', 
     try {
         return await blogService.likeDisLikeBlogPost(id)
     } catch (error) {
+        console.log(error)
         const message =
             error.response.data.message || error.response.data || error.response
         return thunkAPI.rejectWithValue(message)
     }
 })
+//like dislike blog posts 
+export const deleteBlog = createAsyncThunk('blog/deleteBlog', async (id, thunkAPI) => {
+    try {
+        return await blogService.deleteBlog(id)
+    } catch (error) {
+        console.log(error)
+        const message =
+            error.response.data.message || error.response.data || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 
 
 

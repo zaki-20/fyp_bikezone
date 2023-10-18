@@ -36,17 +36,16 @@ const FeaturedProductsPage = () => {
 
   useEffect(() => {
     dispatch(getAllProducts({ keyword, currentPage, price, category, ratings }))
-  }, [])
+  }, [keyword, currentPage, price, category, ratings])
 
 
   useEffect(() => {
     if (isError) {
-      console.log(message, "featured products page")
-      toast.error(message);
+      toast.error();
       dispatch(reset())
     }
 
-  }, [isError, message, dispatch])
+  }, [message])
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e)
@@ -133,7 +132,7 @@ const FeaturedProductsPage = () => {
                 {categories.map((category, index) => (
                   <li
                     key={index}
-                    className="category-link"
+                    className="category-link cursor-pointer hover:bg-blue-400"
                     onClick={() => setCategory(category)}
                   >
                     {category}

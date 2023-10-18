@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createBlogPost, getAllBlogPosts, getSingleBlogPosts, likeDisLikeBlogPost, myBlogPosts } from "./blog.thunk";
+import { createBlogPost, deleteBlog, getAllBlogPosts, getSingleBlogPosts, likeDisLikeBlogPost, myBlogPosts } from "./blog.thunk";
 import initialBlogState from './blog.initialstate'
 
 const blogSlice = createSlice({
@@ -91,7 +91,6 @@ const blogSlice = createSlice({
             .addCase(likeDisLikeBlogPost.pending, (state) => {
                 state.isLoading = true
                 state.isSuccess = false
-
             })
             .addCase(likeDisLikeBlogPost.fulfilled, (state, action) => {
                 state.isLoading = false
@@ -99,6 +98,21 @@ const blogSlice = createSlice({
                 state.message = action.payload.message
             })
             .addCase(likeDisLikeBlogPost.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+            })
+            .addCase(deleteBlog.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(deleteBlog.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(deleteBlog.rejected, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = false
                 state.isError = true

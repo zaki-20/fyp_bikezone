@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { reset } from '../../features/blog/blog.slice';
 import { format } from "timeago.js";
 import { MdEmail } from 'react-icons/md'
 import { toast } from 'react-toastify';
 import Loader from '../shared/Loader';
-import { getSingleBlogPosts } from '../../features/blog/blog.thunk';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import { deleteBlog, getSingleBlogPosts, likeDisLikeBlogPost } from '../../features/blog/blog.thunk';
+
+import { AiOutlineHeart, AiFillHeart, AiFillDelete } from 'react-icons/ai'
 
 
 const GetSingleBlog = () => {
     const { id } = useParams(); // Get the blogId from the URL
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { isLoading, isError, isSuccess, message, blogPost } = useSelector((state) => state.blog)
-
+    const loggedInUser = useSelector((state) => state.auth.user);
 
 
     useEffect(() => {
@@ -27,6 +29,16 @@ const GetSingleBlog = () => {
     }, [isError, dispatch])
 
 
+    const handleLike = async (blogId) => {
+        await dispatch(likeDisLikeBlogPost(blogId))
+        dispatch(getSingleBlogPosts(id));
+    }
+
+    const handleDeletePost = async (id) => {
+        await dispatch(deleteBlog(id))
+        navigate('/blog/me')
+    }
+
     return (
         <>
             {
@@ -38,6 +50,17 @@ const GetSingleBlog = () => {
                                 <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-bold text-gray-900 dark:text-white">{`${blogPost?.user.firstname} ${blogPost?.user.lastname}'s Post`}</h2>
                                 <p className="font-normal text-gray-500 sm:text-xl dark:text-gray-400">Detailed blog post</p>
                             </div>
+
+                            {
+                                // Check if the logged-in user is the author of the blog post
+                                loggedInUser?._id === blogPost?.user._id && (
+                                    <button className=" font-bold group flex gap-2 my-2 rounded shadow-md bg-yellow-400 px-3 hover:px-4  py-2 transition-all ease-in-out duration-150">
+                                        <span>Delete Post</span>
+                                        <AiFillDelete className='text-red-700 group-hover:animate-pulse' size={22} />
+                                    </button>
+                                )
+                            }
+
                             <div >
                                 <article article='true' className="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                                     <div className="flex justify-between items-center mb-5 text-gray-500">
@@ -58,11 +81,17 @@ const GetSingleBlog = () => {
                                     </p>
                                     <div className="">
                                         <div className='flex justify-between items-center'>
-                                            <div className='flex'>
-
-                                                {/* <AiFillHeart size={22}/> */}
-                                                <AiOutlineHeart size={22} />
-                                                <span className='mx-1'>{blogPost?.likes.length} likes</span>
+                                            <div className="flex">
+                                                {blogPost?.likes.includes(loggedInUser?._id) ? (
+                                                    <AiFillHeart className='pointer-cursor text-red-600' size={22} onClick={() => handleLike(blogPost?._id)} />
+                                                ) : (
+                                                    <AiOutlineHeart className='pointer-cursor' size={22} onClick={() => handleLike(blogPost?._id)} />
+                                                )}
+                                                {
+                                                    !isLoading && (
+                                                        <span className="mx-1">{blogPost?.likes.length} likes</span>
+                                                    )
+                                                }
                                             </div>
                                             <div className='flex gap-1 items-center'>
                                                 <MdEmail />

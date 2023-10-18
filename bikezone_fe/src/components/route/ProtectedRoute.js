@@ -29,8 +29,6 @@ const ProtectedRoute = (props) => {
   //         toast.error(message);
   //         dispatch(reset())
   //     }
-
-
   // }, [isError])
 
   return (

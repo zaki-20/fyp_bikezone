@@ -5,20 +5,30 @@ import { Link } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getAllBlogPosts } from '../../features/blog/blog.thunk';
+import { getAllBlogPosts, likeDisLikeBlogPost } from '../../features/blog/blog.thunk';
 import Loader from '../shared/Loader';
 import { TypeAnimation } from 'react-type-animation';
 import { FcSearch } from 'react-icons/fc'
 
 
 const Blogs = () => {
+
     const dispatch = useDispatch();
-    const { isLoading, isError, isSuccess, message, blogPosts } = useSelector(
+
+    const motorbikeCategories = [
+        "Motorbike Reviews", "Maintenance and Repairs", "Motorbike Accessories", "Customization and Modifications", "Motorbike Safety", "Travel and Adventure", "Upcoming Models", "Riding Tips and Techniques", "Motorbike Events and Shows", "Top 10 Lists", "Motorbike Gear Guides", "Motorbike Industry News", "Vintage and Classic Bikes", "Motorbike Racing", "Motorbike Technology", "Environmental Concerns"
+    ];
+
+    const { isLoading, isError, message, blogPosts } = useSelector(
         (state) => state.blog
     );
 
+
+    const loggedInUser = useSelector((state) => state.auth.user);
+
     const [searchTerm, setSearchTerm] = useState(''); // For search input
     const [sortCriteria, setSortCriteria] = useState(''); // For sorting criteria
+    const [categoryFilter, setCategoryFilter] = useState(''); // For filtering by category
 
 
     useEffect(() => {
@@ -34,9 +44,12 @@ const Blogs = () => {
 
 
     const filteredAndSortedBlogPosts = blogPosts
-        .filter((post) =>
-            post.title.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+        .filter((post) => {
+            // Filter by title and category
+            const titleMatch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
+            const categoryMatch = !categoryFilter || post.category === categoryFilter;
+            return titleMatch && categoryMatch;
+        })
         .sort((a, b) => {
             if (sortCriteria === 'title') {
                 return a.title.localeCompare(b.title);
@@ -46,6 +59,12 @@ const Blogs = () => {
             }
         });
 
+
+    const handleLike = async (id) => {
+        await dispatch(likeDisLikeBlogPost(id));
+        dispatch(getAllBlogPosts());
+    }
+
     return (
         <>
             {isLoading ? (
@@ -53,8 +72,8 @@ const Blogs = () => {
             ) : (
                 <section className="bg-blue-200 dark:bg-gray-900">
                     <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-                        <div className="mx-auto max-w-screen-sm text-center mb-4">
-                            <h2 className="mb-4  lg:text-4xl text-2xl tracking-tight font-semibold text-gray-900 dark:text-white">
+                        <div className="mx-auto md:max-w-screen md:max-w-screen-sm text-center mb-4">
+                            <h2 className="mb-4 lg:text-3xl text-2xl tracking-tight font-semibold text-gray-900 dark:text-white">
                                 <TypeAnimation
                                     sequence={[
                                         'Welcome to Motorbike Central!',
@@ -77,14 +96,14 @@ const Blogs = () => {
                             <p className="font-normal text-gray-600 sm:text-xl dark:text-gray-400">
                                 Explore our latest articles and stay informed.
                             </p>
-                            <div className="flex items-center justify-center mt-6">
-                                <div className="relative">
+                            <div className=" flex md:flex-row mx-2 md:gap-0 gap-y-4 flex-col md:items-center md:justify-center items-start mt-6">
+                                <div className="relative md:w-min w-full ">
                                     <input
                                         type="text"
                                         placeholder="Search by Title"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
-                                        className="py-2 px-4 rounded-lg  bg-gray-100 text-gray-700 focus:outline-none focus:ring focus:ring-primary-400 dark:bg-gray-800 dark:text-gray-400 dark:focus:ring-primary-300"
+                                        className="md:ml-4  py-2 px-4  md:w-min w-full rounded-lg  bg-gray-100 text-gray-700 focus:outline-none focus:ring focus:ring-primary-400 dark:bg-gray-800 dark:text-gray-400 dark:focus:ring-primary-300"
                                     />
                                     <div className="absolute animate-pulse inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                         <FcSearch />
@@ -93,15 +112,28 @@ const Blogs = () => {
                                 <select
                                     value={sortCriteria}
                                     onChange={(e) => setSortCriteria(e.target.value)}
-                                    className="ml-4 py-2 px-4 rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring focus:ring-primary-400 dark:bg-gray-800 dark:text-gray-400 dark:focus:ring-primary-300"
+                                    className="md:ml-4 py-2 md:w-min w-full px-4 rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring focus:ring-primary-400 dark:bg-gray-800 dark:text-gray-400 dark:focus:ring-primary-300"
                                 >
                                     <option value="">Sort by Date</option>
                                     <option value="title">Sort by Title</option>
                                 </select>
+                                <select
+                                    value={categoryFilter}
+                                    onChange={(e) => setCategoryFilter(e.target.value)}
+                                    className="md:ml-4 py-2 px-4 md:w-min w-full  rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring focus:ring-primary-400 dark:bg-gray-800 dark:text-gray-400 dark:focus:ring-primary-300"
+                                >
+                                    <option value="">All Categories</option>
+
+                                    {motorbikeCategories.map((item, index) => (
+                                        <option key={index}>{item}</option>
+                                    ))}
+
+                                    {/* Add more category options here */}
+                                </select>
                             </div>
                         </div>
                         <div className="grid gap-8 lg:grid-cols-2">
-                            {filteredAndSortedBlogPosts.map((item, index) => (
+                            {loggedInUser && filteredAndSortedBlogPosts.map((item, index) => (
                                 <article
                                     key={index}
                                     article="true"
@@ -126,18 +158,25 @@ const Blogs = () => {
                                         </span>
                                         <span className="text-sm">{format(item.createdAt)}</span>
                                     </div>
-                                    <h2 className="flex gap-4 items-center">
+                                    <div className="flex flex-col justify-center items-start">
                                         <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.title}</h1>
-                                        <h1 className='mb-2 text-sm text-gray-600 dark:text-white'>( {item.category} )</h1>
-                                    </h2>
+                                        <h1 className='mb-2 text-sm self-end text-gray-600 dark:text-white'>( {item.category} )</h1>
+                                    </div>
                                     <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
                                         {item.description.length > 300 ? `${item.description.slice(0, 300)}...` : item.description}
                                     </p>
                                     <div className="flex justify-between items-center">
                                         <div className="flex">
-                                            {/* <AiFillHeart size={22}/> */}
-                                            <AiOutlineHeart size={22} />
-                                            <span className="mx-1">{item.likes.length} likes</span>
+                                            {item.likes.includes(loggedInUser._id) ? (
+                                                <AiFillHeart className='pointer-cursor text-red-600' size={22} onClick={() => handleLike(item._id)} />
+                                            ) : (
+                                                <AiOutlineHeart className='pointer-cursor' size={22} onClick={() => handleLike(item._id)} />
+                                            )}
+                                            {
+                                                !isLoading && (
+                                                    <span className="mx-1">{item.likes.length} likes</span>
+                                                )
+                                            }
                                         </div>
                                         <Link
                                             to={`/blog/${item._id}`}

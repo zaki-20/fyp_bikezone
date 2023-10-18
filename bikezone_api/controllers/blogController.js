@@ -63,13 +63,16 @@ exports.getSingleBlog = async (req, res, next) => {
 // Like / dislike post
 exports.likeDislikePost = async (req, res, next) => {
     const post = await Blog.findById(req.params.id);
+
+
+    console.log(req.user)
     if (!post.likes.includes(req.user._id)) {
         await post.updateOne({ $push: { likes: req.user._id } });
         res.status(200).json({
             statusCode: 200,
             success: true,
             message: "post has been liked",
-            payload: {},
+            payload: { post },
         });
     } else {
         await post.updateOne({ $pull: { likes: req.user._id } });
@@ -77,7 +80,7 @@ exports.likeDislikePost = async (req, res, next) => {
             statusCode: 200,
             success: true,
             message: "post has been disliked",
-            payload: {},
+            payload: { post },
         });
     }
 };
@@ -106,13 +109,15 @@ exports.deleteAllBlogs = catchAsyncErrors(async (req, res, next) => {
         message: "All blog posts have been deleted.",
     });
 });
-// export const deleteBlog = async (req, res) => {
-//   const blogId = req.params.id;
-//   await Blog.findByIdAndDelete(blogId);
-//   res.status(200).json({
-//     statusCode: 200,
-//     success: true,
-//     message: "Blog Deleted Successfully",
-//   });
-// };
+
+exports.deleteBlog = catchAsyncErrors(async (req, res) => {
+    const blogId = req.params.id;
+    await Blog.findByIdAndDelete(blogId);
+    res.status(200).json({
+        statusCode: 200,
+        success: true,
+        message: "Blog Deleted Successfully",
+        payload: {}
+    });
+});
 

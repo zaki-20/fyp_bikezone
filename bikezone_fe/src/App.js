@@ -51,7 +51,7 @@ function App() {
   }
 
 
-  const { user, resetToken } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth)
 
   const [cookies] = useCookies(["token"]);
   const dispatch = useDispatch();

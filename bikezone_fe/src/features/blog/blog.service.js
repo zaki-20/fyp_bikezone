@@ -26,9 +26,31 @@ const getAllBlogPosts = async () => {
     return response.data
 }
 
-//like dislike post 
+// like dislike post
 const likeDisLikeBlogPost = async (id) => {
-    const response = await axios.put(API_URL + `blog/${id}/like`, { withCredentials: true })
+
+    // Get the token from the cookie
+    const token = document.cookie.split('; ').find(cookie => cookie.startsWith('token=')).split('=')[1];
+    console.log('Token:', token);
+
+    // Attach the token to the request headers
+    const headers = {
+        'Authorization': `Bearer ${token}`,
+    };
+
+    try {
+        const response = await axios.put(API_URL + `blog/${id}/like`, null, { withCredentials: true, headers });
+        return response.data;
+    } catch (error) {
+        // Handle errors
+        console.error('Error in likeDisLikeBlogPost:', error);
+        throw error;
+    }
+};
+
+//get all blog posts
+const deleteBlog = async (id) => {
+    const response = await axios.delete(API_URL + `blog/${id}`, { withCredentials: true })
     return response.data
 }
 
@@ -37,6 +59,7 @@ const blogService = {
     myBlogPosts,
     likeDisLikeBlogPost,
     getAllBlogPosts,
-    getSingleBlogPosts
+    getSingleBlogPosts,
+    deleteBlog
 }
 export default blogService
