@@ -24,8 +24,20 @@ export const getProductDetail = createAsyncThunk('products/getProductDetail', as
     }
 })
 
+// get all rated  products
+export const getRatedProducts = createAsyncThunk('products/getRatedProducts', async (_, thunkAPI) => {
+    try {
+        return await productService.getRatedProducts()
+    } catch (error) {
+        const message =
+            (error.response && error.response.data && error.response.data.message) || error.message ||
+            error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 //cart===================================
-// gadd items in cart
+// add items in cart
 export const addItemsToCart = createAsyncThunk('products/addItemsToCart', async ({ id, quantity }, thunkAPI) => {
     try {
         const state = thunkAPI.getState();

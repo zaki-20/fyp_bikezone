@@ -208,3 +208,18 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+exports.getRatingProducts = async (req, res, next) => {
+
+  const minRating = 4; // Define the minimum rating you want to filter by
+
+  const products = await Product.find({ ratings: { $gte: minRating } });
+
+  res.status(200).json({
+    statusCode: 200,
+    status: true,
+    message: "Rating products retrieved!",
+    payload: {products}
+  });
+
+};

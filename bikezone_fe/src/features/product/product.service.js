@@ -23,16 +23,16 @@ const getProductDetail = async (id) => {
     return response.data
 }
 
-//addItemsToCart
-const addItemsToCart = async (id) => {
-    // const response = await axios.get(API_URL + `product/${id}`)
-    // return response.data
-
+//get top rated products
+const getRatedProducts = async () => {
+    const response = await axios.get(API_URL + `products/top-rated`)
+    return response.data
 }
+
 
 const productService = {
     getAllProducts,
     getProductDetail,
-    addItemsToCart
+    getRatedProducts
 }
 export default productService

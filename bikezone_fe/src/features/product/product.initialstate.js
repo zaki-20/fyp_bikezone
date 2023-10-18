@@ -18,7 +18,8 @@ const initialProductState = {
     length: null,
     productsCount: null,
     resultPerPage: null,
-    filteredProductsCount: null
+    filteredProductsCount: null,
+    topRated: []
 };
 
 export default initialProductState;
