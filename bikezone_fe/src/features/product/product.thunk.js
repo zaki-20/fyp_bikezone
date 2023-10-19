@@ -48,6 +48,17 @@ export const getReviewedProducts = createAsyncThunk('products/getReviewedProduct
         return thunkAPI.rejectWithValue(message)
     }
 })
+// get all new arrival products
+export const getNewArrivalProducts = createAsyncThunk('products/getNewArrivalProducts', async (_, thunkAPI) => {
+    try {
+        return await productService.getNewArrivalProducts()
+    } catch (error) {
+        const message =
+            (error.response && error.response.data && error.response.data.message) || error.message ||
+            error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 
 //cart===================================
 // add items in cart

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../../components/cards/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProducts } from '../../features/product/product.thunk'
+import { getAllProducts, getNewArrivalProducts } from '../../features/product/product.thunk'
 import Loader from '../shared/Loader'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,13 +31,24 @@ const FeaturedProductsPage = () => {
   const [category, setCategory] = useState("");
   const [ratings, setRatings] = useState(0);
 
+  useEffect(() => {
+    dispatch(getNewArrivalProducts())
+  }, [])
 
   const { isError, isLoading, message, products, productsCount, resultPerPage } = useSelector((state) => state.product)
+  const { newArrival, isLoading: loading } = useSelector((state) => state.product)
+
+
 
   useEffect(() => {
     dispatch(getAllProducts({ keyword, currentPage, price, category, ratings }))
   }, [keyword, currentPage, price, category, ratings])
 
+
+  useEffect(() => {
+    if (loading)
+      console.log(newArrival)
+  }, [loading])
 
   useEffect(() => {
     if (isError) {
@@ -98,11 +109,15 @@ const FeaturedProductsPage = () => {
                   {/* Show error toast when isError is true */}
 
                   <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-
                     {products &&
                       products?.map((product) => {
+
+                        const newArrive = newArrival?.some((newArrivalItem) => newArrivalItem._id === product._id);
+                        console.log(newArrive)
+                        // Check if the product is a new arrival
+
                         return (
-                          <ProductCard key={product._id} product={product} />
+                          <ProductCard key={product._id} product={product} newArrive={newArrive ? "newArrive" : null} />
                         )
                       })
                     }

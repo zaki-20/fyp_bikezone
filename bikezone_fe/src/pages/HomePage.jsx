@@ -4,6 +4,7 @@ import FeaturedProducts from '../components/sections/FeaturedProducts'
 import MetaData from '../components/MetaData'
 import TopRatedProducts from '../components/sections/TopRatedProducts'
 import ReviewedProducts from '../components/sections/ReviewedProducts'
+import NewArrivalProducts from '../components/sections/NewArrivalProucts'
 
 const HomePage = () => {
   return (
@@ -13,6 +14,7 @@ const HomePage = () => {
       <FeaturedProducts />
       <TopRatedProducts />
       <ReviewedProducts />
+      <NewArrivalProducts />
     </div>
   )
 }

@@ -35,11 +35,18 @@ const getReviewedProducts = async () => {
     return response.data
 }
 
+//get new arrival  products
+const getNewArrivalProducts = async () => {
+    const response = await axios.get(API_URL + `products/new-arrival`)
+    return response.data
+}
+
 
 const productService = {
     getAllProducts,
     getProductDetail,
     getRatedProducts,
-    getReviewedProducts
+    getReviewedProducts,
+    getNewArrivalProducts
 }
 export default productService

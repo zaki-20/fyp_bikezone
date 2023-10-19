@@ -246,6 +246,28 @@ exports.getProductsWithReviews = async (req, res, next) => {
 
 };
 
+exports.getNewArrivalProducts = catchAsyncErrors(async (req, res, next) => {
+
+  const today = new Date(); // Get the current date
+  const threeDaysAgo = new Date(today);
+  threeDaysAgo.setDate(today.getDate() - 3); // Calculate the date 3 days ago
+
+  const products = await Product.find({
+    createdAt: { $gte: threeDaysAgo, $lte: today },
+  });
+
+  if (!products) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+
+  res.status(200).json({
+    statusCode: 200,
+    status: true,
+    message: "new arrival products retrieved!",
+    payload: { products }
+  });
+
+});
 
 
 

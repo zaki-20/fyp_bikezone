@@ -20,7 +20,8 @@ const initialProductState = {
     resultPerPage: null,
     filteredProductsCount: null,
     topRated: [],
-    reviewed: []
+    reviewed: [],
+    newArrival:[]
 };
 
 export default initialProductState;
