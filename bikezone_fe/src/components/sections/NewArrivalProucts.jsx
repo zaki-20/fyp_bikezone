@@ -37,7 +37,7 @@ const NewArrivalProducts = () => {
 
     return (
 
-        <div className="flex flex-col bg-[#def5f596]">
+        <div className="flex flex-col bg-[#d0d1d1]">
             <div className='flex justify-between items-center mx-5'>
                 <h1 className="flex py-5 md:ml-10 md:mx-10  font-bold text-4xl text-[#122222]">
                     New Arrival Products

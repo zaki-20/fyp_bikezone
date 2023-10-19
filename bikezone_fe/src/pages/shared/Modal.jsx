@@ -7,15 +7,25 @@ import {
     DialogFooter,
 } from "@material-tailwind/react";
 
-const LoginRequestModal = () => {
+const Modal = () => {
     const [open, setOpen] = React.useState(true);
 
     const handleOpen = () => setOpen(!open);
     return (
         <div>
-            <Dialog open={open} handler={handleOpen}>
+            <Button onClick={handleOpen} variant="gradient">
+                Open Dialog
+            </Button>
+            <Dialog
+                open={open}
+                handler={handleOpen}
+                animate={{
+                    mount: { scale: 1, y: 0 },
+                    unmount: { scale: 0.9, y: -100 },
+                }}
+            >
                 <DialogHeader>Its a simple dialog.</DialogHeader>
-                <DialogBody divider>
+                <DialogBody>
                     The key to more success is to have a lot of pillows. Put it this way,
                     it took me twenty five years to get these plants, twenty five years of
                     blood sweat and tears, and I&apos;m never giving up, I&apos;m just
@@ -35,9 +45,8 @@ const LoginRequestModal = () => {
                     </Button>
                 </DialogFooter>
             </Dialog>
-
         </div>
     )
 }
 
-export default LoginRequestModal
+export default Modal

@@ -131,17 +131,17 @@ const Header = () => {
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
             <ul className="flex flex-col  items-center font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-[#122222] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-                <Link to="/" className="block py-2 pl-3 pr-2 rounded hover:text-yellow-400  md:text-white md:p-0 md:hover:bg-transparent md:dark:text-blue-500" aria-current="page">Home</Link>
+                <Link to="/" className="block  py-2 pl-3 pr-2 rounded hover:text-yellow-400 hover:bg-[#122222] md:text-white md:p-0 md:hover:bg-transparent md:dark:text-blue-500 hover:scale-105" aria-current="page">Home</Link>
               </li>
               <li>
-                <Link to="/about" className=" block py-2 pl-3 pr-2 text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</Link>
+                <Link to="/about" className=" block py-2 pl-3 pr-2 text-gray-900 rounded hover:text-yellow-400 hover:bg-[#122222] md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 hover:scale-105">About</Link>
               </li>
 
               <li>
                 <Menu>
                   <MenuHandler>
                     <button
-                      className=" block py-2 pl-3 pr-2 text-gray-900  hover:text-yellow-400  md:text-white  dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 middle none center   transition-all  active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 "
+                      className=" block py-2 pl-3 pr-2 text-gray-900 hover:bg-[#122222]  hover:text-yellow-400  md:text-white  dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 middle none center   transition-all  active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 hover:scale-105"
                     >Services
                     </button>
                   </MenuHandler>
@@ -171,16 +171,13 @@ const Header = () => {
                   </MenuList>
                 </Menu>
 
-
-
               </li>
 
-
               <li>
-                <Link to="/login" className="block py-2 pl-3 pr-2 text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">later</Link>
+                <Link to="/login" className="block py-2 pl-3 pr-2 hover:bg-[#122222] text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 hover:scale-105">later</Link>
               </li>
               <li>
-                <Link to="/contact" className="block py-2 pl-3 pr-2 text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</Link>
+                <Link to="/contact" className="block py-2 pl-3 pr-2 hover:bg-[#122222] text-gray-900 rounded hover:text-yellow-400 md:hover:bg-transparent md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 hover:scale-105">Contact</Link>
               </li>
             </ul>
           </div>

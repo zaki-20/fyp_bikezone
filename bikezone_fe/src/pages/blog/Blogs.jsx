@@ -3,6 +3,7 @@ import { reset } from '../../features/blog/blog.slice';
 import { format } from 'timeago.js';
 import { Link } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { MdOutlineDescription, MdTitle } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getAllBlogPosts, likeDisLikeBlogPost } from '../../features/blog/blog.thunk';
@@ -133,7 +134,7 @@ const Blogs = () => {
                             </div>
                         </div>
                         <div className="grid gap-8 lg:grid-cols-2">
-                            {loggedInUser && filteredAndSortedBlogPosts.map((item, index) => (
+                            {filteredAndSortedBlogPosts.map((item, index) => (
                                 <article
                                     key={index}
                                     article="true"
@@ -158,26 +159,53 @@ const Blogs = () => {
                                         </span>
                                         <span className="text-sm">{format(item.createdAt)}</span>
                                     </div>
-                                    <div className="flex flex-col justify-center items-start">
-                                        <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.title}</h1>
+
+                                    <div className='flex gap-x-2 items-center mb-2'>
+                                        <h2 className=" text-xl  font-bold tracking-tight text-gray-900  dark:text-white">Title</h2>
+                                        <span><MdTitle size={20} /></span>
+                                    </div>
+
+
+                                    <div className="flex flex-col border-b justify-center items-start">
+                                        <h1 className="mb-2 ml-2 text-xl  text-gray-600 dark:text-white">{item.title}</h1>
                                         <h1 className='mb-2 text-sm self-end text-gray-600 dark:text-white'>( {item.category} )</h1>
                                     </div>
-                                    <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
+
+                                    <div className='flex gap-x-2 items-center mb-2'>
+                                        <h2 className=" text-xl  font-bold tracking-tight text-gray-900  dark:text-white">Description</h2>
+                                        <span><MdOutlineDescription size={20} /></span>
+                                    </div>
+                                    <p className="mb-5 ml-2  text-gray-600 dark:text-gray-400 ">
                                         {item.description.length > 300 ? `${item.description.slice(0, 300)}...` : item.description}
                                     </p>
                                     <div className="flex justify-between items-center">
-                                        <div className="flex">
-                                            {item.likes.includes(loggedInUser._id) ? (
-                                                <AiFillHeart className='pointer-cursor text-red-600' size={22} onClick={() => handleLike(item._id)} />
+                                        {
+                                            loggedInUser ? (
+                                                <div className="flex">
+
+                                                    {item.likes.includes(loggedInUser?._id) ? (
+                                                        <AiFillHeart className='pointer-cursor text-red-600' size={22} onClick={() => handleLike(item._id)} />
+                                                    ) : (
+                                                        <AiOutlineHeart className='pointer-cursor' size={22} onClick={() => handleLike(item._id)} />
+                                                    )}
+                                                    {
+                                                        !isLoading && (
+                                                            <span className="mx-1">{item.likes.length} likes</span>
+                                                        )
+                                                    }
+                                                </div>
                                             ) : (
-                                                <AiOutlineHeart className='pointer-cursor' size={22} onClick={() => handleLike(item._id)} />
-                                            )}
-                                            {
-                                                !isLoading && (
-                                                    <span className="mx-1">{item.likes.length} likes</span>
-                                                )
-                                            }
-                                        </div>
+                                                <div className='flex'>
+                                                    <AiOutlineHeart className='cursor-not-allowed' size={22} />
+                                                    {
+                                                        !isLoading && (
+                                                            <span className="mx-1">{item.likes.length} likes</span>
+                                                        )
+                                                    }
+                                                </div>
+                                            )
+                                        }
+
                                         <Link
                                             to={`/blog/${item._id}`}
                                             className="inline-flex group hover:animate-pulse items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"

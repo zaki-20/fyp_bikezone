@@ -84,7 +84,7 @@ const FeaturedProductsPage = () => {
       <MetaData title={"PRODUCTS -- BIKEZONE"} />
 
 
-      <div className='flex md:mx-0 md:justify-start min-h-screen justify-center bg-[#def5f596] '>
+      <div className='flex md:mx-0 md:justify-start min-h-screen justify-center bg-[#d0d1d1] '>
 
         <div className=' md:w-3/4 '>
           <div className="  px-2 py-8 ">
@@ -95,10 +95,10 @@ const FeaturedProductsPage = () => {
                 type="text"
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Search products..."
-                className="w-full px-3 py-2 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500"
+                className="w-full px-3 py-2 rounded-md border-2 bg-yellow-50 border-black focus:outline-none focus:border-blue-500"
               />
 
-              <button type="submit" className='px-3 py-2 border m-2'>Submit</button>
+              <button type="submit" className='px-3 py-2 border-yellow-400 border-2 my-2 hover:text-yellow-400 hover:bg-[#122222] hover:rounded-md duration-200'>Submit</button>
 
             </form>
 
@@ -128,10 +128,12 @@ const FeaturedProductsPage = () => {
 
           </div>
 
-          <div className='md:w-1/5 border-2 md:absolute static right-0 px-2 mx-4 top-64 '>
-            <div className=' border-black my-2 '>
+          <div className='md:w-1/5 border-2 border-black  md:absolute static right-0 p-3 mx-4 top-64 '>
+            <div className='  my-2 '>
               <h1 className="font-semibold text-black"> Price</h1>
               <Slider
+                // className='text-yellow-400 bg-yellow-400'
+                color='warning'
                 getAriaLabel={() => ''}
                 value={price}
                 onChange={priceHandler}
@@ -141,13 +143,13 @@ const FeaturedProductsPage = () => {
                 max={25000}
               />
             </div>
-            <div className=' border my-2'>
-              <h1 className="font-semibold text-black"> Categories</h1>
+            <div className=' border border-black p-2 my-2'>
+              <h1 className="font-semibold border-b border-black  text-black"> Categories</h1>
               <ul className="categoryBox">
                 {categories.map((category, index) => (
                   <li
                     key={index}
-                    className="category-link cursor-pointer hover:bg-blue-400"
+                    className="category-link cursor-pointer hover:bg-[#122222] hover:text-yellow-400 hover:p-1 hover:tracking-wide duration-200"
                     onClick={() => setCategory(category)}
                   >
                     {category}
@@ -166,6 +168,7 @@ const FeaturedProductsPage = () => {
                 valueLabelDisplay="auto"
                 min={0}
                 max={5}
+                color='warning'
               />
             </fieldset>
           </div>
@@ -186,11 +189,11 @@ const FeaturedProductsPage = () => {
                   itemClass="page-item px-4 py-2"
                   linkClass="page-link"
                   innerClass="flex" // Apply Tailwind styles for the parent container
-                  activeClass="bg-blue-500 text-white" // Apply styles for the active page
-                  itemClassPrev="border rounded  hover:bg-blue-500 hover:text-white" // Apply styles for previous page
-                  itemClassNext="border rounded  hover:bg-blue-500 hover:text-white" // Apply styles for next page
-                  itemClassFirst="border rounded  hover:bg-blue-500 hover:text-white" // Apply styles for first page
-                  itemClassLast="border rounded  hover:bg-blue-500 hover:text-white" // Apply styles for last page
+                  activeClass="bg-[#122222] text-yellow-400" // Apply styles for the active page
+                  itemClassPrev="border border-black rounded  hover:bg-[#122222] hover:text-yellow-400" // Apply styles for previous page
+                  itemClassNext="border border-black rounded  hover:bg-[#122222] hover:text-yellow-400" // Apply styles for next page
+                  itemClassFirst="border border-black rounded  hover:bg-[#122222] hover:text-yellow-400" // Apply styles for first page
+                  itemClassLast="border border-black rounded  hover:bg-[#122222] hover:text-yellow-400" // Apply styles for last page
                 />
 
               </div>

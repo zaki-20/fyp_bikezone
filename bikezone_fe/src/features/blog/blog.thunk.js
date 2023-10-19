@@ -59,7 +59,7 @@ export const likeDisLikeBlogPost = createAsyncThunk('blog/likeDisLikeBlogPost', 
         return thunkAPI.rejectWithValue(message)
     }
 })
-//like dislike blog posts 
+//delete blog posts 
 export const deleteBlog = createAsyncThunk('blog/deleteBlog', async (id, thunkAPI) => {
     try {
         return await blogService.deleteBlog(id)

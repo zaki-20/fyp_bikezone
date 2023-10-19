@@ -82,17 +82,15 @@ function App() {
         <Route exact path="/contact" element={<ContactUs />} />
         <Route exact path="/about" element={<AboutUs />} />
         <Route exact path="/product/:id" element={<ProductDetail />} />
-
         <Route exact path="/addproduct" element={<AddProduct />} />
-
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/success" element={<PaymentSuccess />} />
+        <Route exact path="/blogs" element={<Blogs />} />
 
 
         {/* admin routes */}
         <Route exact path="/dashboard" element={<Dashboard />} />
 
-        {/* <Route exact path="/orderDetail" element={<OrderDetails />} /> */}
 
 
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
@@ -111,7 +109,6 @@ function App() {
         <Route exact path="/blog/new" element={<ProtectedRoute Component={CreateBlogPost} />} />
         <Route exact path="/blog/me" element={<ProtectedRoute Component={MyBlogs} />} />
         <Route exact path="/blog/:id" element={<ProtectedRoute Component={GetSingleBlog} />} />
-        <Route exact path="/blogs" element={<ProtectedRoute Component={Blogs} />} />
 
         <Route exact path="/process/payment" element={
           stripeApiKey && (

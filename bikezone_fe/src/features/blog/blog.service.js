@@ -22,7 +22,7 @@ const getSingleBlogPosts = async (id) => {
 
 //get all blog posts
 const getAllBlogPosts = async () => {
-    const response = await axios.get(API_URL + 'blogs', { withCredentials: true })
+    const response = await axios.get(API_URL + 'blogs')
     return response.data
 }
 
@@ -48,7 +48,7 @@ const likeDisLikeBlogPost = async (id) => {
     }
 };
 
-//get all blog posts
+//delete  blog posts
 const deleteBlog = async (id) => {
     const response = await axios.delete(API_URL + `blog/${id}`, { withCredentials: true })
     return response.data

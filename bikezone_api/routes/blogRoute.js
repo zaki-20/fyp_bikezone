@@ -5,7 +5,7 @@ const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
 const router = express.Router();
 
 router.route("/blogs")
-    .get(isAuthenticatedUser, getAllBlogs)
+    .get( getAllBlogs)
     .delete(isAuthenticatedUser, deleteAllBlogs);
 
 router.route("/blog/new").post(isAuthenticatedUser, createBlog);
