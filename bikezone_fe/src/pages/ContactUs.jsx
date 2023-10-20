@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from 'formik';
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { createContact } from "../features/contact/contact.thunk";
+import { toast } from 'react-toastify';
+import { reset } from "../features/contact/contact.slice";
+
+
 const schema = yup.object({
     name: yup.string().required('name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -10,6 +16,19 @@ const schema = yup.object({
 
 
 const ContactUs = () => {
+
+    const dispatch = useDispatch()
+    const { isSuccess, isError, isLoading, message } = useSelector(state => state.contact)
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message)
+            dispatch(reset())
+        }
+        if (isSuccess) {
+            toast.success(message)
+        }
+    }, [isError, isSuccess])
 
     const initialValues = {
         name: "",
@@ -26,9 +45,11 @@ const ContactUs = () => {
             validateOnBlur: false,
             //// By disabling validation onChange and onBlur formik will validate on submit.
             onSubmit: (values, action) => {
-                console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", values);
                 //// to get rid of all the values after submitting the form
+                console.log(values)
+                dispatch(createContact(values))
                 action.resetForm();
+
             },
         });
 

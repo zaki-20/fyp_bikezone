@@ -62,13 +62,13 @@ const UpdatePassword = () => {
 
 
     return (
-        <div className="min-h-screen bg-[#def5f596] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-[#d0d1d1] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Update Password</h2>
             </div>
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <div className="bg-[#b6b6b6] py-8 px-4 shadow sm:rounded-lg sm:px-10">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label htmlFor="oldPassword" className="block text-sm font-medium text-gray-700">
@@ -82,7 +82,7 @@ const UpdatePassword = () => {
                                     value={values.oldPassword}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                 />
                                 {errors.oldPassword && touched.oldPassword ? (
                                     <p className="text-red-600 animate-pulse">{errors.oldPassword}</p>
@@ -102,7 +102,7 @@ const UpdatePassword = () => {
                                     value={values.newPassword}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                 />
                                 {errors.newPassword && touched.newPassword ? (
                                     <p className="text-red-600 animate-pulse">{errors.newPassword}</p>
@@ -122,7 +122,7 @@ const UpdatePassword = () => {
                                     value={values.confirmPassword}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                 />
                                 {errors.confirmPassword && touched.confirmPassword ? (
                                     <p className="text-red-600 animate-pulse">{errors.confirmPassword}</p>

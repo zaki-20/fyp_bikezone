@@ -86,7 +86,7 @@ const EditProfile = () => {
    <>
          <MetaData title={"update profile"} />
 
-         <div className="min-h-screen bg-[#def5f596] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+         <div className="min-h-screen bg-[#d0d1d1] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                     Edit Profile
@@ -94,7 +94,7 @@ const EditProfile = () => {
             </div>
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <div className="bg-[#b6b6b6]  py-8 px-4 shadow sm:rounded-lg sm:px-10">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label htmlFor="firstname" className="block text-sm font-medium text-gray-700">
@@ -108,7 +108,7 @@ const EditProfile = () => {
                                     value={values.firstname}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md bg-gray-100"
                                 />
                                 {errors.firstname && touched.firstname ? (
                                     <p className="text-red-600 animate-pulse">{errors.firstname}</p>
@@ -128,7 +128,7 @@ const EditProfile = () => {
                                     value={values.lastname}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md bg-gray-100"
                                 />
                                 {errors.lastname && touched.lastname ? (
                                     <p className="text-red-600 animate-pulse">{errors.lastname}</p>
@@ -148,7 +148,7 @@ const EditProfile = () => {
                                     value={values.email}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm  rounded-md bg-gray-100"
                                 />
                                 {errors.email && touched.email ? (
                                     <p className="text-red-600 animate-pulse">{errors.email}</p>
@@ -159,7 +159,7 @@ const EditProfile = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#122222]"
+                                className="group relative w-full flex hover:text-yellow-400 justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#122222]"
                             >
                                 Update Profile
                             </button>

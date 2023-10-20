@@ -94,7 +94,7 @@ const MyOrders = () => {
     }, [dispatch, isError, user]);
 
     return (
-        <div className='bg-[#def5f596] p-16'>
+        <div className='bg-[#d0d1d1] p-16'>
 
             {isLoading ? (<Loader />) : (
                 <div className="myOrdersPage h-screen">
@@ -112,7 +112,7 @@ const MyOrders = () => {
                         columns={columns}
                         pageSize={10}
                         disableSelectionOnClick
-                        className=" bg-white"
+                        className=" bg-gray-200"
                         autoHeight
                     />
 

@@ -32,14 +32,14 @@ const ConfirmOrder = () => {
 
     return (
         <div>
-            <CheckoutSteps activeStep={1} />
+            <CheckoutSteps activeStep={1} color={"bg-[#d0d1d1]"}/>
 
-            <div className="bg-[#def5f596] sm:px-10 lg:px-20 md:flex flex-none justify-between gap-8 xl:px-32">
+            <div className="bg-[#d0d1d1] sm:px-10 lg:px-20 md:flex flex-none justify-between gap-8 xl:px-32">
                 <div className="px-4 py-8 md:w-2/3 w-full">
-                    <div className=''>
+                    <div className='border-b py-6 border-black'>
                         <p className="text-xl font-medium">Shipping Detail</p>
-                        <p className="text-gray-400">Check your Shipping Details. Avoid fake details.</p>
-                        <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
+                        <p className="text-gray-500">Check your Shipping Details. Avoid fake details.</p>
+                        <div className="mt-4 space-y-3 rounded-lg border bg-gray-50 px-2 py-2 sm:px-6">
                             {/* Name */}
                             <div className="flex justify-between mx-4">
                                 <span className="text-gray-700 text-sm font-bold">Name:</span>
@@ -60,13 +60,13 @@ const ConfirmOrder = () => {
                         </div>
                     </div>
 
-                    <div className='mt-10'>
+                    <div className='mt-6'>
                         <p className="text-xl font-medium">Order Summary</p>
-                        <p className="text-gray-400">Check your order summary.</p>
-                        <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
+                        <p className="text-gray-500">Check your order summary.</p>
+                        <div className="mt-4 space-y-3 rounded-lg border bg-gray-50 px-2 py-2 sm:px-6">
                             {
                                 cartItems.map((item, index) => (
-                                    <div key={index} className="flex flex-col rounded-lg bg-white sm:flex-row">
+                                    <div key={index} className="flex flex-col rounded-lg  sm:flex-row">
                                         <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt='true' />
                                         <div className="flex w-full justify-between items-center px-4 py-4">
                                             <div>
@@ -89,7 +89,7 @@ const ConfirmOrder = () => {
                 <div className='h-[80%] px-4 md:w-1/3 w-full mt-2 py-8'>
 
                     <p className="text-xl font-medium">Payment Details</p>
-                    <p className="text-gray-400 mb-6">Complete your order by continue to payment.</p>
+                    <p className="text-gray-500 mb-6">Complete your order by continue to payment.</p>
 
                     <div className=" bg-gray-50 border p-6 rounded">
 

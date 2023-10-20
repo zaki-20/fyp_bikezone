@@ -57,7 +57,7 @@ const Cart = () => {
     }
 
     return (
-        <div className='bg-[#def5f596]'>
+        <div className='bg-[#d0d1d1]'>
             {cartItems.length !== 0 ? (<div className=" pt-20">
 
                 <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>

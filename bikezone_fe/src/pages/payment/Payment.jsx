@@ -38,7 +38,7 @@ const Payment = () => {
         amount: Math.round(orderInfo.totalPrice * 100),
     };
 
-   
+
     const order = {
         shippingInfo,
         orderItems: cartItems,
@@ -114,15 +114,15 @@ const Payment = () => {
     return (
         <>
             <MetaData title={"payment"} />
-            <CheckoutSteps activeStep={2} />
+            <CheckoutSteps activeStep={2} color={"bg-[#d0d1d1]"} />
 
-            <div className="min-w-screen  flex items-center justify-center px-5 py-5 my-10">
-                <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: 1000 }}>
+            <div className="min-w-screen bg-[#d0d1d1]  flex items-center justify-center px-5 py-12">
+                <div className=" text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: 1000 }}>
                     <div className="md:flex w-full">
                         <div className="hidden md:block w-1/2 bg-gray-200 px-6 py-10 ">
                             <img src={paymentPic} alt="loginbike" className='w-full  rounded-3xl ' />
                         </div>
-                        <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
+                        <div className="w-full md:w-1/2 py-10 bg-[#e4e4e4]  px-5 md:px-10">
                             <div className="text-center mb-10">
                                 <h1 className="font-bold text-3xl text-gray-900">Payment Details</h1>
                                 <p>Enter your card details for payment</p>

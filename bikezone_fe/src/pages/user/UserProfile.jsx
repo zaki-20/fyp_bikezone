@@ -12,12 +12,12 @@ const UserProfile = () => {
 
         <>
             <MetaData title={"profile"} />
-            <div className="md:p-16 p-4 bg-[#def5f596]">
-                <div className="p-8 bg-[#d9fafa96] shadow-md mt-2 md:mt-20">
+            <div className="md:p-16 p-4 bg-[#d0d1d1]">
+                <div className="p-8 bg-[#f3f3f396] shadow-md mt-2 md:mt-20">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="space-x-8 flex justify-center md:flex-col md:order-1 order-2 md:items-center">
                             <Link to='/orders'>
-                                <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                                <button className="text-white py-2 px-4 uppercase rounded bg-[#122222] hover:text-yellow-400 hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
                                     My Orders
                                 </button>
                             </Link>
@@ -31,7 +31,7 @@ const UserProfile = () => {
 
                         <div className="space-x-8 flex justify-center md:flex-col md:items-center md:order-3 order-2">
                             <Link to='/me/update'>
-                                <button className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                                <button className="text-white py-2 px-4 uppercase rounded bg-[#122222] hover:text-yellow-400 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
                                     Edit Profile
                                 </button>
                             </Link>
@@ -42,19 +42,26 @@ const UserProfile = () => {
                         <h1>{`${user?.firstname} ${user?.lastname}`}</h1>
                     </div>
 
-                    <div className="mt-12 pb-12 grid grid-cols-2 gap-10">
-                        <div className="mx-auto">
-                            <p className="font-bold text-gray-600 mt-3">Joined on</p>
-                            <p className="font-bold text-gray-600 mt-3">Email</p>
-                        </div>
-                        <div className="mx-auto">
-                            <p className="font-light text-gray-600 mt-3">{String(user?.createdAt).substr(0, 10)}</p>
-                            <p className="font-light text-gray-600 mt-3">{user?.email}</p>
-                        </div>
+                    <div className="mt-12 pb-12">
+                        <table className="w-[60%] mx-auto border-collapse border border-gray-300">
+                            <tbody>
+                                <tr className="border-b border-gray-300 hover:bg-gray-300">
+                                    <td className="font-bold text-gray-600 py-3 px-4">Joined on</td>
+                                    <td className="font-light text-gray-600 py-3 px-4 text-right">{String(user?.createdAt).substr(0, 10)}</td>
+                                </tr>
+                                <tr className='hover:bg-gray-300'>
+                                    <td className="font-bold text-gray-600 py-3 px-4">Email</td>
+                                    <td className="font-light text-gray-600 py-3 px-4 text-right">{user?.email}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+
+
+
                     <div className="flex justify-center">
                         <Link to='/update/password'>
-                            <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                            <button className="text-white py-2 px-4 uppercase rounded bg-[#122222] hover:text-yellow-400 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
                                 Change password
                             </button>
                         </Link>

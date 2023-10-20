@@ -165,7 +165,7 @@ const ProductDetail = () => {
             <MetaData title={`${productDetails?.name} -- BIKEZONE`} />
             {
                 !isLoading && productDetails && (
-                    <div className="overflow-hidden bg-[#def5f596] py-11 font-poppins dark:bg-gray-800">
+                    <div className="overflow-hidden bg-[#d0d1d1] py-11 font-poppins dark:bg-gray-800">
                         <div className="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
                             <div className="flex flex-wrap -mx-4">
                                 <div className="w-full px-4 md:w-1/2 ">
@@ -187,11 +187,11 @@ const ProductDetail = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="w-full px-4 md:w-1/2 ">
-                                    <div className="lg:pl-20">
+                                <div className="w-full px-4 md:w-1/2 bg-[#b6b6b6] shadow-md ">
+                                    <div className="p-2">
                                         <div className="mb-5 ">
-                                            <p className='text-xs text-gray-400'>product #: {productDetails._id}</p>
-                                            <span className="text-lg font-medium text-rose-500 dark:text-rose-200">{`${productDetails.brand} - ${productDetails.category}`}</span>
+                                            <p className='text-xs text-gray-700'>product #: {productDetails._id}</p>
+                                            <span className="text-lg font-medium text-red-600 ">{`${productDetails.brand} - ${productDetails.category}`}</span>
                                             <h2 className="max-w-xl mt-2 mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
                                                 {productDetails.name}</h2>
 
@@ -202,9 +202,10 @@ const ProductDetail = () => {
                                                 <p className="text-xs dark:text-gray-400 ">({productDetails.numOfReviews} customer reviews)</p>
                                             </div>
 
-                                            <p className="flex items-end gap-2 mb-5 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
-                                                <span>{productDetails.price} </span>
-                                                <span className='text-xl'>Rs/-</span>
+                                            <p className="flex items-center gap-2 mb-5 text-3xl font-bold text-gray-700 dark:text-gray-400 ">
+                                                <span className='text-xl'>RS.</span>
+                                                <span> {productDetails.price} </span>
+                                                <span className='text-xl'>PKR</span>
                                             </p>
                                             <p className={productDetails.Stock < 0 ? `text-red-500 font-bold` : `font-bold text-green-600`}>{productDetails.Stock < 0 ? "Out Of Stock" : "In Stock"} </p>
                                         </div>
@@ -226,10 +227,10 @@ const ProductDetail = () => {
                                             {productDetails.description}
                                         </p>
                                         <div className="flex flex-wrap items-center -mx-4 ">
-                                            <button onClick={cartHandler} className="flex items-center justify-center w-full p-4 text-[#122222] border border-[#122222] rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                                            <button onClick={cartHandler} className="flex items-center justify-center w-full p-4  border border-white rounded-md dark:text-gray-200 duration-200 dark:border-blue-600 bg-[#122222] hover:border-[#122222] hover:text-yellow-400 text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
                                                 Add to Cart
                                             </button>
-                                            <button onClick={handleClickOpen} className="flex mt-2 items-center justify-center w-full p-4 text-[#122222] border border-[#122222] rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                                            <button onClick={handleClickOpen} className="flex mt-2 items-center justify-center w-full p-4 text-[#122222] border border-[#122222] duration-200 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-yellow-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
                                                 Submit Review
                                             </button>
                                         </div>
@@ -240,7 +241,6 @@ const ProductDetail = () => {
                             </div>
                         </div>
                         <div>
-
                             <Dialog
                                 fullScreen={fullScreen}
                                 open={open}
@@ -281,11 +281,11 @@ const ProductDetail = () => {
                                 </DialogActions>
                             </Dialog>
                         </div>
-                        <div >
-                            <div className='font-bold  shadow-2xl  flex bg-gray-50 justify-center mx-6 py-6 '>
-                                <div className='border-b-2 w-[15%] text-2xl py-2 text-center'>Reviews</div>
+                        <div className=''>
+                            <div className='font-bold  border-black border-t border-l border-r shadow-2xl  flex bg-[#b6b6b6] justify-center mx-6 py-6 '>
+                                <div className='border-b-2 border-[#122222]  w-[15%] text-2xl py-2 text-center'>Reviews</div>
                             </div>
-                            <div className="flex overflow-x-scroll  shadow-xl bg-gray-50 no-scrollbar mx-6  pb-10 px-4">
+                            <div className="flex overflow-x-scroll border-black border-b border-l border-r  shadow-xl bg-[#b6b6b6] no-scrollbar mx-6  pb-10 px-4">
                                 <div className="flex ml-10 gap-10 ">
 
                                     {

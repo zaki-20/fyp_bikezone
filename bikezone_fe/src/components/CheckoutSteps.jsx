@@ -7,7 +7,7 @@ import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import "./CheckoutSteps.css";
 
-const CheckoutSteps = ({ activeStep }) => {
+const CheckoutSteps = ({ activeStep, color }) => {
   const steps = [
     {
       label: <Typography>Shipping Details</Typography>,
@@ -30,7 +30,7 @@ const CheckoutSteps = ({ activeStep }) => {
   return (
     <Fragment>
 
-      <Stepper className="my-10" alternativeLabel activeStep={activeStep} style={stepStyles}>
+      <Stepper className={`py-10 ${color}`} alternativeLabel activeStep={activeStep} style={stepStyles}>
         {steps.map((item, index) => (
           <Step
             key={index}
@@ -39,7 +39,7 @@ const CheckoutSteps = ({ activeStep }) => {
           >
             <StepLabel
               style={{
-                color: activeStep >= index ? "goldenrod" : "rgba(0, 0, 0, 0.649)",
+                color: activeStep >= index ? "parrot-green" : "rgba(0, 0, 0, 0.649)",
               }}
               icon={item.icon}
             >
@@ -48,7 +48,7 @@ const CheckoutSteps = ({ activeStep }) => {
           </Step>
         ))}
       </Stepper>
-    </Fragment>
+    </Fragment >
   );
 };
 
