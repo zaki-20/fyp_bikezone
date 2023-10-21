@@ -31,7 +31,7 @@ const ProductCard = ({ product, newArrive }) => {
             <Link to={`/product/${product._id}`} >
                 <div className='relative'>
                     <img className="  rounded-t-lg p-8 object-cover w-full h-52" src="helmet.jpg" alt="productImage" />
-                    {newArrive && (<span class="absolute z-50 top-0 left-0 inline-flex mt-1 ml-1 px-2 py-1 rounded-lg bg-red-500 text-xs font-medium text-white select-none">
+                    {newArrive && (<span className="absolute z-50 top-0 left-0 inline-flex mt-1 ml-1 px-2 py-1 rounded-lg bg-red-500 text-xs font-medium text-white select-none">
                         New Arrival
                     </span>)}
                 </div>

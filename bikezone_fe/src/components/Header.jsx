@@ -66,7 +66,7 @@ const Header = () => {
               </Link>
               <div className='mr-0'>
                 <Dropdown
-
+                  className='bg-[#122222]'
                   arrowIcon={false}
                   inline
                   label={
@@ -76,26 +76,56 @@ const Header = () => {
                   {
                     user ? (
                       <>
-                        <Dropdown.Header className=' '>
+                        <Dropdown.Header className=' text-white '>
                           <span className="block text-sm">{`${user.firstname} ${user.lastname}`}</span>
                           <span className="block truncate text-sm font-medium">{user.email}</span>
                         </Dropdown.Header>
                         {
                           user?.role === 'admin' && (
-                            <Dropdown.Item>Dashboard</Dropdown.Item>
+                            <Dropdown.Item
+                              style={{
+                                backgroundColor: 'transparent',
+                                transition: 'background-color 0.3s',
+                              }}
+                              onMouseEnter={(e) => e.target.style.backgroundColor = '#facc15'}
+                              onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                              className='text-white  duration-200 hover:text-[#122222]'>Dashboard</Dropdown.Item>
                           )
                         }
-                        <Link to={'/account'}>
-                          <Dropdown.Item>Account</Dropdown.Item>
+                        <Link to={'/account'} className=''>
+                          <Dropdown.Item
+                            style={{
+                              backgroundColor: 'transparent',
+                              transition: 'background-color 0.3s',
+                            }}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = '#facc15'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                            className='text-white  hover:text-[#122222]'>Account</Dropdown.Item>
                         </Link>
-                        <Dropdown.Item>Earnings</Dropdown.Item>
+                        <Dropdown.Item
+                          style={{
+                            backgroundColor: 'transparent',
+                            transition: 'background-color 0.3s',
+                          }}
+                          onMouseEnter={(e) => e.target.style.backgroundColor = '#facc15'}
+                          onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                          className='text-white hover:text-[#122222]'>Earnings</Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item onClick={logoutHandle} >Sign out</Dropdown.Item>
+                        <Dropdown.Item
+
+                          onClick={logoutHandle} className='text-white bg-red-600 hover:text-red-600 duration-200 font-semibold'>Sign out</Dropdown.Item>
                       </>
                     ) : (
                       <>
                         <Link to={'/login'}>
-                          <Dropdown.Item>Please Login</Dropdown.Item>
+                          <Dropdown.Item
+                            style={{
+                              backgroundColor: 'transparent',
+                              transition: 'background-color 0.3s',
+                            }}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = '#facc15'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                            className='text-white hover:text-[#122222]'>Please Login</Dropdown.Item>
                         </Link>
 
                       </>
