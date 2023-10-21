@@ -12,21 +12,23 @@ const cloudinary = require("cloudinary");
 //create user  with jwt
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
-    // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    //     folder: "avatars",
-    //     width: 150,
-    //     crop: "scale",
-    //   });
-
     const { firstname, lastname, email, password } = req.body
+
+
     const user = await User.create({
         firstname, lastname, email, password,
-        // avatar: {
-        //     public_id: myCloud.public_id,
-        //     url: myCloud.secure_url
-        // }
+
     })
-    sendToken(user, 200, res)
+    // const message = `Thank you ${firstname} ${lastname} for joining BIKEZONE `
+    await sendEmail({
+        email: email,
+        subject: `Bikezone Registration`,
+        firstname,
+        lastname
+    }, 'html');
+
+    const msg = "registered successfully"
+    sendToken(user, 200, res, msg)
 })
 
 //login user 
@@ -47,8 +49,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     if (!isPasswordMatch) {
         return next(new ErrorHandler("invalid email or password", 401))
     }
+    const msg = "logged in successfully "
 
-    sendToken(user, 200, res)
+    sendToken(user, 200, res, msg)
 
     // const token = user.getJWTToken()
 
@@ -86,8 +89,8 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
     await user.save({ validateBeforeSave: false })
 
-    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
-    // console.log(req.get("host"))
+    // const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
     const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`;
 
@@ -96,12 +99,15 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
             email: user.email,
             subject: `Bikezone Password Recovery`,
             message,
-        });
+        }, 'text');
 
         res.status(200).json({
-            success: true,
+            statusCode: 200,
+            status: true,
             message: `Email sent to ${user.email} successfully`,
+            payload: {}
         });
+
     } catch (error) {
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
@@ -130,20 +136,28 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     }
 
     //check bot pass and Cpass which will be sent by the user
-    if (req.body.password !== req.body.confirmPassword) {
+    if (req.body.newPassword !== req.body.confirmPassword) {
         return next(new ErrorHandler("Password does not password", 400));
     }
 
+
     //if passwords match and setted undefined for resetTokens because no further usage
-    user.password = req.body.password;
+    user.password = req.body.newPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 
     //save after changes in mongodb 
     await user.save();
 
+    // const msg = "password resetted successfully"
+    // sendToken(user, 200, res, msg);
 
-    sendToken(user, 200, res);
+    res.status(200).json({
+        statusCode: 200,
+        status: true,
+        message: `password resetted successfully`,
+        payload: {}
+    });
 
 })
 
@@ -158,7 +172,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         statusCode: 200,
         status: true,
-        message: "user detail successfully fetched",
+        message: null,
         payload: {
             user
         }
@@ -185,19 +199,26 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     user.password = req.body.newPassword;
     await user.save()
 
-    res.status(200).json({
-        success: true,
-        user,
-    });
+    // res.status(200).json({
+    //     statusCode: 200,
+    //     status: true,
+    //     message: "password has been updated",
+    //     payload: {
+    //         user
+    //     }
+    // });
+    const msg = "password updated successfully"
 
-    sendToken(user, 200, res);
+    sendToken(user, 200, res, msg);
 
 });
 
 // update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+
     const newUserData = {
-        name: req.body.name,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
         email: req.body.email,
     };
 
@@ -210,7 +231,12 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     });
 
     res.status(200).json({
-        success: true,
+        statusCode: 200,
+        status: true,
+        message: "your profile has been updated",
+        payload: {
+            user
+        }
     });
 
 })
@@ -279,3 +305,17 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
         message: "User Deleted Successfully",
     });
 });
+
+
+
+// Delete All Users (except admin)
+exports.deleteAllUsers = catchAsyncErrors(async (req, res, next) => {
+    // Delete all users except those with the "admin" role
+    await User.deleteMany({ role: { $ne: 'admin' } });
+
+    res.status(200).json({
+        success: true,
+        message: "All non-admin users have been deleted successfully",
+    });
+});
+

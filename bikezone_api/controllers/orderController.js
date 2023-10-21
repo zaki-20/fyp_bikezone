@@ -15,6 +15,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     totalPrice,
   } = req.body;
 
+<<<<<<< HEAD
   const order = await Order.create({
     shippingInfo,
     orderItems,
@@ -26,6 +27,41 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     paidAt: Date.now(),
     user: req.user._id,
   });
+=======
+    //  let { _id, name, price, quantity } = orderitem
+
+    // const orderItems = {
+    //     product: _id,
+    //     name,
+    //     price,
+    //     quantity
+    // }
+
+    // console.log(orderItems)
+
+    const order = await Order.create({
+        shippingInfo,
+        orderItems,
+        paymentInfo,
+        itemsPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice,
+        paidAt: Date.now(),
+        user: req.user._id,
+    });
+
+    res.status(201).json({
+        statusCode: 201,
+        status: true,
+        message: `order created successfully`,
+        payload: {
+            order
+        }
+    });
+
+})
+>>>>>>> 0fada1d1e6f966035f941959c4ddc68e3f18b1aa
 
   res.status(201).json({
     success: true,
@@ -35,29 +71,58 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 
 //get single order
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
+<<<<<<< HEAD
   const order = await Order.findById(req.params.id).populate(
     "user",
     "name email"
   );
+=======
+    const order = await Order.findById(req.params.id).populate("user", "firstname lastname email")
+>>>>>>> 0fada1d1e6f966035f941959c4ddc68e3f18b1aa
 
   if (!order) {
     return next(new ErrorHandler("order not found with this id", 404));
   }
 
+<<<<<<< HEAD
   res.status(200).json({
     status: true,
     order,
   });
 });
+=======
+    res.status(200).json({
+        statusCode: 200,
+        status: true,
+        message: `order fetched sucessfully`,
+        payload: {
+            order
+        }
+    });
+})
+>>>>>>> 0fada1d1e6f966035f941959c4ddc68e3f18b1aa
 
 //get logged in user order
 exports.myOrder = catchAsyncErrors(async (req, res, next) => {
   const orders = await Order.find({ user: req.user._id });
 
+<<<<<<< HEAD
   res.status(200).json({
     success: true,
     orders,
   });
+=======
+    const orders = await Order.find({ user: req.user._id });
+
+    res.status(201).json({
+        statusCode: 200,
+        status: true,
+        message: `order created successfully`,
+        payload: {
+            orders
+        }
+    });
+>>>>>>> 0fada1d1e6f966035f941959c4ddc68e3f18b1aa
 });
 
 // get all Orders -- Admin
@@ -108,14 +173,23 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
 //Fucntion for update stock===========
 async function updateStock(id, quantity, next) {
+<<<<<<< HEAD
   const product = await Product.findById(id);
+=======
+
+    const product = await Product.findById(id);
+>>>>>>> 0fada1d1e6f966035f941959c4ddc68e3f18b1aa
 
   // if (quantity > product.Stock) {
   //   return next(new ErrorHandler("Insufficient stock", 400));
   // }
   product.Stock -= quantity;
 
+<<<<<<< HEAD
   await product.save({ validateBeforeSave: false });
+=======
+    await product.save({ validateBeforeSave: false });
+>>>>>>> 0fada1d1e6f966035f941959c4ddc68e3f18b1aa
 }
 
 // delete Order -- Admin

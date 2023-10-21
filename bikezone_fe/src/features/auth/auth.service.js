@@ -4,26 +4,13 @@ const API_URL = 'http://localhost:4000/api/v1/'
 
 //register user
 const register = async (userData) => {
-
-    console.log(" in service above", userData)
-    const config = { headers: { "Content-Type": "application/json" } };
     const response = await axios.post(API_URL + 'register', userData, { withCredentials: true })
-
-    // if (response.data) {
-    //     localStorage.setItem('user', JSON.stringify(response.data))
-    // }
-
     return response.data
 }
 
 //login user
 const login = async (userData) => {
-
     const response = await axios.post(API_URL + 'login', userData, { withCredentials: true })
-
-    // if (response.data) {
-    //     localStorage.setItem('user', JSON.stringify(response.data))
-    // }
     return response.data
 }
 
@@ -36,7 +23,31 @@ const loadUser = async () => {
 // Logout user
 const logout = async () => {
     const response = await axios.get(API_URL + 'logout', { withCredentials: true })
-    console.log(response.data, "logout response data")
+    return response.data
+}
+
+//update user
+const updateProfile = async (userData) => {
+    const response = await axios.put(API_URL + 'me/update', userData, { withCredentials: true })
+    return response.data
+}
+
+//update password
+const updatePassword = async (passwords) => {
+    const response = await axios.put(API_URL + 'password/update', passwords, { withCredentials: true })
+    return response.data
+}
+
+//forgot password 
+const forgotPassword = async (email) => {
+    const response = await axios.post(API_URL + 'password/forgot', email, { withCredentials: true })
+    return response.data
+}
+
+//reset password 
+const resetPassword = async (newPassword, confirmPassword, token) => {
+    // console.log(token, "token")
+    const response = await axios.put(API_URL + `password/reset/${token}`, { newPassword, confirmPassword }, { withCredentials: true })
     return response.data
 }
 
@@ -44,7 +55,10 @@ const authService = {
     register,
     login,
     loadUser,
-    logout
-
+    logout,
+    updateProfile,
+    updatePassword,
+    forgotPassword,
+    resetPassword
 }
 export default authService

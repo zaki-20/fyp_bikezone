@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 // Import  image
-import shadowBikeImage from '../assets/shadow-bike.png';
-import { login } from '../features/auth/auth.thunk';
+import shadowBikeImage from '../../assets/shadow-bike.png';
+import { login } from '../../features/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import { reset } from '../features/auth/auth.slice';
-import Loader from './shared/Loader';
+import { reset } from '../../features/auth/auth.slice';
+import Loader from '../shared/Loader';
 
 
 
@@ -20,8 +20,27 @@ const schema = yup.object({
 
 
 const LoginForm = () => {
+    const { user, isLoading, isError, isSuccess, message, logoutSuccess } = useSelector((state) => state.auth)
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const location = useLocation()
+
+    const redirect = location.search ? location.search.split('=')[1] : '/account'
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+            dispatch(reset())
+        }
+    }, [isError])
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success(message);
+            navigate(redirect)
+        }
+    }, [isSuccess, redirect])
 
     const initialValues = {
         email: "",
@@ -36,36 +55,17 @@ const LoginForm = () => {
             validateOnBlur: false,
             //// By disabling validation onChange and onBlur formik will validate on submit.
             onSubmit: (values, action) => {
-                console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", values);
-                //// to get rid of all the values after submitting the form
                 dispatch(login(values))
                 action.resetForm();
             },
         });
-
-    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
-
-
-    useEffect(() => {
-        if (isError) {
-            console.log(message,"useeffect iserror")
-            toast.error(message);
-            dispatch(reset())
-        }
-        if (isSuccess) {
-            toast.success(message);
-            console.log(message,"useeffect isSuccess")
-            navigate('/')
-        }
-
-    }, [dispatch, isError, isSuccess, message, navigate, user])
 
     return (
         <>
             {
                 isLoading ? (<Loader />) : (
                     <div>
-                        <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
+                        <div className="min-w-screen min-h-screen bg-[#def5f596] flex items-center justify-center px-5 py-5">
                             <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: 1000 }}>
                                 <div className="md:flex w-full">
                                     <div className="hidden md:block w-1/2 bg-gray-200 py-10 px-10 ">
@@ -129,14 +129,13 @@ const LoginForm = () => {
                                         {/* Already have an account? Sign in */}
                                         <div className="text-center mt-3">
                                             <p>
-                                                Dont have an account? <Link href="/login" className='text-[#122222] underline'>Sign up</Link>
+                                                Dont have an account? <Link to="/register" className='text-[#122222] underline'>Sign up</Link>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <ToastContainer position='top-center' /> {/* Add ToastContainer at the end of your component */}
 
                     </div>
                 )

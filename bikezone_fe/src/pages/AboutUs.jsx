@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
+
 const AboutUs = () => {
+    
 
     const [showMoreContent, setShowMoreContent] = useState(false);
 
@@ -11,6 +13,7 @@ const AboutUs = () => {
 
     return (
         <div className='p-4 bg-[#def5f596] '>
+         
             <div className="flex items-center lg:h-screen font-poppins dark:bg-gray-800 ">
                 <div className="justify-center flex-1 max-w-6xl py-4 mx-auto lg:py-6 md:px-6">
                     <div className="px-4 mb-10 md:text-center md:mb-20">
@@ -83,7 +86,7 @@ const AboutUs = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             {showMoreContent && (

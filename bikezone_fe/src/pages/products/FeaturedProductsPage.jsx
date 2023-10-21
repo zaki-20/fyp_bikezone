@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import ProductCard from '../components/cards/ProductCard'
+import ProductCard from '../../components/cards/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProducts } from '../features/product/product.thunk'
-import Loader from './shared/Loader'
-import { ToastContainer, toast } from 'react-toastify';
+import { getAllProducts, getNewArrivalProducts } from '../../features/product/product.thunk'
+import Loader from '../shared/Loader'
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { reset } from '../features/product/product.slice'
+import { reset } from '../../features/product/product.slice'
 import Pagination from "react-js-pagination"
 import { Slider, Typography } from '@mui/material';
-import MetaData from '../components/MetaData'
-
+import MetaData from '../../components/MetaData'
 
 
 const categories = [
@@ -32,22 +31,32 @@ const FeaturedProductsPage = () => {
   const [category, setCategory] = useState("");
   const [ratings, setRatings] = useState(0);
 
+  useEffect(() => {
+    dispatch(getNewArrivalProducts())
+  }, [])
 
   const { isError, isLoading, message, products, productsCount, resultPerPage } = useSelector((state) => state.product)
+  const { newArrival, isLoading: loading } = useSelector((state) => state.product)
+
+
 
   useEffect(() => {
     dispatch(getAllProducts({ keyword, currentPage, price, category, ratings }))
-  }, [dispatch, productsCount, resultPerPage, currentPage, keyword, price, category, ratings])
+  }, [keyword, currentPage, price, category, ratings])
 
 
+  useEffect(() => {
+    if (loading)
+      console.log(newArrival)
+  }, [loading])
 
-  if (isError) {
-    // console.log("featuredProduct")
-    toast.error(message);
-    dispatch(reset())
-  }
+  useEffect(() => {
+    if (isError) {
+      toast.error();
+      dispatch(reset())
+    }
 
-
+  }, [message])
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e)
@@ -70,15 +79,14 @@ const FeaturedProductsPage = () => {
 
   }
 
-
   return (
     <>
       <MetaData title={"PRODUCTS -- BIKEZONE"} />
 
 
-      <div className='flex md:mx-0 md:justify-start min-h-screen justify-center bg-[#def5f596] '>
+      <div className='flex md:mx-0 md:justify-start min-h-screen justify-center bg-[#d0d1d1] '>
 
-        <div className=' md:w-[80%] '>
+        <div className=' md:w-3/4 '>
           <div className="  px-2 py-8 ">
 
             <form onSubmit={searchSubmitHandler} className="mb-4">
@@ -87,13 +95,12 @@ const FeaturedProductsPage = () => {
                 type="text"
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Search products..."
-                className="w-full px-3 py-2 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500"
+                className="w-full px-3 py-2 rounded-md border-2 bg-yellow-50 border-black focus:outline-none focus:border-blue-500"
               />
 
-              <button type="submit" className='px-3 py-2 border m-2'>Submit</button>
+              <button type="submit" className='px-3 py-2 border-yellow-400 border-2 my-2 hover:text-yellow-400 hover:bg-[#122222] hover:rounded-md duration-200'>Submit</button>
 
             </form>
-
 
             {
               isLoading ? (<Loader />) : (
@@ -101,28 +108,32 @@ const FeaturedProductsPage = () => {
                   <h1 className="text-3xl font-semibold mb-4">Featured Products</h1>
                   {/* Show error toast when isError is true */}
 
-                  <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:bg-red-600 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-
+                  <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                     {products &&
-                      products?.map((product, index) => {
+                      products?.map((product) => {
+
+                        const newArrive = newArrival?.some((newArrivalItem) => newArrivalItem._id === product._id);
+                        console.log(newArrive)
+                        // Check if the product is a new arrival
+
                         return (
-                          <ProductCard key={index} product={product} />
+                          <ProductCard key={product._id} product={product} newArrive={newArrive ? "newArrive" : null} />
                         )
                       })
                     }
                   </div>
-                  <ToastContainer position='top-center' /> {/* Add ToastContainer at the end of your component */}
-
                 </>
               )
             }
 
           </div>
 
-          <div className='md:w-[200px] w-[140px] border-2 md:absolute static right-0 px-2 mx-4 top-64 '>
-            <div className=' border-black my-2 '>
+          <div className='md:w-1/5 border-2 border-black  md:absolute static right-0 p-3 mx-4 top-64 '>
+            <div className='  my-2 '>
               <h1 className="font-semibold text-black"> Price</h1>
               <Slider
+                // className='text-yellow-400 bg-yellow-400'
+                color='warning'
                 getAriaLabel={() => ''}
                 value={price}
                 onChange={priceHandler}
@@ -132,20 +143,19 @@ const FeaturedProductsPage = () => {
                 max={25000}
               />
             </div>
-            <div className=' border my-2'>
-              <h1 className="font-semibold text-black"> Categories</h1>
+            <div className=' border border-black p-2 my-2'>
+              <h1 className="font-semibold border-b border-black  text-black"> Categories</h1>
               <ul className="categoryBox">
-                {categories.map((category) => (
+                {categories.map((category, index) => (
                   <li
-                    className="category-link"
-                    key={category}
+                    key={index}
+                    className="category-link cursor-pointer hover:bg-[#122222] hover:text-yellow-400 hover:p-1 hover:tracking-wide duration-200"
                     onClick={() => setCategory(category)}
                   >
                     {category}
                   </li>
                 ))}
               </ul>
-
             </div>
             <fieldset>
               <Typography component="legend">Ratings Above</Typography>
@@ -158,6 +168,7 @@ const FeaturedProductsPage = () => {
                 valueLabelDisplay="auto"
                 min={0}
                 max={5}
+                color='warning'
               />
             </fieldset>
           </div>
@@ -178,11 +189,11 @@ const FeaturedProductsPage = () => {
                   itemClass="page-item px-4 py-2"
                   linkClass="page-link"
                   innerClass="flex" // Apply Tailwind styles for the parent container
-                  activeClass="bg-blue-500 text-white" // Apply styles for the active page
-                  itemClassPrev="border rounded  hover:bg-blue-500 hover:text-white" // Apply styles for previous page
-                  itemClassNext="border rounded  hover:bg-blue-500 hover:text-white" // Apply styles for next page
-                  itemClassFirst="border rounded  hover:bg-blue-500 hover:text-white" // Apply styles for first page
-                  itemClassLast="border rounded  hover:bg-blue-500 hover:text-white" // Apply styles for last page
+                  activeClass="bg-[#122222] text-yellow-400" // Apply styles for the active page
+                  itemClassPrev="border border-black rounded  hover:bg-[#122222] hover:text-yellow-400" // Apply styles for previous page
+                  itemClassNext="border border-black rounded  hover:bg-[#122222] hover:text-yellow-400" // Apply styles for next page
+                  itemClassFirst="border border-black rounded  hover:bg-[#122222] hover:text-yellow-400" // Apply styles for first page
+                  itemClassLast="border border-black rounded  hover:bg-[#122222] hover:text-yellow-400" // Apply styles for last page
                 />
 
               </div>
@@ -190,17 +201,7 @@ const FeaturedProductsPage = () => {
           }
 
         </div>
-
-
-
-        {/* /--------------------------- */}
       </div>
-
-
-
-
-
-
     </>
 
   )

@@ -8,11 +8,11 @@ const getAllProducts = async (keyword, currentPage, price, category, ratings) =>
     const response =
         await axios.get(API_URL + `products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`)
 
-        if(category){
-            const response =
+    if (category) {
+        const response =
             await axios.get(API_URL + `products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`)
-            return response.data
-        }
+        return response.data
+    }
     return response.data
 }
 
@@ -23,8 +23,30 @@ const getProductDetail = async (id) => {
     return response.data
 }
 
+//get top rated products
+const getRatedProducts = async () => {
+    const response = await axios.get(API_URL + `products/top-rated`)
+    return response.data
+}
+
+//get top rated products
+const getReviewedProducts = async () => {
+    const response = await axios.get(API_URL + `products/reviewed`)
+    return response.data
+}
+
+//get new arrival  products
+const getNewArrivalProducts = async () => {
+    const response = await axios.get(API_URL + `products/new-arrival`)
+    return response.data
+}
+
+
 const productService = {
     getAllProducts,
-    getProductDetail
+    getProductDetail,
+    getRatedProducts,
+    getReviewedProducts,
+    getNewArrivalProducts
 }
 export default productService
