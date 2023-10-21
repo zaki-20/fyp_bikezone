@@ -91,7 +91,6 @@ const ProductDetail = () => {
     };
 
 
-
     const decreaseQuantity = () => {
         if (quantity <= 1) return;
         const qty = quantity - 1;
@@ -101,7 +100,6 @@ const ProductDetail = () => {
     const showErrorToast = () => {
         toast.error(message);
     };
-
 
 
     //for star rating
@@ -127,9 +125,6 @@ const ProductDetail = () => {
             <span> {isError && showErrorToast()} </span>
         </>
     }
-
-
-
 
     const cartHandler = () => {
         if (productDetails) {

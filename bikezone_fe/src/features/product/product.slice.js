@@ -89,7 +89,6 @@ const productSlice = createSlice({
                 state.isLoading = true
             })
             .addCase(getAllProducts.fulfilled, (state, action) => {
-                // console.log("The action is:", { action })
                 state.isError = false
                 state.isLoading = false
                 state.isSuccess = true
@@ -99,14 +98,11 @@ const productSlice = createSlice({
                 state.message = action.payload.message
                 state.productsCount = action.payload.payload.products.productsCount
                 state.filteredProductsCount = action.payload.payload.products.filteredProductsCount
-                // console.log(action.payload.message)
             })
             .addCase(getAllProducts.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error
-                console.log(action.payload.error)
-
             })
             .addCase(getProductDetail.pending, (state) => {
                 state.isLoading = true
@@ -114,15 +110,13 @@ const productSlice = createSlice({
             .addCase(getProductDetail.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                // console.log("action.payload.products details:", action.payload)
-                // console.log("slice deyail etails:", action.payload.payload)
                 state.productDetails = action.payload.payload.product
                 state.message = action.payload.message
             })
             .addCase(getProductDetail.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
-                state.message = action.payload
+                state.message = action.payload.error
             })
             .addCase(getRatedProducts.pending, (state) => {
                 state.isLoading = true

@@ -4,17 +4,21 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 
 
 exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
-
-    const { name, brand, city, contact, timeSlots, address } = req.body;
-    // const owner = req.user.id; 
+    const { name, brand, city, contact, address, timeSlots, service1, service2, service3, service4 } = req.body;
+    const owner = req.user._id;
 
     const workshop = await Workshop.create({
         name,
         brand,
-        timeSlots,
-        address,
         city,
         contact,
+        address,
+        owner,
+        service1,
+        service2,
+        service3,
+        service4,
+        timeSlots
     });
 
     res.status(201).json({
@@ -23,7 +27,6 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
         message: "Workshop created successfully",
         payload: { workshop },
     });
-
 });
 
 exports.updateWorkshop = catchAsyncErrors(async (req, res, next) => {
@@ -89,20 +92,20 @@ exports.getAllWorkshops = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getWorkshopDetails = async (req, res, next) => {
-  
+
     const { id } = req.params;
 
     const workshop = await Workshop.findById(id);
 
     if (!workshop) {
-      return next(new ErrorHandler("Workshop not found", 404));
+        return next(new ErrorHandler("Workshop not found", 404));
     }
 
     res.status(200).json({
-      statusCode: 200,
-      success: true,
-      message: "Workshop retrieved successfully",
-      payload: { workshop },
+        statusCode: 200,
+        success: true,
+        message: "Workshop retrieved successfully",
+        payload: { workshop },
     });
- 
+
 };
