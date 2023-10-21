@@ -40,6 +40,8 @@ import CreateBlogPost from "./pages/blog/CreateBlogPost";
 import MyBlogs from "./pages/blog/MyBlogs";
 import GetSingleBlog from "./pages/blog/GetSingleBlog";
 import Blogs from "./pages/blog/Blogs";
+import Workshops from "./pages/workshop/Workshops";
+import CreateWorkshop from "./pages/workshop/CreateWorkshop";
 
 
 function App() {
@@ -86,6 +88,10 @@ function App() {
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/success" element={<PaymentSuccess />} />
         <Route exact path="/blogs" element={<Blogs />} />
+
+        {/* Workshops */}
+        <Route exact path="/workshops" element={<Workshops />} />
+        <Route exact path="/create-workshop" element={<CreateWorkshop />} />
 
 
         {/* admin routes */}

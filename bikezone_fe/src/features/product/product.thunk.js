@@ -7,7 +7,9 @@ export const getAllProducts = createAsyncThunk('products/getAllProducts', async 
     try {
         return await productService.getAllProducts(keyword, currentPage, price, category, ratings)
     } catch (error) {
-        const message = error.response.data
+        const message =
+            error.response || error.response.data || error.response.data.message || error.message || error.code
+            console.log(message)
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -18,8 +20,7 @@ export const getProductDetail = createAsyncThunk('products/getProductDetail', as
         return await productService.getProductDetail(id)
     } catch (error) {
         const message =
-            (error.response && error.response.data && error.response.data.message) || error.message ||
-            error.toString()
+            error.response || error.response.data || error.response.data.message || error.message || error.code 
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -30,8 +31,7 @@ export const getRatedProducts = createAsyncThunk('products/getRatedProducts', as
         return await productService.getRatedProducts()
     } catch (error) {
         const message =
-            (error.response && error.response.data && error.response.data.message) || error.message ||
-            error.toString()
+            error.response || error.response.data || error.response.data.message || error.message || error.code
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -43,8 +43,7 @@ export const getReviewedProducts = createAsyncThunk('products/getReviewedProduct
         return await productService.getReviewedProducts()
     } catch (error) {
         const message =
-            (error.response && error.response.data && error.response.data.message) || error.message ||
-            error.toString()
+            error.response || error.response.data || error.response.data.message || error.message || error.code
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -53,9 +52,8 @@ export const getNewArrivalProducts = createAsyncThunk('products/getNewArrivalPro
     try {
         return await productService.getNewArrivalProducts()
     } catch (error) {
-        const message =
-            (error.response && error.response.data && error.response.data.message) || error.message ||
-            error.toString()
+        console.log(error)
+        const message = error.response || error.response.data || error.response.data.message || error.message || error.code      
         return thunkAPI.rejectWithValue(message)
     }
 })

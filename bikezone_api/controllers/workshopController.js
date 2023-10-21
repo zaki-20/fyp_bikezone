@@ -3,24 +3,31 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 
 exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
-  const { name, brand, city, contact, timeSlots, address } = req.body;
-  // const owner = req.user.id;
 
-  const workshop = await Workshop.create({
-    name,
-    brand,
-    timeSlots,
-    address,
-    city,
-    contact,
-  });
+    const { name, brand, city, contact, address, timeSlots, service1, service2, service3, service4 } = req.body;
+    const owner = req.user._id;
 
-  res.status(201).json({
-    statusCode: 201,
-    success: true,
-    message: "Workshop created successfully",
-    payload: { workshop },
-  });
+    const workshop = await Workshop.create({
+        name,
+        brand,
+        city,
+        contact,
+        address,
+        owner,
+        service1,
+        service2,
+        service3,
+        service4,
+        timeSlots
+    });
+
+    res.status(201).json({
+        statusCode: 201,
+        success: true,
+        message: "Workshop created successfully",
+        payload: { workshop },
+    });
+
 });
 
 exports.updateWorkshop = catchAsyncErrors(async (req, res, next) => {
@@ -79,18 +86,20 @@ exports.getAllWorkshops = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getWorkshopDetails = async (req, res, next) => {
-  const { id } = req.params;
 
-  const workshop = await Workshop.findById(id);
+    const { id } = req.params;
 
-  if (!workshop) {
-    return next(new ErrorHandler("Workshop not found", 404));
-  }
+    const workshop = await Workshop.findById(id);
 
-  res.status(200).json({
-    statusCode: 200,
-    success: true,
-    message: "Workshop retrieved successfully",
-    payload: { workshop },
-  });
+    if (!workshop) {
+        return next(new ErrorHandler("Workshop not found", 404));
+    }
+
+    res.status(200).json({
+        statusCode: 200,
+        success: true,
+        message: "Workshop retrieved successfully",
+        payload: { workshop },
+    });
+
 };

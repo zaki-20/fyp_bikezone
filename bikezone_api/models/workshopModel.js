@@ -1,4 +1,4 @@
-const mongoose =  require("mongoose");
+const mongoose = require("mongoose");
 
 const workshopSchema = new mongoose.Schema({
   name: {
@@ -21,18 +21,20 @@ const workshopSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // owner: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: true,
-  // },
+
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+
   timeSlots: [
     {
-      // user: {
-      //   type: mongoose.Schema.Types.ObjectId,
-      //   ref: "User",
-      //   required: true,
-      // },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
       startTime: {
         type: Date,
         required: true,
@@ -43,6 +45,18 @@ const workshopSchema = new mongoose.Schema({
       },
     },
   ],
+  service1: {
+    type: String,
+  },
+  service2: {
+    type: String,
+  },
+  service3: {
+    type: String,
+  },
+  service4: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Workshop", workshopSchema);
