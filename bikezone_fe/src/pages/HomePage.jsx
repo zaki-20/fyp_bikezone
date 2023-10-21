@@ -7,7 +7,7 @@ import ReviewedProducts from '../components/sections/ReviewedProducts'
 import NewArrivalProducts from '../components/sections/NewArrivalProucts'
 import ProductSection from '../components/sections/ProductSection'
 import FeatureSection from '../components/sections/FeatureSection'
-
+import {motion} from 'framer-motion'
 const HomePage = () => {
   return (
     <div>

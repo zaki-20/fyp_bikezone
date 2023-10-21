@@ -1,6 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { reset } from '../../features/blog/blog.slice';
-import { format } from 'timeago.js';
 import { Link } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { MdOutlineDescription, MdTitle } from 'react-icons/md';
@@ -10,6 +9,7 @@ import { getAllBlogPosts, likeDisLikeBlogPost } from '../../features/blog/blog.t
 import Loader from '../shared/Loader';
 import { TypeAnimation } from 'react-type-animation';
 import { FcSearch } from 'react-icons/fc'
+import TimeAgo from 'timeago-react';
 
 
 const Blogs = () => {
@@ -157,7 +157,11 @@ const Blogs = () => {
                                             </svg>
                                             Article - {`${item.user.firstname} ${item.user.lastname}`}
                                         </span>
-                                        <span className="text-sm">{format(item.createdAt)}</span>
+                                        <span className="text-sm">
+                                            <TimeAgo
+                                                datetime={item.createdAt}    
+                                            />
+                                        </span>
                                     </div>
 
                                     <div className='flex gap-x-2 items-center mb-2'>

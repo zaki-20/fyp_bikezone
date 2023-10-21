@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { reset } from '../../features/blog/blog.slice';
-import { format } from "timeago.js";
 import { MdEmail } from 'react-icons/md'
 import { toast } from 'react-toastify';
 import Loader from '../shared/Loader';
@@ -16,6 +15,7 @@ import {
     DialogBody,
     DialogFooter,
 } from "@material-tailwind/react";
+import TimeAgo from 'timeago-react';
 
 
 const GetSingleBlog = () => {
@@ -110,7 +110,11 @@ const GetSingleBlog = () => {
                                             Article Published on {new Date(blogPost?.createdAt).toDateString()} - by {`${blogPost?.user.firstname} ${blogPost?.user.lastname}`}
 
                                         </span>
-                                        <span className="text-sm">{format(blogPost?.createdAt)}</span>
+                                        <span className="text-sm">
+                                            <TimeAgo
+                                                datetime={blogPost?.createdAt}
+                                            />
+                                        </span>
                                     </div>
 
                                     <h2 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="#">Title</a></h2>

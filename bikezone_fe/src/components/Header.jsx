@@ -137,46 +137,6 @@ const Header = () => {
 
             </li>
 
-            {/* Dropdown menu */}
-            {/* <div className="z-50 hidden my-4 min-w-[200px] text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-              {
-                user ? (
-                  <>
-                    <div className="px-4 py-3">
-                      <span className="block text-sm text-gray-900 dark:text-white">{`${user.firstname} ${user.lastname}`}</span>
-                      <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{user.email}</span>
-                    </div>
-
-                    <ul className="py-2" aria-labelledby="user-menu-button">
-                      {
-                        user?.role === 'admin' && (
-                          <li>
-                            <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
-                          </li>
-                        )
-                      }
-                      <li>
-                        <Link to="/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Account</Link>
-                      </li>
-                      <li>
-                        <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Orders</Link>
-                      </li>
-                      <li>
-                        <div onClick={logoutHandle} className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#122222] hover:text-white dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</div>
-                      </li>
-                    </ul>
-                  </>
-                ) : (
-                  <div className="px-4 py-3">
-                    <Link to={'/login'}>
-                      <span className="block text-sm cursor-pointer text-gray-900 dark:text-white">{`please login`}</span>
-                    </Link>
-                  </div>
-                )
-              }
-            </div> */}
-
-
 
             <button data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
               <span className="sr-only">Open main menu</span>
@@ -207,6 +167,31 @@ const Header = () => {
                   <MenuList className='bg-[#122222] text-yellow-400'>
                     <MenuItem>Menu Item 1</MenuItem>
                     <MenuItem>Menu Item 2</MenuItem>
+
+
+                    <Menu placement="right-start" offset={15}>
+                      <MenuHandler>
+                        <MenuItem>Workshops</MenuItem>
+                      </MenuHandler>
+                      <MenuList className='bg-[#122222] text-yellow-400'>
+
+                        <Link to={'/create-workshop'}>
+                          <MenuItem>Create Workshop</MenuItem>
+                        </Link>
+
+                        <Link to={'/blog/me'}>
+                          <MenuItem>My Workshop</MenuItem>
+                        </Link>
+
+                        <Link to={'/workshops'}>
+                          <MenuItem>Explore Workshop</MenuItem>
+                        </Link>
+
+                      </MenuList>
+                    </Menu>
+
+
+
                     <Menu placement="right-start" offset={15}>
                       <MenuHandler>
                         <MenuItem>Blog</MenuItem>
@@ -227,6 +212,7 @@ const Header = () => {
 
                       </MenuList>
                     </Menu>
+
                     <MenuItem>Menu Item 3</MenuItem>
                   </MenuList>
                 </Menu>
