@@ -16,6 +16,9 @@ module.exports = withMT({
     require('flowbite/plugin'),
 
   ],
+  variants: { 
+    width: ["responsive", "hover", "focus"] 
+}, 
 }
 )
 // module.exports = withMT({

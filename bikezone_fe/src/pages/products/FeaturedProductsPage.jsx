@@ -89,16 +89,16 @@ const FeaturedProductsPage = () => {
         <div className=' md:w-3/4 '>
           <div className="  px-2 py-8 ">
 
-            <form onSubmit={searchSubmitHandler} className="mb-4">
+            <form onSubmit={searchSubmitHandler} className="mb-4 flex items-center gap-x-2">
               <input
                 value={keyword}
                 type="text"
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Search products..."
-                className="w-full px-3 py-2 rounded-md border-2 bg-yellow-50 border-black focus:outline-none focus:border-blue-500"
+                className="w-full px-3 py-2 rounded-md border-2 bg-[#ececec] border-black focus:outline-none "
               />
 
-              <button type="submit" className='px-3 py-2 border-yellow-400 border-2 my-2 hover:text-yellow-400 hover:bg-[#122222] hover:rounded-md duration-200'>Submit</button>
+              <button type="submit" className='px-3 py-2 border-[#122222] border border-b-2 my-2 hover:text-yellow-400 hover:bg-[#122222] hover:rounded-md duration-200'>Submit</button>
 
             </form>
 

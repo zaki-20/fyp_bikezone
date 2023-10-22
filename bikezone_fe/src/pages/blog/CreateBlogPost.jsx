@@ -65,9 +65,9 @@ const CreateBlogPost = () => {
         });
 
     return (
-        <div className="py-20 bg-[#def5f596] dark:text-gray-50">
+        <div className="py-20  bg-[#b6b6b6] dark:text-gray-50">
             <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
-                <div className="py-10 md:py-0 px-6  shadow-xl bg-gray-100 dark:bg-gray-800 rounded-md">
+                <div className="py-10 md:py-0 px-6  shadow-xl bg-[#f0efef] dark:bg-gray-800 rounded-md">
                     <h1 className="text-4xl font-bold text-yellow-400 my-4 text-robotic">
                         Contribute to the Bike Community
                     </h1>
@@ -104,7 +104,7 @@ const CreateBlogPost = () => {
 
                 </div>
 
-                <form onSubmit={handleSubmit} noValidate="" className="flex flex-col py-6 shadow-xl justify-center rounded-md space-y-6 px-6">
+                <form onSubmit={handleSubmit} noValidate="" className="flex bg-[#d0d1d1] flex-col py-6 shadow-xl justify-center rounded-md space-y-6 px-6">
                     <h1 className="text-3xl text-center font-bold text-yellow-400 mb-4 text-robotic">
                         Create Your Post
                     </h1>

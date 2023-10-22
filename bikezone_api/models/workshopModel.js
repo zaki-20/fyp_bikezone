@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const workshopSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+  },
+  email: {
+    type: String,
+    required: [true, "Please Enter Your Email"],
+    unique: true,
+    validate: [validator.isEmail, "Please Enter a valid Email"],
   },
   brand: {
     type: String,
@@ -21,30 +28,26 @@ const workshopSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
+  appointment: {
+    type: Array,
+    default: [],
+    required: true,
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
 
-  timeSlots: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-      startTime: {
-        type: Date,
-        required: true,
-      },
-      endTime: {
-        type: Date,
-        required: true,
-      },
-    },
-  ],
+  totalAppointments: {
+    type: Number
+  },
+  slots: {
+    type: Number,
+    required: true,
+    maxLength: [24],
+    minLength: [1]
+  },
   service1: {
     type: String,
   },
@@ -57,6 +60,17 @@ const workshopSchema = new mongoose.Schema({
   service4: {
     type: String,
   },
+  appointments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Appointment",
+    }
+  ],
+  maxAppointments: {
+    type: Number,
+    required: true
+  }
+
 });
 
 module.exports = mongoose.model("Workshop", workshopSchema);

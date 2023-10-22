@@ -26,6 +26,7 @@ const rentBikeRoute = require("./routes/rentBikeRoute");
 const paymentRoute = require("./routes/paymentRoute");
 const blogRoute = require("./routes/blogRoute");
 const contactUsRoute = require("./routes/contactUsRoute");
+const appintmentRoute = require("./routes/appointmentRoute");
 
 
 app.use("/api/v1", productRoute);
@@ -36,6 +37,7 @@ app.use("/api/v1", rentBikeRoute);
 app.use("/api/v1", paymentRoute);
 app.use("/api/v1", blogRoute);
 app.use("/api/v1", contactUsRoute);
+app.use("/api/v1", appintmentRoute);
 
 
 //middleware for error

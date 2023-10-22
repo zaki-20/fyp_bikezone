@@ -3,13 +3,13 @@ import * as yup from "yup";
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// Import  image
+
 import shadowBikeImage from '../../assets/shadow-bike.png';
+
 import { register } from '../../features/auth/auth.thunk';
 import { reset } from '../../features/auth/auth.slice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-
 
 
 const schema = yup.object({
