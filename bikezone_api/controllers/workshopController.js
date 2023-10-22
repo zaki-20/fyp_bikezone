@@ -4,8 +4,10 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 
 exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
 
-    const { name, brand, city, contact, address, timeSlots, service1, service2, service3, service4 } = req.body;
+    const { name, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, appointment, maxAppointments } = req.body;
     const owner = req.user._id;
+    let workingHours = endTime - startTime;
+    let slots = workingHours;
 
     const workshop = await Workshop.create({
         name,
@@ -18,9 +20,11 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
         service2,
         service3,
         service4,
-        timeSlots
+        appointment,
+        slots,
+        maxAppointments
     });
-
+    let totalAppointments = (maxAppointments*slots); // maxAppointments is maximun for 1 hour. e.g 3 & slots= 7 so, 21 appointments, 3 in each hour. The max count of slot will be 3.
     res.status(201).json({
         statusCode: 201,
         success: true,

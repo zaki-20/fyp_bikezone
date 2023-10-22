@@ -26,11 +26,7 @@ exports.createRentBike = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.updateRentBike = catchAsyncErrors(async (req, res, next) => {
-<<<<<<< HEAD
   let rentBike = await RentBike.findById(req.params.id);
-=======
-    let rentBike = await RentBike.findById(req.params.id)
->>>>>>> 0fada1d1e6f966035f941959c4ddc68e3f18b1aa
 
   if (!rentBike) {
     return next(new ErrorHandler("Rental bike ad not found", 404));
@@ -52,16 +48,10 @@ exports.updateRentBike = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.deleteRentBike = async (req, res, next) => {
-<<<<<<< HEAD
   const rentAdId = req.params.id;
-=======
-
-    const rentAdId = req.params.id;
->>>>>>> 0fada1d1e6f966035f941959c4ddc68e3f18b1aa
 
   const deletedRentBike = await RentBike.findByIdAndDelete(rentAdId);
 
-<<<<<<< HEAD
   if (!deletedRentBike) {
     return next(new ErrorHandler("Rental bike ad not found", 404));
   }
@@ -71,17 +61,6 @@ exports.deleteRentBike = async (req, res, next) => {
     success: true,
     message: "Rent ad deleted successfully",
   });
-=======
-    if (!deletedRentBike) {
-        return next(new ErrorHandler("Rental bike ad not found", 404));
-    }
-
-    res.status(200).json({
-        statusCode: 200,
-        success: true,
-        message: "Rent ad deleted successfully",
-    });
->>>>>>> 0fada1d1e6f966035f941959c4ddc68e3f18b1aa
 };
 
 exports.getAllRentBikes = catchAsyncErrors(async (req, res, next) => {

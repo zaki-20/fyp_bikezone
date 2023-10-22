@@ -21,30 +21,29 @@ const workshopSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
+  appointment: {
+    type: Array,
+    default:[],
+    required: true,
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
 
-  timeSlots: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-      startTime: {
-        type: Date,
-        required: true,
-      },
-      endTime: {
-        type: Date,
-        required: true,
-      },
-    },
-  ],
+  startTime: {
+    type: Number,
+    required: true,
+    maxLength:[24],
+    minLenght:[1]
+  },
+  endTime: {
+    type: Number,
+    required: true,
+    maxLength:[24],
+    minLength:[1]
+  },
   service1: {
     type: String,
   },
@@ -57,6 +56,24 @@ const workshopSchema = new mongoose.Schema({
   service4: {
     type: String,
   },
+  appointments:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Appointment",
+    }
+  ],
+  maxAppointments:{
+    type:Number,
+    required: true
+  }
+  // requests:[{
+  //   name: String,
+  //   time: Date,
+  //   appointment: [{
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Appointment",
+  //   }]
+  // }]
 });
 
 module.exports = mongoose.model("Workshop", workshopSchema);
