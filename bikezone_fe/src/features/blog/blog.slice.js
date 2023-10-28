@@ -4,7 +4,7 @@ import initialBlogState from './blog.initialstate'
 
 const blogSlice = createSlice({
     name: "blog",
-    initialState: initialBlogState,
+    initialState: initialBlogState, 
     reducers: {
         reset: (state) => {
             state.isLoading = false

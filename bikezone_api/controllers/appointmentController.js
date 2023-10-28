@@ -2,19 +2,14 @@ const ErrorHandler = require("../utils/errorHandler")
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const Appointment = require("../models/appointmentModel.js");
 const workshopModel = require("../models/workshopModel");
+const sendEmail = require("../utils/sendEmail");
 
-//create appointment
+
 exports.createAppointment = catchAsyncErrors(async (req, res, next) => {
-
-    const { workshop, bike, slot } = req.body;
+    const { workshop, slot } = req.body;
     const user = req.user;
 
     const existingWorkshop = await workshopModel.findById(workshop);
-
-    if (existingWorkshop.appointments.length >= existingWorkshop.totalAppointments) {
-        // Check if the number of existing appointments exceeds the maximum slots
-        return next(new ErrorHandler("Slots are full", 400)); // You can choose an appropriate HTTP status code
-    }
 
     if (!existingWorkshop) {
         return next(new ErrorHandler("Workshop not found", 404));
@@ -22,15 +17,27 @@ exports.createAppointment = catchAsyncErrors(async (req, res, next) => {
 
     const appointment = await Appointment.create({
         workshop,
-        bike,
         slot,
         user: user._id,
     });
 
     // Update the workshop's appointment array with the new appointment
     existingWorkshop.appointments.push(appointment);
+
     await existingWorkshop.save();
 
+    await sendEmail({
+        email: user.email,
+        subject: 'Appointment Confirmation',
+        firstname: user.firstname,
+        lastname: user.lastname,
+        slot: slot,
+        timing: `${slot}:00 - ${slot + 1}:00`,
+        workshopName: `${existingWorkshop.name}`,
+        workshopContact: `${existingWorkshop.contact}`,
+        workshopContactLink: `https://api.whatsapp.com/send?phone=+92${existingWorkshop.contact}`,
+        bookingSlot: 'Your booking slot data',
+    }, 'html');
 
     res.status(201).json({
         statusCode: 201,
@@ -39,6 +46,7 @@ exports.createAppointment = catchAsyncErrors(async (req, res, next) => {
         payload: { appointment },
     });
 });
+
 
 
 exports.getSingleAppointment = catchAsyncErrors(async (req, res, next) => {

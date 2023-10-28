@@ -18,7 +18,6 @@ export const myBlogPosts = createAsyncThunk('blog/myBlogPosts', async (_, thunkA
     try {
         return await blogService.myBlogPosts()
     } catch (error) {
-        console.log("thunk error", error)
         const message =
             error.response.data.message || error.response.data || error.response
         return thunkAPI.rejectWithValue(message)
@@ -36,7 +35,7 @@ export const getAllBlogPosts = createAsyncThunk('blog/getAllBlogPosts', async (_
     }
 })
 
-//all single blog post 
+// single blog post 
 export const getSingleBlogPosts = createAsyncThunk('blog/getSingleBlogPosts', async (id, thunkAPI) => {
     try {
         return await blogService.getSingleBlogPosts(id)

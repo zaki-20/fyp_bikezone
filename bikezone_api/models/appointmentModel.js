@@ -11,10 +11,6 @@ const appointmentSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    bike: {
-        type: String,
-        required: true,
-    },
     slot: {
         type: Number
     },

@@ -28,22 +28,15 @@ const workshopSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  appointment: {
-    type: Array,
-    default: [],
-    required: true,
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
 
-  totalAppointments: {
-    type: Number
-  },
   slots: {
-    type: Number,
+    type: Array,
+    default: [],
     required: true,
     maxLength: [24],
     minLength: [1]
@@ -66,7 +59,16 @@ const workshopSchema = new mongoose.Schema({
       ref: "Appointment",
     }
   ],
-  maxAppointments: {
+
+  description: {
+    type: String,
+    required: [true, "Please Enter workshop Description"],
+  },
+  startTime: {
+    type: Number,
+    required: true
+  },
+  endTime: {
     type: Number,
     required: true
   }

@@ -5,17 +5,20 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 
 
 exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
-
-    const { name, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, appointment, maxAppointments } = req.body;
+    const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description } = req.body;
     const owner = req.user._id;
-    let workingHours = endTime - startTime;
-    let slots = workingHours;
 
-    let totalAppointments = (maxAppointments * slots); // maxAppointments is maximun for 1 hour. e.g 3 & slots= 7 so, 21 appointments, 3 in each hour. The max count of slot will be 3.
+    // Create an array to store time slots
+    let slotsArray = [];
 
+    // Generate time slots and push them into the array
+    for (let i = startTime; i < endTime; i++) {
+        slotsArray.push(i);
+    }
 
     const workshop = await Workshop.create({
         name,
+        email,
         brand,
         city,
         contact,
@@ -25,45 +28,21 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
         service2,
         service3,
         service4,
-        appointment,
-        slots,
-        maxAppointments,
-        totalAppointments
+        slots: slotsArray, // Store the time slots in an array
+        startTime,
+        endTime,
+        description
     });
-    res.status(201).json({
+
+    return res.status(201).json({
         statusCode: 201,
         success: true,
         message: "Workshop created successfully",
         payload: { workshop },
     });
-
 });
 
-// exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
-//     const { name, brand, city, contact, address, timeSlots, service1, service2, service3, service4 } = req.body;
-//     const owner = req.user._id;
 
-//     const workshop = await Workshop.create({
-//         name,
-//         brand,
-//         city,
-//         contact,
-//         address,
-//         owner,
-//         service1,
-//         service2,
-//         service3,
-//         service4,
-//         timeSlots
-//     });
-
-//     res.status(201).json({
-//         statusCode: 201,
-//         success: true,
-//         message: "Workshop created successfully",
-//         payload: { workshop },
-//     });
-// });
 
 exports.updateWorkshop = catchAsyncErrors(async (req, res, next) => {
 
@@ -144,11 +123,6 @@ exports.getWorkshopDetails = async (req, res, next) => {
             select: "name brand contact", // Select the fields you want from the workshop object
         },
     });
-
-
-
-
-
 
 
     if (!workshop) {

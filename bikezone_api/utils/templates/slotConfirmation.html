@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIKEZONE Appointment Confirmation</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; background-color: #333333; color: #FFD700; margin: 0; padding: 0;">
+    <table align="center" bgcolor="#222222" cellpadding="0" cellspacing="0" width="600"
+        style="border-collapse: collapse; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <tr>
+            <td bgcolor="#3498db" style="background-color: #000a11; color: #ffffff; text-align: center; padding: 10px;">
+                <h1 style="font-size: 24px;">Appointment Confirmation</h1>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#222222" style="background-color: #222222; color: #FFD700; padding: 20px;">
+                <p style="font-size: 18px; margin: 10px 0;">Dear {{firstname}} {{lastname}},</p>
+                <p style="font-size: 18px; margin: 10px 0;">Your appointment at BIKEZONE has been scheduled:</p>
+                <ul style="font-size: 18px; margin: 10px 0; padding-left: 20px;">
+                    <li>
+                        <span style="color: #FFD700;">Date and Time:</span>
+                        <span style="color: #17be17;">{{timing}}</span>
+                    </li>
+                    <li>
+                        <span style="color: #FFD700;">Workshop Name:</span>
+                        <span style="color: #17be17;">{{workshopName}}</span>
+                    </li>
+                    <li>
+                        <span style="color: #FFD700;">Workshop Contact # :</span>
+                        <span style="color: #17be17;">{{workshopContact}}</span>
+                    </li>
+                    <li>
+                        <span style="color: #FFD700;">Slot:</span>
+                        <span style="color: #17be17;">{{slot}}</span>
+                    </li>
+                </ul>
+
+                <p style="font-size: 18px; margin: 20px 0;">We're looking forward to serving you. If you have any
+                    questions or need further assistance, please don't hesitate to reach out to us.</p>
+
+                <a href="{{workshopContactLink}}"
+                    style="background-color: #FFD700; color: #222222; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">
+                    Contact Us on WhatsApp
+                </a>
+
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#3498db" style="background-color: #000a11; padding: 20px;">
+                <p style="font-size: 18px; margin: 0;">BIKEZONE - Your Trusted Bike Service Provider</p>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

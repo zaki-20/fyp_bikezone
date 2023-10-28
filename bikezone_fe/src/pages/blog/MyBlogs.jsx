@@ -28,16 +28,16 @@ const BlogPage = () => {
 
 
     useEffect(() => {
-        dispatch(myBlogPosts());
-    }, [])
+        if (isError) {
+            // toast.error(message);
+            dispatch(reset());
+        }
+    }, []);
 
     useEffect(() => {
-        if (isError) {
-            toast.error(message)
-            dispatch(reset())
-        }
-    }, [isError])
-
+        console.log("my posts")
+        dispatch(myBlogPosts());
+    }, [])
 
 
 

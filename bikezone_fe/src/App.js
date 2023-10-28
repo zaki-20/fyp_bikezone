@@ -42,6 +42,7 @@ import GetSingleBlog from "./pages/blog/GetSingleBlog";
 import Blogs from "./pages/blog/Blogs";
 import Workshops from "./pages/workshop/Workshops";
 import CreateWorkshop from "./pages/workshop/CreateWorkshop";
+import WorkshopDetail from "./pages/workshop/WorkshopDetail";
 
 
 function App() {
@@ -72,7 +73,6 @@ function App() {
   //   getStripeApiKey()
   // }, [])
 
-
   return (
     <>
       <Header />
@@ -90,8 +90,10 @@ function App() {
         <Route exact path="/blogs" element={<Blogs />} />
 
         {/* Workshops */}
+
         <Route exact path="/workshops" element={<Workshops />} />
-        <Route exact path="/create-workshop" element={<CreateWorkshop />} />
+        <Route exact path="/create-workshop" element={<ProtectedRoute Component={CreateWorkshop} />} />  
+        <Route exact path="/workshop/:id" element={<ProtectedRoute Component={WorkshopDetail} />} />  
 
 
         {/* admin routes */}
