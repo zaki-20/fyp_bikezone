@@ -27,7 +27,7 @@ const ProductCard = ({ product, newArrive }) => {
 
     return (
 
-        <div className="w-[250px] bg-[#e7e7e7ea] border-2 hover:border-2 hover:border-black duration-200  shadow-md rounded-lg dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-[250px] bg-[#e7e7e7ea] border-2 hover:border-2 hover:border-black duration-300  shadow-[inset_3px_0px_41px_22px_#00000024] shadow-gray-400  rounded-lg dark:bg-gray-800 dark:border-gray-700">
             <Link to={`/product/${product._id}`} >
                 <div className='relative'>
                     <img className="  rounded-t-lg p-8 object-cover w-full h-52" src="helmet.jpg" alt="productImage" />

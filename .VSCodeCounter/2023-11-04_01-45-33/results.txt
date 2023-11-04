@@ -1,0 +1,209 @@
+Date : 2023-11-04 01:45:33
+Directory : e:\fyp_bikezone\fyp_bikezone
+Total : 138 files,  44077 codes, 398 comments, 1609 blanks, all 46084 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JSON           |          5 |     35,124 |          0 |          5 |     35,129 |
+| JavaScript JSX |         51 |      5,495 |        138 |        850 |      6,483 |
+| JavaScript     |         75 |      3,289 |        243 |        697 |      4,229 |
+| HTML           |          3 |        106 |         15 |         19 |        140 |
+| Markdown       |          1 |         38 |          0 |         33 |         71 |
+| CSS            |          2 |         25 |          2 |          4 |         31 |
+| Properties     |          1 |          0 |          0 |          1 |          1 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                          | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                             |        138 |     44,077 |        398 |      1,609 |     46,084 |
+| . (Files)                                                                                     |          2 |      2,248 |          0 |          2 |      2,250 |
+| bikezone_api                                                                                  |         38 |      1,754 |        131 |        475 |      2,360 |
+| bikezone_api (Files)                                                                          |          2 |         56 |          6 |         18 |         80 |
+| bikezone_api\config                                                                           |          1 |          9 |          0 |          3 |         12 |
+| bikezone_api\controllers                                                                      |          9 |        905 |         79 |        304 |      1,288 |
+| bikezone_api\middlewares                                                                      |          3 |         49 |          3 |         12 |         64 |
+| bikezone_api\models                                                                           |          8 |        424 |         25 |         34 |        483 |
+| bikezone_api\routes                                                                           |          9 |        121 |         10 |         68 |        199 |
+| bikezone_api\utils                                                                            |          6 |        190 |          8 |         36 |        234 |
+| bikezone_api\utils (Files)                                                                    |          4 |        105 |          8 |         26 |        139 |
+| bikezone_api\utils\templates                                                                  |          2 |         85 |          0 |         10 |         95 |
+| bikezone_fe                                                                                   |         98 |     40,075 |        267 |      1,132 |     41,474 |
+| bikezone_fe (Files)                                                                           |          5 |     32,907 |          8 |         40 |     32,955 |
+| bikezone_fe\public                                                                            |          2 |         46 |         15 |         10 |         71 |
+| bikezone_fe\src                                                                               |         91 |      7,122 |        244 |      1,082 |      8,448 |
+| bikezone_fe\src (Files)                                                                       |          3 |        140 |         17 |         32 |        189 |
+| bikezone_fe\src\Utils                                                                         |          1 |        157 |          0 |          1 |        158 |
+| bikezone_fe\src\app                                                                           |          1 |         22 |          0 |          2 |         24 |
+| bikezone_fe\src\components                                                                    |         19 |      1,021 |         16 |        204 |      1,241 |
+| bikezone_fe\src\components (Files)                                                            |          7 |        385 |          5 |         71 |        461 |
+| bikezone_fe\src\components\cards                                                              |          4 |        132 |          4 |         39 |        175 |
+| bikezone_fe\src\components\route                                                              |          1 |         29 |          6 |          9 |         44 |
+| bikezone_fe\src\components\sections                                                           |          7 |        475 |          1 |         85 |        561 |
+| bikezone_fe\src\features                                                                      |         32 |      1,256 |         83 |        184 |      1,523 |
+| bikezone_fe\src\features\appointment                                                          |          4 |         64 |          2 |         16 |         82 |
+| bikezone_fe\src\features\auth                                                                 |          4 |        270 |         18 |         32 |        320 |
+| bikezone_fe\src\features\blog                                                                 |          4 |        232 |         15 |         31 |        278 |
+| bikezone_fe\src\features\contact                                                              |          4 |         64 |          2 |         20 |         86 |
+| bikezone_fe\src\features\order                                                                |          4 |        127 |          7 |         14 |        148 |
+| bikezone_fe\src\features\product                                                              |          4 |        266 |         25 |         35 |        326 |
+| bikezone_fe\src\features\review                                                               |          4 |         63 |          2 |         12 |         77 |
+| bikezone_fe\src\features\workshop                                                             |          4 |        170 |         12 |         24 |        206 |
+| bikezone_fe\src\pages                                                                         |         35 |      4,526 |        128 |        659 |      5,313 |
+| bikezone_fe\src\pages (Files)                                                                 |          4 |        398 |          3 |         40 |        441 |
+| bikezone_fe\src\pages\admin                                                                   |          1 |         26 |          1 |          3 |         30 |
+| bikezone_fe\src\pages\blog                                                                    |          4 |        631 |         15 |        100 |        746 |
+| bikezone_fe\src\pages\payment                                                                 |          2 |        173 |          2 |         37 |        212 |
+| bikezone_fe\src\pages\products                                                                |          7 |        969 |         24 |        179 |      1,172 |
+| bikezone_fe\src\pages\shared                                                                  |          4 |        163 |          0 |         22 |        185 |
+| bikezone_fe\src\pages\user                                                                    |          7 |        847 |         37 |        134 |      1,018 |
+| bikezone_fe\src\pages\workshop                                                                |          6 |      1,319 |         46 |        144 |      1,509 |
++-----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                      | language       | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\app.js                                              | JavaScript     |         32 |          3 |         11 |         46 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\config\database.js                                  | JavaScript     |          9 |          0 |          3 |         12 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\controllers\appointmentController.js                | JavaScript     |         51 |          1 |         23 |         75 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\controllers\blogController.js                       | JavaScript     |         96 |          3 |         25 |        124 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\controllers\contactUsController.js                  | JavaScript     |         29 |          0 |          6 |         35 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\controllers\orderController.js                      | JavaScript     |        103 |         18 |         37 |        158 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\controllers\paymentController.js                    | JavaScript     |         18 |          0 |          4 |         22 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\controllers\productController.js                    | JavaScript     |        202 |          8 |         64 |        274 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\controllers\rentBikeController.js                   | JavaScript     |         79 |          2 |         25 |        106 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\controllers\userController.js                       | JavaScript     |        200 |         45 |         77 |        322 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\controllers\workshopController.js                   | JavaScript     |        127 |          2 |         43 |        172 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\middlewares\auth.js                                 | JavaScript     |         21 |          0 |          7 |         28 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\middlewares\catchAsyncErrors.js                     | JavaScript     |          3 |          0 |          0 |          3 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\middlewares\error.js                                | JavaScript     |         25 |          3 |          5 |         33 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\models\appointmentModel.js                          | JavaScript     |         17 |          0 |          2 |         19 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\models\blogModel.js                                 | JavaScript     |         29 |          0 |          3 |         32 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\models\contactUsModel.js                            | JavaScript     |         27 |          0 |          3 |         30 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\models\orderModel.js                                | JavaScript     |         96 |          4 |          2 |        102 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\models\productModel.js                              | JavaScript     |         88 |          0 |          5 |         93 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\models\rentBikeModel.js                             | JavaScript     |         32 |          5 |          3 |         40 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\models\userModel.js                                 | JavaScript     |         62 |         16 |         11 |         89 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\models\workshopModel.js                             | JavaScript     |         73 |          0 |          5 |         78 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\routes\appointmentRoute.js                          | JavaScript     |          7 |          0 |          3 |         10 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\routes\blogRoute.js                                 | JavaScript     |         14 |          0 |          8 |         22 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\routes\contactUsRoute.js                            | JavaScript     |          9 |          0 |          5 |         14 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\routes\orderRoute.js                                | JavaScript     |         17 |          0 |          9 |         26 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\routes\paymentRoute.js                              | JavaScript     |          7 |          0 |          4 |         11 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\routes\productRoute.js                              | JavaScript     |         20 |          9 |         10 |         39 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\routes\rentBikeRoute.js                             | JavaScript     |         11 |          1 |          6 |         18 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\routes\userRoute.js                                 | JavaScript     |         23 |          0 |         12 |         35 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\routes\workshopRoute.js                             | JavaScript     |         13 |          0 |         11 |         24 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\server.js                                           | JavaScript     |         24 |          3 |          7 |         34 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\utils\apiFeatures.js                                | JavaScript     |         34 |          2 |         13 |         49 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\utils\errorHandler.js                               | JavaScript     |          8 |          0 |          1 |          9 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\utils\jwtToken.js                                   | JavaScript     |         18 |          2 |          4 |         24 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\utils\sendEmail.js                                  | JavaScript     |         45 |          4 |          8 |         57 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\utils\templates\registrationEmail.html              | HTML           |         31 |          0 |          4 |         35 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_api\utils\templates\slotConfirmation.html               | HTML           |         54 |          0 |          6 |         60 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\.env                                                 | Properties     |          0 |          0 |          1 |          1 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\README.md                                            | Markdown       |         38 |          0 |         33 |         71 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\package-lock.json                                    | JSON           |     32,781 |          0 |          1 |     32,782 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\package.json                                         | JSON           |         70 |          0 |          1 |         71 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\public\index.html                                    | HTML           |         21 |         15 |          9 |         45 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\public\manifest.json                                 | JSON           |         25 |          0 |          1 |         26 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\App.js                                           | JavaScript     |        110 |         15 |         26 |        151 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\Utils\productData.js                             | JavaScript     |        157 |          0 |          1 |        158 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\app\store.js                                     | JavaScript     |         22 |          0 |          2 |         24 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\Carousal.jsx                          | JavaScript JSX |         29 |          0 |          6 |         35 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\CheckoutSteps.css                     | CSS            |         11 |          0 |          2 |         13 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\CheckoutSteps.jsx                     | JavaScript JSX |         49 |          0 |          6 |         55 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\Footer.jsx                            | JavaScript JSX |         78 |          2 |          7 |         87 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\Header.jsx                            | JavaScript JSX |        193 |          3 |         45 |        241 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\Layout.jsx                            | JavaScript JSX |         13 |          0 |          3 |         16 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\MetaData.js                           | JavaScript     |         12 |          0 |          2 |         14 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\cards\EmptyCart.jsx                   | JavaScript JSX |         18 |          0 |          3 |         21 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\cards\ProductCard.jsx                 | JavaScript JSX |         47 |          2 |         14 |         63 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\cards\ReviewCard.jsx                  | JavaScript JSX |         28 |          2 |         14 |         44 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\cards\WorkShopCards.jsx               | JavaScript JSX |         39 |          0 |          8 |         47 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\route\ProtectedRoute.js               | JavaScript     |         29 |          6 |          9 |         44 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\sections\FeatureSection.jsx           | JavaScript JSX |         49 |          0 |          7 |         56 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\sections\FeaturedProducts.jsx         | JavaScript JSX |         51 |          0 |         15 |         66 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\sections\HeroSection.jsx              | JavaScript JSX |         68 |          1 |          6 |         75 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\sections\NewArrivalProucts.jsx        | JavaScript JSX |         51 |          0 |         14 |         65 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\sections\ProductSection.jsx           | JavaScript JSX |        154 |          0 |         14 |        168 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\sections\ReviewedProducts.jsx         | JavaScript JSX |         51 |          0 |         14 |         65 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\components\sections\TopRatedProducts.jsx         | JavaScript JSX |         51 |          0 |         15 |         66 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\appointment\appointment.initialstate.js | JavaScript     |          7 |          0 |          2 |          9 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\appointment\appointment.service.js      | JavaScript     |         11 |          1 |          5 |         17 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\appointment\appointment.slice.js        | JavaScript     |         34 |          0 |          3 |         37 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\appointment\appointment.thunk.js        | JavaScript     |         12 |          1 |          6 |         19 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\auth\auth.initialstate.js               | JavaScript     |         10 |          0 |          2 |         12 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\auth\auth.service.js                    | JavaScript     |         45 |          9 |         10 |         64 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\auth\auth.slice.js                      | JavaScript     |        145 |          0 |          7 |        152 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\auth\auth.thunk.js                      | JavaScript     |         70 |          9 |         13 |         92 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\blog\blog.initialstate.js               | JavaScript     |          9 |          0 |          2 |         11 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\blog\blog.service.js                    | JavaScript     |         45 |          9 |         11 |         65 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\blog\blog.slice.js                      | JavaScript     |        119 |          0 |          7 |        126 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\blog\blog.thunk.js                      | JavaScript     |         59 |          6 |         11 |         76 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\contact\contact.initial.js              | JavaScript     |          8 |          0 |          2 |         10 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\contact\contact.service.js              | JavaScript     |         10 |          1 |          4 |         15 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\contact\contact.slice.js                | JavaScript     |         35 |          0 |          5 |         40 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\contact\contact.thunk.js                | JavaScript     |         11 |          1 |          9 |         21 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\order\order.initialstate.js             | JavaScript     |         10 |          0 |          2 |         12 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\order\order.service.js                  | JavaScript     |         20 |          3 |          6 |         29 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\order\order.slice.js                    | JavaScript     |         67 |          1 |          3 |         71 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\order\order.thunk.js                    | JavaScript     |         30 |          3 |          3 |         36 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\product\product.initialstate.js         | JavaScript     |         22 |          1 |          4 |         27 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\product\product.service.js              | JavaScript     |         36 |          7 |          9 |         52 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\product\product.slice.js                | JavaScript     |        151 |         10 |         14 |        175 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\product\product.thunk.js                | JavaScript     |         57 |          7 |          8 |         72 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\review\review.initialstate.js           | JavaScript     |          8 |          0 |          2 |         10 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\review\review.service.js                | JavaScript     |         10 |          1 |          3 |         14 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\review\review.slice.js                  | JavaScript     |         34 |          0 |          4 |         38 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\review\review.thunk.js                  | JavaScript     |         11 |          1 |          3 |         15 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\workshop\workshop.initialstate.js       | JavaScript     |         10 |          0 |          2 |         12 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\workshop\workshop.service.js            | JavaScript     |         35 |          6 |          8 |         49 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\workshop\workshop.slice.js              | JavaScript     |         68 |          0 |          6 |         74 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\features\workshop\workshop.thunk.js              | JavaScript     |         57 |          6 |          8 |         71 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\index.css                                        | CSS            |         14 |          2 |          2 |         18 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\index.js                                         | JavaScript     |         16 |          0 |          4 |         20 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\AboutUs.jsx                                | JavaScript JSX |         93 |          1 |         11 |        105 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\AddProduct.jsx                             | JavaScript JSX |         72 |          0 |          8 |         80 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\ContactUs.jsx                              | JavaScript JSX |        208 |          2 |         19 |        229 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\HomePage.jsx                               | JavaScript JSX |         25 |          0 |          2 |         27 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\admin\Dashboard.jsx                        | JavaScript JSX |         26 |          1 |          3 |         30 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\blog\Blogs.jsx                             | JavaScript JSX |        206 |          3 |         31 |        240 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\blog\CreateBlogPost.jsx                    | JavaScript JSX |        157 |          2 |         22 |        181 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\blog\GetSingleBlog.jsx                     | JavaScript JSX |        135 |          5 |         25 |        165 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\blog\MyBlogs.jsx                           | JavaScript JSX |        133 |          5 |         22 |        160 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\payment\Payment.jsx                        | JavaScript JSX |        149 |          2 |         33 |        184 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\payment\PaymentSuccess.jsx                 | JavaScript JSX |         24 |          0 |          4 |         28 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\products\Cart.jsx                          | JavaScript JSX |        110 |          2 |         17 |        129 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\products\ConfirmOrder.jsx                  | JavaScript JSX |        104 |          2 |         22 |        128 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\products\FeaturedProductsPage.jsx          | JavaScript JSX |        166 |          5 |         39 |        210 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\products\MyOrders.jsx                      | JavaScript JSX |        108 |          0 |         18 |        126 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\products\OrderDetails.jsx                  | JavaScript JSX |         73 |          1 |         12 |         86 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\products\ProductDetail.jsx                 | JavaScript JSX |        240 |         14 |         56 |        310 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\products\Shipping.jsx                      | JavaScript JSX |        168 |          0 |         15 |        183 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\shared\CardLoading.jsx                     | JavaScript JSX |         68 |          0 |          4 |         72 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\shared\ErrorPage.jsx                       | JavaScript JSX |         34 |          0 |         11 |         45 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\shared\Loader.jsx                          | JavaScript JSX |         12 |          0 |          4 |         16 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\shared\Modal.jsx                           | JavaScript JSX |         49 |          0 |          3 |         52 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\user\EditProfile.jsx                       | JavaScript JSX |        144 |          7 |         25 |        176 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\user\ForgotPassword.jsx                    | JavaScript JSX |         95 |          3 |         16 |        114 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\user\LoginForm.jsx                         | JavaScript JSX |        126 |          4 |         19 |        149 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\user\Register.jsx                          | JavaScript JSX |        175 |         22 |         24 |        221 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\user\ResetPassword.jsx                     | JavaScript JSX |        115 |          1 |         15 |        131 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\user\UpdatePassword.jsx                    | JavaScript JSX |        129 |          0 |         20 |        149 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\user\UserProfile.jsx                       | JavaScript JSX |         63 |          0 |         15 |         78 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\workshop\CreateWorkshop.jsx                | JavaScript JSX |        393 |          1 |         24 |        418 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\workshop\MyWorkshopAppointments.jsx        | JavaScript JSX |        111 |          1 |         18 |        130 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\workshop\MyWorkshops.jsx                   | JavaScript JSX |         40 |          5 |         11 |         56 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\workshop\UpdateWorkshop.jsx                | JavaScript JSX |        380 |          2 |         26 |        408 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\workshop\WorkshopDetail.jsx                | JavaScript JSX |        320 |         36 |         44 |        400 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\src\pages\workshop\Workshops.jsx                     | JavaScript JSX |         75 |          1 |         21 |         97 |
+| e:\fyp_bikezone\fyp_bikezone\bikezone_fe\tailwind.config.js                                   | JavaScript     |         18 |          8 |          4 |         30 |
+| e:\fyp_bikezone\fyp_bikezone\package-lock.json                                                | JSON           |      2,212 |          0 |          1 |      2,213 |
+| e:\fyp_bikezone\fyp_bikezone\package.json                                                     | JSON           |         36 |          0 |          1 |         37 |
+| Total                                                                                         |                |     44,077 |        398 |      1,609 |     46,084 |
++-----------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

@@ -118,7 +118,7 @@ const ContactUs = () => {
                                 </div>
                                 <div class="w-full">
                                     <h4 class="text-dark mb-1 text-xl font-bold">Phone Number</h4>
-                                    <p class="text-body-color text-base">(+62)81 414 257 9980</p>
+                                    <p class="text-body-color text-base">(+92)310 7756204</p>
                                 </div>
                             </div>
                             <div class="mb-8 flex w-full max-w-[370px]">
@@ -138,7 +138,7 @@ const ContactUs = () => {
                                 </div>
                                 <div class="w-full">
                                     <h4 class="text-dark mb-1 text-xl font-bold">Email Address</h4>
-                                    <p class="text-body-color text-base">bikezone@gmail.com</p>
+                                    <p class="text-body-color text-base">zakibutt199@gmail.com</p>
                                 </div>
                             </div>
                         </div>

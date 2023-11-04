@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import 'react-phone-number-input/style.css'
 import Input from 'react-phone-number-input/input'
 import { useDispatch, useSelector } from 'react-redux';
 import { createWorkshop } from '../../features/workshop/workshop.thunk';
 import { reset } from '../../features/workshop/workshop.slice';
 import { toast } from 'react-toastify';
+import Lottie from 'lottie-react'
+import verticalBar from '../../assets/animated/verticalBar.json'
 
 
 
@@ -19,6 +20,10 @@ const schema = yup.object({
     brand: yup.string().required('Brand is required'),
     address: yup.string().required('Address is required'),
     city: yup.string().required('City is required'),
+    service1: yup.string(),
+    service2: yup.string(),
+    service3: yup.string(),
+    service4: yup.string(),
     contact: yup.string().required('contact number is required'),
     startTime: yup
         .number().min(1).max(24)
@@ -39,7 +44,6 @@ const schema = yup.object({
 const CreateWorkshop = () => {
 
 
-
     const dispatch = useDispatch()
     const initialValues = {
         name: '',
@@ -52,6 +56,10 @@ const CreateWorkshop = () => {
         endTime: '',
         maxAppointments: '',
         description: '',
+        service1: '',
+        service2: '',
+        service3: '',
+        service4: '',
     }
 
     const { isError, isSuccess, message, isLoading } = useSelector((state) => state.workshop)
@@ -61,11 +69,11 @@ const CreateWorkshop = () => {
             toast.error(message)
             dispatch(reset())
         }
-        if (isSuccess) {
+        if (message === 'Workshop created successfully') {
             toast.success(message)
         }
 
-    }, [isSuccess, isError])
+    }, [isSuccess, isError, message])
 
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
@@ -80,11 +88,10 @@ const CreateWorkshop = () => {
             },
         });
 
-
-
     return (
         <>
-            <section className="py-1 bg-[#d0d1d1]">
+            <section className="py-1 bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600">
+          
                 <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
                     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
                         <div className="rounded-t text-yellow-400 bg-[#122222] mb-0 px-6 py-6">
@@ -114,7 +121,8 @@ const CreateWorkshop = () => {
                                                 value={values.name}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                type="text" placeholder='enter your workshop name' className="border-0 border-b border-black px-3 py-3  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                                type="text"
+                                                placeholder='enter your workshop name' className="border-0 border-b border-black px-3 py-3  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                             {errors.name && touched.name ? (
                                                 <p className="text-red-600 animate-pulse">{errors.name}</p>
                                             ) : null}
@@ -241,7 +249,15 @@ const CreateWorkshop = () => {
                                             <label className="block uppercase text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Service 1
                                             </label>
-                                            <input type="text" placeholder='enter your service' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            <input
+                                                type="text"
+                                                id='service1'
+                                                name='service1'
+                                                value={values.service1}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                placeholder='enter your service'
+                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-6/12 px-4">
@@ -249,15 +265,15 @@ const CreateWorkshop = () => {
                                             <label className="block uppercase  text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Service 2
                                             </label>
-                                            <input type="email" placeholder='enter your service' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
-                                        </div>
-                                    </div>
-                                    <div className="w-full lg:w-6/12 px-4">
-                                        <div className="relative w-full mb-3">
-                                            <label className="block uppercase text-xs font-bold mb-2" htmlFor="grid-password">
-                                                Service 2
-                                            </label>
-                                            <input type="text" placeholder='enter your service' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            <input
+                                                type="text"
+                                                id='service2'
+                                                name='service2'
+                                                value={values.service2}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                placeholder='enter your service'
+                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-6/12 px-4">
@@ -265,7 +281,31 @@ const CreateWorkshop = () => {
                                             <label className="block uppercase text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Service 3
                                             </label>
-                                            <input type="text" placeholder='enter your service' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            <input
+                                                type="text"
+                                                id='service3'
+                                                name='service3'
+                                                value={values.service3}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                placeholder='enter your service'
+                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                        </div>
+                                    </div>
+                                    <div className="w-full lg:w-6/12 px-4">
+                                        <div className="relative w-full mb-3">
+                                            <label className="block uppercase text-xs font-bold mb-2" htmlFor="grid-password">
+                                                Service 4
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id='service4'
+                                                name='service4'
+                                                value={values.service4}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                placeholder='enter your service'
+                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
                                     </div>
                                 </div>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createWorkshop, getAllWorkshops, getSingleWorkshop } from "./workshop.thunk";
+import { createWorkshop, getAllWorkshops, getMyWorkshop, getSingleWorkshop } from "./workshop.thunk";
 import initialWorkshopState from './workshop.initialstate'
 
 const workshopSlice = createSlice({
@@ -34,7 +34,6 @@ const workshopSlice = createSlice({
             .addCase(getAllWorkshops.pending, (state) => {
                 state.isLoading = true
                 state.isSuccess = false
-                console.log("pending")
 
             })
             .addCase(getAllWorkshops.fulfilled, (state, action) => {
@@ -43,7 +42,6 @@ const workshopSlice = createSlice({
                 state.message = action.payload.message
                 state.workshops = action.payload.payload.workshops
                 state.workshopCount = action.payload.payload.workshopCount
-                console.log("success")
 
             })
             .addCase(getAllWorkshops.rejected, (state, action) => {
@@ -51,12 +49,10 @@ const workshopSlice = createSlice({
                 state.isError = true
                 state.message = action.payload.error
                 state.workshops = []
-                console.log("reject")
             })
             .addCase(getSingleWorkshop.pending, (state) => {
                 state.isLoading = true
                 state.isSuccess = false
-
             })
             .addCase(getSingleWorkshop.fulfilled, (state, action) => {
                 state.isLoading = false

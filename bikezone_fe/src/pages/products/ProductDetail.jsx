@@ -23,6 +23,10 @@ import { useTheme } from '@mui/material/styles';
 import { Rating } from '@mui/material';
 import { createReview } from '../../features/review/review.thunk';
 import { reset } from '../../features/review/review.slice';
+import Lottie from 'lottie-react'
+import ratingAnimation from '../../assets/animated/ratingProduct.json'
+import checkDetailsAnimation from '../../assets/animated/checkDetails.jsx.json'
+
 
 
 const ProductDetail = () => {
@@ -158,31 +162,32 @@ const ProductDetail = () => {
     return (
         <div>
             <MetaData title={`${productDetails?.name} -- BIKEZONE`} />
+
             {
                 !isLoading && productDetails && (
-                    <div className="overflow-hidden bg-[#d0d1d1] py-11 font-poppins dark:bg-gray-800">
+                    <div className="overflow-hidden bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600 py-11 font-poppins dark:bg-gray-800">
+                        <h1 className='text-center text-2xl font-semibold'>Product Detail</h1>
                         <div className="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
+                            <Lottie
+                                className="absolute top-10 left-48 h-56"
+                                animationData={checkDetailsAnimation}
+                            />
                             <div className="flex flex-wrap -mx-4">
-                                <div className="w-full px-4 md:w-1/2 ">
-                                    <div className="sticky top-0 z-50 overflow-hidden ">
-                                        <div className="z-50 mb-6 lg:mb-10 lg:h-2/4 ">
-                                            <div className=" mb-6 lg:mb-10 ">
+                                <div className="w-full px-4 py-24 md:w-1/2 ">
+                                    <div className="z-50 overflow-hidden ">
+                                        <div className='z-50 h-[400px] '>
+                                            <Carousal />
+                                        </div>
 
-                                                <div className='h-[400px]'>
-                                                    <Carousal />
-                                                </div>
-
-                                                {/* <Carousel>
+                                        {/* <Carousel>
                                                     <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" className='z-50' alt="" />
                                                     <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="" />
                                                     <img src={shadowBikeImage} className='z-50' alt="" />
                                                 </Carousel> */}
 
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                                <div className="w-full px-4 md:w-1/2 bg-[#b6b6b6] shadow-md ">
+                                <div className="w-full px-4 md:w-1/2 rounded-md shadow-[inset_3px_0px_41px_22px_#00000024] shadow-gray-400 p-4 bg-[#e4e4e4]  ">
                                     <div className="p-2">
                                         <div className="mb-5 ">
                                             <p className='text-xs text-gray-700'>product #: {productDetails._id}</p>
@@ -276,12 +281,17 @@ const ProductDetail = () => {
                                 </DialogActions>
                             </Dialog>
                         </div>
-                        <div className=''>
+                        <div className='relative'>
                             <div className='font-bold  border-black border-t border-l border-r shadow-2xl  flex bg-[#b6b6b6] justify-center mx-6 py-6 '>
                                 <div className='border-b-2 border-[#122222]  w-[15%] text-2xl py-2 text-center'>Reviews</div>
+                                <Lottie
+                                    className="absolute w-36 right-6 top-0"
+                                    animationData={ratingAnimation}
+                                />
                             </div>
+
                             <div className="flex overflow-x-scroll border-black border-b border-l border-r  shadow-xl bg-[#b6b6b6] no-scrollbar mx-6  pb-10 px-4">
-                                <div className="flex ml-10 gap-10 ">
+                                <div className="flex ml-10 mt-4 gap-10 ">
 
                                     {
                                         productDetails.reviews && productDetails.reviews[0] ? (

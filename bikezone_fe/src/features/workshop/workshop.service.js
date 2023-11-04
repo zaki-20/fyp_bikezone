@@ -20,9 +20,30 @@ const getSingleWorkshop = async (id) => {
     return response.data
 }
 
+//get single workshops
+const getMyWorkshop = async () => {
+    const response = await axios.get(API_URL + `workshops/me`, { withCredentials: true })
+    return response.data
+}
+
+//delete my workshops
+const deleteMyWorkshop = async (id) => {
+    const response = await axios.delete(API_URL + `workshop/${id}`, { withCredentials: true })
+    return response.data
+}
+
+//update my workshops
+const updateMyWorkshop = async (id, values) => {
+    const response = await axios.put(API_URL + `workshop/update/${id}`, values, { withCredentials: true })
+    return response.data
+}
+
 const workshopService = {
     createWorkshop,
     getAllWorkshops,
-    getSingleWorkshop
+    getSingleWorkshop,
+    getMyWorkshop,
+    deleteMyWorkshop,
+    updateMyWorkshop
 }
 export default workshopService

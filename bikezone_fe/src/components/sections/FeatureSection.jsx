@@ -3,7 +3,7 @@ import React from 'react'
 const FeatureSection = () => {
     return (
         <>
-            <div className="z-30 relative items-center justify-center w-full h-full overflow-auto">
+            <div className="z-30 relative  items-center justify-center w-full h-full overflow-auto">
                 <div className="inset-0 h-screen bg-cover bg-center" style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp6689710.jpg")' }}>
                 </div>
                 <div className="absolute inset-0 z-20 flex items-center justify-center h-screen w-full bg-gray-900 bg-opacity-75" />
@@ -12,7 +12,7 @@ const FeatureSection = () => {
                         <div className="grid grid-cols-12 gap-1">
                             <div className="relative my-6 px-8 col-span-12 sm:col-span-12 md:col-span-7 lg:col-span-7 xxl:col-span-7">
                                 <div className="border-l-4 border-gray-400 py-20 px-5 mx-2 absolute left-0">
-                                    <p className="italic text-white text-xl md:text-4xl lg:text-6xl uppercase text-center  font-semibold ">
+                                    <p className="italic text-white text-xl md:text-4xl lg:text-6xl uppercase text-center animate-move-diagonal font-semibold ">
                                         BikeZone: Where Dreams Take the Road
                                     </p>
                                 </div>
@@ -22,7 +22,7 @@ const FeatureSection = () => {
                             <div className="col-span-12 sm:col-span-12 md:col-span-5 lg:col-span-5 xxl:col-span-5">
                                 <div className="relative bg-pink-900 h-full md:h-96 w-full bg-opacity-50 rounded-tr-lg rounded-br-lg">
                                     <div className="p-8">
-                                        <p className="text-yellow-300 text-xs md:text-sm tracking-widest py-6 mb-4">
+                                        <p className="text-yellow-300 text-xs md:text-sm  tracking-widest py-6 mb-4">
                                             "BikeZone, where the love for two wheels knows no bounds.
 
                                             Here, machines aren't just metal; they're masterpieces, and roads aren't just paths; they're adventures waiting to be had.

@@ -1,19 +1,15 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import Lottie from 'lottie-react'
+import bikeAnimation from '../assets/animated/aboutus.json'
+import { AboutUsAccordion } from './AboutUsAccordion';
 
 
 const AboutUs = () => {
-    
-
-    const [showMoreContent, setShowMoreContent] = useState(false);
-
-    const toggleContent = () => {
-        setShowMoreContent(!showMoreContent);
-    };
 
     return (
-        <div className='p-4 bg-[#def5f596] '>
-         
+        <div className='p-4 bg-[#d0d1d1]'>
+
             <div className="flex items-center lg:h-screen font-poppins dark:bg-gray-800 ">
                 <div className="justify-center flex-1 max-w-6xl py-4 mx-auto lg:py-6 md:px-6">
                     <div className="px-4 mb-10 md:text-center md:mb-20">
@@ -33,7 +29,7 @@ const AboutUs = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-wrap items-center">
+                    <div className="flex flex-wrap items-center rounded-md shadow-[inset_3px_0px_41px_22px_#00000024] shadow-gray-400 p-4 bg-[#e4e4e4]">
                         <div className="w-full px-4 mb-10 md:w-1/2 lg:mb-0 ">
                             <h2 className="mb-4 text-2xl font-bold text-gray-700 dark:text-gray-300">
                                 We are providing a better facility
@@ -75,29 +71,25 @@ const AboutUs = () => {
                                     Secure Shopping
                                 </li>
                             </ul>
-                            <Link to="# " onClick={toggleContent} className="px-4 py-2 text-gray-100 bg-[#122222] rounded-md dark:bg-blue-400">
-                                Learn more
-                            </Link>
+
                         </div>
                         <div className="relative w-full px-4 mb-10 md:w-1/2 lg:mb-0">
-                            <img src="https://i.postimg.cc/HsSPvTq8/pexels-fauxels-3184357.jpg" alt="" className="relative z-40 object-cover w-full rounded-md md:h-96 h-44" />
+                            <Lottie
+                                className=" "
+                                animationData={bikeAnimation}
+                            />
                             <div className="absolute top-0 right-0 items-center justify-center hidden -mt-16 lg:inline-flex">
 
                             </div>
+
                         </div>
                     </div>
 
                 </div>
             </div>
-            {showMoreContent && (
-                <div>
-                    {/* Additional content to be displayed */}
-                    <h3 className="text-2xl font-semibold mt-4">Additional Content</h3>
-                    <p className="text-base leading-7 text-gray-500 dark:text-gray-400">
-                        This is the additional content that will be displayed when the user clicks "Learn more."
-                    </p>
-                </div>
-            )}
+            <div className='px-[100px] py-10'>
+                <AboutUsAccordion />
+            </div>
         </div>
     )
 }

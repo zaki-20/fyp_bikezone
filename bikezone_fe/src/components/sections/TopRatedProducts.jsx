@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom'
 import { getAllProducts, getRatedProducts } from '../../features/product/product.thunk'
 import { useDispatch, useSelector } from 'react-redux'
 import CardLoading from '../../pages/shared/CardLoading'
+import Lottie from 'lottie-react'
+import fiveStarAnimation from '../../assets/animated/fiveStar.json'
 
 
 const TopRatedProducts = () => {
+
 
     const dispatch = useDispatch()
 
@@ -19,7 +22,7 @@ const TopRatedProducts = () => {
     if (isLoading) {
         return (
             <>
-                <div className="flex flex-col bg-[#def5f596]">
+                <div className="flex flex-col">
                     <CardLoading />
                 </div>
             </>
@@ -37,11 +40,17 @@ const TopRatedProducts = () => {
 
     return (
 
-        <div className="flex flex-col bg-[#d0d1d1]">
+        <div className="flex flex-col ">
             <div className='flex justify-between items-center mx-5'>
-                <h1 className="flex py-5 md:ml-10 md:mx-10  font-bold text-4xl text-[#122222]">
-                    Top Rated Products
-                </h1>
+                <div className='flex items-center gap-x-2 py-5 '>
+                    <h1 className=" md:ml-10 font-bold text-4xl text-[#122222]">
+                        Top Rated Products
+                    </h1>
+                    <Lottie
+                        className=" "
+                        animationData={fiveStarAnimation}
+                    />
+                </div>
                 <Link to={"/products/top-rated"} className='underline hover:text-blue-600'>View All</Link>
             </div>
             <div className="flex overflow-x-scroll no-scrollbar pb-10 px-4">

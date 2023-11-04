@@ -6,7 +6,7 @@ import { HiArrowNarrowRight } from 'react-icons/hi';
 
 const ProductSection = () => {
   return (
-    <section className="p-4 lg:p-8 bg-[#d0d1d1] overflow-x-hidden">
+    <section className="p-4 lg:p-8 overflow-x-hidden">
       <div className="pb-10 flex flex-col items-center">
         <h3 className="text-3xl font-bold ">Services</h3>
         <div className="h-[1px] w-20 bg-black"></div>

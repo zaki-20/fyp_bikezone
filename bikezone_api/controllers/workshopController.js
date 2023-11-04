@@ -5,8 +5,15 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 
 
 exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
-    const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description } = req.body;
     const owner = req.user._id;
+
+    const existingWorkshops = await Workshop.find({ owner });
+
+    if (existingWorkshops.length >= 3) {
+        return next(new ErrorHandler("Workshop limit reached", 404));
+    }
+
+    const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description } = req.body;
 
     // Create an array to store time slots
     let slotsArray = [];
@@ -136,3 +143,29 @@ exports.getWorkshopDetails = async (req, res, next) => {
     });
 
 };
+
+exports.getMyWorkshopDetails = catchAsyncErrors(async (req, res, next) => {
+    const ownerId = req.user._id;
+
+    const workshop = await Workshop.findOne({ owner: ownerId })
+        .populate('owner', 'firstname lastname email') // Populate the owner field
+        .populate({
+            path: 'appointments',
+            populate: {
+                path: 'user',
+                select: 'firstname lastname email', // Select the fields you want from the user object
+            },
+        });
+
+
+    if (!workshop) {
+        return next(new ErrorHandler("Workshop not found", 404));
+    }
+
+    res.status(200).json({
+        statusCode: 200,
+        success: true,
+        message: "My Workshop details retrieved successfully",
+        payload: { workshop },
+    });
+});

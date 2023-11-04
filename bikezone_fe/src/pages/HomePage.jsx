@@ -7,12 +7,28 @@ import ReviewedProducts from '../components/sections/ReviewedProducts'
 import NewArrivalProducts from '../components/sections/NewArrivalProucts'
 import ProductSection from '../components/sections/ProductSection'
 import FeatureSection from '../components/sections/FeatureSection'
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
+import Lottie from 'lottie-react'
+import bikeAnimation from '../assets/animated/bikerun.json'
+
 const HomePage = () => {
   return (
-    <div>
+    <div className='bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-gray-200 via-gray-400 to-gray-600'>
       <MetaData title={"BIKEZONE"} />
+
       <HeroSection />
+
+      <div className=" relative overflow-hidden h-36 w-full">
+        <Lottie
+          className="absolute h-36 w-full animate-move-right "
+          animationData={bikeAnimation}
+        />
+
+        
+      </div>
+      <div className='bg-gray-700 h-1 mx-auto -mt-2 w-2/3 blur-lg animate-pulse roun'></div>
+
+
       <ProductSection />
       <FeaturedProducts />
       <TopRatedProducts />

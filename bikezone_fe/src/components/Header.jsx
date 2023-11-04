@@ -66,7 +66,7 @@ const Header = () => {
               </Link>
               <div className='mr-0'>
                 <Dropdown
-                  className='bg-[#122222]'
+                  className='bg-[#122222] z-50'
                   arrowIcon={false}
                   inline
                   label={
@@ -165,7 +165,9 @@ const Header = () => {
                     </button>
                   </MenuHandler>
                   <MenuList className='bg-[#122222] text-yellow-400'>
-                    <MenuItem>Menu Item 1</MenuItem>
+                    <Link to={'/featuredproducts'}>
+                      <MenuItem>Bike Parts</MenuItem>
+                    </Link>
                     <MenuItem>Menu Item 2</MenuItem>
 
 
@@ -179,7 +181,7 @@ const Header = () => {
                           <MenuItem>Create Workshop</MenuItem>
                         </Link>
 
-                        <Link to={'/blog/me'}>
+                        <Link to={'/workshops/me'}>
                           <MenuItem>My Workshop</MenuItem>
                         </Link>
 

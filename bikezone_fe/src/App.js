@@ -43,6 +43,9 @@ import Blogs from "./pages/blog/Blogs";
 import Workshops from "./pages/workshop/Workshops";
 import CreateWorkshop from "./pages/workshop/CreateWorkshop";
 import WorkshopDetail from "./pages/workshop/WorkshopDetail";
+import MyWorkshopAppointments from "./pages/workshop/MyWorkshopAppointments";
+import MyWorkshops from "./pages/workshop/MyWorkshops";
+import UpdateWorkshop from "./pages/workshop/UpdateWorkshop";
 
 
 function App() {
@@ -89,16 +92,9 @@ function App() {
         <Route exact path="/success" element={<PaymentSuccess />} />
         <Route exact path="/blogs" element={<Blogs />} />
 
-        {/* Workshops */}
-
-        <Route exact path="/workshops" element={<Workshops />} />
-        <Route exact path="/create-workshop" element={<ProtectedRoute Component={CreateWorkshop} />} />  
-        <Route exact path="/workshop/:id" element={<ProtectedRoute Component={WorkshopDetail} />} />  
-
 
         {/* admin routes */}
         <Route exact path="/dashboard" element={<Dashboard />} />
-
 
 
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
@@ -118,6 +114,7 @@ function App() {
         <Route exact path="/blog/me" element={<ProtectedRoute Component={MyBlogs} />} />
         <Route exact path="/blog/:id" element={<ProtectedRoute Component={GetSingleBlog} />} />
 
+        {/* Payment */}
         <Route exact path="/process/payment" element={
           stripeApiKey && (
             <Elements stripe={loadStripe(stripeApiKey)}>
@@ -125,6 +122,18 @@ function App() {
             </Elements>
           )}
         />
+
+
+        {/* Workshops */}
+
+        <Route exact path="/workshops" element={<Workshops />} />
+        <Route exact path="/workshops/me" element={<ProtectedRoute Component={MyWorkshops} />} />
+        <Route exact path="/create-workshop" element={<ProtectedRoute Component={CreateWorkshop} />} />
+        <Route exact path="/workshop/:id" element={<ProtectedRoute Component={WorkshopDetail} />} />
+        <Route exact path="/workshop/update/:id" element={<ProtectedRoute Component={UpdateWorkshop} />} />
+        <Route exact path="/workshop/appointments" element={<ProtectedRoute Component={MyWorkshopAppointments} />} />
+
+
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />
