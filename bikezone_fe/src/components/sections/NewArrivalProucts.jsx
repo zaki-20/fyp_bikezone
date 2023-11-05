@@ -42,7 +42,7 @@ const NewArrivalProducts = () => {
         <div className="flex flex-col ">
             <div className='flex justify-between items-center mx-5'>
                 <div className='flex items-center py-5 '>
-                    <h1 className=" md:ml-10 font-bold text-4xl text-[#122222]">
+                    <h1 className=" md:ml-10  font-bold text-4xl text-[#122222]">
                         New Arrival
                     </h1>
                     <Lottie

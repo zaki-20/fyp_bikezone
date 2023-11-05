@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createWorkshop, getSingleWorkshop, updateMyWorkshop } from '../../features/workshop/workshop.thunk';
 import { reset } from '../../features/workshop/workshop.slice';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Lottie from 'lottie-react'
 import updateWorkshopAnimation from '../../assets/animated/updateWorkshopAnimation.json'
 
@@ -38,6 +38,7 @@ const schema = yup.object({
 const UpdateWorkshop = () => {
     const { id } = useParams();
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const { isError, isSuccess, message, isLoading, workshop } = useSelector((state) => state.workshop)
 
@@ -82,6 +83,11 @@ const UpdateWorkshop = () => {
             onSubmit: async (values, action) => {
                 await dispatch(updateMyWorkshop({ values, id }))
                 action.resetForm();
+                if (isSuccess) {
+                    navigate(`/workshop/${id}`)
+                }
+
+
             },
         });
 

@@ -14,17 +14,23 @@ import maintainAnimation from '../../assets/animated/maintain.json'
 
 const Workshops = () => {
     const dispatch = useDispatch()
-    const { isLoading, isError, message, workshops, isSuccess } = useSelector((state) => state.workshop)
+    const { isLoading, isError, message, workshops } = useSelector((state) => state.workshop)
     const [selectedBrand, setSelectedBrand] = useState('');
 
     useEffect(() => {
         dispatch(getAllWorkshops())
     }, [])
 
+    // useLayoutEffect(() => {
+    //     if (isSuccess) {
+    //         toast.success(message)
+    //     }
+    // }, [isSuccess])
+
     useLayoutEffect(() => {
-        if (isSuccess) {
-            toast.success(message)
-        }
+        
+            toast.success("All workshops data")
+       
     }, [])
 
     useLayoutEffect(() => {
@@ -50,11 +56,10 @@ const Workshops = () => {
                 className=" h-36 w-36 absolute "
                 animationData={mechanicAnimation}
             />
-             <Lottie
+            <Lottie
                 className=" h-36 w-36 absolute right-0"
                 animationData={maintainAnimation}
             />
-
 
             <div className='flex flex-col justify-center items-center'>
                 <div className='flex justify-center items-center gap-x-2 pt-10'>

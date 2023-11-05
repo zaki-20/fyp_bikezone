@@ -72,6 +72,9 @@ const CreateWorkshop = () => {
         if (message === 'Workshop created successfully') {
             toast.success(message)
         }
+        return () => {
+            dispatch(reset())
+        }
 
     }, [isSuccess, isError, message])
 
@@ -91,7 +94,7 @@ const CreateWorkshop = () => {
     return (
         <>
             <section className="py-1 bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600">
-          
+
                 <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
                     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
                         <div className="rounded-t text-yellow-400 bg-[#122222] mb-0 px-6 py-6">

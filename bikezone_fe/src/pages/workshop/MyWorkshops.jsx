@@ -8,8 +8,9 @@ import { toast } from 'react-toastify';
 
 const MyWorkshops = () => {
     const dispatch = useDispatch()
-    const { isLoading, isError, message, workshops, isSuccess } = useSelector((state) => state.workshop)
+    const { isLoading, isError, message, workshops } = useSelector((state) => state.workshop)
     const { user } = useSelector((state) => state.auth)
+
 
     useEffect(() => {
         dispatch(getAllWorkshops())
@@ -19,8 +20,8 @@ const MyWorkshops = () => {
     //     if(isSuccess){
     //         toast.success(message)
     //     }
-    // }, [])
-    
+    // }, [isSuccess])
+
     useLayoutEffect(() => {
         if (isError) {
             toast.error(message);
@@ -46,7 +47,6 @@ const MyWorkshops = () => {
 
                 </div>
             )}
-
 
         </div>
 

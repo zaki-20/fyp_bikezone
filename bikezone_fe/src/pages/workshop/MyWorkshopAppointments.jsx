@@ -43,6 +43,7 @@ const MyWorkshopAppointments = () => {
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Slot #",
             flex: 0.3,
+            minWidth: 150
         },
 
         {

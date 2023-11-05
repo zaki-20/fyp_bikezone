@@ -46,6 +46,7 @@ import WorkshopDetail from "./pages/workshop/WorkshopDetail";
 import MyWorkshopAppointments from "./pages/workshop/MyWorkshopAppointments";
 import MyWorkshops from "./pages/workshop/MyWorkshops";
 import UpdateWorkshop from "./pages/workshop/UpdateWorkshop";
+import Brands from "./pages/brand/Brands";
 
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
         <Route exact path="/login" element={<LoginForm />} />
         <Route exact path="/contact" element={<ContactUs />} />
         <Route exact path="/about" element={<AboutUs />} />
+        <Route exact path="/brands" element={<Brands />} />
         <Route exact path="/product/:id" element={<ProductDetail />} />
         <Route exact path="/addproduct" element={<AddProduct />} />
         <Route exact path="/cart" element={<Cart />} />

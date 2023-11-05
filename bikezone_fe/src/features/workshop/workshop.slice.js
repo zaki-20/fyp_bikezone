@@ -12,6 +12,8 @@ const workshopSlice = createSlice({
             state.isSuccess = false
             state.message = ''
             state.workshopCount = null
+            state.workshops = []
+            state.workshop = null
         },
     },
     extraReducers: (builder) => {
@@ -39,7 +41,7 @@ const workshopSlice = createSlice({
             .addCase(getAllWorkshops.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.message = action.payload.message
+                // state.message = action.payload.message
                 state.workshops = action.payload.payload.workshops
                 state.workshopCount = action.payload.payload.workshopCount
 
