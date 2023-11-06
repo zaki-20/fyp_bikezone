@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import Lottie from 'lottie-react'
 import bikeAnimation from '../assets/animated/aboutus.json'
 import { AboutUsAccordion } from './AboutUsAccordion';
+import MetaData from '../components/MetaData';
 
 
 const AboutUs = () => {
 
     return (
         <div className='p-4 bg-[#d0d1d1]'>
+      <MetaData title={"ABOUT--BIKEZONE"} />
 
             <div className="flex items-center lg:h-screen font-poppins dark:bg-gray-800 ">
                 <div className="justify-center flex-1 max-w-6xl py-4 mx-auto lg:py-6 md:px-6">

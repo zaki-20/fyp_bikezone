@@ -36,13 +36,10 @@ const Blogs = () => {
         dispatch(getAllBlogPosts());
     }, [])
 
-    useEffect(() => {
-        if (isError) {
-            toast.error(message);
-            dispatch(reset());
-        }
-    }, [isError]);
 
+    // if (blogPosts.length <= 0) {
+    //     toast.error("no post");
+    // }
 
     const filteredAndSortedBlogPosts = blogPosts
         .filter((post) => {

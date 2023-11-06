@@ -34,7 +34,7 @@ const workshopSchema = new mongoose.Schema({
     required: true,
   },
 
-  slots: {
+  weeklySlots: {
     type: Array,
     default: [],
     required: true,

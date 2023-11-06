@@ -15,12 +15,17 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
 
     const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description } = req.body;
 
-    // Create an array to store time slots
+    // Create an array to store time slots for each day of the week
+    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     let slotsArray = [];
 
-    // Generate time slots and push them into the array
-    for (let i = startTime; i < endTime; i++) {
-        slotsArray.push(i);
+    // Generate time slots for each day of the week
+    for (const day of daysOfWeek) {
+        let daySlots = [];
+        for (let i = startTime; i < endTime; i++) {
+            daySlots.push(i);
+        }
+        slotsArray.push({ day, slots: daySlots });
     }
 
     const workshop = await Workshop.create({
@@ -35,7 +40,7 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
         service2,
         service3,
         service4,
-        slots: slotsArray, // Store the time slots in an array
+        weeklySlots: slotsArray, // Store the time slots for each day of the week
         startTime,
         endTime,
         description
@@ -48,6 +53,7 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
         payload: { workshop },
     });
 });
+
 
 
 
@@ -135,6 +141,8 @@ exports.getWorkshopDetails = async (req, res, next) => {
     if (!workshop) {
         return next(new ErrorHandler("Workshop not found", 404));
     }
+
+
     res.status(200).json({
         statusCode: 200,
         success: true,

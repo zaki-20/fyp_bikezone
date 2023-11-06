@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItemsToCart, getProductDetail } from '../../features/product/product.thunk';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Carousal from '../../components/Carousal';
 import Loader from '../shared/Loader';
 import ReviewCard from '../../components/cards/ReviewCard';
@@ -30,7 +30,7 @@ import checkDetailsAnimation from '../../assets/animated/checkDetails.jsx.json'
 
 
 const ProductDetail = () => {
-
+    const navigate = useNavigate()
     const { id } = useParams();
 
     const theme = useTheme();
@@ -40,10 +40,11 @@ const ProductDetail = () => {
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
 
+    const dispatch = useDispatch()
 
 
     const [quantity, setQuantity] = useState(1)
-    const dispatch = useDispatch()
+
 
     //===================================================================
     const handleClickOpen = () => {
@@ -55,7 +56,6 @@ const ProductDetail = () => {
     };
 
     const reviewSubmitHandler = () => {
-
 
         const reviewData = {
             rating, comment, productId: id
@@ -72,9 +72,11 @@ const ProductDetail = () => {
 
 
     //=====================================================================
-
+    const { user } = useSelector((state) => state.auth)
     const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
     const { isError: reviewError, message: reviewMsg, isLoading: reviewLoad, isSuccess } = useSelector(state => state.review)
+
+
 
     useEffect(() => {
         dispatch(getProductDetail(id))
@@ -230,9 +232,16 @@ const ProductDetail = () => {
                                             <button onClick={cartHandler} className="flex items-center justify-center w-full p-4  border border-white rounded-md dark:text-gray-200 duration-200 dark:border-blue-600 bg-[#122222] hover:border-[#122222] hover:text-yellow-400 text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
                                                 Add to Cart
                                             </button>
-                                            <button onClick={handleClickOpen} className="flex mt-2 items-center justify-center w-full p-4 text-[#122222] border border-[#122222] duration-200 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-yellow-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
-                                                Submit Review
-                                            </button>
+                                            {
+                                                user ? (
+                                                    <button onClick={handleClickOpen} className="flex mt-2 items-center justify-center w-full p-4 text-[#122222] border border-[#122222] duration-200 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-yellow-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                                                        Submit Review
+                                                    </button>
+                                                ) : (
+                                                    navigate('/login')
+                                                )
+                                            }
+
                                         </div>
 
                                     </div>

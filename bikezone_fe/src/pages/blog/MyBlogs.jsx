@@ -8,6 +8,7 @@ import TimeAgo from 'timeago-react';
 import { Link } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { FcSearch } from 'react-icons/fc'
+import NoBlogPost from './NoBlogPost';
 
 
 
@@ -30,18 +31,10 @@ const BlogPage = () => {
     const loggedInUser = useSelector((state) => state.auth.user);
 
 
-    useEffect(() => {
-        if (isError) {
-            // toast.error(message);
-            dispatch(reset());
-        }
-    }, []);
 
     useEffect(() => {
         dispatch(myBlogPosts());
     }, [])
-
-
 
     const filteredAndSortedBlogPosts = blogPosts
         .filter((post) => {
@@ -63,6 +56,14 @@ const BlogPage = () => {
     const handleLike = async (blogId) => {
         await dispatch(likeDisLikeBlogPost(blogId))
         dispatch(myBlogPosts());
+    }
+
+    if (blogPosts.length <= 0) {
+        return (
+            <>
+                <NoBlogPost />
+            </>
+        )
     }
 
     return (
@@ -134,32 +135,32 @@ const BlogPage = () => {
                                     {item.description.length > 300 ? `${item.description.slice(0, 300)}...` : item.description}
                                 </p>
 
-                                    <div className=" flex justify-between item-center">
-                                        {
-                                            loggedInUser ? (
-                                                <div className="flex">
+                                <div className=" flex justify-between item-center">
+                                    {
+                                        loggedInUser ? (
+                                            <div className="flex">
 
-                                                    {item.likes.includes(loggedInUser?._id) ? (
-                                                        <AiFillHeart className='cursor-pointer text-red-600 hover:scale-110 duration-150' size={22} onClick={() => handleLike(item._id)} />
-                                                    ) : (
-                                                        <AiOutlineHeart className='cursor-pointer hover:scale-110 duration-150' size={22} onClick={() => handleLike(item._id)} />
-                                                    )}
+                                                {item.likes.includes(loggedInUser?._id) ? (
+                                                    <AiFillHeart className='cursor-pointer text-red-600 hover:scale-110 duration-150' size={22} onClick={() => handleLike(item._id)} />
+                                                ) : (
+                                                    <AiOutlineHeart className='cursor-pointer hover:scale-110 duration-150' size={22} onClick={() => handleLike(item._id)} />
+                                                )}
 
-                                                    <span className="mx-1">{item.likes.length} likes</span>
+                                                <span className="mx-1">{item.likes.length} likes</span>
 
-                                                </div>
-                                            ) : (
-                                                <div className='flex '>
-                                                    <AiOutlineHeart className='cursor-not-allowed hover:scale-110 duration-150' size={22} />
-                                                    {
-                                                        !isLoading && (
-                                                            <span className="mx-1">{item.likes.length} likes</span>
-                                                        )
-                                                    }
-                                                </div>
-                                            )
-                                        }
-                                         <Link
+                                            </div>
+                                        ) : (
+                                            <div className='flex '>
+                                                <AiOutlineHeart className='cursor-not-allowed hover:scale-110 duration-150' size={22} />
+                                                {
+                                                    !isLoading && (
+                                                        <span className="mx-1">{item.likes.length} likes</span>
+                                                    )
+                                                }
+                                            </div>
+                                        )
+                                    }
+                                    <Link
                                         to={`/blog/${item._id}`}
                                         className="inline-flex group hover:animate-pulse items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
                                     >
@@ -177,8 +178,8 @@ const BlogPage = () => {
                                             ></path>
                                         </svg>
                                     </Link>
-                                    </div>
-                               
+                                </div>
+
                             </article>
 
                         ))

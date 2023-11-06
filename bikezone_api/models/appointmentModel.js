@@ -12,7 +12,12 @@ const appointmentSchema = new mongoose.Schema({
         required: true,
     },
     slot: {
-        type: Number
+        type: Number,
+        required: true,
+    },
+    day: {
+        type: String,
+        required: true,
     },
 });
 

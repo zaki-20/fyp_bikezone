@@ -23,16 +23,18 @@ import redAlertAnimation from '../../assets/animated/redAlert.json'
 
 
 const WorkshopDetail = () => {
-    const { id } = useParams(); // Get the blogId from the URL
+    const [size, setSize] = React.useState(null);
+
+    const { id } = useParams();
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const [open, setOpen] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
-    const [selectedSlot, setSelectedSlot] = useState(null);
 
 
-    const handleOpen = () => setOpen(!open);
+    const handleOpen = (value) => setSize(value);
+
     const handleOpenDelete = () => {
         setOpenDelete(!openDelete)
     };
@@ -49,44 +51,44 @@ const WorkshopDetail = () => {
 
 
 
-    const isSlotBooked = (slot) => {
-        // Check if the slot is already booked in the backend
-        return workshop?.appointments.some(appointment => appointment.slot === slot);
-    };
-
-    const isSlotAvailable = (slot) => {
-        // Check if the slot is available in the workshop slots
-        return !workshop?.slots.includes(slot);
-    };
-
-    const handleSlotSelection = (slot) => {
-        // Check if the slot is available and not booked
-        if (!isSlotBooked(slot) && !isSlotAvailable(slot)) {
-            // Check if the slot is already booked by the user
-            if (!workshop.appointments.some((appointment) => appointment.slot === slot)) {
-                // Dispatch the appointment creation action
-                dispatch(
-                    createAppointment({
-                        workshop: workshop._id,
-                        slot,
-                    })
-                );
-                setSelectedSlot(slot);
-                dispatch(getSingleWorkshop(id));
-
-                handleOpen(); // Close the dialog
-            } else {
-                // Slot is already booked by the user, you can show a message or handle it as needed
-                alert('You have already booked this slot.');
-            }
-        }
-    };
-
 
     const formatTime = (slot) => {
         const hours = slot % 12 || 12;
         const period = slot < 12 ? 'AM' : 'PM';
         return `${hours}${period}`;
+    };
+
+    const renderSlots = () => {
+        if (workshop && workshop.weeklySlots) {
+            const colors = ['bg-[#f2f2f2]', 'bg-[#e6e6e6]', 'bg-[#d9d9d9]'];
+
+            return workshop.weeklySlots.map((daySlots, index) => (
+                <div key={index} className={` hover:shadow-yellow-400 shadow-md px-3 pb-4 w-full ${colors[index % colors.length]}`}>
+                    <h3 className="text-xl  font-semibold mt-4 mb-2 text-gray-700 dark:text-gray-300">
+                        {daySlots.day}
+                    </h3>
+                    <div className="flex flex-wrap gap-3">
+                        {daySlots.slots.map((slot, slotIndex) => (
+                            <button
+                                key={slotIndex}
+                                onClick={() => handleSlotSelection(daySlots.day, slot)}
+                                className="bg-[#1b2e2e] hover:bg-[#152d28] hover:scale-105 hover:text-yellow-400 duration-200 text-white px-4 py-2 rounded-lg"
+                            >
+                                {formatTime(slot)}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            ));
+        }
+        return null;
+    };
+
+    const handleSlotSelection = async (day, slot) => {
+        await dispatch(createAppointment({ workshop: id, day, slot }));
+        handleOpen();
+        await dispatch(getSingleWorkshop(id))
+
     };
 
     const handleDeleteWorkshop = () => {
@@ -100,7 +102,6 @@ const WorkshopDetail = () => {
             alert('You are not authorized to delete this workshop.');
         }
         setOpenDelete(!openDelete)
-
     };
 
     return (
@@ -301,7 +302,7 @@ const WorkshopDetail = () => {
                                     {user && user._id !== workshop?.owner && (
 
                                         <div className="flex gap-4 mb-6">
-                                            <button onClick={handleOpen} className="w-full flex px-4 py-3 justify-center gap-x-2 items-center text-center font-bold text-yellow-400 bg-[#1b2e2e] border border-transparent dark:border-gray-700  hover:font-bold duration-300 hover:scale-105 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 rounded-xl">
+                                            <button onClick={() => handleOpen("xxl")} className="w-full flex px-4 py-3 justify-center gap-x-2 items-center text-center font-bold text-yellow-400 bg-[#1b2e2e] border border-transparent dark:border-gray-700  hover:font-bold duration-300 hover:scale-105 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 rounded-xl">
                                                 Book Your Appointment
                                                 <MdPunchClock className='text-yellow-400' size={25} />
                                             </button>
@@ -338,27 +339,23 @@ const WorkshopDetail = () => {
                                         </>
                                     )}
 
-                                    <Dialog open={open} handler={handleOpen}>
+                                    <Dialog className='overflow-scroll bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600' open={
+                                        size === "xs" ||
+                                        size === "sm" ||
+                                        size === "md" ||
+                                        size === "lg" ||
+                                        size === "xl" ||
+                                        size === "xxl"
+                                    } size={"xxl"}
+                                        handler={handleOpen}
+                                    >
                                         <DialogHeader>Select a Slot</DialogHeader>
-                                        <DialogBody className='flex flex-wrap gap-3'>
-                                            {workshop?.slots.map((slot, index) => (
-                                                <button
-                                                    key={index}
-                                                    className={`px-4 py-3 text-center text-gray-100 ${selectedSlot === slot || isSlotBooked(slot) || isSlotAvailable(slot) ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500'} border border-transparent dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-700 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 rounded-xl`}
-                                                    onClick={() => handleSlotSelection(slot)}
-                                                    disabled={selectedSlot === slot || isSlotBooked(slot) || isSlotAvailable(slot)}
-                                                >
-                                                    {slot}:00 - {slot + 1}:00
-                                                </button>
-                                            ))}
+                                        <DialogBody className="flex flex-wrap gap-3">
+                                            {renderSlots()}
+
                                         </DialogBody>
                                         <DialogFooter>
-                                            <Button
-                                                variant="text"
-                                                color="red"
-                                                onClick={handleOpen}
-                                                className="mr-1"
-                                            >
+                                            <Button variant="text" color="red" onClick={handleOpen} className="mr-1">
                                                 <span>Cancel</span>
                                             </Button>
                                             <Button variant="gradient" color="green" onClick={handleOpen}>
@@ -366,6 +363,7 @@ const WorkshopDetail = () => {
                                             </Button>
                                         </DialogFooter>
                                     </Dialog>
+
 
                                     <Dialog open={openDelete} handler={handleOpenDelete} className='bg-red-100'>
                                         <DialogHeader className='flex justify-start'>

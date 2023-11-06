@@ -83,7 +83,7 @@ const MyWorkshopAppointments = () => {
                 username: `${item.user.firstname} ${item.user.lastname}`,
                 email: item.user.email,
                 slot: item.slot,
-                date: `${item.slot}:00 -${item.slot + 1}:00`,
+                date: `${item.day} ${item.slot}:00 -${item.slot + 1}:00`,
             });
         });
     useEffect(() => {

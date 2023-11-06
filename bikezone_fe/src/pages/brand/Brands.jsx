@@ -11,10 +11,13 @@ import united from "../../assets/united.png";
 import zxmco from "../../assets/zxmco.png";
 import roadPrince from "../../assets/roadprince.png";
 import yamaha from "../../assets/yamaha.png";
+import MetaData from '../../components/MetaData';
 
 const Brands = () => {
     return (
         <div className="flex flex-wrap justify-center p-16 gap-6 bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600">
+                  <MetaData title={"BRANDS--BIKEZONE"} />
+
             {[
                 { image: honda, name: "Honda" },
                 { image: united, name: "United" },

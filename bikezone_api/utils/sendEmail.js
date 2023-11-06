@@ -42,11 +42,11 @@ const sendEmail = async (options, contentType = 'html') => {
             .replace('{{lastname}}', options.lastname)
             .replace('{{slot}}', options.slot)
             .replace('{{timing}}', options.timing)
+            .replace('{{day}}', options.day)
             .replace('{{workshopName}}', options.workshopName)
             .replace('{{workshopContact}}', options.workshopContact)
             .replace('{{workshopContactLink}}', options.workshopContactLink)
             .replace('{{bookingSlot}}', options.bookingSlot)
-
         mailOptions.html = replacedHtml;
     }
 

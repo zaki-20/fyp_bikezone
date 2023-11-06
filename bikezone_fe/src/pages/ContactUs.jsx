@@ -6,6 +6,7 @@ import { createContact } from "../features/contact/contact.thunk";
 import { toast } from 'react-toastify';
 import { reset } from "../features/contact/contact.slice";
 import { useForm } from '@formspree/react';
+import MetaData from "../components/MetaData";
 
 
 
@@ -61,7 +62,10 @@ const ContactUs = () => {
 
 
     return (
+
         <div class="relative z-10 overflow-hidden bg-[#d0d1d1] pt-[60px] ">
+            <MetaData title={"CONTACT--BIKEZONE"} />
+
             <span class="text-primary mb-4 text-xl block text-center   font-semibold">
                 Contact Us
             </span>
