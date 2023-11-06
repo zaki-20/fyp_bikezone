@@ -122,18 +122,21 @@ const BlogPage = () => {
                                     </span>
                                     <span className="text-sm text-gray-500">
                                         <TimeAgo
-                                            datetime={item.createdAt}
+                                            datetime={item?.createdAt}
                                         />
                                     </span>
                                 </div>
                                 <div className="flex flex-col justify-center items-start">
                                     <h1 className='mb-2 text-sm text-gray-700  border-b border-gray-800 self-end  dark:text-white'>( {item.category} )</h1>
-                                    <h1 className=" ml-2 text-xl font-bold  dark:text-white">{item.title}</h1>
+                                    <h1 className=" ml-2 text-xl font-bold  dark:text-white">{item?.title}</h1>
                                 </div>
 
-                                <p className="mb-5 h-[100px] ml-2 mt-4 text-gray-800  dark:text-gray-400 ">
-                                    {item.description.length > 300 ? `${item.description.slice(0, 300)}...` : item.description}
+
+                                <p
+                                    className="mb-5 h-[100px] ml-2 mt-4 text-gray-800 dark:text-gray-400"
+                                    dangerouslySetInnerHTML={{ __html: item?.description.length > 300 ? `${item?.description.slice(0, 300)}...` : item?.description }}>
                                 </p>
+
 
                                 <div className=" flex justify-between item-center">
                                     {

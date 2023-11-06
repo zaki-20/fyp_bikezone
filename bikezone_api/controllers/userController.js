@@ -4,19 +4,28 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
-const cloudinary = require("cloudinary");
+const cloudinary = require('cloudinary').v2;
 
-
+// Configure your Cloudinary credentials
+cloudinary.config({
+    cloud_name: 'dqe7trput',
+    api_key: '546311599476462',
+    api_secret: 'EhR3ESfDUKlQaHt-ZzJIK4n3ANU',
+});
 
 
 //create user  with jwt
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
-    const { firstname, lastname, email, password } = req.body
+    const { firstname, lastname, email, password, imageURL } = req.body
 
 
     const user = await User.create({
-        firstname, lastname, email, password,
+        firstname,
+        lastname,
+        email,
+        password,
+        imageURL
 
     })
     // const message = `Thank you ${firstname} ${lastname} for joining BIKEZONE `

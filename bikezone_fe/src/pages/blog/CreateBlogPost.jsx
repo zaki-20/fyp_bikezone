@@ -6,7 +6,12 @@ import { createBlogPost } from '../../features/blog/blog.thunk';
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 import { reset } from '../../features/blog/blog.slice';
-import { Select, Option } from "@material-tailwind/react";
+// import { Select, Option } from "@material-tailwind/react";
+import "./createBlog.css"
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 import Lottie from 'lottie-react'
 import createBlogAnimation from '../../assets/animated/createBlog.json'
@@ -19,12 +24,36 @@ const schema = yup.object({
         .required('name is required'),
     description: yup
         .string()
-        .max(4000, 'character imit exceed')
+
         .required('descripton is required'),
     category: yup
         .string()
         .required('category is required'),
 })
+
+const quillModules = {
+    toolbar: [
+        [{ 'font': [] }, { 'header': '1' }, { 'header': '2' },],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['bold', 'italic', 'underline'],
+        [{ 'align': [] }],
+        ['link', 'image'],
+        ['clean'],
+    ],
+};
+
+const quillFormats = [
+    'font',
+    'list',
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'align',
+    'link',
+    'image',
+];
+
 
 const CreateBlogPost = () => {
     const motorbikeCategories = [
@@ -131,15 +160,14 @@ const CreateBlogPost = () => {
 
                     <label className="block">
                         <span className="mb-1">Description</span>
-                        <textarea
-                            name='description'
-                            onChange={handleChange}
-                            onBlur={handleBlur}
+                        <ReactQuill
+                            onChange={(value) => handleChange({ target: { name: 'description', value } })}
+                            modules={quillModules}
+                            formats={quillFormats}
                             value={values.description}
-                            rows="6"
                             placeholder="Enter your post description..."
-                            className="block w-full bg-gray-100 rounded-md focus:ring focus:border-transparent focus:ring-yellow-400  dark:bg-gray-800"
-                        ></textarea>
+                            className="custom-quill "
+                        />
                         {errors.description && touched.description ? (
                             <p className="text-red-600 animate-pulse">{errors.description}</p>
                         ) : null}

@@ -1,0 +1,38 @@
+/* Custom styling for the content area of ReactQuill */
+.custom-quill .ql-editor {
+    border: 1px solid #ccc; /* Add a border */
+    padding: 10px; /* Add padding */
+    background-color: #fff; /* Set the background color */
+    color: #333; /* Set the text color */
+    font-family: Arial, sans-serif; /* Set the font family */
+    font-size: 16px; /* Set the font size */
+    line-height: 1.5; /* Set the line height */
+}
+
+/* Custom styling for the toolbar area of ReactQuill */
+.custom-quill .ql-toolbar {
+    background-color: #f0f0f0; /* Set the toolbar background color */
+    border: 1px solid #ccc; /* Add a border to the toolbar */
+    border-bottom: none; /* Remove the border at the bottom */
+    border-top-left-radius: 4px; /* Round the top left corner */
+    border-top-right-radius: 4px; /* Round the top right corner */
+}
+
+/* Style the active toolbar button */
+.custom-quill .ql-toolbar .ql-active {
+    background-color: #007bff; /* Set the active button background color */
+    color: #fff; /* Set the active button text color */
+    border: 1px solid #007bff; /* Add a border to the active button */
+}
+
+/* Style the tooltip for toolbar buttons */
+.custom-quill .ql-tooltip {
+    background-color: #333; /* Set the tooltip background color */
+    color: #fff; /* Set the tooltip text color */
+    border: 1px solid #333; /* Add a border to the tooltip */
+}
+
+/* Style the placeholder text */
+.custom-quill .ql-placeholder {
+    color: #999; /* Set the placeholder text color */
+}

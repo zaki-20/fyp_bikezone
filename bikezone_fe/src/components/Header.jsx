@@ -34,7 +34,7 @@ const Header = () => {
   const { user, message, logoutSuccess } = useSelector((state) => state.auth)
   const { cartItems } = useSelector((state) => state.product)
 
- 
+
 
   const logoutHandle = () => {
     dispatch(logout())
@@ -79,7 +79,12 @@ const Header = () => {
                   arrowIcon={false}
                   inline
                   label={
-                    <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
+                    user?.imageURL ? (
+                      <Avatar alt="User" img={user?.imageURL} rounded />
+                    ) : (
+                      <Avatar alt="User" rounded >
+                      </Avatar>
+                    )
                   }
                 >
                   {

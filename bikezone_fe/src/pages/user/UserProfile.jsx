@@ -24,9 +24,13 @@ const UserProfile = () => {
                         </div>
 
                         <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl inset-x-0 md:order-2 order-1 flex items-center justify-center text-indigo-500 mt-0  md:-mt-24">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                            </svg>
+                            {user.imageURL ? (
+                                <img src={user.imageURL} alt="Profile" className="w-full h-full rounded-full" />
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                                </svg>
+                            )}
                         </div>
 
                         <div className="space-x-8 flex justify-center md:flex-col md:items-center md:order-3 order-2">

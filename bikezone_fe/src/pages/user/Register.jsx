@@ -10,6 +10,7 @@ import { register } from '../../features/auth/auth.thunk';
 import { reset } from '../../features/auth/auth.slice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios';
 
 
 const schema = yup.object({
@@ -37,6 +38,13 @@ const Register = () => {
         confirmPassword: "",
     };
 
+    const [image, setImage] = useState(null);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
             initialValues,
@@ -45,8 +53,27 @@ const Register = () => {
             validateOnBlur: false,
             onSubmit: async (values) => {
 
-                dispatch(register(values));
+                try {
+                    // Upload the image to Cloudinary
+                    const formData = new FormData();
+                    formData.append('file', image);
+                    formData.append('upload_preset', 'present_images'); // Replace with your Cloudinary upload preset
 
+                    const cloudinaryResponse = await axios.post(
+                        'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
+                        formData
+                    );
+
+                    const imageUrl = cloudinaryResponse.data.secure_url;
+
+                    // Add the Cloudinary image URL to the form data
+                    values.imageURL = imageUrl;
+                    console.log(values)
+                    // // Register the user with the updated form data
+                    dispatch(register(values));
+                } catch (error) {
+                    toast.error('Image upload failed.');
+                }
             },
         });
 
@@ -157,27 +184,23 @@ const Register = () => {
                                         ) : null}
                                     </div>
                                 </div>
-                                {/* 
                                 <div className="flex -mx-3 items-center">
                                     <div className="w-full px-3 mb-5">
-                                        <label htmlFor="true" className="text-xs font-semibold px-1">
+                                        <label htmlFor="avatar" className="text-xs font-semibold px-1">
                                             Profile Image
                                         </label>
                                         <input
-                                            type="file"
-                                            id="avatar"
-                                            name="avatar"
-                                            onChange={(e) => setFieldValue('avatar', e.currentTarget.files[0])}
-                                            className="w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                            type='file'
+                                            id='avatar'
+                                            name='avatar'
+                                            onChange={handleImageChange}
+                                            className="w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus-border-indigo-500"
                                         />
-                                        {errors.avatar && touched.avatar ? (
-                                            <p className="text-red-600 animate-pulse">{errors.avatar}</p>
-                                        ) : null}
                                     </div>
-                                    {values.avatar && (
-                                        <img className="w-10 h-10 rounded-full" src="/helmet.jpg" alt="Rounded avatar" />
+                                    {image && (
+                                        <img className="w-10 h-10 rounded-full" src={URL.createObjectURL(image)} alt="Rounded avatar" />
                                     )}
-                                </div> */}
+                                </div>
 
                                 <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-12">
