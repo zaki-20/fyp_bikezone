@@ -159,8 +159,7 @@ const ContactUs = () => {
                                     </div>
                                 </div>
                                 <div className=" sm:w-[55%] w-[100%] bg-gray-300 rounded-md hover:shadow-blue-800 hover:shadow-lg duration-300 shadow-md  p-4">
-                                    <iframe className="w-[100%] sm:h-[100%] h-56" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3406.4890947432846!2d74.18172697898697!3d31.373074907968885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3918ffd464117913%3A0xce1690d598fc98af!2sSweet%20Creme%20-%20Bahria%20Town!5e0!3m2!1sen!2s!4v1699201296217!5m2!1sen!2s" width="600" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
+                                    <iframe className="w-[100%] sm:h-[100%] h-56" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3606.653987409657!2d55.401798110182916!3d25.31582682679364!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f595513e830f3%3A0xba12ec693e6cbf10!2sAl%20Zaki%20Auto%20Maintenance%20Workshop!5e0!3m2!1sen!2s!4v1699304250349!5m2!1sen!2s" width="600" height="450" style={{border:0}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                 </div>
                             </div>
                         </div>

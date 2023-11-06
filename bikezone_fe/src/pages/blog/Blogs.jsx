@@ -10,6 +10,8 @@ import Loader from '../shared/Loader';
 import { TypeAnimation } from 'react-type-animation';
 import { FcSearch } from 'react-icons/fc'
 import TimeAgo from 'timeago-react';
+import Lottie from 'lottie-react'
+import blogAnimation from '../../assets/animated/blogs.json'
 
 
 const Blogs = () => {
@@ -66,8 +68,16 @@ const Blogs = () => {
     return (
         <>
             <section className="bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600 dark:bg-gray-900">
-                <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                <div className='w-52 lg:w-[330px] absolute '>
+                    <Lottie
+                        className=""
+                        animationData={blogAnimation}
+                    />
+                </div>
+                <div className=" px-4 mx-auto max-w-screen-xl py-10 lg:px-6">
+
                     <div className="mx-auto md:max-w-screen md:max-w-screen-sm text-center mb-4">
+
                         <h2 className="mb-4 lg:text-3xl text-2xl tracking-tight font-semibold text-gray-900 dark:text-white">
                             <TypeAnimation
                                 sequence={[
@@ -91,6 +101,7 @@ const Blogs = () => {
                         <p className="font-normal text-gray-600 sm:text-xl dark:text-gray-400">
                             Explore our latest articles and stay informed.
                         </p>
+
                         <div className=" flex md:flex-row mx-2 md:gap-0 gap-y-4 flex-col md:items-center md:justify-center items-start mt-6">
                             <div className="relative md:w-min w-full ">
                                 <input
@@ -127,6 +138,7 @@ const Blogs = () => {
                             </select>
                         </div>
                     </div>
+
                     <div className="grid gap-8 lg:grid-cols-2">
                         {filteredAndSortedBlogPosts.map((item, index) => (
                             <article

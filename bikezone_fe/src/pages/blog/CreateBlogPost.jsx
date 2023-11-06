@@ -23,8 +23,7 @@ const schema = yup.object({
         .string()
         .required('name is required'),
     description: yup
-        .string()
-
+        .string().min(50)
         .required('descripton is required'),
     category: yup
         .string()
