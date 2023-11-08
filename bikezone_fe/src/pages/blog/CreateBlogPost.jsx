@@ -15,6 +15,7 @@ import 'react-quill/dist/quill.snow.css';
 
 import Lottie from 'lottie-react'
 import createBlogAnimation from '../../assets/animated/createBlog.json'
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -59,7 +60,7 @@ const CreateBlogPost = () => {
         "Motorbike Reviews", "Maintenance and Repairs", "Motorbike Accessories", "Customization and Modifications", "Motorbike Safety", "Travel and Adventure", "Upcoming Models", "Riding Tips and Techniques", "Motorbike Events and Shows", "Top 10 Lists", "Motorbike Gear Guides", "Motorbike Industry News", "Vintage and Classic Bikes", "Motorbike Racing", "Motorbike Technology", "Environmental Concerns"
     ];
 
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { isError, isSuccess, message } = useSelector((state) => state.blog)
@@ -93,6 +94,7 @@ const CreateBlogPost = () => {
                 dispatch(createBlogPost(trimmedValues))
                 toast.success("post created")
                 action.resetForm();
+                navigate('/blog/me')
             },
         });
 

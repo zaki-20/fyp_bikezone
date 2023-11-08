@@ -13,7 +13,7 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Workshop limit reached", 404));
     }
 
-    const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description } = req.body;
+    const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description, imageURL } = req.body;
 
     // Create an array to store time slots for each day of the week
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -43,7 +43,8 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
         weeklySlots: slotsArray, // Store the time slots for each day of the week
         startTime,
         endTime,
-        description
+        description,
+        imageURL
     });
 
     return res.status(201).json({
@@ -58,65 +59,58 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
 
 
 exports.updateWorkshop = catchAsyncErrors(async (req, res, next) => {
+  let workshop = await Workshop.findById(req.params.id);
 
-    let workshop = await Workshop.findById(req.params.id);
+  if (!workshop) {
+    return next(new ErrorHandler("Workshop not found", 404));
+  }
 
-    if (!workshop) {
-        return next(new ErrorHandler("Workshop not found", 404));
-    }
+  workshop = await Workshop.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
 
-    workshop = await Workshop.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false,
-    });
+  await workshop.save();
 
-    await workshop.save();
-
-    res.status(200).json({
-        statusCode: 200,
-        success: true,
-        message: "Workshop updated successfully",
-        payload: { workshop },
-    });
-
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "Workshop updated successfully",
+    payload: { workshop },
+  });
 });
 
 exports.deleteWorkshop = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
 
-    const { id } = req.params;
+  const workshop = await Workshop.findByIdAndRemove(id);
 
-    const workshop = await Workshop.findByIdAndRemove(id);
+  if (!workshop) {
+    return next(new ErrorHandler("Workshop not found", 404));
+  }
 
-    if (!workshop) {
-        return next(new ErrorHandler("Workshop not found", 404));
-    }
-
-    res.status(200).json({
-        statusCode: 200,
-        success: true,
-        message: "Workshop deleted successfully",
-    });
-
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "Workshop deleted successfully",
+  });
 });
 
 exports.getAllWorkshops = catchAsyncErrors(async (req, res, next) => {
+  const workshopCount = await Workshop.countDocuments();
+  const workshops = await Workshop.find();
 
-    const workshopCount = await Workshop.countDocuments();
-    const workshops = await Workshop.find();
+  if (!workshops) {
+    return next(new ErrorHandler("Workshop not found", 404));
+  }
 
-
-    if (!workshops) {
-        return next(new ErrorHandler("Workshop not found", 404));
-    }
-
-    res.status(200).json({
-        statusCode: 200,
-        success: true,
-        message: "All workshops retrieved successfully",
-        payload: { workshops, workshopCount },
-    });
-
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "All workshops retrieved successfully",
+    payload: { workshops, workshopCount },
+  });
 });
 
 exports.getWorkshopDetails = async (req, res, next) => {

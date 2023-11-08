@@ -24,7 +24,7 @@ const UserProfile = () => {
                         </div>
 
                         <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl inset-x-0 md:order-2 order-1 flex items-center justify-center text-indigo-500 mt-0  md:-mt-24">
-                            {user.imageURL ? (
+                            {user?.imageURL ? (
                                 <img src={user.imageURL} alt="Profile" className="w-full h-full rounded-full" />
                             ) : (
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24" viewBox="0 0 20 20" fill="currentColor">

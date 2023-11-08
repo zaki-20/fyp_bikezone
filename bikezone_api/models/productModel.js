@@ -62,6 +62,10 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true,
       },
+      imageURL: {
+        type: String,
+        required: true,
+      },
       lastname: {
         type: String,
         required: true,

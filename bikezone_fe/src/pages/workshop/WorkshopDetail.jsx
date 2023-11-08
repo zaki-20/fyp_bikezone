@@ -111,12 +111,10 @@ const WorkshopDetail = () => {
                     <div className="max-w-6xl px-4 mx-auto">
                         <div className="flex flex-wrap mb-24 -mx-4">
                             <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
-                                <div className="sticky top-0 overflow-hidden ">
+                                <div className="sticky top-0 overflow-hidden h-full ">
 
-
-
-                                    <div className="relative mb-6 lg:mb-10 lg:h-96">
-                                        <img className="object-contain w-full lg:h-full" src="https://i.postimg.cc/0jwyVgqz/Microprocessor1-removebg-preview.png" alt />
+                                    <div className="relative mb-6 lg:mb-10 bg-red-300 ">
+                                        <img className="object-contain w-full lg:h-full" src={workshop?.imageURL} alt />
                                     </div>
 
                                     {/* <div className="flex-wrap hidden -mx-2 md:flex">

@@ -75,7 +75,7 @@ const ProductDetail = () => {
     const { user } = useSelector((state) => state.auth)
     const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
     const { isError: reviewError, message: reviewMsg, isLoading: reviewLoad, isSuccess } = useSelector(state => state.review)
-
+console.log(productDetails, "uhuhuhuhuh")
 
 
     useEffect(() => {
@@ -298,6 +298,7 @@ const ProductDetail = () => {
                                     animationData={ratingAnimation}
                                 />
                             </div>
+
 
                             <div className="flex overflow-x-scroll border-black border-b border-l border-r  shadow-xl bg-[#b6b6b6] no-scrollbar mx-6  pb-10 px-4">
                                 <div className="flex ml-10 mt-4 gap-10 ">

@@ -29,7 +29,7 @@ const MyWorkshops = () => {
         }
     }, [isError]);
 
-    const filteredWorkshops = workshops.filter(item => item.owner === user._id);
+    const filteredWorkshops = workshops?.filter(item => item?.owner === user?._id);
 
     return (
         <div className='bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600'>

@@ -64,6 +64,7 @@ const workshopSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please Enter workshop Description"],
   },
+  imageURL: String,
   startTime: {
     type: Number,
     required: true

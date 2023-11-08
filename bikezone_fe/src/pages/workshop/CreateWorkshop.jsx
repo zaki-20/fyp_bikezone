@@ -8,6 +8,8 @@ import { reset } from '../../features/workshop/workshop.slice';
 import { toast } from 'react-toastify';
 import Lottie from 'lottie-react'
 import verticalBar from '../../assets/animated/verticalBar.json'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 
@@ -42,6 +44,8 @@ const schema = yup.object({
 
 
 const CreateWorkshop = () => {
+    const navigate = useNavigate()
+    const [image, setImage] = useState(null);
 
 
     const dispatch = useDispatch()
@@ -64,6 +68,12 @@ const CreateWorkshop = () => {
 
     const { isError, isSuccess, message, isLoading } = useSelector((state) => state.workshop)
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
+
     useEffect(() => {
         if (isError) {
             toast.error(message)
@@ -85,9 +95,31 @@ const CreateWorkshop = () => {
             validateOnChange: true,
             validateOnBlur: false,
             onSubmit: async (values, action) => {
-                await dispatch(createWorkshop(values))
-                console.log(values)
-                action.resetForm();
+                try {
+                    // Upload the image to Cloudinary
+                    const formData = new FormData();
+                    formData.append('file', image);
+                    formData.append('upload_preset', 'present_images'); // Replace with your Cloudinary upload preset
+
+                    const cloudinaryResponse = await axios.post(
+                        'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
+                        formData
+                    );
+
+                    const imageUrl = cloudinaryResponse.data.secure_url;
+
+                    // Add the Cloudinary image URL to the form data
+                    values.imageURL = imageUrl;
+
+                    await dispatch(createWorkshop(values))
+                    console.log(values)
+                    action.resetForm();
+                    navigate('/workshops/me')
+                } catch (error) {
+                    toast.error('Image upload failed.');
+
+                }
+
             },
         });
 
@@ -168,13 +200,21 @@ const CreateWorkshop = () => {
                                             ) : null}
                                         </div>
                                     </div>
-                                    <div className="w-full lg:w-6/12 px-4">
+                                    <div className="w-full items-center gap-x-2 flex lg:w-6/12 px-4">
                                         <div className="relative w-full mb-3">
                                             <label className="block uppercase  text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Upload photo
                                             </label>
-                                            <input type="file" className="border-0 px-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            <input
+                                                type='file'
+                                                id='avatar'
+                                                name='avatar'
+                                                onChange={handleImageChange}
+                                                className="border-0 px-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
+                                        {image && (
+                                            <img className="w-10 h-10 rounded-full" src={URL.createObjectURL(image)} alt="Rounded avatar" />
+                                        )}
                                     </div>
                                 </div>
 

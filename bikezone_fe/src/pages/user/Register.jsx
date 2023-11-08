@@ -24,7 +24,6 @@ const schema = yup.object({
         .required('Confirm Password is required'),
 }).required();
 
-
 const Register = () => {
 
     const navigate = useNavigate()
@@ -52,20 +51,16 @@ const Register = () => {
             validateOnChange: true,
             validateOnBlur: false,
             onSubmit: async (values) => {
-
                 try {
                     // Upload the image to Cloudinary
                     const formData = new FormData();
                     formData.append('file', image);
                     formData.append('upload_preset', 'present_images'); // Replace with your Cloudinary upload preset
-
                     const cloudinaryResponse = await axios.post(
                         'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
                         formData
                     );
-
                     const imageUrl = cloudinaryResponse.data.secure_url;
-
                     // Add the Cloudinary image URL to the form data
                     values.imageURL = imageUrl;
                     console.log(values)
@@ -77,9 +72,7 @@ const Register = () => {
             },
         });
 
-
     const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
-
 
     useEffect(() => {
         if (isError) {
@@ -90,10 +83,7 @@ const Register = () => {
             toast.success(message);
             navigate('/')
         }
-
     }, [isError, isSuccess])
-
-
 
     return (
         <div>

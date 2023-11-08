@@ -10,7 +10,7 @@ const WorkShopCards = ({ item }) => {
             <div className="flex flex-col justify-center ">
                 <div className="relative bg-[#122222] border border-black flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl  p-3 max-w-xs md:max-w-3xl mx-auto  ">
                     <div className="w-full md:w-1/3 rounded-lg shadow-md shadow-gray-400 grid place-items-center ">
-                        <img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="tailwind logo" className="rounded-lg hover:scale-105 duration-300 h-full" />
+                        <img src={item?.imageURL} alt="tailwind logo" className="rounded-lg hover:scale-105 duration-300 h-full" />
                     </div>
                     <div className="w-full md:w-2/3 shadow-md shadow-gray-400 hover:shadow-yellow-200  bg-[#ecebebe8] flex rounded-lg flex-col space-y-2 p-3">
                         <div className="flex justify-between items-center">

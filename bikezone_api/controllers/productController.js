@@ -106,14 +106,15 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
 // Create New Review or Update the review
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { rating, comment, productId } = req.body;
-
   const review = {
     user: req.user._id,
+    imageURL: req.user.imageURL,
     firstname: req.user.firstname,
     lastname: req.user.lastname,
     rating: Number(rating),
     comment,
   };
+  console.log(review)
 
   const product = await Product.findById(productId);
 
@@ -141,6 +142,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
   await product.save({ validateBeforeSave: false });
 
+  console.log(product)
   res.status(200).json({
     statusCode: 200,
     status: true,

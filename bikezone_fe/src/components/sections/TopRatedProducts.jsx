@@ -46,12 +46,12 @@ const TopRatedProducts = () => {
                     <h1 className=" md:ml-10 font-bold text-4xl text-[#122222]">
                         Top Rated Products
                     </h1>
-                    <Lottie
+                    {/* <Lottie
                         className=" "
                         animationData={fiveStarAnimation}
-                    />
+                    /> */}
                 </div>
-                <Link to={"/products/top-rated"} className='underline hover:text-blue-600'>View All</Link>
+                <Link to={"/products/featuredproducts"} className='underline hover:text-blue-600'>View All</Link>
             </div>
             <div className="flex overflow-x-scroll no-scrollbar pb-10 px-4">
                 <div className="flex flex-nowrap  ml-10 gap-10">

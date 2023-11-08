@@ -18,9 +18,9 @@ const HeroSection = () => {
             </video>
             <div className="absolute inset-0 bg-gradient-to-r from-white/50 to-transparent"></div>
             <div className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
-                <div  
-                    className="max-w-xl z-20 text-center sm:text-left">
-                    <h1 className="text-3xl text-white font-extrabold sm:text-5xl">
+                <div
+                    className="max-w-xl  z-20 text-center sm:text-left">
+                    <h1 className="text-3xl py-4 text-white font-extrabold sm:text-5xl">
                         Let us find your
                         <strong className="block font-extrabold text-[#122222] ">
                             desired products
@@ -50,13 +50,13 @@ const HeroSection = () => {
                     </p>
                     <div className="mt-8 flex flex-wrap gap-4 text-center">
                         <Link
-                            to="#"
+                            to="/login"
                             className="block w-full rounded border bg-[#122222] px-12 py-3 text-sm font-medium text-white shadow hover:bg-[#122222] hover:bg-[#122222]/60 order sm:w-auto duration-300"
                         >
                             Get Started
                         </Link>
                         <Link
-                            to="#"
+                            to="/about"
                             className="block w-full rounded border bg-white px-12 py-3 text-sm font-medium hover:bg-white/40 sm:w-auto duration-300 "
                         >
                             Learn More

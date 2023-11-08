@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import { HiArrowNarrowRight } from 'react-icons/hi';
@@ -26,21 +25,17 @@ const MotorbikeProducts = () => {
     triggerOnce: false,
   });
 
-  const variants = {
-    hidden: { x: -100, opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { duration: 0.5 } },
-  };
+
 
   return (
     <>
       <h3 className="text-3xl font-bold text-center my-3">Motorbike Products</h3>
 
-      <motion.div
-        className='shadow-[0px_10px_39px_7px_#4a5568] hover:shadow-[0px_10px_40px_13px_#38a169] duration-200 rounded-xl'
+      <div
+        className=' duration-200 rounded-xl'
         ref={ref}
         initial="hidden"
-        animate={inView ? "visible" : "hidden"}
-        variants={variants}
+
       >
         <div className="flex flex-col overflow-hidden group/edit rounded-md shadow-md lg:flex-row">
           <img
@@ -65,7 +60,7 @@ const MotorbikeProducts = () => {
             </Link>
           </div>
         </div>
-      </motion.div>
+      </div>
     </>
   );
 };
@@ -75,17 +70,12 @@ const WorkshopServices = () => {
     triggerOnce: false,
   });
 
-  const variants = {
-    hidden: { x: 100, opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { duration: 0.5 } },
-  };
+ 
 
   return (
-    <motion.div
+    <div
       ref={ref}
       initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={variants}
     >
       <h3 className="text-3xl font-bold text-center my-3">Workshop Services</h3>
       <div className="flex flex-col overflow-hidden rounded-md group/edit shadow-md lg:flex-row-reverse">
@@ -113,7 +103,7 @@ const WorkshopServices = () => {
           </Link>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -122,17 +112,12 @@ const UsedBikesForSale = () => {
     triggerOnce: false,
   });
 
-  const variants = {
-    hidden: { x: -100, opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { duration: 0.5 } },
-  };
+
 
   return (
-    <motion.div
+    <div
       ref={ref}
       initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={variants}
     >
       <h3 className="text-3xl font-bold text-center my-3">Used-Bikes For Sale</h3>
       <div className="flex flex-col overflow-hidden rounded-md group/edit shadow-md lg:flex-row">
@@ -160,7 +145,7 @@ const UsedBikesForSale = () => {
           </Link>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

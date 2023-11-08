@@ -43,7 +43,6 @@ exports.getUserPosts = async (req, res, next) => {
 
 };
 
-
 //get single blog post
 exports.getSingleBlog = async (req, res, next) => {
     const blogId = req.params.id;

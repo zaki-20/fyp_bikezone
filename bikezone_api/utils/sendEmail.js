@@ -48,6 +48,15 @@ const sendEmail = async (options, contentType = 'html') => {
             .replace('{{workshopContactLink}}', options.workshopContactLink)
             .replace('{{bookingSlot}}', options.bookingSlot)
         mailOptions.html = replacedHtml;
+    } else if (contentType === 'html' && options.subject === 'OTP Verification') {
+        // Load the HTML template and replace placeholders
+        const templatePath = path.join(__dirname, 'templates', 'otpVerificarion.html');
+        const htmlTemplate = fs.readFileSync(templatePath, 'utf-8');
+        const replacedHtml = htmlTemplate
+            .replace('{{message}}', options.message)
+           
+
+        mailOptions.html = replacedHtml;
     }
 
 

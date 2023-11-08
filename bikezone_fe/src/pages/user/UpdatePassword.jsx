@@ -55,7 +55,7 @@ const UpdatePassword = () => {
         if (isUpdate) {
             toast.success(message);
             dispatch(reset())
-            navigate('/profile')
+            navigate('/account')
         }
 
     }, [isError, isUpdate])

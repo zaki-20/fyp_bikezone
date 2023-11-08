@@ -42,6 +42,12 @@ const userSchema = new mongoose.Schema({
 
     resetPasswordToken: String,
     resetPasswordExpire: Date,
+    isVerified: {
+        type: Boolean,
+        default: false,
+    },
+    emailVerificationOTP: String,
+    emailVerificationExpiry: Date,
 });
 
 //password hash before saving
@@ -76,6 +82,13 @@ userSchema.methods.getResetPasswordToken = async function () {
     this.resetPasswordExpire = Date.now() + 10 * 60 * 1000
     return resetToken
 
+}
+
+userSchema.methods.generateEmailVerificationOTP = function () {
+    const otp = Math.floor(1000 + Math.random() * 9000); // A random 4-digit OTP
+    this.emailVerificationOTP = otp;
+    this.emailVerificationExpiry = Date.now() + 10 * 60 * 1000; // OTP expires after 10 minutes
+    return otp;
 }
 
 module.exports = mongoose.model("User", userSchema);

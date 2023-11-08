@@ -7,7 +7,6 @@ import ReviewedProducts from '../components/sections/ReviewedProducts'
 import NewArrivalProducts from '../components/sections/NewArrivalProucts'
 import ProductSection from '../components/sections/ProductSection'
 import FeatureSection from '../components/sections/FeatureSection'
-import { motion } from 'framer-motion'
 import Lottie from 'lottie-react'
 import bikeAnimation from '../assets/animated/bikerun.json'
 
@@ -29,7 +28,7 @@ const HomePage = () => {
       <div className='bg-gray-700 h-1 mx-auto -mt-2 w-2/3 blur-lg animate-pulse roun'></div>
 
 
-      <ProductSection />
+      {/* <ProductSection /> */}
       <FeaturedProducts />
       <TopRatedProducts />
       <ReviewedProducts />
