@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../features/auth/auth.thunk';
 import { reset } from '../features/auth/auth.slice';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
   Menu,
@@ -96,14 +95,16 @@ const Header = () => {
                         </Dropdown.Header>
                         {
                           user?.role === 'admin' && (
-                            <Dropdown.Item
-                              style={{
-                                backgroundColor: 'transparent',
-                                transition: 'background-color 0.3s',
-                              }}
-                              onMouseEnter={(e) => e.target.style.backgroundColor = '#facc15'}
-                              onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                              className='text-white  duration-200 hover:text-[#122222]'>Dashboard</Dropdown.Item>
+                            <Link to={'/admin/dashboard'}>
+                              <Dropdown.Item
+                                style={{
+                                  backgroundColor: 'transparent',
+                                  transition: 'background-color 0.3s',
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = '#facc15'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                                className='text-white  duration-200 hover:text-[#122222]'>Dashboard</Dropdown.Item>
+                            </Link>
                           )
                         }
                         <Link to={'/account'} className=''>

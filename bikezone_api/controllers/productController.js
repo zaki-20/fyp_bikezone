@@ -53,8 +53,6 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 
 //get product details
 exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
-
-
   const product = await Product.findById(req.params.id);
 
   if (!product) {
@@ -67,7 +65,6 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
     payload: {
       product
     }
-
   });
 });
 

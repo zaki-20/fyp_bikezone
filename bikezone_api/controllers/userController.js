@@ -13,20 +13,15 @@ cloudinary.config({
     api_secret: 'EhR3ESfDUKlQaHt-ZzJIK4n3ANU',
 });
 
-
 //create user  with jwt
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-
     const { firstname, lastname, email, password, imageURL } = req.body
-
-
     const user = await User.create({
         firstname,
         lastname,
         email,
         password,
         imageURL
-
     })
     // const message = `Thank you ${firstname} ${lastname} for joining BIKEZONE `
     await sendEmail({
@@ -35,7 +30,6 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         firstname,
         lastname
     }, 'html');
-
     const msg = "registered successfully"
     sendToken(user, 200, res, msg)
 })

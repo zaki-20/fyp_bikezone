@@ -49,8 +49,13 @@ import UpdateWorkshop from "./pages/workshop/UpdateWorkshop";
 import Brands from "./pages/brand/Brands";
 
 
+
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
+
+  // socket.on("connection", (message) => {
+  //   console.log(message)
+  // })
 
   async function getStripeApiKey() {
     const { data } = await axios.get("http://localhost:4000/api/v1/stripeapikey", { withCredentials: true });
@@ -94,11 +99,6 @@ function App() {
         <Route exact path="/success" element={<PaymentSuccess />} />
         <Route exact path="/blogs" element={<Blogs />} />
 
-
-        {/* admin routes */}
-        <Route exact path="/dashboard" element={<Dashboard />} />
-
-
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
         <Route exact path="/password/reset/:token" element={<ResetPassword />} />
 
@@ -136,6 +136,9 @@ function App() {
         <Route exact path="/workshop/appointments" element={<ProtectedRoute Component={MyWorkshopAppointments} />} />
 
 
+
+        {/* admin routes */}
+        <Route exact path="/admin/dashboard" element={<Dashboard />} />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />
