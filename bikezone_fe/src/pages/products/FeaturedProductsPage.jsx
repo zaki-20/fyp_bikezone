@@ -12,12 +12,13 @@ import MetaData from '../../components/MetaData'
 
 
 const categories = [
-  "bikeparts",
-  "gears",
-  "brakes",
-  "engine",
-  "lights",
-  "tyres",
+  "Motorbike Parts",
+  "Motorbike Accessories",
+  "Maintenance and Care",
+  "Performance Upgrades",
+  "Riding Apparel",
+  "OEM Parts",
+  "Specialty and Customization"
 ];
 
 const FeaturedProductsPage = () => {

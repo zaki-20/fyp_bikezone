@@ -9,7 +9,7 @@ import AboutUs from "./pages/AboutUs";
 import LoginForm from "./pages/user/LoginForm";
 import ProductDetail from "./pages/products/ProductDetail";
 import UserProfile from "./pages/user/UserProfile";
-import AddProduct from "./pages/AddProduct";
+import AddProduct from "./admin/pages/AddProduct";
 import Cart from "./pages/products/Cart";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,6 @@ import { loadUser } from "./features/auth/auth.thunk";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from "./components/route/ProtectedRoute";
-import Dashboard from "./pages/admin/Dashboard";
 import EditProfile from "./pages/user/EditProfile";
 import UpdatePassword from "./pages/user/UpdatePassword";
 import ForgotPassword from "./pages/user/ForgotPassword";
@@ -47,6 +46,10 @@ import MyWorkshopAppointments from "./pages/workshop/MyWorkshopAppointments";
 import MyWorkshops from "./pages/workshop/MyWorkshops";
 import UpdateWorkshop from "./pages/workshop/UpdateWorkshop";
 import Brands from "./pages/brand/Brands";
+import Dashboard from "./admin/pages/Dashboard";
+import ProductList from "./admin/pages/ProductList";
+
+
 
 
 
@@ -94,7 +97,6 @@ function App() {
         <Route exact path="/about" element={<AboutUs />} />
         <Route exact path="/brands" element={<Brands />} />
         <Route exact path="/product/:id" element={<ProductDetail />} />
-        <Route exact path="/addproduct" element={<AddProduct />} />
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/success" element={<PaymentSuccess />} />
         <Route exact path="/blogs" element={<Blogs />} />
@@ -138,7 +140,9 @@ function App() {
 
 
         {/* admin routes */}
-        <Route exact path="/admin/dashboard" element={<Dashboard />} />
+        <Route exact isAdmin={true} path="/admin/dashboard" element={<ProtectedRoute Component={Dashboard} />} />
+        <Route exact isAdmin={true} path="/admin/products" element={<ProtectedRoute Component={ProductList} />} />
+        <Route exact isAdmin={true} path="/admin/product" element={<ProtectedRoute Component={AddProduct} />} />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

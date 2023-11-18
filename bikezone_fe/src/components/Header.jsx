@@ -23,7 +23,7 @@ const Header = () => {
 
   const location = useLocation();
   // Define routes where you want to hide the header content
-  const hideHeaderRoutes = ['/login', '/register', '/dashboard', '/forgot-password', '/me/update', '/update/password'];
+  const hideHeaderRoutes = ['/login', '/register', '/dashboard', '/forgot-password', '/me/update', '/update/password', '/admin/dashboard', '/admin/products', '/admin/product'];
 
   const isResetPasswordPage = location.pathname.startsWith('/password/reset/');
 

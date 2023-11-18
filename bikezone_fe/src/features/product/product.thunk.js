@@ -58,6 +58,17 @@ export const getNewArrivalProducts = createAsyncThunk('products/getNewArrivalPro
     }
 })
 
+// get all products admin
+export const getAdminProducts = createAsyncThunk('products/getAdminProducts', async (_, thunkAPI) => {
+    try {
+        return await productService.getAdminProducts()
+    } catch (error) {
+        const message =
+            error.response || error.response.data || error.response.data.message || error.message || error.code 
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 //cart===================================
 // add items in cart
 export const addItemsToCart = createAsyncThunk('products/addItemsToCart', async ({ id, quantity }, thunkAPI) => {
@@ -70,3 +81,4 @@ export const addItemsToCart = createAsyncThunk('products/addItemsToCart', async 
         return thunkAPI.rejectWithValue(message)
     }
 })
+

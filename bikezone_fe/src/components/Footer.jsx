@@ -10,7 +10,7 @@ const Footer = () => {
 
   const location = useLocation();
   // Define routes where you want to hide the header content
-  const hideFooterRoutes = ['/login', '/register', '/dashboard', '/forgot-password', '/me/update', '/update/password'];
+  const hideFooterRoutes = ['/login', '/register', '/dashboard', '/forgot-password', '/me/update', '/update/password', '/admin/dashboard', '/admin/products'];
 
   const isResetPasswordPage = location.pathname.startsWith('/password/reset/');
 
@@ -74,11 +74,11 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className='mt-[-40px]'>
+      {/* <div className='mt-[-40px]'>
         <p className="text-center mt-4 text-gray-400 text-sm mb-0">
           &copy; {new Date().getFullYear()} BikeZone, all rights reserved.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }

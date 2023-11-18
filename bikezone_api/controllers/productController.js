@@ -226,7 +226,6 @@ exports.getRatingProducts = async (req, res, next) => {
 
 };
 
-
 // get reviewd products
 exports.getProductsWithReviews = async (req, res, next) => {
 
@@ -269,4 +268,14 @@ exports.getNewArrivalProducts = catchAsyncErrors(async (req, res, next) => {
 });
 
 
+// Get All Product (Admin)
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
 
+  res.status(200).json({
+    statusCode: 200,
+    status: true,
+    message: "All products fetched!",
+    payload: { products }
+  });
+});

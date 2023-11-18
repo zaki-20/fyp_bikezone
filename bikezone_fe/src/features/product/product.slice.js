@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllProducts, getNewArrivalProducts, getProductDetail, getRatedProducts, getReviewedProducts } from "./product.thunk";
+import { getAdminProducts, getAllProducts, getNewArrivalProducts, getProductDetail, getRatedProducts, getReviewedProducts } from "./product.thunk";
 import initialProductState from "./product.initialstate";
 
 const productSlice = createSlice({
@@ -165,6 +165,21 @@ const productSlice = createSlice({
                 state.isError = true
                 state.message = action.payload.error
                 state.newArrival = null
+            })
+            .addCase(getAdminProducts.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload.error
+            })
+            .addCase(getAdminProducts.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(getAdminProducts.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.products = action.payload.payload.products
+                state.message = action.payload.message
             })
 
     }

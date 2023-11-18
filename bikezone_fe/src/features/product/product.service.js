@@ -41,12 +41,20 @@ const getNewArrivalProducts = async () => {
     return response.data
 }
 
+//getAllProducts admin
+const getAdminProducts = async (id) => {
+    // console.log("helo from service before axios")
+    const response = await axios.get(API_URL + `admin/products`, { withCredentials: true })
+    return response.data
+}
+
 
 const productService = {
     getAllProducts,
     getProductDetail,
     getRatedProducts,
     getReviewedProducts,
-    getNewArrivalProducts
+    getNewArrivalProducts,
+    getAdminProducts
 }
 export default productService

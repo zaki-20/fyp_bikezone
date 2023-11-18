@@ -1,42 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../pages/shared/Loader"
+import Loader from "../../pages/shared/Loader";
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 import { reset } from "../../features/auth/auth.slice";
 
 const ProtectedRoute = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { user, message, isLoading, isError } = useSelector((state) => state.auth)
+  const { user, message, isLoading, isError } = useSelector((state) => state.auth);
 
-  const { Component } = props
+  const { Component, isAdmin } = props;
 
   const navigate = useNavigate();
   const [cookies] = useCookies(["token"]);
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
 
   useEffect(() => {
-    const savedToken = cookies.token;
-    if (!savedToken) {
-      navigate('/login')
-    }
-  }, [cookies]);
+    const checkUserPermissions = () => {
+      if (!user) {
+        navigate('/login');
+      }
+      if (user?.role !== 'admin' && isAdmin === true) {
+        navigate('/login');
+      }
+      setIsUserLoaded(true);
+    };
 
-  //   useEffect(() => {
-  //     if (isError) {
-  //         toast.error(message);
-  //         dispatch(reset())
-  //     }
-  // }, [isError])
+    // If user is already loaded, check permissions immediately
+    if (user) {
+      checkUserPermissions();
+    }
+
+    // If user is not loaded, wait for user to load before checking permissions
+    if (isLoading) {
+      setIsUserLoaded(false);
+    }
+
+  }, [user, isLoading, isAdmin, navigate]);
 
   return (
-
     <>
-      {
-        isLoading ? (<Loader />) : (<Component />)
-      }
+      {isLoading || !isUserLoaded ? (<Loader />) : (<Component />)}
     </>
   );
 };
