@@ -59,11 +59,9 @@ const UpdateWorkshop = () => {
         service4: workshop?.service4
     }
 
-    console.log(workshop?.contact, "workshop contact")
 
     useEffect(() => {
         dispatch(getSingleWorkshop(id));
-        console.log(workshop, "workshop")
     }, []);
 
     useEffect(() => {

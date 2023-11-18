@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
 import { Link } from 'react-router-dom';
 import SideBar from '../components/SideBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdminProducts } from '../../features/product/product.thunk';
+import { deleteProduct, getAdminProducts } from '../../features/product/product.thunk';
 
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
@@ -12,11 +12,25 @@ import { FaRegEdit } from "react-icons/fa";
 const ProductList = () => {
 
     const dispatch = useDispatch()
+    const [localProducts, setLocalProducts] = useState([]);
+
+
+    const { isLoading, isError, message, products } = useSelector((state) => state.product)
+
+
+    const deleteProductHandler = async (id) => {
+        dispatch(deleteProduct(id))
+    }
+
     useEffect(() => {
         dispatch(getAdminProducts())
     }, [])
 
-    const { isLoading, isError, message, products } = useSelector((state) => state.product)
+    useEffect(() => {
+        // Update local state when products change
+        setLocalProducts(products || []);
+    }, [products]);
+
 
     const columns = [
         { field: "id", headerName: "Product ID", headerClassName: "bg-gray-900 text-yellow-400 text-lg", minWidth: 300, flex: 1 },
@@ -60,7 +74,7 @@ const ProductList = () => {
                         <Link to={`/admin/product/${params.row.id}`}>
                             <FaRegEdit size={20} />
                         </Link>
-                        <button>
+                        <button onClick={() => deleteProductHandler(params.row.id)}>
                             <MdDelete className='text-red-600' size={22} />
                         </button>
                     </>

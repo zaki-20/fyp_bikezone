@@ -2,16 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import productService from "./product.service"
 
 
-//create product --admin
-export const createProduct = createAsyncThunk('products/createProduct', async (data, thunkAPI) => {
-    try {
-        return await productService.createProduct(data)
-    } catch (error) {
-        const message =
-            error.response.data.message
-        return thunkAPI.rejectWithValue(message)
-    }
-})
 
 
 // get all goals
@@ -26,7 +16,7 @@ export const getAllProducts = createAsyncThunk('products/getAllProducts', async 
     }
 })
 
-// get all products
+// get  product details
 export const getProductDetail = createAsyncThunk('products/getProductDetail', async (id, thunkAPI) => {
     try {
         return await productService.getProductDetail(id)
@@ -70,16 +60,7 @@ export const getNewArrivalProducts = createAsyncThunk('products/getNewArrivalPro
     }
 })
 
-// get all products admin
-export const getAdminProducts = createAsyncThunk('products/getAdminProducts', async (_, thunkAPI) => {
-    try {
-        return await productService.getAdminProducts()
-    } catch (error) {
-        const message =
-            error.response || error.response.data || error.response.data.message || error.message || error.code
-        return thunkAPI.rejectWithValue(message)
-    }
-})
+
 
 //cart===================================
 // add items in cart
@@ -94,3 +75,47 @@ export const addItemsToCart = createAsyncThunk('products/addItemsToCart', async 
     }
 })
 
+
+//create product  --admin
+export const createProduct = createAsyncThunk('products/createProduct', async (data, thunkAPI) => {
+    try {
+        return await productService.createProduct(data)
+    } catch (error) {
+        const message =
+            error.response.data.message
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get all products  --admin
+export const getAdminProducts = createAsyncThunk('products/getAdminProducts', async (_, thunkAPI) => {
+    try {
+        return await productService.getAdminProducts()
+    } catch (error) {
+        const message =
+            error.response || error.response.data || error.response.data.message || error.message || error.code
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+// delete Product  --admin
+export const deleteProduct = createAsyncThunk('products/deleteProduct', async (id, thunkAPI) => {
+    try {
+        return await productService.deleteProduct(id)
+    } catch (error) {
+        const message =
+            error.response || error.response.data || error.response.data.message || error.message || error.code
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//update product --admin 
+export const updateProduct = createAsyncThunk('products/updateProduct', async ({values, id}, thunkAPI) => {
+    try {
+        console.log(values, id)
+        return await productService.updateProduct(values, id)
+    } catch (error) {
+        const message =
+            error.response.data.message || error.response.data || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})

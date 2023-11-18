@@ -48,6 +48,7 @@ import UpdateWorkshop from "./pages/workshop/UpdateWorkshop";
 import Brands from "./pages/brand/Brands";
 import Dashboard from "./admin/pages/Dashboard";
 import ProductList from "./admin/pages/ProductList";
+import UpdateProduct from "./admin/pages/UpdateProduct";
 
 
 
@@ -138,11 +139,11 @@ function App() {
         <Route exact path="/workshop/appointments" element={<ProtectedRoute Component={MyWorkshopAppointments} />} />
 
 
-
         {/* admin routes */}
         <Route exact isAdmin={true} path="/admin/dashboard" element={<ProtectedRoute Component={Dashboard} />} />
         <Route exact isAdmin={true} path="/admin/products" element={<ProtectedRoute Component={ProductList} />} />
         <Route exact isAdmin={true} path="/admin/product/new" element={<ProtectedRoute Component={AddProduct} />} />
+        <Route exact isAdmin={true} path="/admin/product/:id" element={<ProtectedRoute Component={UpdateProduct} />} />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

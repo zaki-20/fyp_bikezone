@@ -38,7 +38,7 @@ const Dashboard = () => {
     datasets: [
       {
         label: "TOTAL AMOUNT",
-        backgroundColor: ["tomato"],
+        backgroundColor: ["#ff9900"],
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
         data: [0, 4000],
       },
@@ -49,8 +49,8 @@ const Dashboard = () => {
     labels: ["Out of Stock", "InStock"],
     datasets: [
       {
-        backgroundColor: ["#00A6B4", "#6800B4"],
-        hoverBackgroundColor: ["#4B5000", "#35014F"],
+        backgroundColor: ["#e50000", "#03a700"],
+        hoverBackgroundColor: ["#b30000", "#037b00"],
         data: [outOfStock, products.length - outOfStock],
       },
     ],
@@ -75,10 +75,12 @@ const Dashboard = () => {
 
         <div className="flex justify-around w-full flex-wrap gap-20 px-20 py-16">
 
-          <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
-            <span>Products</span>
-            <span>{products && products.length}</span>
-          </div>
+          <Link to={'/admin/products'}>
+            <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
+              <span>Products</span>
+              <span>{products && products.length}</span>
+            </div>
+          </Link>
 
           <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
             <span>Orders</span>

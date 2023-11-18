@@ -12,7 +12,6 @@ import {
     AccordionBody,
 } from "@material-tailwind/react";
 import {
-    PresentationChartBarIcon,
     ShoppingBagIcon,
     UserCircleIcon,
     Cog6ToothIcon,
@@ -25,6 +24,8 @@ import { Link } from "react-router-dom";
 import { MdDashboard, MdStorage } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { AiOutlineStock } from "react-icons/ai";
+import { CgList } from "react-icons/cg";
+
 
 
 
@@ -91,12 +92,8 @@ const SideBar = () => {
                                     Create Product
                                 </ListItem>
                             </Link>
-                            <ListItem>
-                                <ListItemPrefix>
-                                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                </ListItemPrefix>
-                                Projects
-                            </ListItem>
+
+            
                         </List>
                     </AccordionBody>
                 </Accordion>
@@ -114,10 +111,10 @@ const SideBar = () => {
                     <ListItem className="p-0" selected={open === 2}>
                         <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
                             <ListItemPrefix>
-                                <ShoppingBagIcon className="h-5 w-5" />
+                                <CgList className="h-5 w-5" />
                             </ListItemPrefix>
                             <Typography color="blue-gray" className="mr-auto font-normal">
-                                E-Commerce
+                                Orders
                             </Typography>
                         </AccordionHeader>
                     </ListItem>

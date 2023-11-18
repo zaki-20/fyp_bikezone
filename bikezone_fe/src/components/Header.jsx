@@ -23,9 +23,10 @@ const Header = () => {
 
   const location = useLocation();
   // Define routes where you want to hide the header content
-  const hideHeaderRoutes = ['/login', '/register', '/dashboard', '/forgot-password', '/me/update', '/update/password', '/admin/dashboard', '/admin/products', '/admin/product'];
+  const hideHeaderRoutes = ['/login', '/register', '/dashboard', '/forgot-password', '/me/update', '/update/password'];
 
   const isResetPasswordPage = location.pathname.startsWith('/password/reset/');
+  const adminPage = location.pathname.startsWith('/admin');
 
   // Check if the current route is in the hideHeaderRoutes array
   const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
@@ -49,7 +50,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className={shouldHideHeader || isResetPasswordPage ? `hidden` : `bg-[#122222]  border-gray-200 dark:bg-gray-900  z-50 `}>
+      <nav className={shouldHideHeader || isResetPasswordPage || adminPage? `hidden` : `bg-[#122222]  border-gray-200 dark:bg-gray-900  z-50 `}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
           <Link to="/" className="flex items-center">

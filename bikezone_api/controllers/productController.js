@@ -84,8 +84,10 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   });
 
   res.status(200).json({
-    success: true,
-    product,
+    statusCode: 200,
+    status: true,
+    message: "Product updated successfully!",
+    payload: {}
   });
 });
 
@@ -98,8 +100,10 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   }
   await product.deleteOne();
   res.status(200).json({
-    success: true,
-    message: "product has been deleted ",
+    statusCode: 200,
+    status: true,
+    message: "Product has been deleted!",
+    payload: {}
   });
 });
 
@@ -142,7 +146,6 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
   await product.save({ validateBeforeSave: false });
 
-  console.log(product)
   res.status(200).json({
     statusCode: 200,
     status: true,
