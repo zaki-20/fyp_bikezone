@@ -2,6 +2,13 @@ import axios from "axios";
 
 const API_URL = 'http://localhost:4000/api/v1/'
 
+//create Product
+const createProduct = async (data) => {
+    const response = await axios.post(API_URL + 'admin/product/new', data, { withCredentials: true })
+    return response.data
+}
+
+
 //getAllProducts
 const getAllProducts = async (keyword, currentPage, price, category, ratings) => {
     // console.log("helo from service before axios")
@@ -55,6 +62,7 @@ const productService = {
     getRatedProducts,
     getReviewedProducts,
     getNewArrivalProducts,
-    getAdminProducts
+    getAdminProducts,
+    createProduct
 }
 export default productService

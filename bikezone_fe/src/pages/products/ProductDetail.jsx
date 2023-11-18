@@ -75,7 +75,7 @@ const ProductDetail = () => {
     const { user } = useSelector((state) => state.auth)
     const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
     const { isError: reviewError, message: reviewMsg, isLoading: reviewLoad, isSuccess } = useSelector(state => state.review)
-console.log(productDetails, "uhuhuhuhuh")
+    console.log(productDetails, "uhuhuhuhuh")
 
 
     useEffect(() => {
@@ -178,15 +178,8 @@ console.log(productDetails, "uhuhuhuhuh")
                                 <div className="w-full px-4 py-24 md:w-1/2 ">
                                     <div className="z-50 overflow-hidden ">
                                         <div className='z-50 h-[400px] '>
-                                            <Carousal />
+                                            <Carousal images={productDetails?.images}/>
                                         </div>
-
-                                        {/* <Carousel>
-                                                    <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" className='z-50' alt="" />
-                                                    <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="" />
-                                                    <img src={shadowBikeImage} className='z-50' alt="" />
-                                                </Carousel> */}
-
                                     </div>
                                 </div>
                                 <div className="w-full px-4 md:w-1/2 rounded-md shadow-[inset_3px_0px_41px_22px_#00000024] shadow-gray-400 p-4 bg-[#e4e4e4]  ">

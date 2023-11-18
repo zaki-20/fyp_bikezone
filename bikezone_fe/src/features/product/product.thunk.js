@@ -2,6 +2,18 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import productService from "./product.service"
 
 
+//create product --admin
+export const createProduct = createAsyncThunk('products/createProduct', async (data, thunkAPI) => {
+    try {
+        return await productService.createProduct(data)
+    } catch (error) {
+        const message =
+            error.response.data.message
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+
 // get all goals
 export const getAllProducts = createAsyncThunk('products/getAllProducts', async ({ keyword = '', currentPage = 1, price = [0, 25000], category, ratings = 0 }, thunkAPI) => {
     try {
@@ -9,7 +21,7 @@ export const getAllProducts = createAsyncThunk('products/getAllProducts', async 
     } catch (error) {
         const message =
             error.response || error.response.data || error.response.data.message || error.message || error.code
-            console.log(message)
+        console.log(message)
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -20,7 +32,7 @@ export const getProductDetail = createAsyncThunk('products/getProductDetail', as
         return await productService.getProductDetail(id)
     } catch (error) {
         const message =
-            error.response || error.response.data || error.response.data.message || error.message || error.code 
+            error.response || error.response.data || error.response.data.message || error.message || error.code
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -53,7 +65,7 @@ export const getNewArrivalProducts = createAsyncThunk('products/getNewArrivalPro
         return await productService.getNewArrivalProducts()
     } catch (error) {
         console.log(error)
-        const message = error.response || error.response.data || error.response.data.message || error.message || error.code      
+        const message = error.response || error.response.data || error.response.data.message || error.message || error.code
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -64,7 +76,7 @@ export const getAdminProducts = createAsyncThunk('products/getAdminProducts', as
         return await productService.getAdminProducts()
     } catch (error) {
         const message =
-            error.response || error.response.data || error.response.data.message || error.message || error.code 
+            error.response || error.response.data || error.response.data.message || error.message || error.code
         return thunkAPI.rejectWithValue(message)
     }
 })

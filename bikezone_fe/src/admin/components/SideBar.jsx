@@ -83,7 +83,7 @@ const SideBar = () => {
                                     All Products
                                 </ListItem>
                             </Link>
-                            <Link to={'/admin/product'}>
+                            <Link to={'/admin/product/new'}>
                                 <ListItem>
                                     <ListItemPrefix>
                                         <IoIosAddCircleOutline strokeWidth={3} className="h-4 w-5" />

@@ -23,24 +23,16 @@ const productSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  images: [
-    {
-      public_id: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
   category: {
     type: String,
     required: [true, "Please Enter Product Category"],
-    required: true,
-
   },
+  images: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   Stock: {
     type: Number,
     required: [true, "Please Enter product Stock"],

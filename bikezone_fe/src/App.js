@@ -142,7 +142,7 @@ function App() {
         {/* admin routes */}
         <Route exact isAdmin={true} path="/admin/dashboard" element={<ProtectedRoute Component={Dashboard} />} />
         <Route exact isAdmin={true} path="/admin/products" element={<ProtectedRoute Component={ProductList} />} />
-        <Route exact isAdmin={true} path="/admin/product" element={<ProtectedRoute Component={AddProduct} />} />
+        <Route exact isAdmin={true} path="/admin/product/new" element={<ProtectedRoute Component={AddProduct} />} />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

@@ -31,7 +31,7 @@ const ProductCard = ({ product, newArrive }) => {
         <div className="w-[250px] bg-[#e7e7e7ea] border-2 hover:border-2 hover:border-black duration-300  shadow-[inset_3px_0px_41px_22px_#00000024] shadow-gray-400  rounded-lg dark:bg-gray-800 dark:border-gray-700">
             <Link to={`/product/${product._id}`} >
                 <div className='relative'>
-                    <img className="  rounded-t-lg p-8 object-cover w-full h-52" src="helmet.jpg" alt="productImage" />
+                    <img className="  rounded-t-lg p-8 object-cover w-full h-52" src={product?.images[0]} alt="productImage" />
                     {newArrive && (<span className="absolute z-20 top-0 left-0 inline-flex mt-1 ml-1 px-2 py-1 rounded-lg bg-red-500 text-xs font-medium text-white select-none">
                         New Arrival
                     </span>)}

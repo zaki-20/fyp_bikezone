@@ -141,7 +141,7 @@ const FeaturedProductsPage = () => {
                 valueLabelDisplay="auto"
                 disableSwap
                 min={0}
-                max={25000}
+                max={50000}
               />
             </div>
             <div className=' border border-black p-2 my-2'>

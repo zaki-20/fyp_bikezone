@@ -1,102 +1,243 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SideBar from '../components/SideBar';
+import { useFormik } from 'formik';
+import * as yup from "yup";
+import { useDispatch, useSelector } from 'react-redux';
+import { reset } from '../../features/product/product.slice';
+import { createProduct } from '../../features/product/product.thunk';
+import axios from 'axios';
+
+const schema = yup.object({
+    name: yup.string().required('Product name is required'),
+    price: yup
+        .number().min(50)
+        .typeError('price must be a number')
+        .required('price is required'),
+    category: yup
+        .string()
+        .required('category is required'),
+    brand: yup.string().required('brand is required'),
+    Stock: yup
+        .number().min(1)
+        .typeError('stock must be a number')
+        .required('stock is required'),
+    description: yup.string().min(30).required('Description is required'),
+    images: yup.array().min(1, 'At least one image is required').required('Image(s) is required'),
+
+});
 
 function AddProduct() {
 
-    return (
+    const dispatch = useDispatch()
 
+
+    const { isError, isSuccess, message } = useSelector((state) => state.product)
+
+
+    useEffect(() => {
+        if (isError) {
+            // toast.error(message)
+            dispatch(reset())
+        }
+    }, [isError])
+
+    const initialValues = {
+        name: "",
+        price: "",
+        category: "",
+        brand: "",
+        Stock: "",
+        description: "",
+        images: [], // Use an array to store multiple images
+
+    };
+
+    const [previewImages, setPreviewImages] = useState([]);
+
+    const handleImageChange = (e) => {
+        const files = e.target.files;
+        const fileArray = Array.from(files);
+
+        // Update form values
+        setFieldValue('images', fileArray);
+
+        // Update preview images for display
+        setPreviewImages(fileArray.map(file => URL.createObjectURL(file)));
+    };
+
+    const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
+        useFormik({
+            initialValues,
+            validationSchema: schema,
+            validateOnChange: true,
+            validateOnBlur: false,
+            onSubmit: async (values, action) => {
+                try {
+                    const imageUrls = await Promise.all(
+                        values.images.map(async (image) => {
+                            const formData = new FormData();
+                            formData.append('file', image);
+                            formData.append('upload_preset', 'preset_images'); // Replace with your Cloudinary upload preset
+                            const cloudinaryResponse = await axios.post(
+                                'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
+                                formData
+                            );
+                            return cloudinaryResponse.data.secure_url;
+                        })
+                    );
+
+                    // Add the Cloudinary image URLs to the form data
+                    values.images = imageUrls;
+
+
+                    console.log(values)
+                    await dispatch(createProduct(values))
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        });
+
+    return (
         <>
             <div className='flex w-[100%] '>
+
                 <SideBar />
+
                 <div className=" shadow-md rounded w-full px-8 pt-2 pb-8 bg-gray-100">
                     <div className="max-w-4xl p-6 mx-auto bg-gray-200 rounded-md shadow-md dark:bg-gray-800 mt-10">
                         <h1 className="text-xl mb-4 font-bold text-black capitalize dark:text-white">Post Your Product</h1>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-1 gap-6 mt- sm:grid-cols-2">
                                 <div>
                                     <label className="text-black dark:text-gray-200" htmlFor="username">Product Name</label>
-                                    <input id="username" type="text" placeholder='Enter your product name' className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    <input
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.name}
+                                        id="name" type="text" placeholder='Enter your product name' className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    {errors.name && touched.name ? (
+                                        <p className="text-red-600 animate-pulse">{errors.name}</p>
+                                    ) : null}
                                 </div>
                                 <div>
                                     <label className="text-black dark:text-gray-200" htmlFor="emailApriceddress">Price (Rs)</label>
-                                    <input id="price" placeholder='Enter price e.g. 500' type="number" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    <input
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.price}
+                                        id="price" type="number" placeholder='Enter price e.g. 500' className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    {errors.price && touched.price ? (
+                                        <p className="text-red-600 animate-pulse">{errors.price}</p>
+                                    ) : null}
                                 </div>
 
                                 <div>
                                     <label className="text-black dark:text-gray-200" htmlFor="passwordConfirmation">Category</label>
-                                    <select value={""} className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <select
+                                        name='category'
+                                        id='category'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.category}
+                                        className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                    >
                                         <option value="" disabled hidden>Select Category</option>
-                                        <option>Motorbike Parts</option>
-                                        <option>Motorbike Accessories</option>
-                                        <option>Maintenance and Care</option>
-                                        <option>Riding Apparel</option>
-                                        <option>Performance Upgrades</option>
-                                        <option>OEM (Original Equipment Manufacturer) Parts</option>
-                                        <option>Specialty and Customization</option>
+                                        <option value={'Motorbike Parts'}>Motorbike Parts</option>
+                                        <option value={'Motorbike Accessories'}>Motorbike Accessories</option>
+                                        <option value={'Maintenance and Care'}>Maintenance and Care</option>
+                                        <option value={'Riding Apparel'}>Riding Apparel</option>
+                                        <option value={'Performance Upgrades'}>Performance Upgrades</option>
+                                        <option value={'OEM Parts'}>OEM (Original Equipment Manufacturer) Parts</option>
+                                        <option value={'Specialty and Customization'}>Specialty and Customization</option>
                                     </select>
+                                    {errors.category && touched.category ? (
+                                        <p className="text-red-600 animate-pulse">{errors.category}</p>
+                                    ) : null}
                                 </div>
                                 <div>
                                     <label className="text-black dark:text-gray-200" htmlFor="passwordConfirmation">Brand</label>
-                                    <select value={""} className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <select
+                                        name='brand'
+                                        id='brand'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.brand}
+                                        className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                    >
                                         <option value="" disabled hidden>Select Brand</option>
-                                        <option>Honda</option>
-                                        <option>Suzuki</option>
-                                        <option>Road Prince</option>
-                                        <option>United</option>
-                                        <option>Yamaha</option>
-                                        <option>Super Star</option>
-                                        <option>Super Power</option>
-                                        <option>Crown</option>
-                                        <option>Eagle</option>
+                                        <option value={'Honda'}>Honda</option>
+                                        <option value={'Suzuki'}>Suzuki</option>
+                                        <option value={'Road Prince'}>Road Prince</option>
+                                        <option value={'United'}>United</option>
+                                        <option value={'Yamaha'}>Yamaha</option>
+                                        <option value={'Super Star'}>Super Star</option>
+                                        <option value={'Super Power'}>Super Power</option>
+                                        <option value={'Crown'}>Crown</option>
+                                        <option value={'Eagle'}>Eagle</option>
                                     </select>
+                                    {errors.brand && touched.brand ? (
+                                        <p className="text-red-600 animate-pulse">{errors.brand}</p>
+                                    ) : null}
                                 </div>
                                 <div>
                                     <label className="text-black dark:text-gray-200" htmlFor="emailApriceddress">Stock</label>
-                                    <input id="stock" placeholder='Enter stock e.g. 20' type="number" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    <input
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.Stock}
+                                        id="Stock" type="number" name='Stock' placeholder='Enter stock e.g. 20' className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    {errors.Stock && touched.Stock ? (
+                                        <p className="text-red-600 animate-pulse">{errors.Stock}</p>
+                                    ) : null}
                                 </div>
+
+                                <div>
+                                    <label className="text-black dark:text-gray-200" htmlFor="">Upload Image</label>
+
+                                    <input
+                                        type="file"
+                                        id="file-upload"
+                                        name="file-upload"
+                                        onChange={handleImageChange}
+                                        className="block w-full px-4  mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                        multiple  // Allow multiple files to be selected
+                                    />
+
+                                    <div className='flex gap-x-2'>
+                                        {/* Display preview images */}
+                                        {previewImages.map((url, index) => (
+                                            <img key={index} src={url} alt={`Preview ${index + 1}`} className="w-8 h-8 object-cover rounded-md mr-2 mt-2" />
+                                        ))}
+                                    </div>
+                                </div>
+
+
                                 <div>
                                     <label className="text-black dark:text-gray-200" htmlFor="passwordConfirmation">Description</label>
-                                    <textarea id="textarea" rows={6} placeholder='Enter product description' type="textarea" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" defaultValue={""} />
+                                    <textarea
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.description}
+                                        id="description" name='description' rows={6} placeholder='Enter product description' type="textarea" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" defaultValue={""} />
+                                    {errors.description && touched.description ? (
+                                        <p className="text-red-600 animate-pulse">{errors.description}</p>
+                                    ) : null}
                                 </div>
-
-
-                                <label htmlFor='file-upload' className=' -mt-20'>
-                                    <label className="block text-sm font-medium text-black">
-                                        Image
-                                    </label>
-                                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-black border-dashed rounded-md">
-                                        <div className="space-y-1 text-center">
-                                            <svg h className="mx-auto h-12 w-12 text-black" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                            <div className="flex text-sm text-gray-600">
-                                                <label htmlFor="file-upload" className="relative cursor-pointer px-[2px] py-[1px] bg-white font-medium text-black hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                                    <span className>Upload a file</span>
-                                                    <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                                                </label>
-                                                <p className="pl-1 text-black">or drag and drop</p>
-                                            </div>
-                                            <p className="text-xs text-black">
-                                                PNG, JPG, GIF up to 10MB
-                                            </p>
-                                        </div>
-                                    </div>
-                                </label>
-
+                                {/* ===================== */}
 
 
 
                             </div>
                             <div className="flex justify-end mt-6">
-                                <button className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-[#122222] rounded-md  focus:outline-none focus:bg-gray-600">Upload</button>
+                                <button type='submit' className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-[#122222] rounded-md  focus:outline-none focus:bg-gray-600">Upload</button>
                             </div>
                         </form>
                     </div>
 
                 </div>
+
             </div>
-
-
         </>
     );
 }
