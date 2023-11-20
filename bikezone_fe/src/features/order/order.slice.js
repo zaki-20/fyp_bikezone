@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createOrder, getOrderDetails, myOrders } from "./order.thunk";
+import { createOrder, deleteOrder, getAllOrders, getOrderDetails, myOrders, updateOrder } from "./order.thunk";
 import initialOrderState from './order.initialstate'
 
 const orderSlice = createSlice({
@@ -63,7 +63,53 @@ const orderSlice = createSlice({
                 state.message = action.payload.error
                 state.orderDetails = null
             })
-              
+            .addCase(getAllOrders.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(getAllOrders.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.orders = action.payload.payload.orders
+                state.message = action.payload.message
+            })
+            .addCase(getAllOrders.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload.error
+                state.orders = null
+            })
+            .addCase(deleteOrder.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(deleteOrder.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(deleteOrder.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+            })
+            .addCase(updateOrder.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(updateOrder.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(updateOrder.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+            })
+
     }
 })
 export const { reset } = orderSlice.actions

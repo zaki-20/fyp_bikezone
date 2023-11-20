@@ -7,8 +7,8 @@ export const createOrder = createAsyncThunk('order/createOrder', async (order, t
         console.log(order.orderItems, "order id order service")
         return await orderService.createOrder(order)
     } catch (error) {
-        const message = 
-            error.response.data
+        const message =
+            error.response.data.message || error.response.data || error.response
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -19,18 +19,52 @@ export const myOrders = createAsyncThunk('order/myOrders', async (_, thunkAPI) =
         return await orderService.myOrders()
     } catch (error) {
         const message =
-            error.response.data
+            error.response.data.message || error.response.data || error.response
         return thunkAPI.rejectWithValue(message)
     }
 })
 
-//my orders 
+//get order detils 
 export const getOrderDetails = createAsyncThunk('order/getOrderDetails', async (id, thunkAPI) => {
     try {
         return await orderService.getOrderDetails(id)
     } catch (error) {
         const message =
-            error.response.data
+            error.response.data.message || error.response.data || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//get all orders   --admin
+export const getAllOrders = createAsyncThunk('order/getAllOrders', async (_, thunkAPI) => {
+    try {
+        return await orderService.getAllOrders()
+    } catch (error) {
+        const message =
+            error.response.data.message || error.response.data || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//delete order  -admin 
+export const deleteOrder = createAsyncThunk('order/deleteOrder', async (id, thunkAPI) => {
+    try {
+        return await orderService.deleteOrder(id)
+    } catch (error) {
+        const message =
+            error.response.data.message || error.response.data || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//update order  -admin 
+export const updateOrder = createAsyncThunk('order/updateOrder', async (data, thunkAPI) => {
+    try {
+        
+        return await orderService.updateOrder(data)
+    } catch (error) {
+        const message =
+            error.response.data.message || error.response.data || error.response
         return thunkAPI.rejectWithValue(message)
     }
 })

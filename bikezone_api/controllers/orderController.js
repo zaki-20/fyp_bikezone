@@ -94,9 +94,13 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
   });
 
   res.status(200).json({
-    success: true,
-    totalAmount,
-    orders,
+    statusCode: 200,
+    status: true,
+    message: `order retrieved successfully`,
+    payload: {
+      orders,
+      totalAmount,
+    }
   });
 });
 
@@ -112,34 +116,28 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("you have already delieverd this order", 400));
   }
 
-  order.orderItems.forEach(async (o) => {
-    await updateStock(o.product, o.quantity, next);
-  });
+  if (req.body.status === "Shipped") {
+    order.orderItems.forEach(async (o) => {
+      await updateStock(o._id, o.quantity);
+    });
+  }
 
   order.orderStatus = req.body.status;
 
-  if (req.body.status === "delivered") {
+  if (req.body.status === "Delivered") {
     order.deliveredAt = Date.now();
   }
 
   await order.save({ validateBeforeSave: false });
 
   res.status(200).json({
-    success: true,
+    statusCode: 200,
+    status: true,
+    message: `order updated successfully`,
+    payload: {}
   });
 });
 
-//Fucntion for update stock===========
-async function updateStock(id, quantity, next) {
-  const product = await Product.findById(id);
-
-  // if (quantity > product.Stock) {
-  //   return next(new ErrorHandler("Insufficient stock", 400));
-  // }
-  product.Stock -= quantity;
-
-  await product.save({ validateBeforeSave: false });
-}
 
 // delete Order -- Admin
 exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
@@ -152,6 +150,20 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
   await order.deleteOne();
 
   res.status(200).json({
-    success: true,
+    statusCode: 200,
+    status: true,
+    message: `order deleted successfully`,
+    payload: {}
   });
 });
+
+
+//Fucntion for update stock===========
+async function updateStock(id, quantity) {
+  const product = await Product.findById(id);
+
+  console.log(product)
+  product.Stock -= quantity;
+
+  await product.save({ validateBeforeSave: false });
+}

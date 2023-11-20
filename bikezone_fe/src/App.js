@@ -49,9 +49,8 @@ import Brands from "./pages/brand/Brands";
 import Dashboard from "./admin/pages/Dashboard";
 import ProductList from "./admin/pages/ProductList";
 import UpdateProduct from "./admin/pages/UpdateProduct";
-
-
-
+import OrderList from "./admin/pages/OrderList";
+import ProcessOrder from "./admin/pages/ProcessOrder";
 
 
 function App() {
@@ -144,6 +143,8 @@ function App() {
         <Route exact isAdmin={true} path="/admin/products" element={<ProtectedRoute Component={ProductList} />} />
         <Route exact isAdmin={true} path="/admin/product/new" element={<ProtectedRoute Component={AddProduct} />} />
         <Route exact isAdmin={true} path="/admin/product/:id" element={<ProtectedRoute Component={UpdateProduct} />} />
+        <Route exact isAdmin={true} path="/admin/orders" element={<ProtectedRoute Component={OrderList} />} />
+        <Route exact isAdmin={true} path="/admin/order/:id" element={<ProtectedRoute Component={ProcessOrder} />} />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

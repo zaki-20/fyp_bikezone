@@ -25,8 +25,7 @@ import { MdDashboard, MdStorage } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { AiOutlineStock } from "react-icons/ai";
 import { CgList } from "react-icons/cg";
-
-
+import { HiOutlineClipboardList } from "react-icons/hi";
 
 
 const SideBar = () => {
@@ -45,6 +44,7 @@ const SideBar = () => {
             </div>
 
             <List className="">
+
                 <Link to={'/admin/dashboard'}>
                     <ListItem className="w-[85%]">
                         <ListItemPrefix>
@@ -92,8 +92,6 @@ const SideBar = () => {
                                     Create Product
                                 </ListItem>
                             </Link>
-
-            
                         </List>
                     </AccordionBody>
                 </Accordion>
@@ -120,12 +118,15 @@ const SideBar = () => {
                     </ListItem>
                     <AccordionBody className="py-1">
                         <List className="p-0">
-                            <ListItem>
-                                <ListItemPrefix>
-                                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                </ListItemPrefix>
-                                Orders
-                            </ListItem>
+
+                            <Link to={'/admin/orders'}>
+                                <ListItem>
+                                    <ListItemPrefix>
+                                        <HiOutlineClipboardList strokeWidth={3} className="h-4 w-5" />
+                                    </ListItemPrefix>
+                                    All Orders
+                                </ListItem>
+                            </Link>
                             <ListItem>
                                 <ListItemPrefix>
                                     <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />

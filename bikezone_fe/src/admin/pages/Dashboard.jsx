@@ -6,6 +6,7 @@ import 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 import { getAdminProducts } from "../../features/product/product.thunk";
 import { useDispatch, useSelector } from "react-redux";
+import { getAllOrders } from "../../features/order/order.thunk";
 
 
 
@@ -14,6 +15,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const { products } = useSelector((state) => state.product);
+  const { orders } = useSelector((state) => state.order)
 
   // const { orders } = useSelector((state) => state.order);
 
@@ -30,6 +32,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getAdminProducts());
+    dispatch(getAllOrders())
   }, [dispatch]);
 
 
@@ -82,10 +85,12 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
-            <span>Orders</span>
-            <span>29</span>
-          </div>
+          <Link to={'/admin/orders'}>
+            <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
+              <span>Orders</span>
+              <span>{orders && orders.length}</span>
+            </div>
+          </Link>
 
           <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
             <span>Users</span>
