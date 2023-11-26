@@ -175,7 +175,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         statusCode: 200,
         status: true,
-        message: null,
+        message: "user detail retrieved",
         payload: {
             user
         }
@@ -202,14 +202,6 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     user.password = req.body.newPassword;
     await user.save()
 
-    // res.status(200).json({
-    //     statusCode: 200,
-    //     status: true,
-    //     message: "password has been updated",
-    //     payload: {
-    //         user
-    //     }
-    // });
     const msg = "password updated successfully"
 
     sendToken(user, 200, res, msg);
@@ -250,9 +242,14 @@ exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
     const users = await User.find();
 
     res.status(200).json({
-        success: true,
-        users,
+        statusCode: 200,
+        status: true,
+        message: "all users fetched!",
+        payload: {
+            users
+        }
     });
+
 });
 
 // Get single user (admin)
@@ -304,9 +301,12 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     await user.deleteOne();
 
     res.status(200).json({
-        success: true,
-        message: "User Deleted Successfully",
+        statusCode: 200,
+        status: true,
+        message: "user deleted successfully!",
+        payload: {}
     });
+
 });
 
 

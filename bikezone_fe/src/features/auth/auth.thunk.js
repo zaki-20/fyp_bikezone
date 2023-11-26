@@ -89,3 +89,39 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
         return thunkAPI.rejectWithValue(message)
     }
 })
+
+//get all users  --admin
+export const getAllUsers = createAsyncThunk('auth/getAllUsers', async (_, thunkAPI) => {
+    try {
+        console.log("thunk get all users")
+        return await authService.getAllUsers()
+    } catch (error) {
+        console.log(error)
+        const message = error.response.data || error.response.data.message || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//get user detail  --admin
+export const getUserDetail = createAsyncThunk('auth/getUserDetail', async (id, thunkAPI) => {
+    try {
+        return await authService.getUserDetail(id)
+    } catch (error) {
+        console.log(error)
+        const message = error.response.data || error.response.data.message || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//delete user  --admin
+export const deleteUser = createAsyncThunk('auth/deleteUser', async (id, thunkAPI) => {
+    try {
+        return await authService.deleteUser(id)
+    } catch (error) {
+        console.log(error)
+        const message = error.response.data || error.response.data.message || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+

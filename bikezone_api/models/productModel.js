@@ -69,7 +69,6 @@ const productSchema = mongoose.Schema({
       comment: {
         type: String,
         required: true,
-        minLength: [500, "review should be less than 500 characters"],
 
       },
     },

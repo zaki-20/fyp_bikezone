@@ -8,7 +8,22 @@ const createReview = async (reviewData) => {
     return response.data
 }
 
+//get all Reviews  --admin
+const getProductReviews = async (id) => {
+    const response = await axios.get(API_URL + `reviews?id=${id}`, { withCredentials: true })
+    return response.data
+}
+
+//delete  Reviews  --admin
+const deleteReview = async (reviewId, productId) => {
+    const response = await axios.delete(API_URL + `reviews?reviewId=${reviewId}&productId=${productId}`, { withCredentials: true })
+    return response.data
+}
+
+
 const reviewService = {
-   createReview
+   createReview,
+   getProductReviews,
+   deleteReview
 }
 export default reviewService

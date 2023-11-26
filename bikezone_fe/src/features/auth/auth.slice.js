@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, login, loadUser, logout, updateProfile, updatePassword, forgotPassword, resetPassword } from "./auth.thunk";
+import { register, login, loadUser, logout, updateProfile, updatePassword, forgotPassword, resetPassword, getAllUsers, getUserDetail, deleteUser } from "./auth.thunk";
 import initialAuthState from "./auth.initialstate";
 
 const authSlice = createSlice({
@@ -87,7 +87,6 @@ const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload.error
                 state.isUpdate = false
-                console.log(action.payload.error)
             })
             .addCase(updatePassword.pending, (state) => {
                 state.isLoading = true
@@ -143,6 +142,55 @@ const authSlice = createSlice({
 
                 state.message = action.payload.message
                 state.logoutSuccess = true
+            })
+            .addCase(getAllUsers.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllUsers.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.users = action.payload.payload.users
+                state.message = action.payload.message
+            })
+            .addCase(getAllUsers.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.isSuccess = false
+                state.message = action.payload.error //need checking
+                state.users = []
+            })
+            .addCase(getUserDetail.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getUserDetail.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.user = action.payload.payload.users
+                state.message = action.payload.message
+            })
+            .addCase(getUserDetail.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.isSuccess = false
+                state.message = action.payload.error //need checking
+                state.user = null
+            })
+            .addCase(deleteUser.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(deleteUser.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(deleteUser.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
             })
 
     }

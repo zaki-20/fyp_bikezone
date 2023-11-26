@@ -77,7 +77,7 @@ const orderSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error
-                state.orders = null
+                state.orders = []
             })
             .addCase(deleteOrder.pending, (state) => {
                 state.isLoading = true

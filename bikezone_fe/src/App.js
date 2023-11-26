@@ -51,6 +51,9 @@ import ProductList from "./admin/pages/ProductList";
 import UpdateProduct from "./admin/pages/UpdateProduct";
 import OrderList from "./admin/pages/OrderList";
 import ProcessOrder from "./admin/pages/ProcessOrder";
+import UserList from "./admin/pages/UserList";
+import UserDetail from "./admin/pages/UserDetail";
+import ReviewList from "./admin/pages/ReviewList";
 
 
 function App() {
@@ -145,6 +148,9 @@ function App() {
         <Route exact isAdmin={true} path="/admin/product/:id" element={<ProtectedRoute Component={UpdateProduct} />} />
         <Route exact isAdmin={true} path="/admin/orders" element={<ProtectedRoute Component={OrderList} />} />
         <Route exact isAdmin={true} path="/admin/order/:id" element={<ProtectedRoute Component={ProcessOrder} />} />
+        <Route exact isAdmin={true} path="/admin/users" element={<ProtectedRoute Component={UserList} />} />
+        <Route exact isAdmin={true} path="/admin/user/:id" element={<ProtectedRoute Component={UserDetail} />} />
+        <Route exact isAdmin={true} path="/admin/reviews" element={<ProtectedRoute Component={ReviewList} />} />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

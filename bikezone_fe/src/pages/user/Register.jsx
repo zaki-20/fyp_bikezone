@@ -55,7 +55,7 @@ const Register = () => {
                     // Upload the image to Cloudinary
                     const formData = new FormData();
                     formData.append('file', image);
-                    formData.append('upload_preset', 'present_images'); // Replace with your Cloudinary upload preset
+                    formData.append('upload_preset', 'preset_images'); // Replace with your Cloudinary upload preset
                     const cloudinaryResponse = await axios.post(
                         'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
                         formData

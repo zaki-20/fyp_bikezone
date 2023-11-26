@@ -7,6 +7,7 @@ import { Chart } from 'react-chartjs-2';
 import { getAdminProducts } from "../../features/product/product.thunk";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrders } from "../../features/order/order.thunk";
+import { getAllUsers } from "../../features/auth/auth.thunk";
 
 
 
@@ -16,10 +17,7 @@ const Dashboard = () => {
 
   const { products } = useSelector((state) => state.product);
   const { orders } = useSelector((state) => state.order)
-
-  // const { orders } = useSelector((state) => state.order);
-
-  // const { users } = useSelector((state) => state.auth);
+  const { users } = useSelector((state) => state.auth);
 
   let outOfStock = 0;
 
@@ -31,10 +29,22 @@ const Dashboard = () => {
     });
 
   useEffect(() => {
+    if (!users.length) {
+      dispatch(getAllUsers());
+    }
+  }, [dispatch, users]);
+
+  useEffect(() => {
     dispatch(getAdminProducts());
     dispatch(getAllOrders())
-  }, [dispatch]);
+  }, []);
 
+
+  let totalAmount = 0;
+  orders &&
+    orders.forEach((item) => {
+      totalAmount += item.totalPrice;
+    });
 
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
@@ -43,7 +53,7 @@ const Dashboard = () => {
         label: "TOTAL AMOUNT",
         backgroundColor: ["#ff9900"],
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
-        data: [0, 4000],
+        data: [0, totalAmount],
       },
     ],
   };
@@ -70,7 +80,7 @@ const Dashboard = () => {
             <div className='flex justify-center bg-black '>
               <p className='bg-slate-950 text-[15px] font-md  text-yellow-400 w-full m-3 p-6 text-lg text-center rounded-md'>
                 Total Amount <br />
-                15000 Rs
+                {totalAmount} Rs
               </p>
             </div>
           </div>
@@ -92,10 +102,13 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
-            <span>Users</span>
-            <span>19</span>
-          </div>
+          <Link to={'/admin/users'}>
+            <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
+              <span>Users</span>
+              <span>{users && users.length}</span>
+            </div>
+          </Link>
+
 
           <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
             <span>Workshops</span>

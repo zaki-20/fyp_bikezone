@@ -34,6 +34,9 @@ module.exports = withMT({
           },
         },
       },
+      cursor: {
+        'custom-cursor': 'url("./src/assets/cursor.png"), auto',
+      },
     },
   },
   plugins: [
@@ -45,10 +48,3 @@ module.exports = withMT({
   },
 }
 )
-// module.exports = withMT({
-//   content: ["./src/**/*.{js,jsx,ts,tsx}"],
-//   theme: {
-//     extend: {},
-//   },
-//   plugins: [],
-// });
