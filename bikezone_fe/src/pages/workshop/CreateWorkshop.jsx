@@ -43,10 +43,10 @@ const schema = yup.object({
 
 const CreateWorkshop = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [image, setImage] = useState(null);
 
 
-    const dispatch = useDispatch()
     const initialValues = {
         name: '',
         email: '',

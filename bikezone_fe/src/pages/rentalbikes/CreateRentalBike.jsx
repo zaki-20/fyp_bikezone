@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import Select from 'react-select'
 import InputMask from 'react-input-mask';
-
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { createRentBike } from '../../features/rentbike/rentbike.thunk';
+import { reset } from '../../features/rentbike/rentbike.slice';
+import axios from 'axios';
 
 
 const schema = yup.object({
@@ -41,6 +45,8 @@ const schema = yup.object({
 
 
 const CreateRentalBike = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const initialValues = {
         title: '',
@@ -69,21 +75,53 @@ const CreateRentalBike = () => {
         setPreviewImages(fileArray.map(file => URL.createObjectURL(file)));
     };
 
+    const { isError, isSuccess, message, isLoading } = useSelector((state) => state.rentBike)
+
+    useEffect(() => {
+        if (isError) {
+            // toast.error(message)
+            dispatch(reset())
+        }
+    }, [isError])
+
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
             initialValues,
             validationSchema: schema,
             validateOnChange: true,
             validateOnBlur: false,
-            onSubmit: (values) => {
-                console.log(values)
+            onSubmit: async (values, action) => {
+                try {
+                    const imageUrls = await Promise.all(
+                        values.images.map(async (image) => {
+                            const formData = new FormData();
+                            formData.append('file', image);
+                            formData.append('upload_preset', 'preset_images'); 
+                            const cloudinaryResponse = await axios.post(
+                                'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
+                                formData
+                            );
+                            return cloudinaryResponse.data.secure_url;
+                        })
+                    );
+
+                    // Add the Cloudinary image URLs to the form data
+                    values.images = imageUrls;
+
+                    console.log(values)
+                    await dispatch(createRentBike(values))
+
+                } catch (error) {
+                    console.log(error)
+
+                }
             },
         });
 
 
     const options = [
         { value: 'new', label: 'New' },
-        { value: 'old', label: 'Old' },
+        { value: 'used', label: 'Used' },
     ]
     const options2 = [
         { value: true, label: 'Yes' },
