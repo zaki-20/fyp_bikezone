@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createWorkshop } from '../../features/workshop/workshop.thunk';
 import { reset } from '../../features/workshop/workshop.slice';
 import { toast } from 'react-toastify';
-import Lottie from 'lottie-react'
-import verticalBar from '../../assets/animated/verticalBar.json'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 

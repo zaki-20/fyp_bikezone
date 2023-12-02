@@ -54,6 +54,8 @@ import ProcessOrder from "./admin/pages/ProcessOrder";
 import UserList from "./admin/pages/UserList";
 import UserDetail from "./admin/pages/UserDetail";
 import ReviewList from "./admin/pages/ReviewList";
+import CreateRentalBike from "./pages/rentalbikes/CreateRentalBike";
+
 
 
 function App() {
@@ -139,6 +141,10 @@ function App() {
         <Route exact path="/workshop/:id" element={<ProtectedRoute Component={WorkshopDetail} />} />
         <Route exact path="/workshop/update/:id" element={<ProtectedRoute Component={UpdateWorkshop} />} />
         <Route exact path="/workshop/appointments" element={<ProtectedRoute Component={MyWorkshopAppointments} />} />
+
+        {/*Rental-Bikes*/}
+        <Route exact path="/create-rental-bike" element={<ProtectedRoute Component={CreateRentalBike} />} />
+
 
 
         {/* admin routes */}

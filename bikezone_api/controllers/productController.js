@@ -53,7 +53,6 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 
 })
 
-
 //get product details
 exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
@@ -90,7 +89,6 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     payload: {}
   });
 });
-
 
 //delete product
 exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
@@ -283,7 +281,6 @@ exports.getNewArrivalProducts = catchAsyncErrors(async (req, res, next) => {
   });
 
 });
-
 
 // Get All Product (Admin)
 exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {

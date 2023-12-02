@@ -50,7 +50,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className={shouldHideHeader || isResetPasswordPage || adminPage? `hidden` : `bg-[#122222]  border-gray-200 dark:bg-gray-900  z-50 `}>
+      <nav className={shouldHideHeader || isResetPasswordPage || adminPage ? `hidden` : `bg-[#122222]  border-gray-200 dark:bg-gray-900  z-50 `}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
           <Link to="/" className="flex items-center">
@@ -231,7 +231,28 @@ const Header = () => {
                       </MenuList>
                     </Menu>
 
-                    <MenuItem className='text-light-green-700'>Coming Soon</MenuItem>
+                    <Menu placement="right-start" offset={15}>
+                      <MenuHandler>
+                        <MenuItem>Rental Bikes</MenuItem>
+                      </MenuHandler>
+                      <MenuList className='bg-[#122222] text-yellow-400'>
+
+                        <Link to={'/create-rental-bike'}>
+                          <MenuItem>Create rental ad</MenuItem>
+                        </Link>
+
+                        <Link to={'/rental-bikes/me'}>
+                          <MenuItem>My ads</MenuItem>
+                        </Link>
+
+                        <Link to={'/rental-bikes'}>
+                          <MenuItem>Explore rental bikes</MenuItem>
+                        </Link>
+
+                      </MenuList>
+                    </Menu>
+
+
                   </MenuList>
                 </Menu>
               </li>

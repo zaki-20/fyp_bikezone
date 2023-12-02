@@ -1,5 +1,5 @@
 const express = require("express");
-const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
+const { isAuthenticatedUser } = require("../middlewares/auth");
 const { createRentBike, getAllRentBikes, getRentBikeDetails, updateRentBike, deleteRentBike } = require("../controllers/rentBikeController");
 const router = express.Router();
 

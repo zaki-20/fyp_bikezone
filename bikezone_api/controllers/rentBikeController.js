@@ -3,18 +3,36 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 
 exports.createRentBike = catchAsyncErrors(async (req, res, next) => {
-  const { title, description, price, model, condition, location, contact } =
+  const { title, description, rent, model, email, condition, address, city, contact, availableFromDate, images } =
     req.body;
-  console.log("inside");
+
+  const seller = req.user._id;
+
+  // Check if availableFromDate is greater than the current date
+  // const currentDate = new Date();
+  // const selectedDate = new Date(availableFromDate);
+
+  // if (selectedDate <= currentDate) {
+  //   return res.status(400).json({
+  //     statusCode: 400,
+  //     success: false,
+  //     message: "Available from date must be greater than the current date.",
+  //   });
+  // }
+
   const rentBike = await RentBike.create({
     title,
     description,
-    price,
+    rent,
+    email,
     model,
     condition,
-    location,
-    //   seller: req.user._id, // Assuming you have user authentication in place
+    address,
+    city,
+    seller,
     contact,
+    availableFromDate,
+    images,
   });
 
   res.status(201).json({
@@ -24,6 +42,7 @@ exports.createRentBike = catchAsyncErrors(async (req, res, next) => {
     payload: { rentBike },
   });
 });
+
 
 exports.updateRentBike = catchAsyncErrors(async (req, res, next) => {
   let rentBike = await RentBike.findById(req.params.id);

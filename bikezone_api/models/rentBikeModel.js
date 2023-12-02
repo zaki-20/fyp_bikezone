@@ -1,4 +1,4 @@
-const mongoose = require("mongoose") ;
+const mongoose = require("mongoose");
 
 const rentBikeSchema = new mongoose.Schema({
   title: {
@@ -9,31 +9,50 @@ const rentBikeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  price: {
+  rent: {
     type: Number,
     required: true,
   },
   model: {
-    type: Number,
+    type: String,
     required: true,
   },
   condition: {
     type: String,
     required: true,
+    enum: ['new', 'used'], // You can customize the conditions based on your needs
   },
-  location: {
+  address: {
     type: String,
     required: true,
   },
-//   seller: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "User", // Reference to the User model for seller details
-//     required: true,
-//   },
+  city: {
+    type: String,
+    required: true
+  },
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   contact: {
     type: String,
     required: true,
   },
+  images: {
+    type: [String], 
+    // required: true,
+  },
+  availableFromDate: {
+    type: Date,
+    required: true,
+  },
+  isAvailable: {
+    type: Boolean,
+    default: true,
+  },
+}, {
+  timestamps: true,
 });
 
 module.exports = mongoose.model("RentBike", rentBikeSchema);
