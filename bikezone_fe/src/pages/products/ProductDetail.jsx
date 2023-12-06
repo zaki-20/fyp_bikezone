@@ -75,7 +75,6 @@ const ProductDetail = () => {
     const { user } = useSelector((state) => state.auth)
     const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
     const { isError: reviewError, message: reviewMsg, isLoading: reviewLoad, isSuccess } = useSelector(state => state.review)
-    console.log(productDetails, "uhuhuhuhuh")
 
 
     useEffect(() => {

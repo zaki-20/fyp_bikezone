@@ -66,7 +66,7 @@ const workshopSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error
-                state.message = null
+                state.workshop = null
             })
 
     }

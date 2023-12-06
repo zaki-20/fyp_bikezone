@@ -43,6 +43,29 @@ exports.createRentBike = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+//get all rent bike ads for users
+exports.getAllRentBikes = catchAsyncErrors(async (req, res, next) => {
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Fetch rent bikes with availableFromDate greater than or equal to the current date
+  const rentBikes = await RentBike.find({
+    availableFromDate: { $lte: currentDate },
+  });
+
+  if (!rentBikes || rentBikes.length === 0) {
+    return next(new ErrorHandler("No available rental bikes found", 404));
+  }
+
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "All rent ads retrieved",
+    payload: { rentBikes },
+  });
+});
+
 
 exports.updateRentBike = catchAsyncErrors(async (req, res, next) => {
   let rentBike = await RentBike.findById(req.params.id);
@@ -57,7 +80,8 @@ exports.updateRentBike = catchAsyncErrors(async (req, res, next) => {
     useFindAndModify: false,
   });
 
-  // await rentBike.save();
+  await rentBike.save();
+
   res.status(200).json({
     statusCode: 200,
     success: true,
@@ -82,24 +106,11 @@ exports.deleteRentBike = async (req, res, next) => {
   });
 };
 
-exports.getAllRentBikes = catchAsyncErrors(async (req, res, next) => {
-  const rentBikes = await RentBike.find();
 
-  if (!rentBikes) {
-    return next(new ErrorHandler("rental bikes not found", 404));
-  }
-
-  res.status(200).json({
-    statusCode: 200,
-    success: true,
-    message: "All rent ads retrieved",
-    payload: { rentBikes },
-  });
-});
 
 exports.getRentBikeDetails = catchAsyncErrors(async (req, res, next) => {
-  const rentAdId = req.params.id;
-  const rentBike = await RentBike.findById(rentAdId);
+  const rentBikeId = req.params.id;
+  const rentBike = await RentBike.findById(rentBikeId);
 
   if (!rentBike) {
     return next(new CustomError("Rental bike ad not found", 404));
@@ -110,5 +121,24 @@ exports.getRentBikeDetails = catchAsyncErrors(async (req, res, next) => {
     success: true,
     message: "Rent ad retrieved",
     payload: { rentBike },
+  });
+});
+
+
+// get all my rent bike ads
+exports.getMyRentBikes = catchAsyncErrors(async (req, res, next) => {
+  const userId = req.user._id;
+
+  const rentBikes = await RentBike.find({ seller: userId });
+
+  if (!rentBikes) {
+    return next(new ErrorHandler("No rent bikes found for the logged-in user", 404));
+  }
+
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "All rent bikes for the logged-in user retrieved",
+    payload: { rentBikes },
   });
 });

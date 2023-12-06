@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createRentBike } from "./rentbike.thunk";
+import { createRentBike, getAllRentBikes, getDetailRentBike, getMyRentBikes } from "./rentbike.thunk";
 import initialRentBikeState from './rentbike.initialstate'
 
 const rentBikeSlice = createSlice({
@@ -31,6 +31,56 @@ const rentBikeSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error
+            })
+            .addCase(getAllRentBikes.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+
+            })
+            .addCase(getAllRentBikes.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+                state.rentBikes = action.payload.payload.rentBikes
+            })
+            .addCase(getAllRentBikes.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload.error
+                state.rentBikes = []
+            })
+            .addCase(getDetailRentBike.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(getDetailRentBike.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+                state.rentBike = action.payload.payload.rentBike
+            })
+            .addCase(getDetailRentBike.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload.error
+                state.rentBike = null
+            })
+            .addCase(getMyRentBikes.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+
+            })
+            .addCase(getMyRentBikes.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+                state.rentBikes = action.payload.payload.rentBikes
+            })
+            .addCase(getMyRentBikes.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload.error
+                state.rentBikes = []
             })
     }
 })

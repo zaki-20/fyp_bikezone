@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const rentBikeSchema = new mongoose.Schema({
   title: {
@@ -8,6 +9,12 @@ const rentBikeSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
+  },
+  email: {
+    type: String,
+    required: [true, "Please Enter Your Email"],
+    unique: true,
+    validate: [validator.isEmail, "Please Enter a valid Email"],
   },
   rent: {
     type: Number,
@@ -40,7 +47,7 @@ const rentBikeSchema = new mongoose.Schema({
     required: true,
   },
   images: {
-    type: [String], 
+    type: [String],
     // required: true,
   },
   availableFromDate: {

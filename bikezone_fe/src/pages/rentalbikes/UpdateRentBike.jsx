@@ -3,9 +3,9 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import Select from 'react-select'
 import InputMask from 'react-input-mask';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createRentBike } from '../../features/rentbike/rentbike.thunk';
+import { createRentBike, getDetailRentBike, updateMyRentBike } from '../../features/rentbike/rentbike.thunk';
 import { reset } from '../../features/rentbike/rentbike.slice';
 import axios from 'axios';
 
@@ -44,24 +44,35 @@ const schema = yup.object({
 });
 
 
-const CreateRentalBike = () => {
+const UpdateRentBike = () => {
+    const { id } = useParams();
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    const { isError, isSuccess, message, isLoading, rentBike } = useSelector((state) => state.rentBike)
+
+    useEffect(() => {
+        dispatch(getDetailRentBike(id));
+        console.log(rentBike)
+    }, [dispatch, id]);
+    console.log(rentBike)
+
     const initialValues = {
-        title: '',
-        email: '',
-        description: '',
-        model: '',
-        condition: '',
-        address: '',
-        contact: '',
-        city: '',
-        rent: '',
-        availableFromDate: '',
-        isAvailable: '',
-        images: [], // Use an array to store multiple images
+        title: rentBike?.title || ``,
+        email: rentBike?.email || '',
+        description: rentBike?.description || '',
+        model: rentBike?.model || '',
+        condition: rentBike?.condition || '',
+        address: rentBike?.address || '',
+        contact: rentBike?.contact || '',
+        city: rentBike?.city || '',
+        rent: rentBike?.rent || '',
+        availableFromDate: rentBike?.availableFromDate || '',
+        isAvailable: rentBike?.isAvailable || '',
+        images: rentBike?.images || '',
     }
+
+
 
     const [previewImages, setPreviewImages] = useState([]);
     const handleImageChange = (e) => {
@@ -75,7 +86,6 @@ const CreateRentalBike = () => {
         setPreviewImages(fileArray.map(file => URL.createObjectURL(file)));
     };
 
-    const { isError, isSuccess, message, isLoading } = useSelector((state) => state.rentBike)
 
     useEffect(() => {
         if (isError) {
@@ -83,6 +93,22 @@ const CreateRentalBike = () => {
             dispatch(reset())
         }
     }, [isError])
+
+    useEffect(() => {
+        // Set initial preview images when rentBike changes
+        if (rentBike && rentBike.images) {
+            const initialImages = rentBike.images.map(image => {
+                // Check if the item is a Blob or File
+                if (image instanceof Blob || image instanceof File) {
+                    return URL.createObjectURL(image);
+                }
+                // If it's not a Blob or File, handle accordingly (e.g., it might be a string URL)
+                // Adjust this part based on the actual structure of your rentBike.images array
+                return image;
+            });
+            setPreviewImages(initialImages);
+        }
+    }, [rentBike]);
 
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
@@ -96,7 +122,7 @@ const CreateRentalBike = () => {
                         values.images.map(async (image) => {
                             const formData = new FormData();
                             formData.append('file', image);
-                            formData.append('upload_preset', 'preset_images'); 
+                            formData.append('upload_preset', 'preset_images');
                             const cloudinaryResponse = await axios.post(
                                 'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
                                 formData
@@ -109,7 +135,7 @@ const CreateRentalBike = () => {
                     values.images = imageUrls;
 
                     console.log(values)
-                    await dispatch(createRentBike(values))
+                    await dispatch(updateMyRentBike({ values, id }))
 
                 } catch (error) {
                     console.log(error)
@@ -232,6 +258,7 @@ const CreateRentalBike = () => {
                                         </div>
                                     </div>
                                     <div className='w-full items-center gap-x-2 flex lg:w-6/12 px-4'>
+
                                         {/* Display preview images */}
                                         {previewImages.map((url, index) => (
                                             <img key={index} src={url} alt={`Preview ${index + 1}`} className="w-8 h-8 object-cover rounded-md mr-2 mt-2" />
@@ -399,7 +426,7 @@ const CreateRentalBike = () => {
                                     <div className='flex justify-center w-full'>
                                         <button
                                             type="submit"
-                                            className="flex justify-center bg-gray-400 uppercase tracking-wider hover:tracking-[6px] font-bold rounded-md px-4 py-2 border border-black  transition-all  hover:bg-[#122222] w-1/3 hover:w-1/2 hover:text-yellow-400 duration-500"
+                                            className="flex justify-center bg-gray-400 uppercase tracking-wider hover:tracking-[6px] font-bold rounded-md px-4 py-2 border-2 border-b-4 border-black  transition-all  hover:bg-[#122222] w-1/3 hover:w-1/2 hover:text-yellow-400 duration-500"
                                         >
                                             SUBMIT
                                         </button>
@@ -416,4 +443,4 @@ const CreateRentalBike = () => {
     )
 }
 
-export default CreateRentalBike
+export default UpdateRentBike

@@ -55,6 +55,10 @@ import UserList from "./admin/pages/UserList";
 import UserDetail from "./admin/pages/UserDetail";
 import ReviewList from "./admin/pages/ReviewList";
 import CreateRentalBike from "./pages/rentalbikes/CreateRentalBike";
+import GetAllRentBikes from "./pages/rentalbikes/GetAllRentBikes";
+import RentBikeDetail from "./pages/rentalbikes/RentBikeDetail";
+import MyRentBikes from "./pages/rentalbikes/MyRentBikes";
+import UpdateRentBike from "./pages/rentalbikes/UpdateRentBike";
 
 
 
@@ -144,8 +148,10 @@ function App() {
 
         {/*Rental-Bikes*/}
         <Route exact path="/create-rental-bike" element={<ProtectedRoute Component={CreateRentalBike} />} />
-
-
+        <Route exact path="/rental-bikes" element={<ProtectedRoute Component={GetAllRentBikes} />} />
+        <Route exact path="/rental-bikes/me" element={<ProtectedRoute Component={MyRentBikes} />} />
+        <Route exact path="/rental-bikes/:id" element={<ProtectedRoute Component={RentBikeDetail} />} />
+        <Route exact path="/rental-bike/update/:id" element={<ProtectedRoute Component={UpdateRentBike} />} />
 
         {/* admin routes */}
         <Route exact isAdmin={true} path="/admin/dashboard" element={<ProtectedRoute Component={Dashboard} />} />
