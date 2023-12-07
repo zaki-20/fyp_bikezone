@@ -42,6 +42,7 @@ const userSchema = new mongoose.Schema({
 
     resetPasswordToken: String,
     resetPasswordExpire: Date,
+
     isVerified: {
         type: Boolean,
         default: false,
@@ -87,8 +88,25 @@ userSchema.methods.getResetPasswordToken = async function () {
 userSchema.methods.generateEmailVerificationOTP = function () {
     const otp = Math.floor(1000 + Math.random() * 9000); // A random 4-digit OTP
     this.emailVerificationOTP = otp;
-    this.emailVerificationExpiry = Date.now() + 10 * 60 * 1000; // OTP expires after 10 minutes
+    this.emailVerificationExpiry = Date.now() + 1 * 60 * 1000; // OTP expires after 1 minute
     return otp;
 }
+
+userSchema.methods.resendEmailVerificationOTP = function () {
+    // Check if the previous OTP has expired
+    if (this.emailVerificationExpiry && this.emailVerificationExpiry > Date.now()) {
+        throw new Error("Previous OTP is still valid. Please wait before requesting a new one.");
+    }
+
+    // Regenerate OTP and update the existing user with the new OTP
+    this.emailVerificationOTP = this.generateEmailVerificationOTP();
+
+    // Allow resend after 10 seconds and set the expiry time to 1 minute from now
+    this.emailVerificationExpiry = Date.now() + 1 * 60 * 1000;
+
+    this.save(); // Save the user with the new OTP
+    return this.emailVerificationOTP;
+}
+
 
 module.exports = mongoose.model("User", userSchema);

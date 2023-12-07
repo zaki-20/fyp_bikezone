@@ -81,7 +81,7 @@ const Register = () => {
         }
         if (isSuccess) {
             toast.success(message);
-            navigate('/')
+            navigate('/otp-verification', { state: { fromRegister: true } });
         }
     }, [isError, isSuccess])
 

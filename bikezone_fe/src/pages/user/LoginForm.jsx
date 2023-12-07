@@ -20,29 +20,29 @@ const schema = yup.object({
 
 
 const LoginForm = () => {
+
     const { user, isLoading, isError, isSuccess, message, logoutSuccess } = useSelector((state) => state.auth)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
 
-    const redirect = location.search ? location.search.split('=')[1] : '/account'
+    // console.log(location)
+    // const redirect = location.search ? location.search.split('=')[1] : '/account'
 
     useEffect(() => {
         if (isError) {
             toast.error(message);
             dispatch(reset())
         }
-
     }, [isError])
 
     useEffect(() => {
-        if (isSuccess) {
+        if (isSuccess && user) {
             toast.success(message);
-            navigate(redirect)
+            navigate('/account')
         }
-
-    }, [isSuccess, redirect])
+    }, [isSuccess])
 
     const initialValues = {
         email: "",
@@ -55,7 +55,6 @@ const LoginForm = () => {
             validationSchema: schema,
             validateOnChange: true,
             validateOnBlur: false,
-            //// By disabling validation onChange and onBlur formik will validate on submit.
             onSubmit: (values, action) => {
                 dispatch(login(values))
                 action.resetForm();

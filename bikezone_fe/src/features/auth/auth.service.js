@@ -70,6 +70,13 @@ const deleteUser = async (id) => {
 }
 
 
+//verify user otp 
+const verifyOtp = async (userData) => {
+    const response = await axios.post(API_URL + `verify-email-otp`, userData, { withCredentials: true })
+    return response.data
+}
+
+
 const authService = {
     register,
     login,
@@ -81,6 +88,7 @@ const authService = {
     resetPassword,
     getAllUsers,
     getUserDetail,
-    deleteUser
+    deleteUser,
+    verifyOtp
 }
 export default authService

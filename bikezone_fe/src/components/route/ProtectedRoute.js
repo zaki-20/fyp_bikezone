@@ -29,10 +29,9 @@ const ProtectedRoute = (props) => {
       setIsUserLoaded(true);
     };
 
-    // If user is already loaded, check permissions immediately
-    if (user) {
+    
       checkUserPermissions();
-    }
+    
 
     // If user is not loaded, wait for user to load before checking permissions
     if (isLoading) {

@@ -23,16 +23,114 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         password,
         imageURL
     })
-    // const message = `Thank you ${firstname} ${lastname} for joining BIKEZONE `
+
+    // Generate email verification OTP
+    const otp = user.generateEmailVerificationOTP();
+
+    // Save the user with the generated OTP
+    await user.save();
+
+
+    // await sendEmail({
+    //     email: email,
+    //     subject: `Bikezone Registration`,
+    //     firstname,
+    //     lastname
+    // }, 'html');
+
+
+
+    const message = `Your Bikezone registration OTP is: ${otp}`;
+
     await sendEmail({
         email: email,
-        subject: `Bikezone Registration`,
-        firstname,
-        lastname
+        subject: `OTP Verification`,
+        message,
     }, 'html');
-    const msg = "registered successfully"
-    sendToken(user, 200, res, msg)
+
+
+    // const msg = "Registered successfully. An OTP has been sent to your email for verification.";
+    // sendToken(user, 200, res, msg)
+
+    res.status(200).json({
+        statusCode: 200,
+        status: true,
+        message: "Registration successful. Check your email for the verification OTP.",
+        payload: {},
+    });
 })
+
+
+// verify OTP during registration
+exports.verifyEmailOTP = catchAsyncErrors(async (req, res, next) => {
+    const { email, otp } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+    }
+
+    console.log("Entered OTP: ", otp);
+    console.log("Stored OTP: ", user.emailVerificationOTP);
+    console.log("Expiry time: ", user.emailVerificationExpiry);
+    console.log("Current time: ", Date.now());
+
+    // Check if OTP matches and it's not expired
+    if (user.emailVerificationOTP === otp && user.emailVerificationExpiry > Date.now()) {
+        user.isVerified = true;
+        user.emailVerificationOTP = undefined; // Clear OTP after verification
+        user.emailVerificationExpiry = undefined;
+        await user.save();
+
+        // Send the token now that email is verified
+        sendToken(user, 200, res, "Email verification successful. You are now logged in.");
+    } else {
+        console.log("Verification failed");
+        console.log("Difference in time: ", user.emailVerificationExpiry - Date.now());
+        return next(new ErrorHandler("Invalid OTP or OTP has expired", 400));
+    }
+});
+
+
+// Resend OTP during registration
+exports.resendEmailVerificationOTP = catchAsyncErrors(async (req, res, next) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+    }
+
+    // Check if the user is already verified
+    if (user.isVerified) {
+        return next(new ErrorHandler("User is already verified", 400));
+    }
+
+    // Check if the previous OTP has expired
+    if (user.emailVerificationExpiry > Date.now()) {
+        return next(new ErrorHandler("Previous OTP is still valid", 400));
+    }
+
+    // Resend OTP
+    const otp = user.resendEmailVerificationOTP();
+
+    const message = `Your Bikezone registration OTP is: ${otp}`;
+
+    await sendEmail({
+        email: email,
+        subject: `OTP Verification`,
+        message,
+    }, 'html');
+
+    res.status(200).json({
+        statusCode: 200,
+        status: true,
+        message: "OTP has been resent to your email for verification.",
+        payload: {},
+    });
+});
+
+
 
 //login user 
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {

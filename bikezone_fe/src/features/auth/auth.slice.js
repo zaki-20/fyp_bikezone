@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, login, loadUser, logout, updateProfile, updatePassword, forgotPassword, resetPassword, getAllUsers, getUserDetail, deleteUser } from "./auth.thunk";
+import { register, login, loadUser, logout, updateProfile, updatePassword, forgotPassword, resetPassword, getAllUsers, getUserDetail, deleteUser, verifyOtp } from "./auth.thunk";
 import initialAuthState from "./auth.initialstate";
 
 const authSlice = createSlice({
@@ -24,14 +24,14 @@ const authSlice = createSlice({
             .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.user = action.payload.payload.user
+                // state.user = action.payload.payload.user
                 state.message = action.payload.message
             })
             .addCase(register.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error
-                state.user = null
+                // state.user = null
             })
             .addCase(login.pending, (state) => {
                 state.isLoading = true
@@ -64,9 +64,9 @@ const authSlice = createSlice({
             })
             .addCase(loadUser.rejected, (state, action) => {
                 state.isLoading = false
-                state.isError = true
+                // state.isError = true
                 state.isSuccess = false
-                state.message = action.payload.error //need checking
+                // state.message = action.payload.error //need checking
                 state.user = null
             })
             .addCase(updateProfile.pending, (state) => {
@@ -191,6 +191,23 @@ const authSlice = createSlice({
                 state.isSuccess = false
                 state.isError = true
                 state.message = action.payload.error
+            })
+            .addCase(verifyOtp.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(verifyOtp.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+                state.user = action.payload.payload.user
+            })
+            .addCase(verifyOtp.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+                state.user = null
             })
 
     }

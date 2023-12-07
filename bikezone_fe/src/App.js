@@ -59,6 +59,7 @@ import GetAllRentBikes from "./pages/rentalbikes/GetAllRentBikes";
 import RentBikeDetail from "./pages/rentalbikes/RentBikeDetail";
 import MyRentBikes from "./pages/rentalbikes/MyRentBikes";
 import UpdateRentBike from "./pages/rentalbikes/UpdateRentBike";
+import OtpVerification from "./pages/user/OtpVerification";
 
 
 
@@ -102,6 +103,7 @@ function App() {
         <Route exact path="/featuredproducts" element={<FeaturedProductsPage />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/login" element={<LoginForm />} />
+        <Route exact path="/otp-verification" element={<OtpVerification />} />
         <Route exact path="/contact" element={<ContactUs />} />
         <Route exact path="/about" element={<AboutUs />} />
         <Route exact path="/brands" element={<Brands />} />

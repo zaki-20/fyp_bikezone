@@ -124,4 +124,15 @@ export const deleteUser = createAsyncThunk('auth/deleteUser', async (id, thunkAP
     }
 })
 
+//Verify otp user 
+export const verifyOtp = createAsyncThunk('auth/verifyOtp', async (userData, thunkAPI) => {
+    try {
+        return await authService.verifyOtp(userData)
+    } catch (error) {
+        console.log(error)
+        const message = error.response.data || error.response.data.message || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 
