@@ -28,7 +28,7 @@ const LoginForm = () => {
     const location = useLocation()
 
     // console.log(location)
-    // const redirect = location.search ? location.search.split('=')[1] : '/account'
+    const redirect = location.search ? location.search.split('=')[0] : '/account'
 
     useEffect(() => {
         if (isError) {
@@ -40,7 +40,7 @@ const LoginForm = () => {
     useEffect(() => {
         if (isSuccess && user) {
             toast.success(message);
-            navigate('/account')
+            navigate(redirect)
         }
     }, [isSuccess])
 

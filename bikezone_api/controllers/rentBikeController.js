@@ -67,6 +67,25 @@ exports.getAllRentBikes = catchAsyncErrors(async (req, res, next) => {
 });
 
 
+//get all rental-bikes for admin
+exports.getAllRentBikesForAdmin = catchAsyncErrors(async (req, res, next) => {
+
+  // Get all rent bikes
+  const rentBikes = await RentBike.find();
+
+  if (!rentBikes || rentBikes.length === 0) {
+    return next(new ErrorHandler("No rental bikes found", 404));
+  }
+
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "All rent ads retrieved for admin",
+    payload: { rentBikes },
+  });
+});
+
+
 exports.updateRentBike = catchAsyncErrors(async (req, res, next) => {
   let rentBike = await RentBike.findById(req.params.id);
 

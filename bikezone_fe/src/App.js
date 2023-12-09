@@ -9,7 +9,6 @@ import AboutUs from "./pages/AboutUs";
 import LoginForm from "./pages/user/LoginForm";
 import ProductDetail from "./pages/products/ProductDetail";
 import UserProfile from "./pages/user/UserProfile";
-import AddProduct from "./admin/pages/AddProduct";
 import Cart from "./pages/products/Cart";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -47,19 +46,22 @@ import MyWorkshops from "./pages/workshop/MyWorkshops";
 import UpdateWorkshop from "./pages/workshop/UpdateWorkshop";
 import Brands from "./pages/brand/Brands";
 import Dashboard from "./admin/pages/Dashboard";
-import ProductList from "./admin/pages/ProductList";
-import UpdateProduct from "./admin/pages/UpdateProduct";
-import OrderList from "./admin/pages/OrderList";
-import ProcessOrder from "./admin/pages/ProcessOrder";
-import UserList from "./admin/pages/UserList";
-import UserDetail from "./admin/pages/UserDetail";
-import ReviewList from "./admin/pages/ReviewList";
+import ProductList from "./admin/pages/products/ProductList";
+import AddProduct from "./admin/pages/products/AddProduct";
+import UpdateProduct from "./admin/pages/products/UpdateProduct";
+import OrderList from "./admin/pages/products/OrderList";
+import ProcessOrder from "./admin/pages/products/ProcessOrder";
+import UserList from "./admin/pages/users/UserList";
+import UserDetail from "./admin/pages/users/UserDetail";
+import ReviewList from "./admin/pages/products/ReviewList";
 import CreateRentalBike from "./pages/rentalbikes/CreateRentalBike";
 import GetAllRentBikes from "./pages/rentalbikes/GetAllRentBikes";
 import RentBikeDetail from "./pages/rentalbikes/RentBikeDetail";
 import MyRentBikes from "./pages/rentalbikes/MyRentBikes";
 import UpdateRentBike from "./pages/rentalbikes/UpdateRentBike";
 import OtpVerification from "./pages/user/OtpVerification";
+import WorkshopList from "./admin/pages/workshops/WorkshopList";
+import RentalBikesList from "./admin/pages/rentalbikes/RentalBikesList";
 
 
 
@@ -160,11 +162,17 @@ function App() {
         <Route exact isAdmin={true} path="/admin/products" element={<ProtectedRoute Component={ProductList} />} />
         <Route exact isAdmin={true} path="/admin/product/new" element={<ProtectedRoute Component={AddProduct} />} />
         <Route exact isAdmin={true} path="/admin/product/:id" element={<ProtectedRoute Component={UpdateProduct} />} />
+
         <Route exact isAdmin={true} path="/admin/orders" element={<ProtectedRoute Component={OrderList} />} />
         <Route exact isAdmin={true} path="/admin/order/:id" element={<ProtectedRoute Component={ProcessOrder} />} />
+
         <Route exact isAdmin={true} path="/admin/users" element={<ProtectedRoute Component={UserList} />} />
         <Route exact isAdmin={true} path="/admin/user/:id" element={<ProtectedRoute Component={UserDetail} />} />
         <Route exact isAdmin={true} path="/admin/reviews" element={<ProtectedRoute Component={ReviewList} />} />
+        
+        <Route exact isAdmin={true} path="/admin/workshops" element={<ProtectedRoute Component={WorkshopList} />} />
+        <Route exact isAdmin={true} path="/admin/rental-bikes" element={<ProtectedRoute Component={RentalBikesList} />} />
+        
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

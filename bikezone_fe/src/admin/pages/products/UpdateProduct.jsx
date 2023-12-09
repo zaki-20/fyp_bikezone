@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import SideBar from '../components/SideBar';
+import { useEffect, useState } from 'react';
+import SideBar from '../../components/SideBar';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
-import { reset } from '../../features/product/product.slice';
-import { createProduct } from '../../features/product/product.thunk';
+import { reset } from '../../../features/product/product.slice';
+import { updateProduct, getProductDetail } from '../../../features/product/product.thunk';
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+
 
 const schema = yup.object({
     name: yup.string().required('Product name is required'),
@@ -26,33 +28,47 @@ const schema = yup.object({
 
 });
 
-function AddProduct() {
+const UpdateProduct = () => {
 
+    const { id } = useParams();
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [previewImages, setPreviewImages] = useState([]);
 
 
-    const { isError, isSuccess, message } = useSelector((state) => state.product)
+    const { isError, isSuccess, message, productDetails } = useSelector((state) => state.product)
 
 
     useEffect(() => {
+        dispatch(getProductDetail(id));
+    }, [id]);
+
+    useEffect(() => {
         if (isError) {
-            // toast.error(message)
             dispatch(reset())
         }
     }, [isError])
 
     const initialValues = {
-        name: "",
-        price: "",
-        category: "",
-        brand: "",
-        Stock: "",
-        description: "",
-        images: [], // Use an array to store multiple images
+        name: productDetails && productDetails?.name,
+        price: productDetails && productDetails?.price,
+        category: productDetails && productDetails?.category,
+        brand: productDetails && productDetails?.brand,
+        Stock: productDetails && productDetails?.Stock,
+        description: productDetails && productDetails?.description,
+        images: productDetails && productDetails?.images,
 
     };
 
-    const [previewImages, setPreviewImages] = useState([]);
+
+    useEffect(() => {
+        // Initialize previewImages with existing product images
+        if (productDetails?.images && productDetails.images.length > 0) {
+            setPreviewImages(productDetails.images);
+        }
+    }, [productDetails]);
+
+
 
     const handleImageChange = (e) => {
         const files = e.target.files;
@@ -89,14 +105,28 @@ function AddProduct() {
                     // Add the Cloudinary image URLs to the form data
                     values.images = imageUrls;
 
-
-                    console.log(values)
-                    await dispatch(createProduct(values))
+                    await dispatch(updateProduct({ values, id }))
+                    navigate('/admin/products')
                 } catch (error) {
                     console.log(error)
                 }
             },
         });
+
+
+    useEffect(() => {
+        if (productDetails) {
+            setFieldValue('name', productDetails.name);
+            setFieldValue('price', productDetails.price);
+            setFieldValue('category', productDetails.category);
+            setFieldValue('brand', productDetails.brand);
+            setFieldValue('Stock', productDetails.Stock);
+            setFieldValue('description', productDetails.description);
+
+            // Assuming images is an array, you may need to adjust accordingly
+            setFieldValue('images', productDetails.images || []);
+        }
+    }, [productDetails, setFieldValue]);
 
     return (
         <>
@@ -106,16 +136,19 @@ function AddProduct() {
 
                 <div className=" shadow-md rounded w-full px-8 pt-2 pb-8 bg-gray-100">
                     <div className="max-w-4xl p-6 mx-auto bg-gray-200 rounded-md shadow-md dark:bg-gray-800 mt-10">
-                        <h1 className="text-xl mb-4 font-bold text-black capitalize dark:text-white">Post Your Product</h1>
+                        <h1 className="text-xl mb-4 font-bold text-black capitalize dark:text-white">Update Your Product</h1>
                         <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-1 gap-6 mt- sm:grid-cols-2">
                                 <div>
                                     <label className="text-black dark:text-gray-200" htmlFor="username">Product Name</label>
                                     <input
+                                        name='name'
+                                        id="name"
+                                        type="text"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.name}
-                                        id="name" type="text" placeholder='Enter your product name' className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                        placeholder='Enter your product name' className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
                                     {errors.name && touched.name ? (
                                         <p className="text-red-600 animate-pulse">{errors.name}</p>
                                     ) : null}
@@ -126,7 +159,11 @@ function AddProduct() {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.price}
-                                        id="price" type="number" placeholder='Enter price e.g. 500' className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                        id="price"
+                                        type="number"
+                                        name='price'
+                                        placeholder='Enter price e.g. 500'
+                                        className="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
                                     {errors.price && touched.price ? (
                                         <p className="text-red-600 animate-pulse">{errors.price}</p>
                                     ) : null}
@@ -201,11 +238,10 @@ function AddProduct() {
                                         name="file-upload"
                                         onChange={handleImageChange}
                                         className="block w-full px-4  mt-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                                        multiple  // Allow multiple files to be selected
+                                        multiple
                                     />
 
                                     <div className='flex gap-x-2'>
-                                        {/* Display preview images */}
                                         {previewImages.map((url, index) => (
                                             <img key={index} src={url} alt={`Preview ${index + 1}`} className="w-8 h-8 object-cover rounded-md mr-2 mt-2" />
                                         ))}
@@ -224,9 +260,6 @@ function AddProduct() {
                                         <p className="text-red-600 animate-pulse">{errors.description}</p>
                                     ) : null}
                                 </div>
-                                {/* ===================== */}
-
-
 
                             </div>
                             <div className="flex justify-end mt-6">
@@ -242,4 +275,4 @@ function AddProduct() {
     );
 }
 
-export default AddProduct;
+export default UpdateProduct;

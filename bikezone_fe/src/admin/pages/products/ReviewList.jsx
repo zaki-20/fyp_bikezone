@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import SideBar from '../components/SideBar';
+import SideBar from '../../components/SideBar';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { MdDelete } from "react-icons/md";
-import { deleteReview, getProductReviews } from '../../features/review/review.thunk';
-import { reset } from '../../features/review/review.slice';
-import { deleteProduct } from '../../features/product/product.thunk';
+import { deleteReview, getProductReviews } from '../../../features/review/review.thunk';
+import { reset } from '../../../features/review/review.slice';
+import { deleteProduct } from '../../../features/product/product.thunk';
 
 const ReviewList = () => {
     const dispatch = useDispatch()

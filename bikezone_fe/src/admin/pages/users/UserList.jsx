@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
 import { Link } from 'react-router-dom';
-import SideBar from '../components/SideBar';
+import SideBar from '../../components/SideBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import { deleteUser, getAllUsers } from '../../features/auth/auth.thunk';
+import { deleteUser, getAllUsers } from '../../../features/auth/auth.thunk';
 
 const UserList = () => {
     const dispatch = useDispatch()

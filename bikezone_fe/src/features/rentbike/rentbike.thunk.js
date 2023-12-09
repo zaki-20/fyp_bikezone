@@ -24,6 +24,17 @@ export const getAllRentBikes = createAsyncThunk('rentBike/getAllRentBikes', asyn
     }
 })
 
+//get all rental bikes  --admin
+export const getAllRentBikesAdmin = createAsyncThunk('rentBike/getAllRentBikesAdmin', async (_, thunkAPI) => {
+    try {
+        return await rentBikeService.getAllRentBikesAdmin()
+    } catch (error) {
+        const message =
+            error.response.data.message || error.response.data || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 //get rental bike detail 
 export const getDetailRentBike = createAsyncThunk('rentBike/getDetailRentBike', async (id, thunkAPI) => {
     try {
@@ -36,7 +47,7 @@ export const getDetailRentBike = createAsyncThunk('rentBike/getDetailRentBike', 
 })
 
 
-//get rental bike detail 
+//get my rental bikes 
 export const getMyRentBikes = createAsyncThunk('rentBike/getMyRentBikes', async (_, thunkAPI) => {
     try {
         return await rentBikeService.getMyRentBikes()

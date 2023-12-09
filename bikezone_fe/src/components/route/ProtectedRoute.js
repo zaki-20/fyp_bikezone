@@ -17,21 +17,21 @@ const ProtectedRoute = (props) => {
   const navigate = useNavigate();
   const [cookies] = useCookies(["token"]);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
-
+  
   useEffect(() => {
     const checkUserPermissions = () => {
-      if (!user) {
+      if (!user && !isLoading) {
+        // Redirect to login page if not logged in
         navigate('/login');
-      }
-      if (user?.role !== 'admin' && isAdmin === true) {
+      } else if (user && user.role !== 'admin' && isAdmin === true) {
+        // Redirect to login page if not an admin (optional, adjust as needed)
         navigate('/login');
+      } else {
+        setIsUserLoaded(true);
       }
-      setIsUserLoaded(true);
     };
 
-    
-      checkUserPermissions();
-    
+    checkUserPermissions();
 
     // If user is not loaded, wait for user to load before checking permissions
     if (isLoading) {
@@ -39,6 +39,15 @@ const ProtectedRoute = (props) => {
     }
 
   }, [user, isLoading, isAdmin, navigate]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+      dispatch(reset());
+      // Redirect to login page if there is an error (optional, adjust as needed)
+      navigate('/login');
+    }
+  }, [isError, message, dispatch, navigate]);
 
   return (
     <>

@@ -56,8 +56,6 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
 });
 
 
-
-
 exports.updateWorkshop = catchAsyncErrors(async (req, res, next) => {
   let workshop = await Workshop.findById(req.params.id);
 
@@ -81,6 +79,7 @@ exports.updateWorkshop = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+
 exports.deleteWorkshop = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
 
@@ -96,6 +95,7 @@ exports.deleteWorkshop = catchAsyncErrors(async (req, res, next) => {
     message: "Workshop deleted successfully",
   });
 });
+
 
 exports.getAllWorkshops = catchAsyncErrors(async (req, res, next) => {
   const workshopCount = await Workshop.countDocuments();

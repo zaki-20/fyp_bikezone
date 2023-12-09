@@ -15,6 +15,12 @@ const getAllRentBikes = async () => {
     return response.data
 }
 
+//get all rental bikes  --admin
+const getAllRentBikesAdmin = async () => {
+    const response = await axios.get(API_URL + `admin/rental-bikes`, { withCredentials: true })
+    return response.data
+}
+
 //get rent Bike detail
 const getDetailRentBike = async (id) => {
     const response = await axios.get(API_URL + `rentbike/${id}`, { withCredentials: true })
@@ -39,6 +45,7 @@ const rentBikeService = {
     getAllRentBikes,
     getDetailRentBike,
     getMyRentBikes,
-    updateMyRentBike
+    updateMyRentBike,
+    getAllRentBikesAdmin
 }
 export default rentBikeService

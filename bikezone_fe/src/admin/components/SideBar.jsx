@@ -5,28 +5,26 @@ import {
     List,
     ListItem,
     ListItemPrefix,
-    ListItemSuffix,
-    Chip,
     Accordion,
     AccordionHeader,
     AccordionBody,
 } from "@material-tailwind/react";
 import {
-    ShoppingBagIcon,
     UserCircleIcon,
     Cog6ToothIcon,
-    InboxIcon,
     PowerIcon,
 } from "@heroicons/react/24/solid";
-import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
 import { MdDashboard, MdStorage, MdOutlineRateReview } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { AiOutlineStock } from "react-icons/ai";
-import { CgList } from "react-icons/cg";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { FaUsers } from "react-icons/fa";
+import { GiAutoRepair } from "react-icons/gi";
+import { RiMotorbikeFill } from "react-icons/ri";
+
 
 const SideBar = () => {
     const [open, setOpen] = React.useState(0);
@@ -44,7 +42,6 @@ const SideBar = () => {
             </div>
 
             <List className="">
-
                 <Link to={'/admin/dashboard'}>
                     <ListItem className="w-[85%]">
                         <ListItemPrefix>
@@ -125,6 +122,25 @@ const SideBar = () => {
                     </ListItem>
                 </Link>
 
+
+
+                <Link to={'/admin/workshops'}>
+                    <ListItem className="w-[85%]">
+                        <ListItemPrefix>
+                            <GiAutoRepair className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Workshops
+                    </ListItem>
+                </Link>
+
+                <Link to={'/admin/rental-bikes'}>
+                    <ListItem className="w-[85%]">
+                        <ListItemPrefix>
+                            <RiMotorbikeFill className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Rental Bikes
+                    </ListItem>
+                </Link>
 
                 <ListItem>
                     <ListItemPrefix>

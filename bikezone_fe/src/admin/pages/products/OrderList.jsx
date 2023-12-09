@@ -2,59 +2,54 @@ import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
 import { Link } from 'react-router-dom';
-import SideBar from '../components/SideBar';
+import SideBar from '../../components/SideBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteProduct, getAdminProducts } from '../../features/product/product.thunk';
 
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
+import { deleteOrder, getAllOrders } from '../../../features/order/order.thunk';
+import { reset } from '../../../features/order/order.slice';
 
-const ProductList = () => {
+const OrderList = () => {
 
     const dispatch = useDispatch()
-    const [localProducts, setLocalProducts] = useState([]);
+
+    const { isLoading, isError, message, orders } = useSelector((state) => state.order)
 
 
-    const { isLoading, isError, message, products } = useSelector((state) => state.product)
-
-
-    const deleteProductHandler = async (id) => {
-        dispatch(deleteProduct(id))
+    const deleteOrderHandler = async (id) => {
+        await dispatch(deleteOrder(id))
+        dispatch(getAllOrders());
     }
 
-    useEffect(() => {
-        dispatch(getAdminProducts())
-    }, [])
-
-    useEffect(() => {
-        // Update local state when products change
-        setLocalProducts(products || []);
-    }, [products]);
-
-
     const columns = [
-        { field: "id", headerName: "Product ID", headerClassName: "bg-gray-900 text-yellow-400 text-lg", minWidth: 300, flex: 1 },
+        { field: "id", headerClassName: "bg-gray-900 text-yellow-400 text-lg", headerName: "Order ID", minWidth: 300, flex: 1 },
 
         {
-            field: "name",
+            field: "status",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Name",
+            headerName: "Status",
             minWidth: 150,
-            flex: 1,
+            flex: 0.5,
+            cellClassName: (params) => {
+                return params.row.status === "Delivered"
+                    ? "text-green-600"
+                    : "text-red-600";
+            },
         },
         {
-            field: "stock",
+            field: "itemsQty",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Stock",
+            headerName: "Items Qty",
             type: "number",
-            minWidth: 100,
+            minWidth: 150,
             flex: 0.3,
         },
 
         {
-            field: "price",
+            field: "amount",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Price",
+            headerName: "Amount",
             type: "number",
             minWidth: 270,
             flex: 0.5,
@@ -71,10 +66,10 @@ const ProductList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={`/admin/product/${params.row.id}`}>
+                        <Link to={`/admin/order/${params.row.id}`}>
                             <FaRegEdit size={20} />
                         </Link>
-                        <button onClick={() => deleteProductHandler(params.row.id)}>
+                        <button onClick={() => deleteOrderHandler(params.row.id)}>
                             <MdDelete className='text-red-600' size={22} />
                         </button>
                     </>
@@ -87,15 +82,28 @@ const ProductList = () => {
 
     const rows = [];
 
-    products &&
-        products.forEach((item) => {
+    orders &&
+        orders.forEach((item) => {
             rows.push({
-                id: item._id,
-                stock: item.Stock,
-                price: item.price,
-                name: item.name,
+                itemsQty: item?.orderItems.length,
+                id: item?._id,
+                status: item?.orderStatus,
+                amount: item?.totalPrice,
             });
         });
+
+    useEffect(() => {
+        dispatch(getAllOrders());
+    }, []);
+
+    useEffect(() => {
+        if (isError) {
+            // toast.error(isError);
+            dispatch(reset());
+        }
+
+    }, [isError]);
+
 
     return (
         <div className='flex w-[100%] '>
@@ -114,4 +122,4 @@ const ProductList = () => {
     )
 }
 
-export default ProductList
+export default OrderList

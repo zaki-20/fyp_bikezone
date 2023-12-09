@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import Lottie from 'lottie-react'
-import shippingOrderAnimation from '../../assets/animated/orderShipping.json'
-import { getOrderDetails, updateOrder } from '../../features/order/order.thunk'
-import SideBar from '../components/SideBar'
-import { reset } from '../../features/order/order.slice'
+import shippingOrderAnimation from '../../../assets/animated/orderShipping.json'
+import { getOrderDetails, updateOrder } from '../../../features/order/order.thunk'
+import SideBar from '../../components/SideBar'
+import { reset } from '../../../features/order/order.slice'
 import { MdVerified } from "react-icons/md";
 import Select from 'react-select';
 

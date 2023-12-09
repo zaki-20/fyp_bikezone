@@ -8,6 +8,8 @@ import { getAdminProducts } from "../../features/product/product.thunk";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrders } from "../../features/order/order.thunk";
 import { getAllUsers } from "../../features/auth/auth.thunk";
+import { getAllWorkshops } from "../../features/workshop/workshop.thunk";
+import { getAllRentBikesAdmin } from "../../features/rentbike/rentbike.thunk";
 
 
 
@@ -18,6 +20,8 @@ const Dashboard = () => {
   const { products } = useSelector((state) => state.product);
   const { orders } = useSelector((state) => state.order)
   const { users } = useSelector((state) => state.auth);
+  const { workshops } = useSelector((state) => state.workshop);
+  const { rentBikes } = useSelector((state) => state.rentBike);
 
   let outOfStock = 0;
 
@@ -37,6 +41,8 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getAdminProducts());
     dispatch(getAllOrders())
+    dispatch(getAllWorkshops())
+    dispatch(getAllRentBikesAdmin())
   }, []);
 
 
@@ -110,10 +116,20 @@ const Dashboard = () => {
           </Link>
 
 
-          <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
-            <span>Workshops</span>
-            <span>10</span>
-          </div>
+          <Link to={'/admin/workshops'}>
+            <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
+              <span>Workshops</span>
+              <span>{workshops && workshops.length}</span>
+            </div>
+          </Link>
+
+          <Link to={'/admin/rental-bikes'}>
+            <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
+              <span>Rental Bike</span>
+              <span>{rentBikes && rentBikes.length}</span>
+            </div>
+          </Link>
+
 
         </div>
 
