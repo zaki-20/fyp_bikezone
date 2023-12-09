@@ -5,7 +5,7 @@ import SideBar from '../../components/SideBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import { getAllRentBikesAdmin } from '../../../features/rentbike/rentbike.thunk';
+import { deleteRentBike, getAllRentBikesAdmin } from '../../../features/rentbike/rentbike.thunk';
 
 const RentalBikesList = () => {
     const dispatch = useDispatch()
@@ -20,7 +20,7 @@ const RentalBikesList = () => {
 
 
     const deleteRentBikeHandler = async (id) => {
-        // await dispatch(deleteMyWorkshop(id))
+        await dispatch(deleteRentBike(id))
         dispatch(getAllRentBikesAdmin())
     }
 

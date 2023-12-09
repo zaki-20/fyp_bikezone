@@ -68,3 +68,14 @@ export const updateMyRentBike = createAsyncThunk('rentBike/updateMyRentBike', as
         return thunkAPI.rejectWithValue(message)
     }
 })
+
+//get rental bike detail 
+export const deleteRentBike = createAsyncThunk('rentBike/deleteRentBike', async (id, thunkAPI) => {
+    try {
+        return await rentBikeService.deleteRentBike(id)
+    } catch (error) {
+        const message =
+            error.response.data.message || error.response.data || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})

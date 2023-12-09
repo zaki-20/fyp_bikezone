@@ -21,6 +21,8 @@ const GetAllRentBikes = () => {
     dispatch(getAllRentBikes())
   }, [])
 
+  console.log(rentBikes, "hshshbsb")
+
   const filteredRentBikes = rentBikes
     .filter(item =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) &&

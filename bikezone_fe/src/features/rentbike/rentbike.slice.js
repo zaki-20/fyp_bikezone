@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createRentBike, getAllRentBikes, getAllRentBikesAdmin, getDetailRentBike, getMyRentBikes } from "./rentbike.thunk";
+import { createRentBike, deleteRentBike, getAllRentBikes, getAllRentBikesAdmin, getDetailRentBike, getMyRentBikes } from "./rentbike.thunk";
 import initialRentBikeState from './rentbike.initialstate'
 
 const rentBikeSlice = createSlice({
@@ -98,6 +98,21 @@ const rentBikeSlice = createSlice({
                 state.isError = true
                 state.message = action.payload.error
                 state.rentBikes = []
+            })
+            .addCase(deleteRentBike.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(deleteRentBike.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(deleteRentBike.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
             })
     }
 })

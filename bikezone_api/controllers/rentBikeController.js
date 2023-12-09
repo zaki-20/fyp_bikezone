@@ -49,7 +49,10 @@ exports.getAllRentBikes = catchAsyncErrors(async (req, res, next) => {
   // Get the current date
   const currentDate = new Date();
 
-  // Fetch rent bikes with availableFromDate greater than or equal to the current date
+  // Set the time part of currentDate to the end of the day
+  currentDate.setHours(23, 59, 59, 999);
+
+  // Fetch rent bikes with availableFromDate greater than or equal to the start of the current date
   const rentBikes = await RentBike.find({
     availableFromDate: { $lte: currentDate },
   });
@@ -122,6 +125,7 @@ exports.deleteRentBike = async (req, res, next) => {
     statusCode: 200,
     success: true,
     message: "Rent ad deleted successfully",
+    payload: {}
   });
 };
 

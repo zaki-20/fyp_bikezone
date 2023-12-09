@@ -35,8 +35,13 @@ const getMyRentBikes = async () => {
 
 //update my rent bike ad
 const updateMyRentBike = async (id, values) => {
-    console.log(id, values)
     const response = await axios.put(API_URL + `rentbike/${id}`, values, { withCredentials: true })
+    return response.data
+}
+
+//delete rent bike ad
+const deleteRentBike = async (id, values) => {
+    const response = await axios.delete(API_URL + `rentbike/${id}`, { withCredentials: true })
     return response.data
 }
 
@@ -46,6 +51,7 @@ const rentBikeService = {
     getDetailRentBike,
     getMyRentBikes,
     updateMyRentBike,
-    getAllRentBikesAdmin
+    getAllRentBikesAdmin,
+    deleteRentBike
 }
 export default rentBikeService

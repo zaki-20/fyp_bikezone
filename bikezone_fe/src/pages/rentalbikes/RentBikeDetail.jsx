@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TbSettingsCog } from "react-icons/tb"
 import { ImLocation2 } from "react-icons/im"
 import { BsFillTelephoneFill } from "react-icons/bs"
@@ -6,12 +6,22 @@ import { MdEmail, MdAccessTimeFilled } from "react-icons/md"
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Carousal from '../../components/Carousal';
-import { getDetailRentBike } from '../../features/rentbike/rentbike.thunk'
+import { deleteRentBike, getDetailRentBike } from '../../features/rentbike/rentbike.thunk'
 import { MdEventAvailable } from "react-icons/md";
 import { CgUnavailable } from "react-icons/cg";
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { FcEngineering } from "react-icons/fc";
-
+import { MdOutlineChangeCircle } from "react-icons/md"
+import { AiFillDelete } from "react-icons/ai"
+import {
+    Button,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
+} from "@material-tailwind/react";
+import Lottie from 'lottie-react'
+import redAlertAnimation from '../../assets/animated/redAlert.json'
 
 const RentBikeDetail = () => {
     const { id } = useParams();
@@ -21,7 +31,10 @@ const RentBikeDetail = () => {
     const { isError, message, isLoading, rentBike } = useSelector(state => state.rentBike)
     const { user } = useSelector((state) => state.auth)
 
-
+    const [openDelete, setOpenDelete] = useState(false);
+    const handleOpenDelete = () => {
+        setOpenDelete(!openDelete)
+    };
 
     useEffect(() => {
         dispatch(getDetailRentBike(id))
@@ -49,6 +62,19 @@ const RentBikeDetail = () => {
         }
     };
 
+
+    const handleDeleteRentBike = () => {
+        // Check if the logged-in user's ID matches the owner's ID
+        if (user && user._id === rentBike.seller) {
+
+            dispatch(deleteRentBike(id));
+            navigate('/rental-bikes/me');
+        } else {
+            // Handle the case where the logged-in user is not the owner (show a message or take appropriate action)
+            alert('You are not authorized to delete this workshop.');
+        }
+        setOpenDelete(!openDelete)
+    };
 
     return (
         <div>
@@ -215,17 +241,28 @@ const RentBikeDetail = () => {
                                         </p>
                                     </div>
                                     <div className="mb-6 " />
+                                    {/* <Link to={`/rental-bike/update/${rentBike?._id}`}> */}
                                     {
                                         user?._id === rentBike?.seller ? (
-                                            <div className="w-full mb-4 md:w-1/2">
+                                            <>
+
+
                                                 <Link to={`/rental-bike/update/${rentBike?._id}`}>
-                                                    <button
-                                                        className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600"
-                                                    >
-                                                        Update Your Ad
-                                                    </button>
+                                                    <div className="flex gap-4 mb-6">
+                                                        <button className="w-full flex px-4 py-3 justify-center gap-x-2 items-center text-center font-bold text-light-green-700 bg-[#1b2e2e] border border-transparent dark:border-gray-700  hover:font-bold duration-300 hover:scale-105 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 rounded-xl">
+                                                            Update Workshop
+                                                            <MdOutlineChangeCircle className='text-light-green-700' color='' size={25} />
+                                                        </button>
+                                                    </div>
                                                 </Link>
-                                            </div>
+                                                <div className="flex gap-4 mb-6">
+                                                    <button onClick={handleOpenDelete} className="w-full px-4 flex py-3 text-center justify-center gap-x-2 items-center font-bold text-red-600 bg-[#1b2e2e] border border-transparent dark:border-gray-700  hover:font-bold  duration-300 hover:scale-105 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 rounded-xl">
+                                                        Delete Your Workshop
+                                                        <AiFillDelete className='text-red-600' size={25} />
+
+                                                    </button>
+                                                </div>
+                                            </>
 
                                         ) : (
                                             <div className="w-full mb-4 md:w-1/2">
@@ -242,13 +279,40 @@ const RentBikeDetail = () => {
 
 
                                 </div>
+
                             </div>
                         </div >
                     </div >
+
                 </section >
 
             </div >
+            <Dialog open={openDelete} handler={handleOpenDelete} className='bg-red-100'>
+                <DialogHeader className='flex justify-start'>
+                    <Lottie
+                        className="w-28 h-28 "
+                        animationData={redAlertAnimation}
+                    />
+                    <span>Delete Your Workshop</span>
+                </DialogHeader>
+                <DialogBody className='flex flex-wrap justify-center animate-pulse font-bold tracking-wide text-red-600'>
+                    Are you sure to delete your Bike from ad permanently?
 
+                </DialogBody>
+                <DialogFooter>
+                    <Button
+                        variant="text"
+                        color="black"
+                        onClick={handleOpenDelete}
+                        className="mr-1"
+                    >
+                        <span>Cancel</span>
+                    </Button>
+                    <Button variant="gradient" color="red" onClick={handleDeleteRentBike}>
+                        <span>Delete</span>
+                    </Button>
+                </DialogFooter>
+            </Dialog>
         </div >
     )
 }

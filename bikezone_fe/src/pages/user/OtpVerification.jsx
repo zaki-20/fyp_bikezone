@@ -27,6 +27,7 @@ const OtpVerification = () => {
         email: '',
     };
 
+    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
 
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
@@ -36,8 +37,10 @@ const OtpVerification = () => {
             validateOnChange: true,
             validateOnBlur: false,
             onSubmit: async (values, action) => {
-                console.log(values)
                 await dispatch(verifyOtp(values))
+                if (isSuccess && user) {
+                    navigate('/account');
+                }
                 action.resetForm();
             },
         });
