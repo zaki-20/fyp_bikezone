@@ -184,7 +184,28 @@ const Header = () => {
                     <Link to={'/featuredproducts'}>
                       <MenuItem>Bike Parts</MenuItem>
                     </Link>
-                    <MenuItem className='text-light-green-700'>Coming Soon</MenuItem>
+
+
+                    <Menu placement="right-start" offset={15}>
+                      <MenuHandler>
+                        <MenuItem>Used Bikes</MenuItem>
+                      </MenuHandler>
+                      <MenuList className='bg-[#122222] text-yellow-400'>
+
+                        <Link to={'/create-usedbike'}>
+                          <MenuItem>Create Ad</MenuItem>
+                        </Link>
+
+                        <Link to={'/workshops/me'}>
+                          <MenuItem>My Ads</MenuItem>
+                        </Link>
+
+                        <Link to={'/workshops'}>
+                          <MenuItem>Explore Used Bikes</MenuItem>
+                        </Link>
+
+                      </MenuList>
+                    </Menu>
 
 
                     <Menu placement="right-start" offset={15}>

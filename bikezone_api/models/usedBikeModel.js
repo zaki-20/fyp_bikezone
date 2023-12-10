@@ -35,13 +35,17 @@ const usedBikeSchema = new mongoose.Schema({
     condition: {
         type: String,
         required: true,
-        enum: ['excellent', 'good', 'fair'], // You can customize the conditions based on your needs
+        enum: ['excellent', 'good', 'fair', 'bad'], // You can customize the conditions based on your needs
     },
     mileage: {
         type: Number,
         required: true,
     },
-    location: {
+    address: {
+        type: String,
+        required: true,
+    },
+    city: {
         type: String,
         required: true,
     },

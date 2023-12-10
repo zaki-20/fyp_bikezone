@@ -14,12 +14,14 @@ exports.createUsedBikeAd = catchAsyncErrors(async (req, res, next) => {
         year,
         condition,
         mileage,
-        location,
-        seller,
+        address,
+        city,
         contact,
         images,
         isAvailable
     } = req.body;
+
+    const seller = req.user._id;
 
     // Create a new bike ad
     const usedBikeAd = new UsedBike({
@@ -32,7 +34,8 @@ exports.createUsedBikeAd = catchAsyncErrors(async (req, res, next) => {
         year,
         condition,
         mileage,
-        location,
+        address,
+        city,
         seller,
         contact,
         images,

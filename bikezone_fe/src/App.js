@@ -62,6 +62,7 @@ import UpdateRentBike from "./pages/rentalbikes/UpdateRentBike";
 import OtpVerification from "./pages/user/OtpVerification";
 import WorkshopList from "./admin/pages/workshops/WorkshopList";
 import RentalBikesList from "./admin/pages/rentalbikes/RentalBikesList";
+import CreateUsedBike from "./pages/usedbike/CreateUsedBike";
 
 
 
@@ -157,6 +158,9 @@ function App() {
         <Route exact path="/rental-bikes/:id" element={<ProtectedRoute Component={RentBikeDetail} />} />
         <Route exact path="/rental-bike/update/:id" element={<ProtectedRoute Component={UpdateRentBike} />} />
 
+        {/* Used Bikes */}
+        <Route exact path="/create-usedbike" element={<ProtectedRoute Component={CreateUsedBike} />} />
+
         {/* admin routes */}
         <Route exact isAdmin={true} path="/admin/dashboard" element={<ProtectedRoute Component={Dashboard} />} />
         <Route exact isAdmin={true} path="/admin/products" element={<ProtectedRoute Component={ProductList} />} />
@@ -169,10 +173,10 @@ function App() {
         <Route exact isAdmin={true} path="/admin/users" element={<ProtectedRoute Component={UserList} />} />
         <Route exact isAdmin={true} path="/admin/user/:id" element={<ProtectedRoute Component={UserDetail} />} />
         <Route exact isAdmin={true} path="/admin/reviews" element={<ProtectedRoute Component={ReviewList} />} />
-        
+
         <Route exact isAdmin={true} path="/admin/workshops" element={<ProtectedRoute Component={WorkshopList} />} />
         <Route exact isAdmin={true} path="/admin/rental-bikes" element={<ProtectedRoute Component={RentalBikesList} />} />
-        
+
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />
