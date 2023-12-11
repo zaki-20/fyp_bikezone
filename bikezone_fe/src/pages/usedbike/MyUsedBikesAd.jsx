@@ -3,25 +3,25 @@ import { MdEventAvailable } from "react-icons/md";
 import { CgUnavailable } from "react-icons/cg";
 import { MdOutlineDoubleArrow } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllRentBikes, getMyRentBikes } from '../../features/rentbike/rentbike.thunk';
 import { Link } from 'react-router-dom';
+import { getAllMyUsedBike } from '../../features/usedbike/usedbike.thunk';
 
 
-const MyRentBikes = () => {
+const MyUsedBikesAd = () => {
     const dispatch = useDispatch()
-    const { isLoading, isError, message, rentBikes } = useSelector((state) => state.rentBike)
+    const { isLoading, isError, message, usedBikes } = useSelector((state) => state.usedBike)
 
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedCondition, setSelectedCondition] = useState('');
-    const [selectedDateOrder, setSelectedDateOrder] = useState(''); // 'asc' or 'desc'
+    const [selectedDateOrder, setSelectedDateOrder] = useState('');
 
 
     useEffect(() => {
-        dispatch(getMyRentBikes())
+        dispatch(getAllMyUsedBike())
     }, [])
 
-    const filteredRentBikes = rentBikes
+    const filteredRentBikes = usedBikes
         .filter(item =>
             item.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
             (selectedCity === '' || item.city.toLowerCase() === selectedCity.toLowerCase()) &&
@@ -112,8 +112,10 @@ const MyRentBikes = () => {
                             className="appearance-none bg-gray-200 border-2 pl-10 border-gray-300 hover:border-gray-400 transition-colors rounded-md w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:ring-purple-600 focus:border-purple-600 focus:shadow-outline"
                         >
                             <option value="">Default Condition</option>
-                            <option value="new">New</option>
-                            <option value="used">Used</option>
+                            <option value="excellent">Excellent</option>
+                            <option value="good">Good</option>
+                            <option value="fair">Fair</option>
+                            <option value="bad">Bad</option>
                         </select>
                     </div>
 
@@ -142,7 +144,7 @@ const MyRentBikes = () => {
                             <option value="">Default City</option>
                             {/* Add options dynamically based on available cities */}
                             {
-                                rentBikes?.map(item => item?.city).filter((value, index, self) => self.indexOf(value) === index).map(city => <option key={city} value={city}>{city}</option>)
+                                usedBikes?.map(item => item?.city).filter((value, index, self) => self.indexOf(value) === index).map(city => <option key={city} value={city}>{city}</option>)
                             }
                         </select>
                     </div>
@@ -181,7 +183,7 @@ const MyRentBikes = () => {
                                                                 <p>Available</p>
                                                             </div>
                                                             <div>
-                                                                <p>PKR {item?.rent} per-day</p>
+                                                                <p>PKR {item?.price}</p>
                                                             </div>
                                                         </div>
                                                     </>
@@ -195,7 +197,7 @@ const MyRentBikes = () => {
                                                                 <p>Not Available</p>
                                                             </div>
                                                             <div>
-                                                                <p>Rent {item?.rent}</p>
+                                                                <p>PKR {item?.price}</p>
                                                             </div>
                                                         </div>
                                                     </>)
@@ -210,7 +212,7 @@ const MyRentBikes = () => {
                                             <p>{item?.condition} Condition</p>
                                         </div>
 
-                                        <Link to={`/rental-bikes/${item?._id}`}>
+                                        <Link to={`/usedbike/${item?._id}`}>
                                             <button className="mt-4 text-md w-full text-yellow-400 bg-[#122222] py-2 rounded-md shadow-lg">View Details</button>
                                         </Link>
 
@@ -229,4 +231,4 @@ const MyRentBikes = () => {
     )
 }
 
-export default MyRentBikes
+export default MyUsedBikesAd

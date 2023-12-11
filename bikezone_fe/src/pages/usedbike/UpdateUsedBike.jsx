@@ -3,12 +3,12 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import Select from 'react-select'
 import InputMask from 'react-input-mask';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createRentBike } from '../../features/rentbike/rentbike.thunk';
 import { reset } from '../../features/rentbike/rentbike.slice';
 import axios from 'axios';
-import { createUsedBike } from '../../features/usedbike/usedbike.thunk';
+import { createUsedBike, getUsedBikeDetails, updateUsedBike } from '../../features/usedbike/usedbike.thunk';
 
 
 const schema = yup.object({
@@ -37,24 +37,27 @@ const schema = yup.object({
 
 
 const CreateUsedBike = () => {
+    const { id } = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    const { isError, isSuccess, message, isLoading, usedBike } = useSelector((state) => state.usedBike)
+
     const initialValues = {
-        title: '',
-        email: '',
-        description: '',
-        model: '',
-        brand: '',
-        year: '',
-        condition: '',
-        contact: '',
-        city: '',
-        address: '',
-        price: '',
-        mileage: '',
-        isAvailable: '',
-        images: [], // Use an array to store multiple images
+        title: usedBike?.title || ``,
+        email: usedBike?.email || ``,
+        description: usedBike?.description || ``,
+        model: usedBike?.model || ``,
+        brand: usedBike?.brand || ``,
+        year: usedBike?.year || ``,
+        condition: usedBike?.condition || ``,
+        contact: usedBike?.contact || ``,
+        city: usedBike?.city || ``,
+        address: usedBike?.address || ``,
+        price: usedBike?.price || ``,
+        mileage: usedBike?.mileage || ``,
+        isAvailable: usedBike?.isAvailable || ``,
+        images: usedBike?.images || '',
     }
 
     const [previewImages, setPreviewImages] = useState([]);
@@ -69,14 +72,18 @@ const CreateUsedBike = () => {
         setPreviewImages(fileArray.map(file => URL.createObjectURL(file)));
     };
 
-    // const { isError, isSuccess, message, isLoading } = useSelector((state) => state.usedBike)
 
-    // useEffect(() => {
-    //     if (isError) {
-    //         toast.error(message)
-    //         dispatch(reset())
-    //     }
-    // }, [isError])
+    useEffect(() => {
+        if (isError) {
+            // toast.error(message)
+            dispatch(reset())
+        }
+    }, [isError])
+
+    useEffect(() => {
+        dispatch(getUsedBikeDetails(id));
+        console.log(usedBike)
+    }, [dispatch, id]);
 
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
@@ -103,7 +110,8 @@ const CreateUsedBike = () => {
                     values.images = imageUrls;
                     // Convert brand to lowercase before submitting
                     values.brand = values.brand.toLowerCase();
-                    await dispatch(createUsedBike(values))
+                    console.log(values)
+                    await dispatch(updateUsedBike({ values, id }))
                     navigate('/usedbikes/me')
 
                 } catch (error) {
@@ -405,8 +413,8 @@ const CreateUsedBike = () => {
                                                 onBlur={handleBlur}
                                                 name="isAvailable"
                                             />
-                                            {errors.condition && touched.condition ? (
-                                                <p className="text-red-600 animate-pulse">{errors.condition}</p>
+                                            {errors.isAvailable && touched.isAvailable ? (
+                                                <p className="text-red-600 animate-pulse">{errors.isAvailable}</p>
                                             ) : null}
                                         </div>
                                     </div>

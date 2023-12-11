@@ -1,7 +1,7 @@
 
 const initialUsedBikeState = {
     usedBikes: [],
-    usedbike: null,
+    usedBike: null,
     isLoading: false,
     isError: false,
     isSuccess: false,

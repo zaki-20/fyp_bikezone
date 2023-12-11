@@ -63,7 +63,10 @@ import OtpVerification from "./pages/user/OtpVerification";
 import WorkshopList from "./admin/pages/workshops/WorkshopList";
 import RentalBikesList from "./admin/pages/rentalbikes/RentalBikesList";
 import CreateUsedBike from "./pages/usedbike/CreateUsedBike";
-
+import MyUsedBikesAd from "./pages/usedbike/MyUsedBikesAd";
+import GetAllUsedBikeAds from "./pages/usedbike/GetAllUsedBikeAds";
+import GetUsedBikeDetail from "./pages/usedbike/GetUsedBikeDetails";
+import UpdateUsedBike from "./pages/usedbike/UpdateUsedBike";
 
 
 function App() {
@@ -160,6 +163,10 @@ function App() {
 
         {/* Used Bikes */}
         <Route exact path="/create-usedbike" element={<ProtectedRoute Component={CreateUsedBike} />} />
+        <Route exact path="/usedbikes/me" element={<ProtectedRoute Component={MyUsedBikesAd} />} />
+        <Route exact path="/usedbikes" element={<ProtectedRoute Component={GetAllUsedBikeAds} />} />
+        <Route exact path="/usedbike/:id" element={<ProtectedRoute Component={GetUsedBikeDetail} />} />
+        <Route exact path="/usedbike/update/:id" element={<ProtectedRoute Component={UpdateUsedBike} />} />
 
         {/* admin routes */}
         <Route exact isAdmin={true} path="/admin/dashboard" element={<ProtectedRoute Component={Dashboard} />} />

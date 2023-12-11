@@ -196,11 +196,11 @@ const Header = () => {
                           <MenuItem>Create Ad</MenuItem>
                         </Link>
 
-                        <Link to={'/workshops/me'}>
+                        <Link to={'/usedbikes/me'}>
                           <MenuItem>My Ads</MenuItem>
                         </Link>
 
-                        <Link to={'/workshops'}>
+                        <Link to={'/usedbikes'}>
                           <MenuItem>Explore Used Bikes</MenuItem>
                         </Link>
 
@@ -228,8 +228,6 @@ const Header = () => {
 
                       </MenuList>
                     </Menu>
-
-
 
                     <Menu placement="right-start" offset={15}>
                       <MenuHandler>

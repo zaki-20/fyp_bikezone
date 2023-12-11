@@ -129,8 +129,6 @@ exports.deleteRentBike = async (req, res, next) => {
   });
 };
 
-
-
 exports.getRentBikeDetails = catchAsyncErrors(async (req, res, next) => {
   const rentBikeId = req.params.id;
   const rentBike = await RentBike.findById(rentBikeId);

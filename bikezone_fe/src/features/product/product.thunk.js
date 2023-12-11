@@ -4,14 +4,13 @@ import productService from "./product.service"
 
 
 
-// get all goals
+// get all products
 export const getAllProducts = createAsyncThunk('products/getAllProducts', async ({ keyword = '', currentPage = 1, price = [0, 25000], category, ratings = 0 }, thunkAPI) => {
     try {
         return await productService.getAllProducts(keyword, currentPage, price, category, ratings)
     } catch (error) {
         const message =
             error.response || error.response.data || error.response.data.message || error.message || error.code
-        console.log(message)
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -54,7 +53,6 @@ export const getNewArrivalProducts = createAsyncThunk('products/getNewArrivalPro
     try {
         return await productService.getNewArrivalProducts()
     } catch (error) {
-        console.log(error)
         const message = error.response || error.response.data || error.response.data.message || error.message || error.code
         return thunkAPI.rejectWithValue(message)
     }

@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import Select from 'react-select'
-import InputMask from 'react-input-mask';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createRentBike, getDetailRentBike, updateMyRentBike } from '../../features/rentbike/rentbike.thunk';
+import {  getDetailRentBike, updateMyRentBike } from '../../features/rentbike/rentbike.thunk';
 import { reset } from '../../features/rentbike/rentbike.slice';
 import axios from 'axios';
 
@@ -55,7 +54,7 @@ const UpdateRentBike = () => {
         dispatch(getDetailRentBike(id));
         console.log(rentBike)
     }, [dispatch, id]);
-    console.log(rentBike)
+
 
     const initialValues = {
         title: rentBike?.title || ``,
@@ -396,8 +395,8 @@ const UpdateRentBike = () => {
                                                 onBlur={handleBlur}
                                                 name="isAvailable"
                                             />
-                                            {errors.condition && touched.condition ? (
-                                                <p className="text-red-600 animate-pulse">{errors.condition}</p>
+                                            {errors.isAvailable && touched.isAvailable ? (
+                                                <p className="text-red-600 animate-pulse">{errors.isAvailable}</p>
                                             ) : null}
                                         </div>
                                     </div>

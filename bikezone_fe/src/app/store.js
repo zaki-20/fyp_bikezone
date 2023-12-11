@@ -8,6 +8,7 @@ import contactReducer from "../features/contact/contact.slice"
 import workshopReducer from "../features/workshop/workshop.slice"
 import appointmentReducer from "../features/appointment/appointment.slice"
 import rentBikeReducer from "../features/rentbike/rentbike.slice"
+import usedBikeReducer from "../features/usedbike/usedbike.slice"
 
 const store = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ const store = configureStore({
         contact: contactReducer,
         workshop: workshopReducer,
         appointment: appointmentReducer,
-        rentBike: rentBikeReducer
+        rentBike: rentBikeReducer,
+        usedBike: usedBikeReducer
     },
 });
 export default store

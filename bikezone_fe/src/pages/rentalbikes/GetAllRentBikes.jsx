@@ -106,7 +106,7 @@ const GetAllRentBikes = () => {
 
         <div className='md:flex items-center mx-10 md:mx-0'>
           <div className="relative md:w-1/4 mx-auto py-5">
-            <span className='text-black'>Select Condition</span>
+            <span className='text-black text-sm'>Select Condition</span>
 
             <select
               value={selectedCondition}
@@ -120,7 +120,7 @@ const GetAllRentBikes = () => {
           </div>
 
           <div className="relative md:w-1/4 mx-auto py-5">
-            <span className='text-black'>Select Date Order</span>
+            <span className='text-black text-sm'>Select Date Order</span>
 
             <select
               value={selectedDateOrder}
@@ -134,7 +134,7 @@ const GetAllRentBikes = () => {
           </div>
 
           <div className="relative md:w-1/4 mx-auto py-5">
-            <span className='text-black'>Select City</span>
+            <span className='text-black text-sm'>Select City</span>
 
             <select
               value={selectedCity}

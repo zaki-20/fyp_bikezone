@@ -46,9 +46,13 @@ const ProductList = () => {
             field: "stock",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Stock",
-            type: "number",
             minWidth: 100,
             flex: 0.3,
+            cellClassName: (params) => {
+                return params.row.stock <= 0
+                    ? "text-red-600"
+                    : "text-green-600";
+            },
         },
 
         {
