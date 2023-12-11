@@ -24,7 +24,7 @@ import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { FaUsers } from "react-icons/fa";
 import { GiAutoRepair } from "react-icons/gi";
 import { RiMotorbikeFill } from "react-icons/ri";
-
+import { PiMotorcycleFill } from "react-icons/pi";
 
 const SideBar = () => {
     const [open, setOpen] = React.useState(0);
@@ -136,18 +136,20 @@ const SideBar = () => {
                 <Link to={'/admin/rental-bikes'}>
                     <ListItem className="w-[85%]">
                         <ListItemPrefix>
-                            <RiMotorbikeFill className="h-5 w-5" />
+                            <PiMotorcycleFill className="h-5 w-5" />
                         </ListItemPrefix>
                         Rental Bikes
                     </ListItem>
                 </Link>
 
-                <ListItem>
-                    <ListItemPrefix>
-                        <UserCircleIcon className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Profile
-                </ListItem>
+                <Link to={'/admin/usedbikes'}>
+                    <ListItem className="w-[85%]">
+                        <ListItemPrefix>
+                            <PiMotorcycleFill className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Used Bikes
+                    </ListItem>
+                </Link>
 
                 <ListItem>
                     <ListItemPrefix>

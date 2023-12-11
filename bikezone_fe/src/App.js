@@ -67,6 +67,7 @@ import MyUsedBikesAd from "./pages/usedbike/MyUsedBikesAd";
 import GetAllUsedBikeAds from "./pages/usedbike/GetAllUsedBikeAds";
 import GetUsedBikeDetail from "./pages/usedbike/GetUsedBikeDetails";
 import UpdateUsedBike from "./pages/usedbike/UpdateUsedBike";
+import UsedBikesList from "./admin/pages/usedbike/UsedBikesList";
 
 
 function App() {
@@ -184,6 +185,7 @@ function App() {
         <Route exact isAdmin={true} path="/admin/workshops" element={<ProtectedRoute Component={WorkshopList} />} />
         <Route exact isAdmin={true} path="/admin/rental-bikes" element={<ProtectedRoute Component={RentalBikesList} />} />
 
+        <Route exact isAdmin={true} path="/admin/usedbikes" element={<ProtectedRoute Component={UsedBikesList} />} />
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

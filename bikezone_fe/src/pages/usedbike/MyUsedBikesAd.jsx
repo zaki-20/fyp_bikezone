@@ -121,7 +121,6 @@ const MyUsedBikesAd = () => {
 
                     <div className="relative md:w-1/4 mx-auto py-5">
                         <span className='text-black text-sm'>Select Date Order</span>
-
                         <select
                             value={selectedDateOrder}
                             onChange={handleDateOrderChange}
@@ -148,7 +147,6 @@ const MyUsedBikesAd = () => {
                             }
                         </select>
                     </div>
-
                 </div>
             </div>
 

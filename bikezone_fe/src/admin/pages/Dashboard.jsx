@@ -10,6 +10,7 @@ import { getAllOrders } from "../../features/order/order.thunk";
 import { getAllUsers } from "../../features/auth/auth.thunk";
 import { getAllWorkshops } from "../../features/workshop/workshop.thunk";
 import { getAllRentBikesAdmin } from "../../features/rentbike/rentbike.thunk";
+import { getAllUsedBikes } from "../../features/usedbike/usedbike.thunk";
 
 
 
@@ -22,6 +23,7 @@ const Dashboard = () => {
   const { users } = useSelector((state) => state.auth);
   const { workshops } = useSelector((state) => state.workshop);
   const { rentBikes } = useSelector((state) => state.rentBike);
+  const { usedBikes } = useSelector((state) => state.usedBike);
 
   let outOfStock = 0;
 
@@ -43,6 +45,7 @@ const Dashboard = () => {
     dispatch(getAllOrders())
     dispatch(getAllWorkshops())
     dispatch(getAllRentBikesAdmin())
+    dispatch(getAllUsedBikes)
   }, []);
 
 
@@ -127,6 +130,13 @@ const Dashboard = () => {
             <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
               <span>Rental Bike</span>
               <span>{rentBikes && rentBikes.length}</span>
+            </div>
+          </Link>
+
+          <Link to={'/admin/usedbikes'}>
+            <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
+              <span>Used Bike</span>
+              <span>{usedBikes && usedBikes.length}</span>
             </div>
           </Link>
 

@@ -5,23 +5,23 @@ import SideBar from '../../components/SideBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import { deleteRentBike, getAllRentBikesAdmin } from '../../../features/rentbike/rentbike.thunk';
+import { deleteUsedBikeAd, getAllUsedBikes } from '../../../features/usedbike/usedbike.thunk';
 
-const RentalBikesList = () => {
+const UsedBikesList = () => {
     const dispatch = useDispatch()
 
-    const { isLoading, isError, message, rentBikes } = useSelector((state) => state.rentBike)
+    const { isLoading, isError, message, usedBikes } = useSelector((state) => state.usedBike)
 
     useEffect(() => {
-        if (!rentBikes.length) {
-            dispatch(getAllRentBikesAdmin());
+        if (!usedBikes.length) {
+            dispatch(getAllUsedBikes());
         }
-    }, [dispatch, rentBikes]);
+    }, [dispatch, usedBikes]);
 
 
     const deleteRentBikeHandler = async (id) => {
-        await dispatch(deleteRentBike(id))
-        dispatch(getAllRentBikesAdmin())
+        await dispatch(deleteUsedBikeAd(id))
+        dispatch(getAllUsedBikes())
     }
 
     const columns = [
@@ -69,18 +69,6 @@ const RentalBikesList = () => {
             },
         },
         {
-            field: "publish",
-            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Publish On",
-            minWidth: 200,
-            flex: 0.5,
-            cellClassName: (params) => {
-
-                return params.row.publish === 'Published' ? "text-green-600 font-semibold" : "text-red-600";
-
-            },
-        },
-        {
             field: "actions",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             flex: 0.3,
@@ -103,31 +91,16 @@ const RentalBikesList = () => {
     ];
 
 
-    const rows = rentBikes?.map((rentBike) => {
+    const rows = usedBikes?.map((usedBike) => {
 
-        const today = new Date();
-        const publishDate = new Date(rentBike.availableFromDate);
-    
-        let displayValue;
-    
-        // Set hours, minutes, seconds, and milliseconds to 0 for accurate date comparison
-        today.setHours(0, 0, 0, 0);
-        publishDate.setHours(0, 0, 0, 0);
-    
-        if (today.getTime() === publishDate.getTime() || today.getTime() > publishDate.getTime()) {
-            displayValue = "Published";
-        } else {
-            displayValue = publishDate.toLocaleDateString();
-        }
 
         return {
-            id: rentBike._id,
-            owner_email: rentBike.email,
-            bike_title: rentBike.title,
-            available: rentBike.isAvailable ? "Available" : "Unavailable",
-            city: rentBike.city,
-            contact: rentBike.contact,
-            publish: displayValue
+            id: usedBike._id,
+            owner_email: usedBike.email,
+            bike_title: usedBike.title,
+            available: usedBike.isAvailable ? "Available" : "Unavailable",
+            city: usedBike.city,
+            contact: usedBike.contact,
         };
     }) || [];
 
@@ -148,4 +121,4 @@ const RentalBikesList = () => {
     )
 }
 
-export default RentalBikesList
+export default UsedBikesList
