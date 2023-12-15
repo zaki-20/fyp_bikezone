@@ -49,7 +49,6 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 
 })
 
-
 //get single order
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id).populate("user", "firstname lastname email")
@@ -118,6 +117,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
   if (req.body.status === "Shipped") {
     order.orderItems.forEach(async (o) => {
+      console.log(o._id, o.quantity, "o_id, quantity")
       await updateStock(o._id, o.quantity);
     });
   }
@@ -138,7 +138,6 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // delete Order -- Admin
 exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
@@ -157,12 +156,11 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 //Fucntion for update stock===========
 async function updateStock(id, quantity) {
   const product = await Product.findById(id);
-
-  console.log(product)
+  console.log(id, quantity, "id and quantity of update parameters")
+  console.log(product, "update function find product")
   product.Stock -= quantity;
 
   await product.save({ validateBeforeSave: false });

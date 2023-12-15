@@ -26,6 +26,13 @@ const OrderList = () => {
         { field: "id", headerClassName: "bg-gray-900 text-yellow-400 text-lg", headerName: "Order ID", minWidth: 300, flex: 1 },
 
         {
+            field: "name",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
+            headerName: "Items Name",
+            minWidth: 150,
+            flex: 0.3,
+        },
+        {
             field: "status",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Status",
@@ -87,6 +94,7 @@ const OrderList = () => {
             rows.push({
                 itemsQty: item?.orderItems.length,
                 id: item?._id,
+                name: item?.orderItems.map((orderItem) => orderItem.name),
                 status: item?.orderStatus,
                 amount: item?.totalPrice,
             });

@@ -14,6 +14,7 @@ import {
 } from "@material-tailwind/react";
 import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 import { resetCart } from '../features/product/product.slice';
+import { useCookies } from "react-cookie"
 
 
 const Header = () => {
@@ -40,6 +41,18 @@ const Header = () => {
     dispatch(logout())
     dispatch(resetCart())
   }
+
+
+  const [cookies] = useCookies(["token"]);
+  useEffect(() => {
+    const savedToken = cookies.token;
+    console.log(savedToken)
+
+    if (!savedToken && !user) {
+      dispatch(resetCart())
+    }
+  }, [cookies, dispatch, user]);
+
 
   useEffect(() => {
     if (logoutSuccess) {

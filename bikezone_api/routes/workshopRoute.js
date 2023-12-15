@@ -10,7 +10,7 @@ router.route("/workshops/me").get(isAuthenticatedUser, getMyWorkshopDetails)
 
 router.route("/workshop/new").post(isAuthenticatedUser, createWorkshop)
 router.route("/workshop/:id")
-    .get(getWorkshopDetails)
+    .get(isAuthenticatedUser, getWorkshopDetails)
     .delete(isAuthenticatedUser, deleteWorkshop)
 
 router.route("/workshop/update/:id")

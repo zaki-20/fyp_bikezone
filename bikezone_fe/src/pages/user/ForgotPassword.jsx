@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { Link, useNavigate } from 'react-router-dom';
-// Import  image
+// Import image
 import forgetpic from '../../assets/forget-pass.webp';
 import { forgotPassword } from '../../features/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +9,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { reset } from '../../features/auth/auth.slice';
 import Loader from '../shared/Loader';
+import { MdEmail } from "react-icons/md";
+
 
 const schema = yup.object({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -74,29 +75,32 @@ const ForgotPassword = () => {
                                     <p>Enter your register email for password reset</p>
                                 </div>
                                 <form onSubmit={handleSubmit}>
-
-                                    <div className="flex  -mx-3">
+                                    <div className="flex -mx-3">
                                         <div className="w-full px-3 mb-5">
                                             <label htmlFor="true" className="text-xs font-semibold px-1">Email</label>
                                             <div className="flex">
-                                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg" /></div>
+                                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                    <MdEmail />
+                                                </div>
                                                 <input
                                                     name='email'
                                                     value={values.email}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    type="email" id='email' className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com" />
+                                                    type="email"
+                                                    id='email'
+                                                    className={`w-full caret-yellow-500 placeholder:text-gray-400  text-[#6e6e6e] -ml-10 pl-10 pr-3 py-2 rounded-lg border-1 border-gray-200 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.email && errors.email ? 'border-red-500' : 'border-gray-200'} `}
+                                                    placeholder="johnsmith@example.com" />
                                             </div>
                                             {errors.email && touched.email ? (
                                                 <p className="text-red-600 animate-pulse">{errors.email}</p>
                                             ) : null}
                                         </div>
-
                                     </div>
 
                                     <div className="flex w-full mt-5">
                                         <div className="w-full  mb-5">
-                                            <button type='submit' className="block w-full  mx-auto bg-[#122222] hover:bg-indigo-700  text-white rounded-lg px-3 py-3 font-semibold">SUBMIT </button>
+                                            <button type='submit' className="block w-full  mx-auto bg-[#122222] hover:text-yellow-400  text-white rounded-lg px-3 py-3 font-semibold duration-200">SUBMIT </button>
                                         </div>
                                     </div>
                                 </form>

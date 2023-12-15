@@ -1,7 +1,7 @@
 import React from 'react'
 import { MdDelete } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, addToCartByQuantity, removeFromCart, removeFromCartByQuantity, resetCart } from '../../features/product/product.slice'
+import { addToCartByQuantity, removeFromCart, removeFromCartByQuantity, resetCart } from '../../features/product/product.slice'
 import { toast } from 'react-toastify'
 import EmptyCart from '../../components/cards/EmptyCart'
 import { useNavigate } from 'react-router-dom'
@@ -53,8 +53,13 @@ const Cart = () => {
     }
 
     const checkoutHandler = () => {
-        navigate('/login?redirect=/shipping')
+        navigate('/shipping')
     }
+
+    const calculateShipping = () => {
+        const subtotal = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
+        return subtotal > 5000 ? 0 : 499;
+      };
 
     return (
         <div className='bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600'>
@@ -100,7 +105,7 @@ const Cart = () => {
                         </div>
                         <div className="flex justify-between">
                             <p className="text-gray-700">Shipping</p>
-                            <p className="text-gray-700">499 Rs/-</p>
+                            <p className="text-gray-700">{calculateShipping()}  Rs/-</p>
                         </div>
                         <hr className="my-4" />
                         <div className="flex justify-between">

@@ -74,7 +74,6 @@ const UserProfile = () => {
                 </div>
             </div>
 
-
         </>
     )
 }

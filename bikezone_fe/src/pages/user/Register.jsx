@@ -11,6 +11,10 @@ import { reset } from '../../features/auth/auth.slice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios';
+import { FaUser } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 
 const schema = yup.object({
@@ -28,6 +32,8 @@ const Register = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const initialValues = {
         firstname: "",
@@ -85,6 +91,10 @@ const Register = () => {
         }
     }, [isError, isSuccess])
 
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
+
     return (
         <div>
             <div className="min-w-screen min-h-screen bg-[#def5f596] flex items-center justify-center px-5 py-5 mb-4">
@@ -104,7 +114,9 @@ const Register = () => {
                                     <div className="w-1/2 px-3 mb-5">
                                         <label htmlFor="true" className="text-xs font-semibold px-1">First name</label>
                                         <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-account-outline text-gray-400 text-lg" /></div>
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <FaUser />
+                                            </div>
                                             <input
                                                 type="text"
                                                 id='firstname'
@@ -112,7 +124,8 @@ const Register = () => {
                                                 value={values.firstname}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="John" />
+                                                className={`w-full text-[#6e6e6e] caret-yellow-500 placeholder:text-gray-400 -ml-10 pl-10 pr-3 py-2 rounded-lg border-1 border-gray-200 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.firstname && errors.firstname ? 'border-red-500' : 'border-gray-200'}`}
+                                                placeholder="John" />
                                         </div>
                                         {errors.firstname && touched.firstname ? (
                                             <p className="text-red-600 animate-pulse">{errors.firstname}</p>
@@ -121,7 +134,9 @@ const Register = () => {
                                     <div className="w-1/2 px-3 mb-5">
                                         <label htmlFor="true" className="text-xs font-semibold px-1">Last name</label>
                                         <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-account-outline text-gray-400 text-lg" /></div>
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <FaUser />
+                                            </div>
                                             <input
                                                 type="text"
                                                 id='lastname'
@@ -129,7 +144,9 @@ const Register = () => {
                                                 value={values.lastname}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Smith" />
+                                                className={`w-full text-[#6e6e6e] caret-yellow-500 placeholder:text-gray-400  -ml-10 pl-10 pr-3 py-2 rounded-lg border-1 border-gray-200 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.lastname && errors.lastname ? 'border-red-500' : 'border-gray-200'
+                                                    }`}
+                                                placeholder="Smith" />
                                         </div>
                                         {errors.lastname && touched.lastname ? (
                                             <p className="text-red-600 animate-pulse">{errors.lastname}</p>
@@ -141,7 +158,9 @@ const Register = () => {
                                     <div className="w-full px-3 mb-5">
                                         <label htmlFor="true" className="text-xs font-semibold px-1">Email</label>
                                         <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg" /></div>
+                                            <div className="w-10  z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <MdEmail />
+                                            </div>
                                             <input
                                                 name='email'
                                                 type="email"
@@ -149,7 +168,10 @@ const Register = () => {
                                                 value={values.email}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com" />
+                                                className={`w-full -ml-10 pl-10 pr-3 py-2 text-[#6e6e6e] caret-yellow-500 placeholder:text-gray-400  rounded-lg border-1 border-gray-200 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.email && errors.email ? 'border-red-500' : 'border-gray-200'
+                                                    }`}
+                                                placeholder="johnsmith@example.com" />
+
                                         </div>
                                         {errors.email && touched.email ? (
                                             <p className="text-red-600 animate-pulse">{errors.email}</p>
@@ -159,18 +181,31 @@ const Register = () => {
                                 </div>
 
                                 <div className="flex -mx-3">
-                                    <div className="w-full px-3 mb-5">
-                                        <label htmlFor="true" className="text-xs font-semibold px-1">Password</label>
-                                        <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg" /></div>
+                                    <div className="w-full px-3 mb-5 relative">
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">
+                                            Password
+                                        </label>
+                                        <div className="flex items-center">
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <RiLockPasswordFill />
+                                            </div>
                                             <input
-                                                id='password'
-                                                type="password"
-                                                name='password'
+                                                name="password"
                                                 value={values.password}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************" />
+                                                id="password"
+                                                type={showPassword ? 'text' : 'password'} // Toggle visibility based on showPassword state
+                                                className={`w-full caret-yellow-500 placeholder:text-gray-400  text-[#6e6e6e] -ml-10 pl-10 pr-3 py-2 rounded-lg border-1 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.password && errors.password ? 'border-red-500' : 'border-gray-200'
+                                                    }`}
+                                                placeholder="xxxxxxxxx"
+                                            />
+                                            <div
+                                                className="absolute right-5 cursor-pointer"
+                                                onClick={handleTogglePasswordVisibility}
+                                            >
+                                                {showPassword ? <FaEye className='hover:text-yellow-400 duration-300' /> : <FaEyeSlash className='hover:text-yellow-400 duration-300' />}
+                                            </div>
                                         </div>
                                         {errors.password && touched.password ? (
                                             <p className="text-red-600 animate-pulse">{errors.password}</p>
@@ -179,16 +214,31 @@ const Register = () => {
                                 </div>
 
                                 <div className="flex -mx-3">
-                                    <div className="w-full px-3 mb-5">
-                                        <label htmlFor="true" className="text-xs font-semibold px-1">Confirm Password</label>
-                                        <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg" /></div>
+                                    <div className="w-full px-3 mb-5 relative">
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">
+                                            Confirm Password
+                                        </label>
+                                        <div className="flex items-center">
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <RiLockPasswordFill />
+                                            </div>
                                             <input
-                                                name='confirmPassword'
+                                                name="confirmPassword"
                                                 value={values.confirmPassword}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                type="password" id='confirmPassword' className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************" />
+                                                id="confirmPassword"
+                                                type={showPassword ? 'text' : 'password'} // Toggle visibility based on showPassword state
+                                                className={`w-full caret-yellow-500 placeholder:text-gray-400 text-[#6e6e6e] -ml-10 pl-10 pr-3 py-2 rounded-lg border-1 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : 'border-gray-200'
+                                                    }`}
+                                                placeholder="xxxxxxxxx"
+                                            />
+                                            <div
+                                                className="absolute right-5 cursor-pointer"
+                                                onClick={handleTogglePasswordVisibility}
+                                            >
+                                                {showPassword ? <FaEye className='hover:text-yellow-400 duration-300'/> : <FaEyeSlash className='hover:text-yellow-400 duration-300' />}
+                                            </div>
                                         </div>
                                         {errors.confirmPassword && touched.confirmPassword ? (
                                             <p className="text-red-600 animate-pulse">{errors.confirmPassword}</p>
@@ -218,7 +268,7 @@ const Register = () => {
                                     <div className="w-full px-3 mb-5">
                                         <button
                                             type="submit"
-                                            className="flex relative items-center justify-center w-full  bg-[#122222] text-white rounded-lg h-12 font-semibold "
+                                            className="flex relative items-center justify-center w-full hover:text-yellow-400 bg-[#122222] text-white rounded-lg h-12 font-semibold "
                                             disabled={isLoading}
                                         >
                                             {isLoading ? (
@@ -231,7 +281,7 @@ const Register = () => {
                                                 </div>
                                             ) : (
                                                 <>
-                                                    <span>REGISTER NOW</span>
+                                                    <span className=''>REGISTER NOW</span>
                                                 </>
                                             )
                                             }
@@ -244,7 +294,7 @@ const Register = () => {
                             {/* Already have an account? Sign in */}
                             <div className="text-center mt-3">
                                 <p>
-                                    Already have an account? <Link to="/login" className='text-[#122222] underline'>Sign in</Link>
+                                    Already have an account? <Link to="/login" className='text-[#122222] underline hover:text-blue-800 duration-200'>Sign in</Link>
                                 </p>
                             </div>
                         </div>

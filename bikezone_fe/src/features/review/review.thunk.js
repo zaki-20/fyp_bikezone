@@ -25,9 +25,10 @@ export const getProductReviews = createAsyncThunk('review/getProductReviews', as
 })
 
 
-//delete reviews --admin 
+//delete reviews 
 export const deleteReview = createAsyncThunk('review/deleteReview', async ({ reviewId, productId }, thunkAPI) => {
     try {
+        console.log(reviewId, productId)
         return await reviewService.deleteReview(reviewId, productId)
     } catch (error) {
         const message =

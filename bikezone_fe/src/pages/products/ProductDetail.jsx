@@ -151,10 +151,10 @@ const ProductDetail = () => {
                 dispatch(addToCart(item));
                 toast.success("Item added to the cart");
             } else {
-                toast.error("Not available in stock huhu");
+                toast.error("Not available in stock");
             }
         } else {
-            toast.error("not available in stock haha")
+            toast.error("not available in stock ")
         }
     };
 
@@ -177,7 +177,7 @@ const ProductDetail = () => {
                                 <div className="w-full px-4 py-24 md:w-1/2 ">
                                     <div className="z-50 overflow-hidden ">
                                         <div className='z-50 h-[400px] '>
-                                            <Carousal images={productDetails?.images}/>
+                                            <Carousal images={productDetails?.images} />
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +201,7 @@ const ProductDetail = () => {
                                                 <span> {productDetails.price} </span>
                                                 <span className='text-xl'>PKR</span>
                                             </p>
-                                            <p className={productDetails.Stock < 0 ? `text-red-500 font-bold` : `font-bold text-green-600`}>{productDetails.Stock < 0 ? "Out Of Stock" : "In Stock"} </p>
+                                            <p className={productDetails.Stock <= 0 ? `text-red-500 font-bold` : `font-bold text-green-600`}>{productDetails.Stock <= 0 ? "Out Of Stock" : "In Stock"} </p>
                                         </div>
 
 
@@ -299,14 +299,15 @@ const ProductDetail = () => {
                                         productDetails.reviews && productDetails.reviews[0] ? (
                                             productDetails.reviews && productDetails.reviews.map((review) => {
                                                 return (<>
-                                                    <ReviewCard key={review._id} review={review} />
+                                                    <ReviewCard key={review._id} review={review} product={productDetails}/>
                                                 </>
                                                 )
                                             })
                                         ) : (
                                             <div className="flex items-center justify-center text-lg text-red-700 font-bold">
                                                 No reviews yet
-                                            </div>)
+                                            </div>
+                                        )
                                     }
 
                                 </div>

@@ -115,7 +115,7 @@ const CreateBlogPost = () => {
 
                 </div>
 
-                <form onSubmit={handleSubmit} noValidate="" className="flex bg-[#d0d1d1] flex-col py-6 shadow-xl justify-between rounded-md space-y-6 px-6">
+                <form onSubmit={handleSubmit} noValidate="" className="flex bg-[#d0d1d1] flex-col py-6 shadow-xl justify-around rounded-md px-6">
                     <h1 className="text-3xl text-center font-bold text-yellow-400 mb-4 text-robotic">
                         Create Your Post
                     </h1>
@@ -158,7 +158,6 @@ const CreateBlogPost = () => {
                         ) : null}
                     </label>
 
-
                     <label className="block">
                         <span className="mb-1">Description</span>
                         <ReactQuill
@@ -167,7 +166,7 @@ const CreateBlogPost = () => {
                             formats={quillFormats}
                             value={values.description}
                             placeholder="Enter your post description..."
-                            className="custom-quill "
+                            className="custom-quill h-28 mb-12"
                         />
                         {errors.description && touched.description ? (
                             <p className="text-red-600 animate-pulse">{errors.description}</p>
@@ -176,7 +175,7 @@ const CreateBlogPost = () => {
 
                     <button
                         type="submit"
-                        className="self-center  bg-gray-900 text-white hover:text-yellow-400 py-2 px-6 w-full my-2 text-lg rounded  dark:bg-violet-400 dark:text-gray-900 "
+                        className=" mt-4 bg-gray-900 text-white hover:text-yellow-400 py-2 px-6 w-full my-2 text-lg rounded  dark:bg-violet-400 dark:text-gray-900 "
                     >
                         Post
                     </button>
