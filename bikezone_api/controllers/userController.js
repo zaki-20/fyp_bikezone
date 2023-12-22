@@ -323,6 +323,8 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         useFindAndModify: false,
     });
 
+   
+
     res.status(200).json({
         statusCode: 200,
         status: true,
@@ -367,10 +369,8 @@ exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 // update User role --admin
-exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
+exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
     const newUserData = {
-        name: req.body.name,
-        email: req.body.email,
         role: req.body.role
     };
 
@@ -380,8 +380,13 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
         useFindAndModify: false,
     });
 
+    await user.save()
+    console.log(user)
     res.status(200).json({
-        success: true,
+        statusCode: 200,
+        status: true,
+        message: "user role is updated!",
+        payload: { user }
     });
 
 })
@@ -406,7 +411,6 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     });
 
 });
-
 
 
 // Delete All Users (except admin)

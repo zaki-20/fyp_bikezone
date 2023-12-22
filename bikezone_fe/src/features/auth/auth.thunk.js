@@ -135,4 +135,18 @@ export const verifyOtp = createAsyncThunk('auth/verifyOtp', async (userData, thu
     }
 })
 
+//update user role
+export const updateUserRole = createAsyncThunk('auth/updateUserRole', async ({selectedRole, userId }, thunkAPI) => {
+    try {
+        
+        return await authService.updateUserRole(selectedRole, userId )
+    } catch (error) {
+        console.log(error)
+        const message = error.response.data || error.response.data.message || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+
+
 

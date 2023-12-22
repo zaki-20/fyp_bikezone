@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, login, loadUser, logout, updateProfile, updatePassword, forgotPassword, resetPassword, getAllUsers, getUserDetail, deleteUser, verifyOtp } from "./auth.thunk";
+import { register, login, loadUser, logout, updateProfile, updatePassword, forgotPassword, resetPassword, getAllUsers, getUserDetail, deleteUser, verifyOtp, updateUserRole } from "./auth.thunk";
 import initialAuthState from "./auth.initialstate";
 
 const authSlice = createSlice({
@@ -208,6 +208,21 @@ const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload.error
                 state.user = null
+            })
+            .addCase(updateUserRole.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(updateUserRole.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(updateUserRole.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
             })
 
     }

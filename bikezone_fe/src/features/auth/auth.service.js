@@ -76,6 +76,12 @@ const verifyOtp = async (userData) => {
     return response.data
 }
 
+//update user role
+const updateUserRole = async (role, id) => {
+    const response = await axios.put(API_URL + `/admin/user/${id}`, {role}, { withCredentials: true })
+    return response.data
+}
+
 
 const authService = {
     register,
@@ -89,6 +95,7 @@ const authService = {
     getAllUsers,
     getUserDetail,
     deleteUser,
-    verifyOtp
+    verifyOtp,
+    updateUserRole
 }
 export default authService

@@ -114,7 +114,9 @@ function App() {
         <Route exact path="/contact" element={<ContactUs />} />
         <Route exact path="/about" element={<AboutUs />} />
         <Route exact path="/brands" element={<Brands />} />
-        <Route exact path="/product/:id" element={<ProductDetail />} />
+
+        <Route exact path="/product/:id" element={<ProductDetail />} /> 
+
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/success" element={<PaymentSuccess />} />
         <Route exact path="/blogs" element={<Blogs />} />
@@ -156,16 +158,16 @@ function App() {
         <Route exact path="/workshop/appointments" element={<ProtectedRoute Component={MyWorkshopAppointments} />} />
 
         {/*Rental-Bikes*/}
+        <Route exact path="/rental-bikes" element={<GetAllRentBikes />} />
         <Route exact path="/create-rental-bike" element={<ProtectedRoute Component={CreateRentalBike} />} />
-        <Route exact path="/rental-bikes" element={<ProtectedRoute Component={GetAllRentBikes} />} />
         <Route exact path="/rental-bikes/me" element={<ProtectedRoute Component={MyRentBikes} />} />
         <Route exact path="/rental-bikes/:id" element={<ProtectedRoute Component={RentBikeDetail} />} />
         <Route exact path="/rental-bike/update/:id" element={<ProtectedRoute Component={UpdateRentBike} />} />
 
         {/* Used Bikes */}
+        <Route exact path="/usedbikes" element={<GetAllUsedBikeAds />} />
         <Route exact path="/create-usedbike" element={<ProtectedRoute Component={CreateUsedBike} />} />
         <Route exact path="/usedbikes/me" element={<ProtectedRoute Component={MyUsedBikesAd} />} />
-        <Route exact path="/usedbikes" element={<ProtectedRoute Component={GetAllUsedBikeAds} />} />
         <Route exact path="/usedbike/:id" element={<ProtectedRoute Component={GetUsedBikeDetail} />} />
         <Route exact path="/usedbike/update/:id" element={<ProtectedRoute Component={UpdateUsedBike} />} />
 

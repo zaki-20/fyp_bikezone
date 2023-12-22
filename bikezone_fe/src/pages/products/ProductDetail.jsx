@@ -60,11 +60,7 @@ const ProductDetail = () => {
         const reviewData = {
             rating, comment, productId: id
         }
-        // const myForm = new FormData();
-
-        // myForm.set("rating", rating);
-        // myForm.set("comment", comment);
-        // myForm.set("productId", id);
+    
 
         dispatch(createReview(reviewData))
         setOpen(false);
@@ -75,6 +71,7 @@ const ProductDetail = () => {
     const { user } = useSelector((state) => state.auth)
     const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
     const { isError: reviewError, message: reviewMsg, isLoading: reviewLoad, isSuccess } = useSelector(state => state.review)
+    // const { isLoading, isError, message, orders } = useSelector((state) => state.order)
 
 
     useEffect(() => {
@@ -190,9 +187,7 @@ const ProductDetail = () => {
                                                 {productDetails.name}</h2>
 
                                             <div className="flex items-center mb-6 gap-4">
-
                                                 <ReactStars  {...options} />
-
                                                 <p className="text-xs dark:text-gray-400 ">({productDetails.numOfReviews} customer reviews)</p>
                                             </div>
 

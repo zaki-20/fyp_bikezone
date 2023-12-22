@@ -6,10 +6,28 @@ import SideBar from '../../components/SideBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import { deleteUser, getAllUsers } from '../../../features/auth/auth.thunk';
+import { deleteUser, getAllUsers, updateUserRole } from '../../../features/auth/auth.thunk';
+import {
+    Button,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
+} from "@material-tailwind/react";
+import Select from 'react-select'
+
 
 const UserList = () => {
     const dispatch = useDispatch()
+    const [openUser, setOpenUser] = useState(false);
+
+    const [selectedRole, setSelectedRole] = useState();
+    const [selectedUserId, setSelectedUserId] = useState(null);
+
+
+    const handleOpenUser = () => {
+        setOpenUser(!openUser)
+    };
 
     const { isLoading, users } = useSelector((state) => state.auth)
 
@@ -68,9 +86,14 @@ const UserList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={`/admin/user/${params.row.id}`}>
-                            <FaRegEdit size={20} />
-                        </Link>
+                        <FaRegEdit
+                            onClick={() => {
+                                setSelectedUserId(params.row.id);
+                                setSelectedRole(params.row.role);
+                                handleOpenUser(); // Open the dialog
+                            }}
+                            size={20} />
+
                         <button >
                             <MdDelete onClick={() => deleteUserHandler(params.row.id)} className='text-red-600' size={22} />
                         </button>
@@ -90,6 +113,24 @@ const UserList = () => {
         role: user.role,
     })) || [];
 
+
+    const handleRoleChange = (selectedOption) => {
+        setSelectedRole(selectedOption.value);
+    };
+
+    const options = [
+        { value: 'admin', label: 'Admin' },
+        { value: 'user', label: 'User' },
+    ]
+
+    const handleUpdateUser = async (userId) => {
+        await dispatch(updateUserRole({ selectedRole, userId }));
+        await dispatch(getAllUsers())
+
+        handleOpenUser();
+    };
+
+
     return (
         <div className='flex w-[100%] '>
             <SideBar />
@@ -103,6 +144,44 @@ const UserList = () => {
                     autoHeight
                 />
             </div>}
+
+            <Dialog open={openUser} handler={handleOpenUser} className=''>
+                <DialogHeader className='flex justify-start'>
+                    {/* <Lottie
+                        className="w-28 h-28 "
+                        animationData={redAlertAnimation}
+                    /> */}
+                    <span>Update User Role</span>
+                </DialogHeader>
+                <DialogBody className=' animate-pulse font-bold tracking-wide '>
+                    <div className="mb-4">
+                        <label htmlFor="role" className="text-sm font-semibold text-gray-600">
+                            Select Role:
+                        </label>
+                        <Select
+                            className="border-0 w-full border-b border-black rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
+                            options={options}
+                            onChange={handleRoleChange}
+                            value={options.find(option => option.value === selectedRole)} // Set the selected value
+                            name="role"
+                        />
+
+                    </div>
+                </DialogBody>
+                <DialogFooter>
+                    <Button
+                        variant="text"
+                        onClick={handleOpenUser}
+                        className="mr-1"
+                    >
+                        <span>Cancel</span>
+                    </Button>
+                    <Button variant="gradient" color="red" onClick={() => handleUpdateUser(selectedUserId)}>
+                        <span>update</span>
+                    </Button>
+                </DialogFooter>
+            </Dialog>
+
         </div>
     )
 }
