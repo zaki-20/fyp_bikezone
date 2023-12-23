@@ -67,7 +67,9 @@ const WorkshopList = () => {
             renderCell: (params) => {
                 return (
                     <>
-            
+                        <Link to={`/admin/workshops/${params.row.id}`}>
+                            <FaRegEdit size={20} />
+                        </Link>
                         <button >
                             <MdDelete onClick={() => deleteWorkshopHandler(params.row.id)} className='text-red-600' size={22} />
                         </button>

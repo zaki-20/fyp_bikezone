@@ -13,6 +13,18 @@ export const createAppointment = createAsyncThunk('appointment/createAppointment
     }
 })
 
+//get single workshop 
+export const getSingleAppointment = createAsyncThunk('appointment/getSingleAppointment', async (id, thunkAPI) => {
+    try {
+        return await appointmentService.getSingleAppointment(id)
+    } catch (error) {
+        const message =
+            error.response.data.message || error.response.data || error.response
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+
 
 
 

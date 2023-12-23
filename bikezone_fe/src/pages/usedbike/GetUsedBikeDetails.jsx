@@ -65,7 +65,7 @@ const GetUsedBikeDetail = () => {
 
     const handleDeleteRentBike = () => {
         // Check if the logged-in user's ID matches the owner's ID
-        if (user && user._id === usedBike.seller) {
+        if (user && user._id === usedBike.seller._id) {
 
             dispatch(deleteUsedBikeAd(id));
             navigate('/usedbikes/me');
@@ -242,7 +242,7 @@ const GetUsedBikeDetail = () => {
                                     </div>
                                     <div className="mb-6 " />
                                     {
-                                        user?._id === usedBike?.seller ? (
+                                        user?._id === usedBike?.seller._id ? (
                                             <>
                                                 <Link to={`/usedbike/update/${usedBike?._id}`}>
                                                     <div className="flex gap-4 mb-6">

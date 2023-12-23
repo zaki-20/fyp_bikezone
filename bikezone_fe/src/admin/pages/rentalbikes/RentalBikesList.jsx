@@ -91,6 +91,10 @@ const RentalBikesList = () => {
             renderCell: (params) => {
                 return (
                     <>
+
+                        <Link to={`/admin/rentalbikes/${params.row.id}`}>
+                            <FaRegEdit size={20} />
+                        </Link>
                         <button >
                             <MdDelete onClick={() => deleteRentBikeHandler(params.row.id)} className='text-red-600' size={22} />
                         </button>
@@ -107,13 +111,13 @@ const RentalBikesList = () => {
 
         const today = new Date();
         const publishDate = new Date(rentBike.availableFromDate);
-    
+
         let displayValue;
-    
+
         // Set hours, minutes, seconds, and milliseconds to 0 for accurate date comparison
         today.setHours(0, 0, 0, 0);
         publishDate.setHours(0, 0, 0, 0);
-    
+
         if (today.getTime() === publishDate.getTime() || today.getTime() > publishDate.getTime()) {
             displayValue = "Published";
         } else {

@@ -45,7 +45,7 @@ const Dashboard = () => {
     dispatch(getAllOrders())
     dispatch(getAllWorkshops())
     dispatch(getAllRentBikesAdmin())
-    dispatch(getAllUsedBikes)
+    dispatch(getAllUsedBikes())
   }, []);
 
 

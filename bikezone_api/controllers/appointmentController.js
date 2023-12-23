@@ -81,6 +81,13 @@ exports.getSingleAppointment = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
 
     const appointment = await Appointment.findById(id)
+        .populate('user')
+        .populate({
+            path: 'workshop',
+            populate: {
+                path: 'owner'
+            },
+        })
 
     if (!appointment) {
         return next(new ErrorHandler("Appointment not found", 404));

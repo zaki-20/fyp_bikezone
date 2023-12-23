@@ -49,9 +49,6 @@ const WorkshopDetail = () => {
         dispatch(getSingleWorkshop(id))
     }, [])
 
-
-
-
     const formatTime = (slot) => {
         const hours = slot % 12 || 12;
         const period = slot < 12 ? 'AM' : 'PM';
@@ -117,33 +114,7 @@ const WorkshopDetail = () => {
                                         <img className="object-contain w-full lg:h-full" src={workshop?.imageURL} alt />
                                     </div>
 
-                                    {/* <div className="flex-wrap hidden -mx-2 md:flex">
-
-                                        <div className="w-1/2 p-2 sm:w-1/4">
-                                            <a className="block border border-gray-200 hover:border-blue-400 dark:border-gray-700 dark:hover:border-blue-300" href="#">
-                                                <div>hello</div>
-                                                <div>hello</div>
-                                                <div>hello</div>
-                                                <div>hello</div>
-                                            </a>
-                                        </div>
-                                        <div className="w-1/2 p-2 sm:w-1/4">
-                                            <a className="block border border-gray-200 hover:border-blue-400 dark:border-gray-700 dark:hover:border-blue-300" href="#">
-                                                <div>hello</div>                                            </a>
-                                        </div>
-                                        <div className="w-1/2 p-2 sm:w-1/4">
-                                            <a className="block border border-gray-200 hover:border-blue-400 dark:border-gray-700 dark:hover:border-blue-300" href="#">
-                                                <div>hello</div>
-                                                <div>hello</div>
-                                                <div>hello</div>
-                                            </a>
-                                        </div>
-                                        <div className="w-1/2 p-2 sm:w-1/4">
-                                            <a className="block border border-gray-200 hover:border-blue-400 dark:border-gray-700 dark:hover:border-blue-300" href="#">
-                                                <div>hello</div>
-                                            </a>
-                                        </div>
-                                    </div> */}
+                    
                                 </div >
                             </div >
                             <div className="w-full px-4 md:w-1/2 border-l border-gray-500">
@@ -297,7 +268,7 @@ const WorkshopDetail = () => {
                                     </div>
                                     <div className="mb-6 " />
 
-                                    {user && user._id !== workshop?.owner && (
+                                    {user && user._id !== workshop?.owner._id && (
 
                                         <div className="flex gap-4 mb-6">
                                             <button onClick={() => handleOpen("xxl")} className="w-full flex px-4 py-3 justify-center gap-x-2 items-center text-center font-bold text-yellow-400 bg-[#1b2e2e] border border-transparent dark:border-gray-700  hover:font-bold duration-300 hover:scale-105 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 rounded-xl">
@@ -307,7 +278,7 @@ const WorkshopDetail = () => {
                                         </div>
                                     )}
 
-                                    {user && user._id === workshop?.owner && (
+                                    {user && user._id === workshop?.owner._id && (
                                         <>
                                             <Link to={`/workshop/appointments`}>
                                                 <div className="flex gap-4 mb-6">

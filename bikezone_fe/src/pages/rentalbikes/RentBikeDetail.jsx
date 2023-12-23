@@ -65,7 +65,7 @@ const RentBikeDetail = () => {
 
     const handleDeleteRentBike = () => {
         // Check if the logged-in user's ID matches the owner's ID
-        if (user && user._id === rentBike.seller) {
+        if (user && user._id === rentBike.seller?._id) {
 
             dispatch(deleteRentBike(id));
             navigate('/rental-bikes/me');
@@ -243,7 +243,7 @@ const RentBikeDetail = () => {
                                     <div className="mb-6 " />
                                     {/* <Link to={`/rental-bike/update/${rentBike?._id}`}> */}
                                     {
-                                        user?._id === rentBike?.seller ? (
+                                        user?._id === rentBike?.seller?._id ? (
                                             <>
 
 

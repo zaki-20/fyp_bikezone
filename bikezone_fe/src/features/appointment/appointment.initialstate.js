@@ -4,6 +4,7 @@ const initialAppointmentState = {
     isError: false,
     isSuccess: false,
     message: '',
+    appointment: null
 };
 
 export default initialAppointmentState;

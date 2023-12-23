@@ -5,54 +5,54 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 
 
 exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
-    const owner = req.user._id;
+  const owner = req.user._id;
 
-    const existingWorkshops = await Workshop.find({ owner });
+  const existingWorkshops = await Workshop.find({ owner });
 
-    if (existingWorkshops.length >= 3) {
-        return next(new ErrorHandler("Workshop limit reached", 404));
+  if (existingWorkshops.length >= 3) {
+    return next(new ErrorHandler("Workshop limit reached", 404));
+  }
+
+  const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description, imageURL } = req.body;
+
+  // Create an array to store time slots for each day of the week
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  let slotsArray = [];
+
+  // Generate time slots for each day of the week
+  for (const day of daysOfWeek) {
+    let daySlots = [];
+    for (let i = startTime; i < endTime; i++) {
+      daySlots.push(i);
     }
+    slotsArray.push({ day, slots: daySlots });
+  }
 
-    const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description, imageURL } = req.body;
+  const workshop = await Workshop.create({
+    name,
+    email,
+    brand,
+    city,
+    contact,
+    address,
+    owner,
+    service1,
+    service2,
+    service3,
+    service4,
+    weeklySlots: slotsArray, // Store the time slots for each day of the week
+    startTime,
+    endTime,
+    description,
+    imageURL
+  });
 
-    // Create an array to store time slots for each day of the week
-    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    let slotsArray = [];
-
-    // Generate time slots for each day of the week
-    for (const day of daysOfWeek) {
-        let daySlots = [];
-        for (let i = startTime; i < endTime; i++) {
-            daySlots.push(i);
-        }
-        slotsArray.push({ day, slots: daySlots });
-    }
-
-    const workshop = await Workshop.create({
-        name,
-        email,
-        brand,
-        city,
-        contact,
-        address,
-        owner,
-        service1,
-        service2,
-        service3,
-        service4,
-        weeklySlots: slotsArray, // Store the time slots for each day of the week
-        startTime,
-        endTime,
-        description,
-        imageURL
-    });
-
-    return res.status(201).json({
-        statusCode: 201,
-        success: true,
-        message: "Workshop created successfully",
-        payload: { workshop },
-    });
+  return res.status(201).json({
+    statusCode: 201,
+    success: true,
+    message: "Workshop created successfully",
+    payload: { workshop },
+  });
 });
 
 
@@ -115,59 +115,62 @@ exports.getAllWorkshops = catchAsyncErrors(async (req, res, next) => {
 
 exports.getWorkshopDetails = async (req, res, next) => {
 
-    const { id } = req.params;
+  const { id } = req.params;
 
-    const workshop = await Workshop.findById(id).populate({
-        path: "appointments",
-        populate: {
-            path: "user",
-            select: "firstname lastname email", // Select the fields you want from the user object
-        },
-    }).populate({
-        path: "appointments",
-        populate: {
-            path: "workshop",
-            select: "name brand contact", // Select the fields you want from the workshop object
-        },
-    });
-
-
-    if (!workshop) {
-        return next(new ErrorHandler("Workshop not found", 404));
-    }
+  const workshop = await Workshop.findById(id).populate({
+    path: "appointments",
+    populate: {
+      path: "user",
+      select: "firstname lastname email", // Select the fields you want from the user object
+    },
+  }).populate({
+    path: "appointments",
+    populate: {
+      path: "workshop",
+      select: "name brand contact owner", // Select the fields you want from the workshop object
+    },
+  }).populate({
+    path: "owner", // Assuming "owner" is a reference field in the Workshop model
+    select: "firstname lastname email imageURL", // Select the fields you want from the owner user object
+  });
 
 
-    res.status(200).json({
-        statusCode: 200,
-        success: true,
-        message: "Workshop retrieved successfully",
-        payload: { workshop },
-    });
+  if (!workshop) {
+    return next(new ErrorHandler("Workshop not found", 404));
+  }
+
+
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "Workshop retrieved successfully",
+    payload: { workshop },
+  });
 
 };
 
 exports.getMyWorkshopDetails = catchAsyncErrors(async (req, res, next) => {
-    const ownerId = req.user._id;
+  const ownerId = req.user._id;
 
-    const workshop = await Workshop.findOne({ owner: ownerId })
-        .populate('owner', 'firstname lastname email') // Populate the owner field
-        .populate({
-            path: 'appointments',
-            populate: {
-                path: 'user',
-                select: 'firstname lastname email', // Select the fields you want from the user object
-            },
-        });
-
-
-    if (!workshop) {
-        return next(new ErrorHandler("Workshop not found", 404));
-    }
-
-    res.status(200).json({
-        statusCode: 200,
-        success: true,
-        message: "My Workshop details retrieved successfully",
-        payload: { workshop },
+  const workshop = await Workshop.findOne({ owner: ownerId })
+    .populate('owner', 'firstname lastname email') // Populate the owner field
+    .populate({
+      path: 'appointments',
+      populate: {
+        path: 'user',
+        select: 'firstname lastname email', // Select the fields you want from the user object
+      },
     });
+
+
+  if (!workshop) {
+    return next(new ErrorHandler("Workshop not found", 404));
+  }
+
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "My Workshop details retrieved successfully",
+    payload: { workshop },
+  });
 });

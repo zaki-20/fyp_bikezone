@@ -68,6 +68,10 @@ import GetAllUsedBikeAds from "./pages/usedbike/GetAllUsedBikeAds";
 import GetUsedBikeDetail from "./pages/usedbike/GetUsedBikeDetails";
 import UpdateUsedBike from "./pages/usedbike/UpdateUsedBike";
 import UsedBikesList from "./admin/pages/usedbike/UsedBikesList";
+import GetSingleAppointment from "./pages/workshop/GetSingleAppointment";
+import WorkshopDetails from "./admin/pages/workshops/WorkshopDetails";
+import UsedBikeDetail from "./admin/pages/usedbike/UsedBikeDetail";
+import RentalBikeDetail from "./admin/pages/rentalbikes/RentalBikeDetail";
 
 
 function App() {
@@ -156,6 +160,7 @@ function App() {
         <Route exact path="/workshop/:id" element={<ProtectedRoute Component={WorkshopDetail} />} />
         <Route exact path="/workshop/update/:id" element={<ProtectedRoute Component={UpdateWorkshop} />} />
         <Route exact path="/workshop/appointments" element={<ProtectedRoute Component={MyWorkshopAppointments} />} />
+        <Route exact path="/workshop/appointment/:id" element={<ProtectedRoute Component={GetSingleAppointment} />} />
 
         {/*Rental-Bikes*/}
         <Route exact path="/rental-bikes" element={<GetAllRentBikes />} />
@@ -185,9 +190,14 @@ function App() {
         <Route exact isAdmin={true} path="/admin/reviews" element={<ProtectedRoute Component={ReviewList} />} />
 
         <Route exact isAdmin={true} path="/admin/workshops" element={<ProtectedRoute Component={WorkshopList} />} />
+        <Route exact isAdmin={true} path="/admin/workshops/:id" element={<ProtectedRoute Component={WorkshopDetails} />} />
+
         <Route exact isAdmin={true} path="/admin/rental-bikes" element={<ProtectedRoute Component={RentalBikesList} />} />
+        <Route exact isAdmin={true} path="/admin/rentalbikes/:id" element={<ProtectedRoute Component={RentalBikeDetail} />} />
 
         <Route exact isAdmin={true} path="/admin/usedbikes" element={<ProtectedRoute Component={UsedBikesList} />} />
+        <Route exact isAdmin={true} path="/admin/usedbikes/:id" element={<ProtectedRoute Component={UsedBikeDetail} />} />
+
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

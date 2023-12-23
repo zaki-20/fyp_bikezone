@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createAppointment } from "./appointment.thunk";
+import { createAppointment, getSingleAppointment } from "./appointment.thunk";
 import initialAppointmentState from './appointment.initialstate'
 
 const appointmentSlice = createSlice({
@@ -28,6 +28,23 @@ const appointmentSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error
+            })
+            .addCase(getSingleAppointment.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(getSingleAppointment.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+                state.appointment = action.payload.payload.appointment
+            })
+            .addCase(getSingleAppointment.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload.error
+                state.appointment = null
+
             })
         
     }

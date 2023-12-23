@@ -131,7 +131,10 @@ exports.deleteRentBike = async (req, res, next) => {
 
 exports.getRentBikeDetails = catchAsyncErrors(async (req, res, next) => {
   const rentBikeId = req.params.id;
-  const rentBike = await RentBike.findById(rentBikeId);
+  const rentBike = await RentBike.findById(rentBikeId).populate({
+    path: 'seller',
+    select: 'firstname lastname email imageURL', // Select the fields you want from the seller object
+  });
 
   if (!rentBike) {
     return next(new CustomError("Rental bike ad not found", 404));

@@ -66,7 +66,7 @@ const MyWorkshopAppointments = () => {
             sortable: false,
             renderCell: (params) => {
                 return (
-                    <Link to={`/appointments/${params.row.id}`}>
+                    <Link to={`/workshop/appointment/${params.row.id}`}>
                         <MdLaunch size={20} />
                     </Link>
 

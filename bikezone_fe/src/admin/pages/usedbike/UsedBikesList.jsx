@@ -79,6 +79,10 @@ const UsedBikesList = () => {
             renderCell: (params) => {
                 return (
                     <>
+                        <Link to={`/admin/usedbikes/${params.row.id}`}>
+                            <FaRegEdit size={20} />
+                        </Link>
+
                         <button >
                             <MdDelete onClick={() => deleteRentBikeHandler(params.row.id)} className='text-red-600' size={22} />
                         </button>
@@ -92,7 +96,6 @@ const UsedBikesList = () => {
 
 
     const rows = usedBikes?.map((usedBike) => {
-
 
         return {
             id: usedBike._id,
