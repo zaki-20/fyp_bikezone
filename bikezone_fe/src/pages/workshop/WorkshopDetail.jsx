@@ -90,7 +90,7 @@ const WorkshopDetail = () => {
 
     const handleDeleteWorkshop = () => {
         // Check if the logged-in user's ID matches the owner's ID
-        if (user && user._id === workshop.owner) {
+        if (user && user._id === workshop.owner._id) {
 
             dispatch(deleteMyWorkshop(id));
             navigate('/workshops/me');
@@ -113,7 +113,6 @@ const WorkshopDetail = () => {
                                     <div className="relative mb-6 lg:mb-10 bg-red-300 ">
                                         <img className="object-contain w-full lg:h-full" src={workshop?.imageURL} alt />
                                     </div>
-
                     
                                 </div >
                             </div >

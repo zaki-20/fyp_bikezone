@@ -69,7 +69,6 @@ const Register = () => {
                     const imageUrl = cloudinaryResponse.data.secure_url;
                     // Add the Cloudinary image URL to the form data
                     values.imageURL = imageUrl;
-                    console.log(values)
                     // // Register the user with the updated form data
                     dispatch(register(values));
                 } catch (error) {

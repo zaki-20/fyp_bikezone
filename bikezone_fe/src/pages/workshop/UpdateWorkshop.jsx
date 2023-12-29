@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Lottie from 'lottie-react'
 import updateWorkshopAnimation from '../../assets/animated/updateWorkshopAnimation.json'
+import axios from 'axios';
 
 const schema = yup.object({
     name: yup.string().required('Workshop Name is required'),
@@ -32,6 +33,7 @@ const schema = yup.object({
         .typeError('Max Appointments must be a number')
         .required('Max Appointments is required'),
     description: yup.string().required('Description is required'),
+
 });
 
 
@@ -39,6 +41,9 @@ const UpdateWorkshop = () => {
     const { id } = useParams();
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const [image, setImage] = useState(null);
+
 
     const { isError, isSuccess, message, isLoading, workshop } = useSelector((state) => state.workshop)
 
@@ -56,7 +61,8 @@ const UpdateWorkshop = () => {
         service1: workshop?.service1,
         service2: workshop?.service2,
         service3: workshop?.service3,
-        service4: workshop?.service4
+        service4: workshop?.service4,
+      
     }
 
 
@@ -72,6 +78,12 @@ const UpdateWorkshop = () => {
 
     }, [isError])
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
+
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
             initialValues,
@@ -79,10 +91,32 @@ const UpdateWorkshop = () => {
             validateOnChange: true,
             validateOnBlur: false,
             onSubmit: async (values, action) => {
-                await dispatch(updateMyWorkshop({ values, id }))
-                action.resetForm();
-                if (isSuccess) {
-                    navigate(`/workshop/${id}`)
+
+                try {
+                    const formData = new FormData();
+                    formData.append('file', image);
+                    formData.append('upload_preset', 'preset_images'); // Replace with your Cloudinary upload preset
+
+                    const cloudinaryResponse = await axios.post(
+                        'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
+                        formData
+                    );
+
+                    const imageUrl = cloudinaryResponse.data.secure_url;
+
+                    // Add the Cloudinary image URL to the form data
+                    values.imageURL = imageUrl;
+
+                    await dispatch(updateMyWorkshop({ values, id }))
+                    action.resetForm();
+                    if (isSuccess) {
+                        navigate(`/workshop/${id}`)
+                    }
+                    console.log(values)
+                } catch (err) {
+                    console.error('Image upload failed.', err);
+                    toast.error('Image upload failed.');
+
                 }
 
 
@@ -174,8 +208,17 @@ const UpdateWorkshop = () => {
                                             <label className="block uppercase  text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Upload photo
                                             </label>
-                                            <input type="file" className="border-0 px-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            <input
+                                                type='file'
+                                                id='avatar'
+                                                name='avatar'
+                                                onChange={handleImageChange}
+                                                className="border-0 px-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
+                                       
+                                        {image && (
+                                            <img className="w-10 h-10 rounded-full" src={URL.createObjectURL(image)} alt="Rounded avatar" />
+                                        )}
                                     </div>
                                 </div>
 

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import Loader from '../../../pages/shared/Loader'
 import SideBar from '../../components/SideBar'
-import { getUsedBikeDetails } from '../../../features/usedbike/usedbike.thunk'
 import { getDetailRentBike } from '../../../features/rentbike/rentbike.thunk'
 
 

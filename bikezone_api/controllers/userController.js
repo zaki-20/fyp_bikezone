@@ -309,11 +309,15 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 // update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
+
+    console.log(req.body)
     const newUserData = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
+        imageURL:req.body.imageURL
     };
+
 
     //we will add cloudinary later
 

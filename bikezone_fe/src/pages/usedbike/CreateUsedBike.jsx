@@ -69,15 +69,7 @@ const CreateUsedBike = () => {
         setPreviewImages(fileArray.map(file => URL.createObjectURL(file)));
     };
 
-    // const { isError, isSuccess, message, isLoading } = useSelector((state) => state.usedBike)
-
-    // useEffect(() => {
-    //     if (isError) {
-    //         toast.error(message)
-    //         dispatch(reset())
-    //     }
-    // }, [isError])
-
+   
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
             initialValues,

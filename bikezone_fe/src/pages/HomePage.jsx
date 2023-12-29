@@ -5,10 +5,10 @@ import MetaData from '../components/MetaData'
 import TopRatedProducts from '../components/sections/TopRatedProducts'
 import ReviewedProducts from '../components/sections/ReviewedProducts'
 import NewArrivalProducts from '../components/sections/NewArrivalProucts'
-import ProductSection from '../components/sections/ProductSection'
 import FeatureSection from '../components/sections/FeatureSection'
 import Lottie from 'lottie-react'
 import bikeAnimation from '../assets/animated/bikerun.json'
+import Services from '../components/sections/Services'
 
 const HomePage = () => {
   return (
@@ -28,7 +28,7 @@ const HomePage = () => {
       <div className='bg-gray-700 h-1 mx-auto -mt-2 w-2/3 blur-lg animate-pulse roun'></div>
 
 
-      {/* <ProductSection /> */}
+      <Services />
       <FeaturedProducts />
       <TopRatedProducts />
       <ReviewedProducts />

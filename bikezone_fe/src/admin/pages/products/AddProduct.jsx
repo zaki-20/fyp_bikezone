@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { reset } from '../../../features/product/product.slice';
 import { createProduct } from '../../../features/product/product.thunk';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const schema = yup.object({
     name: yup.string().required('Product name is required'),
@@ -29,7 +30,7 @@ const schema = yup.object({
 function AddProduct() {
 
     const dispatch = useDispatch()
-
+    const navigate = useNavigate()
 
     const { isError, isSuccess, message } = useSelector((state) => state.product)
 
@@ -88,10 +89,9 @@ function AddProduct() {
 
                     // Add the Cloudinary image URLs to the form data
                     values.images = imageUrls;
-
-
-                    console.log(values)
                     await dispatch(createProduct(values))
+                    navigate('/admin/products')
+
                 } catch (error) {
                     console.log(error)
                 }

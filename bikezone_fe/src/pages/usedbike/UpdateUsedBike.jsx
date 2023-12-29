@@ -110,7 +110,6 @@ const CreateUsedBike = () => {
                     values.images = imageUrls;
                     // Convert brand to lowercase before submitting
                     values.brand = values.brand.toLowerCase();
-                    console.log(values)
                     await dispatch(updateUsedBike({ values, id }))
                     navigate('/usedbikes/me')
 

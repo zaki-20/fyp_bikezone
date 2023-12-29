@@ -75,11 +75,10 @@ const RentalBikesList = () => {
             minWidth: 200,
             flex: 0.5,
             cellClassName: (params) => {
-
                 return params.row.publish === 'Published' ? "text-green-600 font-semibold" : "text-red-600";
-
             },
         },
+
         {
             field: "actions",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
@@ -91,7 +90,6 @@ const RentalBikesList = () => {
             renderCell: (params) => {
                 return (
                     <>
-
                         <Link to={`/admin/rentalbikes/${params.row.id}`}>
                             <FaRegEdit size={20} />
                         </Link>
@@ -99,7 +97,6 @@ const RentalBikesList = () => {
                             <MdDelete onClick={() => deleteRentBikeHandler(params.row.id)} className='text-red-600' size={22} />
                         </button>
                     </>
-
                 );
             },
             cellClassName: "text-blue-500"

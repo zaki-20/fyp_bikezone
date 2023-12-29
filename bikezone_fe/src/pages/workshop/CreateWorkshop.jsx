@@ -38,6 +38,8 @@ const schema = yup.object({
         .typeError('Max Appointments must be a number')
         .required('Max Appointments is required'),
     description: yup.string().required('Description is required'),
+    // imageURL: yup.string().required('Image is required'),
+
 });
 
 
@@ -62,6 +64,8 @@ const CreateWorkshop = () => {
         service2: '',
         service3: '',
         service4: '',
+        // imageURL: '',
+
     }
 
     const { isError, isSuccess, message, isLoading } = useSelector((state) => state.workshop)
@@ -110,14 +114,11 @@ const CreateWorkshop = () => {
                     values.imageURL = imageUrl;
 
                     await dispatch(createWorkshop(values))
-                    console.log(values)
                     action.resetForm();
                     navigate('/workshops/me')
                 } catch (error) {
                     toast.error('Image upload failed.');
-
                 }
-
             },
         });
 
@@ -210,6 +211,7 @@ const CreateWorkshop = () => {
                                                 onChange={handleImageChange}
                                                 className="border-0 px-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
+                                       
                                         {image && (
                                             <img className="w-10 h-10 rounded-full" src={URL.createObjectURL(image)} alt="Rounded avatar" />
                                         )}

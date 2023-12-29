@@ -119,7 +119,7 @@ function App() {
         <Route exact path="/about" element={<AboutUs />} />
         <Route exact path="/brands" element={<Brands />} />
 
-        <Route exact path="/product/:id" element={<ProductDetail />} /> 
+        <Route exact path="/product/:id" element={<ProductDetail />} />
 
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/success" element={<PaymentSuccess />} />
@@ -176,25 +176,30 @@ function App() {
         <Route exact path="/usedbike/:id" element={<ProtectedRoute Component={GetUsedBikeDetail} />} />
         <Route exact path="/usedbike/update/:id" element={<ProtectedRoute Component={UpdateUsedBike} />} />
 
-        {/* admin routes */}
+        {/* admin product routes */}
         <Route exact isAdmin={true} path="/admin/dashboard" element={<ProtectedRoute Component={Dashboard} />} />
         <Route exact isAdmin={true} path="/admin/products" element={<ProtectedRoute Component={ProductList} />} />
         <Route exact isAdmin={true} path="/admin/product/new" element={<ProtectedRoute Component={AddProduct} />} />
         <Route exact isAdmin={true} path="/admin/product/:id" element={<ProtectedRoute Component={UpdateProduct} />} />
 
+        {/* admin order routes */}
         <Route exact isAdmin={true} path="/admin/orders" element={<ProtectedRoute Component={OrderList} />} />
         <Route exact isAdmin={true} path="/admin/order/:id" element={<ProtectedRoute Component={ProcessOrder} />} />
 
+        {/* admin users routes */}
         <Route exact isAdmin={true} path="/admin/users" element={<ProtectedRoute Component={UserList} />} />
         <Route exact isAdmin={true} path="/admin/user/:id" element={<ProtectedRoute Component={UserDetail} />} />
         <Route exact isAdmin={true} path="/admin/reviews" element={<ProtectedRoute Component={ReviewList} />} />
 
+        {/* admin workshop routes */}
         <Route exact isAdmin={true} path="/admin/workshops" element={<ProtectedRoute Component={WorkshopList} />} />
         <Route exact isAdmin={true} path="/admin/workshops/:id" element={<ProtectedRoute Component={WorkshopDetails} />} />
 
+        {/* admin rental bike routes */}
         <Route exact isAdmin={true} path="/admin/rental-bikes" element={<ProtectedRoute Component={RentalBikesList} />} />
         <Route exact isAdmin={true} path="/admin/rentalbikes/:id" element={<ProtectedRoute Component={RentalBikeDetail} />} />
 
+        {/* admin used bike routes */}
         <Route exact isAdmin={true} path="/admin/usedbikes" element={<ProtectedRoute Component={UsedBikesList} />} />
         <Route exact isAdmin={true} path="/admin/usedbikes/:id" element={<ProtectedRoute Component={UsedBikeDetail} />} />
 
