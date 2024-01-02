@@ -105,6 +105,7 @@ const ProductList = () => {
         <div className='flex w-[100%] '>
             <SideBar />
             <div className="bg-gray-100 min-h-screen p-5 w-full">
+                <h1 className='text-2xl py-3' >All Products</h1>
                 <DataGrid
                     rows={rows}
                     columns={columns}

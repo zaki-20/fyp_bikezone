@@ -135,6 +135,8 @@ const UserList = () => {
         <div className='flex w-[100%] '>
             <SideBar />
             {!isLoading && <div className="bg-gray-100 min-h-screen p-5 w-full">
+            <h1 className='text-2xl py-3' >All Users</h1>
+
                 <DataGrid
                     rows={rows}
                     columns={columns}

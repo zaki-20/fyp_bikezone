@@ -136,6 +136,8 @@ const RentalBikesList = () => {
         <div className='flex'>
             <SideBar />
             {!isLoading && <div className="bg-gray-100 min-h-screen p-5 overflow-x-hidden">
+                <h1 className='text-2xl font-medium  py-3' >All Product Reviews</h1>
+
                 <DataGrid
                     className=" w-[100%]"
                     rows={rows}

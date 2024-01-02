@@ -105,6 +105,7 @@ function AddProduct() {
                 <SideBar />
 
                 <div className=" shadow-md rounded w-full px-8 pt-2 pb-8 bg-gray-100">
+                    
                     <div className="max-w-4xl p-6 mx-auto bg-gray-200 rounded-md shadow-md dark:bg-gray-800 mt-10">
                         <h1 className="text-xl mb-4 font-bold text-black capitalize dark:text-white">Post Your Product</h1>
                         <form onSubmit={handleSubmit}>

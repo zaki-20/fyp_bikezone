@@ -48,8 +48,9 @@ const UsedBikeDetail = () => {
                 ) : (
 
                     <div className='w-full py-10'>
-                        <div className=" sm:px-10 lg:px-20 md:flex flex-none justify-between gap-8 xl:px-32">
+                        <div className=" sm:px-10 lg:px-16 md:flex flex-none justify-between gap-8 xl:px-20">
                             <div className="px-4 py-8 w-full ">
+                                <h1 className="text-3xl text-center">Bike detail</h1>
                                 <div className='border-b py-6 border-black '>
                                     <div className=' flex justify-between items-center'>
                                         <div>

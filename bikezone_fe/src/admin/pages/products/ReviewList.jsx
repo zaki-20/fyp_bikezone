@@ -105,13 +105,11 @@ const ReviewList = () => {
         <div className='flex w-[100%] '>
             <SideBar />
             <div className="bg-gray-100 min-h-screen p-5 w-full">
-                <h1 className="text-xl ext-center">ALL REVIEWS</h1>
+            <h1 className='text-2xl font-medium  py-3' >All Product Reviews</h1>
                 <form
                     className="flex justify-center items-center gap-x-3 mb-10"
                     onSubmit={productReviewsSubmitHandler}
                 >
-
-
                     <div className='flex justify-center'>
                         <input
                             type="text"
@@ -143,7 +141,7 @@ const ReviewList = () => {
                             autoHeight
                         />
                     ) : (
-                        <h1 className="text-xl text-black">No Reviews Found</h1>
+                        <h1 className="text-xl flex pt-32 justify-center cursor-wait items-center text-black">No Reviews Found!</h1>
 
                     )
                 }
