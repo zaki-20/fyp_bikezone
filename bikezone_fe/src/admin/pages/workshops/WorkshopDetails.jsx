@@ -39,7 +39,7 @@ const WorkshopDetails = () => {
 
 
     return (
-        <div className='flex bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600'>
+        <div className='flex bg-gray-100'>
             <SideBar />
 
             {
@@ -54,6 +54,8 @@ const WorkshopDetails = () => {
                     <div className='w-full py-10'>
                         <div className=" sm:px-10 lg:px-20 md:flex flex-none justify-between gap-8 xl:px-32">
                             <div className="px-4 py-8 w-full ">
+                            <h1 className="text-3xl text-center">Workshop detail</h1>
+
                                 <div className='border-b py-6 border-black '>
                                     <div className=' flex justify-between items-center'>
                                         <div>
@@ -65,7 +67,7 @@ const WorkshopDetails = () => {
                                             <span>Owner</span>
                                         </div>
                                     </div>
-                                    <div className="mt-4 space-y-3 rounded-lg border border-gray-600 bg-[#d8d7d7ea] hover:shadow-[inset_3px_0px_41px_22px_#00000024] hover:shadow-gray-400 duration-300 px-2 py-2 sm:px-6">
+                                    <div className="mt-4 space-y-3 rounded-lg border border-gray-600 bg-[#e9e7e7ea] hover:shadow-[inset_3px_0px_41px_22px_#00000024] hover:shadow-gray-400 duration-300 px-2 py-2 sm:px-6">
                                         <div className="flex justify-between mx-4">
                                             <span className="text-gray-700 text-sm font-bold">Name:</span>
                                             <span className="text-gray-600">{`${workshop?.owner?.firstname} ${workshop?.owner?.lastname}`}</span>
@@ -86,7 +88,7 @@ const WorkshopDetails = () => {
                                         <p className="text-gray-700">Check your Workshop Details.</p>
 
                                     </div>
-                                    <div className="mt-4 space-y-3 rounded-lg border border-gray-600 bg-[#d8d7d7ea] hover:shadow-[inset_3px_0px_41px_22px_#00000024] duration-300 hover:shadow-gray-400 px-2 py-2 sm:px-6">
+                                    <div className="mt-4 space-y-3 rounded-lg border border-gray-600 bg-[#e9e7e7ea] hover:shadow-[inset_3px_0px_41px_22px_#00000024] duration-300 hover:shadow-gray-400 px-2 py-2 sm:px-6">
                                         <div className="flex flex-col rounded-lg  sm:flex-row items-center ">
                                             <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src={workshop?.imageURL} alt='true' />
 

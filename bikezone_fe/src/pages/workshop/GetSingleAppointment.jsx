@@ -75,6 +75,10 @@ const GetSingleAppointment = () => {
                                             <span className="text-gray-700 text-sm font-bold">Slot #:</span>
                                             <span className="text-gray-600">{appointment?.slot}:00</span>
                                         </div>
+                                        <div className="flex justify-between mx-4">
+                                            <span className="text-gray-700 text-sm font-bold">Discount:</span>
+                                            <span className="text-gray-600">{appointment?.discountAmount > 0 ? `${appointment?.discountAmount}%` : "No Discount"}</span>
+                                        </div>
 
                                     </div>
                                 </div>

@@ -70,10 +70,6 @@ exports.verifyEmailOTP = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("User not found", 404));
     }
 
-    console.log("Entered OTP: ", otp);
-    console.log("Stored OTP: ", user.emailVerificationOTP);
-    console.log("Expiry time: ", user.emailVerificationExpiry);
-    console.log("Current time: ", Date.now());
 
     // Check if OTP matches and it's not expired
     if (user.emailVerificationOTP === otp && user.emailVerificationExpiry > Date.now()) {
@@ -315,7 +311,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
-        imageURL:req.body.imageURL
+        imageURL: req.body.imageURL
     };
 
 
@@ -327,7 +323,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         useFindAndModify: false,
     });
 
-   
+
 
     res.status(200).json({
         statusCode: 200,

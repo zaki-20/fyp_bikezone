@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-
 const schema = yup.object({
     name: yup.string().required('Workshop Name is required'),
     email: yup
@@ -33,12 +32,12 @@ const schema = yup.object({
         .number().min(1).max(24)
         .typeError('End Time must be a number')
         .required('End Time is required'),
-    maxAppointments: yup
-        .number()
-        .typeError('Max Appointments must be a number')
-        .required('Max Appointments is required'),
+    discount: yup
+        .number().min(1).max(100)
+        .typeError('discount must be a number'),
     description: yup.string().required('Description is required'),
     // imageURL: yup.string().required('Image is required'),
+    offerDate: yup.date().nullable().min(new Date(), "Offer date must be in the future").typeError('Invalid date format'),
 
 });
 
@@ -65,6 +64,7 @@ const CreateWorkshop = () => {
         service3: '',
         service4: '',
         // imageURL: '',
+        offerDate: null,
 
     }
 
@@ -87,7 +87,6 @@ const CreateWorkshop = () => {
         return () => {
             dispatch(reset())
         }
-
     }, [isSuccess, isError, message])
 
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
@@ -114,6 +113,7 @@ const CreateWorkshop = () => {
                     values.imageURL = imageUrl;
 
                     await dispatch(createWorkshop(values))
+                    console.log(values)
                     action.resetForm();
                     navigate('/workshops/me')
                 } catch (error) {
@@ -211,7 +211,7 @@ const CreateWorkshop = () => {
                                                 onChange={handleImageChange}
                                                 className="border-0 px-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
-                                       
+
                                         {image && (
                                             <img className="w-10 h-10 rounded-full" src={URL.createObjectURL(image)} alt="Rounded avatar" />
                                         )}
@@ -396,19 +396,39 @@ const CreateWorkshop = () => {
                                     <div className="w-full lg:w-4/12 px-4">
                                         <div className="relative w-full mb-3">
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                                Max Appointments
+                                                Offer Discount
                                             </label>
                                             <input
-                                                id='maxAppointments'
-                                                name='maxAppointments'
-                                                value={values.maxAppointments}
+                                                id='discount'
+                                                name='discount'
+                                                value={values.discount}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                type="number" placeholder='max appointments per hour' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
-                                            {errors.maxAppointments && touched.maxAppointments ? (
-                                                <p className="text-red-600 animate-pulse">{errors.maxAppointments}</p>
+                                                type="number" placeholder='enter discount ' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            {errors.discount && touched.discount ? (
+                                                <p className="text-red-600 animate-pulse">{errors.discount}</p>
                                             ) : null}
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div className="w-full lg:w-6/12 px-4">
+                                    <div className="relative w-full mb-3">
+                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                                            Special Offer Date
+                                        </label>
+                                        <input
+                                            type="date"
+                                            id="offerDate"
+                                            name="offerDate"
+                                            value={values.offerDate}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            className="border-0 px-3 py-3 border-b border-black bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        />
+                                        {errors.offerDate && touched.offerDate ? (
+                                            <p className="text-red-600 animate-pulse">{errors.offerDate}</p>
+                                        ) : null}
                                     </div>
                                 </div>
 

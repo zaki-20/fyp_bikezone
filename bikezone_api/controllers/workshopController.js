@@ -1,6 +1,7 @@
 const Workshop = require("../models/workshopModel");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const moment = require('moment-timezone');
 
 
 
@@ -13,7 +14,9 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Workshop limit reached", 404));
   }
 
-  const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description, imageURL } = req.body;
+  const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description, imageURL, offerDate, discount } = req.body;
+
+  const karachiTimezone = 'Asia/Karachi';
 
   // Create an array to store time slots for each day of the week
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -27,6 +30,8 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
     }
     slotsArray.push({ day, slots: daySlots });
   }
+
+  const offerDateInKarachi = moment.tz(offerDate, karachiTimezone);
 
   const workshop = await Workshop.create({
     name,
@@ -44,7 +49,9 @@ exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
     startTime,
     endTime,
     description,
-    imageURL
+    imageURL,
+    discount,
+    offerDate: offerDateInKarachi.toISOString(), // Store the date in ISO format
   });
 
   return res.status(201).json({

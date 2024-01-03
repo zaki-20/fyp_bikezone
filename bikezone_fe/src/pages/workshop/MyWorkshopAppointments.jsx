@@ -45,6 +45,19 @@ const MyWorkshopAppointments = () => {
             flex: 0.3,
             minWidth: 150
         },
+        {
+            field: "discount",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
+            headerName: "Discount",
+            flex: 0.3,
+            minWidth: 150,
+            cellClassName: (params) => {
+                const numericDiscount = parseFloat(params.row.discount);
+                return numericDiscount > 0
+                    ? "text-green-600"
+                    : "text-red-600";
+            },
+        },
 
         {
             field: "date",
@@ -78,11 +91,14 @@ const MyWorkshopAppointments = () => {
     const rows = []
     workshop && workshop.appointments &&
         workshop.appointments.forEach((item, index) => {
+            const discountValue = item.discountAmount > 0 ? `${item.discountAmount}%` : 'No Discount';
+
             rows.push({
                 id: item._id,
                 username: `${item.user.firstname} ${item.user.lastname}`,
                 email: item.user.email,
                 slot: item.slot,
+                discount: discountValue,
                 date: `${item.day} ${item.slot}:00 -${item.slot + 1}:00`,
             });
         });

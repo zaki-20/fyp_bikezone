@@ -27,6 +27,14 @@ exports.createAppointment = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("You already have an appointment at this slot", 400));
     }
 
+    // Check if the workshop has an active offer
+    const currentDateTime = new Date();
+    let discountAmount = 0;
+
+    if (existingWorkshop.offerDate && currentDateTime <= new Date(existingWorkshop.offerDate)) {
+        discountAmount = existingWorkshop.discount;
+    }
+
     // Remove the slot from the specified day in weeklySlots
     const updatedWeeklySlots = existingWorkshop.weeklySlots.map(daySlots => {
         if (daySlots.day === day) {
@@ -45,6 +53,8 @@ exports.createAppointment = catchAsyncErrors(async (req, res, next) => {
         day,
         slot,
         user: user._id,
+        discountAmount, // Include discount amount in the appointment
+
     });
 
     // Update the workshop's appointment array with the new appointment

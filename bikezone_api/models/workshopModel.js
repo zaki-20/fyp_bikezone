@@ -33,7 +33,6 @@ const workshopSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-
   weeklySlots: {
     type: Array,
     default: [],
@@ -59,7 +58,6 @@ const workshopSchema = new mongoose.Schema({
       ref: "Appointment",
     }
   ],
-
   description: {
     type: String,
     required: [true, "Please Enter workshop Description"],
@@ -72,8 +70,15 @@ const workshopSchema = new mongoose.Schema({
   endTime: {
     type: Number,
     required: true
-  }
-
+  },
+  offerDate: {
+    type: Date,
+    default: null,
+  },
+  discount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("Workshop", workshopSchema);

@@ -29,6 +29,11 @@ const OtpVerification = () => {
 
     const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
+    useEffect(() => {
+        if (user) {
+            navigate('/account');
+        }
+    }, [user])
 
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
         useFormik({
@@ -38,9 +43,6 @@ const OtpVerification = () => {
             validateOnBlur: false,
             onSubmit: async (values, action) => {
                 await dispatch(verifyOtp(values))
-                if (isSuccess && user) {
-                    navigate('/account');
-                }
                 action.resetForm();
             },
         });
