@@ -72,6 +72,7 @@ import GetSingleAppointment from "./pages/workshop/GetSingleAppointment";
 import WorkshopDetails from "./admin/pages/workshops/WorkshopDetails";
 import UsedBikeDetail from "./admin/pages/usedbike/UsedBikeDetail";
 import RentalBikeDetail from "./admin/pages/rentalbikes/RentalBikeDetail";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 
 function App() {
@@ -116,6 +117,7 @@ function App() {
         <Route exact path="/login" element={<LoginForm />} />
         <Route exact path="/otp-verification" element={<OtpVerification />} />
         <Route exact path="/contact" element={<ContactUs />} />
+        <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route exact path="/about" element={<AboutUs />} />
         <Route exact path="/brands" element={<Brands />} />
 

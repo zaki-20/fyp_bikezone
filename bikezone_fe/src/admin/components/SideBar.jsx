@@ -10,21 +10,20 @@ import {
     AccordionBody,
 } from "@material-tailwind/react";
 import {
-    UserCircleIcon,
-    Cog6ToothIcon,
+
     PowerIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-
+import { IoHome } from "react-icons/io5";
 import { MdDashboard, MdStorage, MdOutlineRateReview } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { AiOutlineStock } from "react-icons/ai";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { FaUsers } from "react-icons/fa";
 import { GiAutoRepair } from "react-icons/gi";
-import { RiMotorbikeFill } from "react-icons/ri";
 import { PiMotorcycleFill } from "react-icons/pi";
+
 
 const SideBar = () => {
     const [open, setOpen] = React.useState(0);
@@ -151,19 +150,16 @@ const SideBar = () => {
                     </ListItem>
                 </Link>
 
-                <ListItem>
-                    <ListItemPrefix>
-                        <Cog6ToothIcon className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Settings
-                </ListItem>
 
-                <ListItem>
-                    <ListItemPrefix>
-                        <PowerIcon className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Log Out
-                </ListItem>
+
+                <Link to={'/'}>
+                    <ListItem className="w-[85%] bg-red-200">
+                        <ListItemPrefix>
+                            <IoHome className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Go To Home
+                    </ListItem>
+                </Link>
 
             </List>
         </Card>

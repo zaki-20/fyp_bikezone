@@ -17,10 +17,12 @@ const ProtectedRoute = (props) => {
   const navigate = useNavigate();
   const [cookies] = useCookies(["token"]);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
-  
+
   useEffect(() => {
+    const savedToken = cookies.token;
+
     const checkUserPermissions = () => {
-      if (!user && !isLoading) {
+      if (!user && !isLoading && !savedToken) {
         // Redirect to login page if not logged in
         navigate('/login');
       } else if (user && user.role !== 'admin' && isAdmin === true) {
