@@ -141,6 +141,16 @@ exports.getWorkshopDetails = async (req, res, next) => {
     select: "firstname lastname email imageURL", // Select the fields you want from the owner user object
   });
 
+  // Filter out the slots for the upcoming days
+  const today = moment().tz('Asia/Karachi').day(); // Get the current day in Karachi timezone
+  const upcomingDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const upcomingDaysSlots = upcomingDays.slice(today).map(day => {
+    const daySlots = workshop.weeklySlots.find(slot => slot.day === day);
+    return { day, slots: daySlots ? daySlots.slots : [] };
+  });
+
+  workshop.weeklySlots = upcomingDaysSlots;
+
 
   if (!workshop) {
     return next(new ErrorHandler("Workshop not found", 404));

@@ -4,6 +4,14 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const workshopModel = require("../models/workshopModel");
+const productModel = require("../models/productModel");
+const orderModel = require("../models/orderModel");
+const appointmentModel = require("../models/appointmentModel");
+const blogModel = require("../models/blogModel");
+const rentBikeModel = require("../models/rentBikeModel");
+const usedBikeModel = require("../models/usedBikeModel");
+
 const cloudinary = require('cloudinary').v2;
 
 // Configure your Cloudinary credentials
@@ -393,6 +401,8 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 
 // Delete User --Admin
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
+    const userId = req.params.id;
+
     const user = await User.findById(req.params.id);
 
     if (!user) {
@@ -400,6 +410,27 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
             new ErrorHandler(`User does not exist with Id: ${req.params.id}`, 400)
         );
     }
+
+
+    // Delete associated products (modify this according to your product model)
+    await productModel.deleteMany({ user: userId });
+
+    // Delete associated orders (modify this according to your order model)
+    await orderModel.deleteMany({ user: userId });
+
+    // Delete associated orders (modify this according to your order model)
+    await appointmentModel.deleteMany({ user: userId });
+
+    // Delete associated workshops
+    await workshopModel.deleteMany({ owner: userId });
+
+    // Delete associated orders (modify this according to your order model)
+    await rentBikeModel.deleteMany({ seller: userId });
+
+    // Delete associated orders (modify this according to your order model)
+    await usedBikeModel.deleteMany({ seller: userId });
+
+
 
     await user.deleteOne();
 

@@ -16,6 +16,17 @@ const schema = yup.object({
     brand: yup.string().required('Brand is required'),
     address: yup.string().required('Address is required'),
     city: yup.string().required('City is required'),
+    email: yup
+        .string()
+        .email('Invalid email format')
+        .required('Workshop Email is required'),
+    contact: yup.string()
+        .required('Contact is required')
+        .test('is-pakistan-number', 'Invalid contact number', function (value) {
+            // Use a regular expression to validate the Pakistan contact number format
+            const pakistanNumberRegex = /^(\+92|92|0)?[3]\d{9}$/;
+            return pakistanNumberRegex.test(value);
+        }),
     service1: yup.string(),
     service2: yup.string(),
     service3: yup.string(),
@@ -28,11 +39,11 @@ const schema = yup.object({
         .number().min(1).max(24)
         .typeError('End Time must be a number')
         .required('End Time is required'),
-    maxAppointments: yup
-        .number()
-        .typeError('Max Appointments must be a number')
-        .required('Max Appointments is required'),
+    discount: yup
+        .number().min(1).max(100)
+        .typeError('discount must be a number'),
     description: yup.string().required('Description is required'),
+    offerDate: yup.date().nullable().min(new Date(), "Offer date must be in the future").typeError('Invalid date format'),
 
 });
 
@@ -53,21 +64,24 @@ const UpdateWorkshop = () => {
         brand: workshop?.brand,
         address: workshop?.address,
         city: workshop?.city,
-        contact: `0${workshop?.contact}`,
+        contact: `${workshop?.contact}`,
         startTime: workshop?.startTime,
         endTime: workshop?.endTime,
-        maxAppointments: workshop?.maxAppointments,
         description: workshop?.description,
         service1: workshop?.service1,
         service2: workshop?.service2,
         service3: workshop?.service3,
         service4: workshop?.service4,
-      
+        discount: workshop?.discount,
+        offerDate: workshop?.offerDate,
+        imageURL: workshop?.imageURL,
+
     }
 
 
     useEffect(() => {
         dispatch(getSingleWorkshop(id));
+
     }, []);
 
     useEffect(() => {
@@ -80,7 +94,11 @@ const UpdateWorkshop = () => {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setImage(file);
+        if (file) {
+            setImage(file);
+            // Update the imageURL field in the form values
+            setFieldValue('imageURL', file.name); // Adjust this based on your use case
+        }
     };
 
 
@@ -94,34 +112,37 @@ const UpdateWorkshop = () => {
 
                 try {
                     const formData = new FormData();
-                    formData.append('file', image);
-                    formData.append('upload_preset', 'preset_images'); // Replace with your Cloudinary upload preset
 
-                    const cloudinaryResponse = await axios.post(
-                        'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
-                        formData
-                    );
+                    // Check if a new image is selected
+                    if (image) {
+                        formData.append('file', image);
+                        formData.append('upload_preset', 'preset_images'); // Replace with your Cloudinary upload preset
 
-                    const imageUrl = cloudinaryResponse.data.secure_url;
+                        const cloudinaryResponse = await axios.post(
+                            'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
+                            formData
+                        );
 
-                    // Add the Cloudinary image URL to the form data
-                    values.imageURL = imageUrl;
+                        // Update the imageURL field only when a new image is selected
+                        values.imageURL = cloudinaryResponse.data.secure_url;
+                    }
 
                     await dispatch(updateMyWorkshop({ values, id }))
                     action.resetForm();
                     if (isSuccess) {
                         navigate(`/workshop/${id}`)
                     }
-                    console.log(values)
                 } catch (err) {
                     console.error('Image upload failed.', err);
                     toast.error('Image upload failed.');
 
                 }
 
-
             },
         });
+
+    const date = new Date(values.offerDate);
+    const formattedDate = date.toISOString().split('T')[0];
 
     return (
         <>
@@ -172,18 +193,20 @@ const UpdateWorkshop = () => {
 
                                     <div className="w-full lg:w-6/12 px-4">
                                         <div className="relative w-full mb-3">
-                                            <label className="block uppercase text-xs text-gray-600 font-bold mb-2" htmlFor="grid-password">
+                                            <label className="block uppercase text-xs  font-bold mb-2" htmlFor="grid-password">
                                                 Workshop Email address
                                             </label>
                                             <input
-                                                disabled
                                                 id='email'
                                                 name='email'
                                                 value={values.email}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 type="email"
-                                                className="border-0 px-3 py-3 text-gray-500 border-b cursor-not-allowed border-black  placeholder-blueGray-300 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                                className="border-0 px-3 py-3  border-b  border-black  placeholder-blueGray-300 bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            {errors.email && touched.email ? (
+                                                <p className="text-red-600 animate-pulse">{errors.email}</p>
+                                            ) : null}
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-6/12 px-4">
@@ -215,10 +238,13 @@ const UpdateWorkshop = () => {
                                                 onChange={handleImageChange}
                                                 className="border-0 px-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
-                                       
-                                        {image && (
-                                            <img className="w-10 h-10 rounded-full" src={URL.createObjectURL(image)} alt="Rounded avatar" />
+
+                                        {(image || initialValues.imageURL) && (
+                                            <div className="mt-3">
+                                                <img className="w-10 h-10 rounded-full" src={image ? URL.createObjectURL(image) : initialValues.imageURL} alt="Avatar" />
+                                            </div>
                                         )}
+
                                     </div>
                                 </div>
 
@@ -262,14 +288,27 @@ const UpdateWorkshop = () => {
                                     </div>
                                     <div className="w-full lg:w-6/12 px-4">
                                         <div className="relative w-full mb-3">
-                                            <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                                            <label className="block uppercase  text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Phone #
                                             </label>
-                                            <input
-                                                disabled
+                                            {/* <input
                                                 value={String(values.contact)}
                                                 className="border-0  px-3 py-3 cursor-not-allowed border-b border-black text-gray-500  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            /> */}
+                                            <Input
+                                                country="PK"
+                                                international
+                                                withCountryCallingCode
+                                                id='contact'
+                                                name='contact'
+                                                value={String(values.contact)}
+                                                onChange={(value) => setFieldValue('contact', value)}
+                                                onBlur={handleBlur}
+                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             />
+                                            {errors.contact && touched.contact ? (
+                                                <p className="text-red-600 animate-pulse">{errors.contact}</p>
+                                            ) : null}
                                         </div>
                                     </div>
 
@@ -388,25 +427,45 @@ const UpdateWorkshop = () => {
                                             ) : null}
                                         </div>
                                     </div>
+
                                     <div className="w-full lg:w-4/12 px-4">
                                         <div className="relative w-full mb-3">
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                                Max Appointments
+                                                Offer Discount %
                                             </label>
                                             <input
-                                                id='maxAppointments'
-                                                name='maxAppointments'
-                                                value={values.maxAppointments}
+                                                id='discount'
+                                                name='discount'
+                                                value={values.discount}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                type="number" placeholder='max appointments per hour' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
-                                            {errors.maxAppointments && touched.maxAppointments ? (
-                                                <p className="text-red-600 animate-pulse">{errors.maxAppointments}</p>
+                                                type="number" placeholder='enter discount ' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            {errors.discount && touched.discount ? (
+                                                <p className="text-red-600 animate-pulse">{errors.discount}</p>
                                             ) : null}
                                         </div>
                                     </div>
                                 </div>
 
+                                <div className="w-full lg:w-6/12 px-4">
+                                    <div className="relative w-full mb-3">
+                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                                            Special Offer Date
+                                        </label>
+                                        <input
+                                            type="date"
+                                            id="offerDate"
+                                            name="offerDate"
+                                            defaultValue={formattedDate}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            className="border-0 px-3 py-3 border-b border-black bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        />
+                                        {errors.offerDate && touched.offerDate ? (
+                                            <p className="text-red-600 animate-pulse">{errors.offerDate}</p>
+                                        ) : null}
+                                    </div>
+                                </div>
 
                                 <h6 className=" text-sm mt-3 mb-6 font-bold uppercase">
                                     About Workshop

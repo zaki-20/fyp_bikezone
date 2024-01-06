@@ -58,8 +58,9 @@ export const deleteMyWorkshop = createAsyncThunk('workshop/deleteMyWorkshop', as
 })
 
 //update my workshop 
-export const updateMyWorkshop = createAsyncThunk('workshop/updateMyWorkshop', async ({values, id}, thunkAPI) => {
+export const updateMyWorkshop = createAsyncThunk('workshop/updateMyWorkshop', async ({ values, id }, thunkAPI) => {
     try {
+        console.log(values, "update")
         return await workshopService.updateMyWorkshop(id, values)
     } catch (error) {
         const message =

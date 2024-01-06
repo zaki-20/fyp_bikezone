@@ -9,6 +9,7 @@ import { createRentBike } from '../../features/rentbike/rentbike.thunk';
 import { reset } from '../../features/rentbike/rentbike.slice';
 import axios from 'axios';
 import { createUsedBike, getUsedBikeDetails, updateUsedBike } from '../../features/usedbike/usedbike.thunk';
+import Input from 'react-phone-number-input/input'
 
 
 const schema = yup.object({
@@ -27,7 +28,7 @@ const schema = yup.object({
         .required('Contact is required')
         .test('is-pakistan-number', 'Invalid contact number', function (value) {
             // Use a regular expression to validate the Pakistan contact number format
-            const pakistanNumberRegex = /^(\+92|92|0)?[3456789]\d{9}$/;
+            const pakistanNumberRegex = /^(\+92|92|0)?[3]\d{9}$/;
             return pakistanNumberRegex.test(value);
         }),
     isAvailable: yup.boolean().required('Availability is required'),
@@ -141,6 +142,7 @@ const CreateUsedBike = () => {
         setFieldValue('isAvailable', selectedOption.value);
     };
 
+    
     return (
         <>
             <section className="py-1 bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600">
@@ -173,7 +175,7 @@ const CreateUsedBike = () => {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 type="text"
-                                                placeholder='enter your workshop name' className="border-0 border-b border-black px-3 py-3  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                                placeholder='enter your bike name' className="border-0 border-b border-black px-3 py-3  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                             {errors.title && touched.title ? (
                                                 <p className="text-red-600 animate-pulse">{errors.title}</p>
                                             ) : null}
@@ -292,7 +294,10 @@ const CreateUsedBike = () => {
                                                 name='city'
                                                 value={values.city}
                                                 onChange={handleChange}
-                                                onBlur={handleBlur} type="text" placeholder='enter workshop city' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                                onBlur={handleBlur}
+                                                type="text"
+                                                placeholder='enter city'
+                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                             {errors.city && touched.city ? (
                                                 <p className="text-red-600 animate-pulse">{errors.city}</p>
                                             ) : null}
@@ -303,7 +308,7 @@ const CreateUsedBike = () => {
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Phone #
                                             </label>
-                                            <input
+                                            {/* <input
                                                 type='text'
                                                 id='contact'
                                                 name='contact'
@@ -311,7 +316,20 @@ const CreateUsedBike = () => {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            /> */}
+
+                                            <Input
+                                                country="PK"
+                                                international
+                                                withCountryCallingCode
+                                                id='contact'
+                                                name='contact'
+                                                value={String(values.contact)}
+                                                onChange={(value) => setFieldValue('contact', value)}
+                                                onBlur={handleBlur}
+                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             />
+
                                             {errors.contact && touched.contact ? (
                                                 <p className="text-red-600 animate-pulse">{errors.contact}</p>
                                             ) : null}

@@ -4,9 +4,11 @@ import * as yup from "yup";
 import Select from 'react-select'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {  getDetailRentBike, updateMyRentBike } from '../../features/rentbike/rentbike.thunk';
+import { getDetailRentBike, updateMyRentBike } from '../../features/rentbike/rentbike.thunk';
 import { reset } from '../../features/rentbike/rentbike.slice';
 import axios from 'axios';
+import Input from 'react-phone-number-input/input'
+
 
 
 const schema = yup.object({
@@ -22,7 +24,7 @@ const schema = yup.object({
         .required('Contact is required')
         .test('is-pakistan-number', 'Invalid contact number', function (value) {
             // Use a regular expression to validate the Pakistan contact number format
-            const pakistanNumberRegex = /^(\+92|92|0)?[3456789]\d{9}$/;
+            const pakistanNumberRegex = /^(\+92|92|0)?[3]\d{9}$/;
             return pakistanNumberRegex.test(value);
         }),
     availableFromDate: yup.date().required('Available from date is required')
@@ -162,6 +164,9 @@ const UpdateRentBike = () => {
         // Set the value in Formik state
         setFieldValue('isAvailable', selectedOption.value);
     };
+
+    const date = new Date(values.availableFromDate);
+    const formattedDate = date.toISOString().split('T')[0];
 
     return (
         <>
@@ -304,12 +309,24 @@ const UpdateRentBike = () => {
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Phone #
                                             </label>
-                                            <input
+                                            {/* <input
                                                 type='text'
                                                 id='contact'
                                                 name='contact'
                                                 value={values.contact}
                                                 onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            /> */}
+
+                                            <Input
+                                                country="PK"
+                                                international
+                                                withCountryCallingCode
+                                                id='contact'
+                                                name='contact'
+                                                value={String(values.contact)}
+                                                onChange={(value) => setFieldValue('contact', value)}
                                                 onBlur={handleBlur}
                                                 className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             />
@@ -350,7 +367,7 @@ const UpdateRentBike = () => {
                                                 type="date"
                                                 id="availableFromDate"
                                                 name="availableFromDate"
-                                                value={values.availableFromDate}
+                                                defaultValue={formattedDate}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 min={new Date().toISOString().split('T')[0]}

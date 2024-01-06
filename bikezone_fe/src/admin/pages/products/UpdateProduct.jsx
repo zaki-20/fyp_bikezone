@@ -93,7 +93,7 @@ const UpdateProduct = () => {
                         values.images.map(async (image) => {
                             const formData = new FormData();
                             formData.append('file', image);
-                            formData.append('upload_preset', 'preset_images'); // Replace with your Cloudinary upload preset
+                            formData.append('upload_preset', 'preset_images'); 
                             const cloudinaryResponse = await axios.post(
                                 'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
                                 formData

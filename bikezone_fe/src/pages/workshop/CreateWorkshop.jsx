@@ -23,7 +23,13 @@ const schema = yup.object({
     service2: yup.string(),
     service3: yup.string(),
     service4: yup.string(),
-    contact: yup.string().required('contact number is required'),
+    contact: yup.string()
+        .required('Contact is required')
+        .test('is-pakistan-number', 'Invalid contact number', function (value) {
+            // Use a regular expression to validate the Pakistan contact number format
+            const pakistanNumberRegex = /^(\+92|92|0)?[3]\d{9}$/;
+            return pakistanNumberRegex.test(value);
+        }),
     startTime: yup
         .number().min(1).max(24)
         .typeError('Start Time must be a number')
@@ -36,7 +42,7 @@ const schema = yup.object({
         .number().min(1).max(100)
         .typeError('discount must be a number'),
     description: yup.string().required('Description is required'),
-    // imageURL: yup.string().required('Image is required'),
+    imageURL: yup.mixed().required('Image is required'),
     offerDate: yup.date().nullable().min(new Date(), "Offer date must be in the future").typeError('Invalid date format'),
 
 });
@@ -57,14 +63,15 @@ const CreateWorkshop = () => {
         contact: '',
         startTime: '',
         endTime: '',
-        maxAppointments: '',
         description: '',
         service1: '',
         service2: '',
         service3: '',
         service4: '',
-        // imageURL: '',
+        imageURL: '',
+        discount: '',
         offerDate: null,
+        imageURL: ''
 
     }
 
@@ -73,6 +80,9 @@ const CreateWorkshop = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         setImage(file);
+
+        // Set the value of the imageURL field manually
+        setFieldValue('imageURL', file ? file.name : ''); // Y
     };
 
 
@@ -113,7 +123,6 @@ const CreateWorkshop = () => {
                     values.imageURL = imageUrl;
 
                     await dispatch(createWorkshop(values))
-                    console.log(values)
                     action.resetForm();
                     navigate('/workshops/me')
                 } catch (error) {
@@ -206,10 +215,13 @@ const CreateWorkshop = () => {
                                             </label>
                                             <input
                                                 type='file'
-                                                id='avatar'
-                                                name='avatar'
+                                                id='imageURL'
+                                                name='imageURL'
                                                 onChange={handleImageChange}
                                                 className="border-0 px-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            {errors.imageURL && touched.imageURL ? (
+                                                <p className="text-red-600 animate-pulse">{errors.imageURL}</p>
+                                            ) : null}
                                         </div>
 
                                         {image && (
@@ -396,7 +408,7 @@ const CreateWorkshop = () => {
                                     <div className="w-full lg:w-4/12 px-4">
                                         <div className="relative w-full mb-3">
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                                Offer Discount
+                                                Offer Discount %
                                             </label>
                                             <input
                                                 id='discount'
@@ -404,7 +416,7 @@ const CreateWorkshop = () => {
                                                 value={values.discount}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                type="number" placeholder='enter discount ' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                                type="number" placeholder='enter discount in %' className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                             {errors.discount && touched.discount ? (
                                                 <p className="text-red-600 animate-pulse">{errors.discount}</p>
                                             ) : null}
@@ -425,6 +437,7 @@ const CreateWorkshop = () => {
                                             onChange={handleChange}
                                             onBlur={handleBlur}
                                             className="border-0 px-3 py-3 border-b border-black bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            
                                         />
                                         {errors.offerDate && touched.offerDate ? (
                                             <p className="text-red-600 animate-pulse">{errors.offerDate}</p>

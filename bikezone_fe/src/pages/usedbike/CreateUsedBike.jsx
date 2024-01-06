@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import Select from 'react-select'
-import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { createRentBike } from '../../features/rentbike/rentbike.thunk';
-import { reset } from '../../features/rentbike/rentbike.slice';
+import { useDispatch } from 'react-redux';
+
 import axios from 'axios';
 import { createUsedBike } from '../../features/usedbike/usedbike.thunk';
+import Input from 'react-phone-number-input/input'
 
 
 const schema = yup.object({
@@ -27,7 +26,7 @@ const schema = yup.object({
         .required('Contact is required')
         .test('is-pakistan-number', 'Invalid contact number', function (value) {
             // Use a regular expression to validate the Pakistan contact number format
-            const pakistanNumberRegex = /^(\+92|92|0)?[3456789]\d{9}$/;
+            const pakistanNumberRegex = /^(\+92|92|0)?[3]\d{9}$/;
             return pakistanNumberRegex.test(value);
         }),
     isAvailable: yup.boolean().required('Availability is required'),
@@ -69,7 +68,7 @@ const CreateUsedBike = () => {
         setPreviewImages(fileArray.map(file => URL.createObjectURL(file)));
     };
 
-   
+
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
             initialValues,
@@ -288,12 +287,25 @@ const CreateUsedBike = () => {
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Phone #
                                             </label>
-                                            <input
+                                            
+                                            {/* <input
                                                 type='text'
                                                 id='contact'
                                                 name='contact'
                                                 value={values.contact}
                                                 onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            /> */}
+
+                                            <Input
+                                                country="PK"
+                                                international
+                                                withCountryCallingCode
+                                                id='contact'
+                                                name='contact'
+                                                value={values.contact}
+                                                onChange={(value) => setFieldValue('contact', value)}
                                                 onBlur={handleBlur}
                                                 className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             />

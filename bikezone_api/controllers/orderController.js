@@ -117,7 +117,6 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
   if (req.body.status === "Shipped") {
     order.orderItems.forEach(async (o) => {
-      console.log(o._id, o.quantity, "o_id, quantity")
       await updateStock(o._id, o.quantity);
     });
   }
@@ -159,9 +158,6 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
 //Fucntion for update stock===========
 async function updateStock(id, quantity) {
   const product = await Product.findById(id);
-  console.log(id, quantity, "id and quantity of update parameters")
-  console.log(product, "update function find product")
   product.Stock -= quantity;
-
   await product.save({ validateBeforeSave: false });
 }
