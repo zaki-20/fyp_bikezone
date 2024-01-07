@@ -43,7 +43,7 @@ const Services = () => {
 
     return (
         <div className='px-10'>
-            <section className="pt-20 lg:pt-[120px] pb-12 lg:pb-[70px]">
+            <section className="pt-16 lg:pt-[80px] pb-12 lg:pb-[70px]">
                 <div className="container">
                     <div className="flex flex-wrap -mx-4">
                         <div className="w-full px-4">
@@ -155,7 +155,6 @@ const Services = () => {
                     </div>
                 </div>
             </section>
-
         </div>
     )
 }

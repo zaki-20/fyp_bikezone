@@ -50,7 +50,7 @@ const NewArrivalProducts = () => {
                         animationData={newArrivalAnimation}
                     />
                 </div>
-                <Link to={"/products/featuredproducts"} className='underline hover:text-blue-600'>View All</Link>
+                <Link to={"/featuredproducts"} className='underline hover:text-blue-600'>View All</Link>
             </div>
             <div className="flex overflow-x-scroll no-scrollbar pb-10 px-4">
                 <div className="flex flex-nowrap  ml-10 gap-10">

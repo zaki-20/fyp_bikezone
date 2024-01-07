@@ -15,7 +15,7 @@ const ProductList = () => {
     const [localProducts, setLocalProducts] = useState([]);
 
 
-    const { isLoading, isError, message, products } = useSelector((state) => state.product)
+    const {isLoading, products } = useSelector((state) => state.product)
 
 
     const deleteProductHandler = async (id) => {
@@ -33,14 +33,14 @@ const ProductList = () => {
 
 
     const columns = [
-        { field: "id", headerName: "Product ID", headerClassName: "bg-gray-900 text-yellow-400 text-lg", minWidth: 300, flex: 1 },
+        { field: "id", headerName: "Product ID", headerClassName: "bg-gray-900 text-yellow-400 text-lg", minWidth: 250, flex: 0.6 },
 
         {
             field: "name",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Name",
             minWidth: 150,
-            flex: 1,
+            flex: 0.6,
         },
         {
             field: "stock",
@@ -59,9 +59,16 @@ const ProductList = () => {
             field: "price",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Price",
-            type: "number",
-            minWidth: 270,
-            flex: 0.5,
+            minWidth: 130,
+            flex: 0.3,
+        },
+
+        {
+            field: "date",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
+            headerName: "Created Date",
+            minWidth: 120,
+            flex: 0.3,
         },
 
         {
@@ -93,28 +100,33 @@ const ProductList = () => {
 
     products &&
         products.forEach((item) => {
+            const datePart = item.createdAt.split('T')[0]; // Extracts the date part
+
             rows.push({
                 id: item._id,
                 stock: item.Stock,
                 price: item.price,
                 name: item.name,
+                date: datePart
             });
         });
 
     return (
-        <div className='flex w-[100%] '>
+        <div className='flex '>
             <SideBar />
-            <div className="bg-gray-100 min-h-screen p-5 w-full">
+            {!isLoading &&
+             <div className="bg-gray-100 w-full min-h-screen p-5 overflow-x-hidden">
                 <h1 className='text-2xl py-3' >All Products</h1>
                 <DataGrid
                     rows={rows}
                     columns={columns}
                     pageSize={10}
                     disableSelectionOnClick
-                    className=""
+                    className="w-[100%]"
                     autoHeight
                 />
             </div>
+            }
         </div>
     )
 }

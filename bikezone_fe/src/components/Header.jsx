@@ -131,14 +131,7 @@ const Header = () => {
                             onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
                             className='text-white  hover:text-[#122222]'>Account</Dropdown.Item>
                         </Link>
-                        <Dropdown.Item
-                          style={{
-                            backgroundColor: 'transparent',
-                            transition: 'background-color 0.3s',
-                          }}
-                          onMouseEnter={(e) => e.target.style.backgroundColor = '#facc15'}
-                          onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                          className='text-white hover:text-[#122222]'>Earnings</Dropdown.Item>
+                       
                         <Dropdown.Divider />
                         <Dropdown.Item
 

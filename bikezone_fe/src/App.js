@@ -10,12 +10,10 @@ import LoginForm from "./pages/user/LoginForm";
 import ProductDetail from "./pages/products/ProductDetail";
 import UserProfile from "./pages/user/UserProfile";
 import Cart from "./pages/products/Cart";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useCookies } from "react-cookie"
-
 import { loadUser } from "./features/auth/auth.thunk";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,7 +26,6 @@ import Shipping from "./pages/products/Shipping";
 import ConfirmOrder from "./pages/products/ConfirmOrder";
 import axios from "axios";
 import Payment from "./pages/payment/Payment";
-
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentSuccess from "./pages/payment/PaymentSuccess";
@@ -78,15 +75,10 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
-  // socket.on("connection", (message) => {
-  //   console.log(message)
-  // })
-
   async function getStripeApiKey() {
     const { data } = await axios.get("http://localhost:4000/api/v1/stripeapikey", { withCredentials: true });
     setStripeApiKey(data.stripeApiKey);
   }
-
 
   const { user } = useSelector((state) => state.auth)
 
@@ -95,17 +87,12 @@ function App() {
 
   useEffect(() => {
     const savedToken = cookies.token;
-
     if (savedToken && !user) {
       dispatch(loadUser());
       console.log(savedToken, "console token on render");
       getStripeApiKey()
     }
   }, [cookies, dispatch, user]);
-
-  // useEffect(() => {
-  //   getStripeApiKey()
-  // }, [])
 
   return (
     <>
@@ -120,13 +107,10 @@ function App() {
         <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route exact path="/about" element={<AboutUs />} />
         <Route exact path="/brands" element={<Brands />} />
-
         <Route exact path="/product/:id" element={<ProductDetail />} />
-
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/success" element={<PaymentSuccess />} />
         <Route exact path="/blogs" element={<Blogs />} />
-
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
         <Route exact path="/password/reset/:token" element={<ResetPassword />} />
 
@@ -153,9 +137,7 @@ function App() {
           )}
         />
 
-
         {/* Workshops */}
-
         <Route exact path="/workshops" element={<Workshops />} />
         <Route exact path="/workshops/me" element={<ProtectedRoute Component={MyWorkshops} />} />
         <Route exact path="/create-workshop" element={<ProtectedRoute Component={CreateWorkshop} />} />
@@ -205,13 +187,11 @@ function App() {
         <Route exact isAdmin={true} path="/admin/usedbikes" element={<ProtectedRoute Component={UsedBikesList} />} />
         <Route exact isAdmin={true} path="/admin/usedbikes/:id" element={<ProtectedRoute Component={UsedBikeDetail} />} />
 
-
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />
 
       </Routes>
       <Footer />
-
 
       <ToastContainer position='top-center' />
     </>
