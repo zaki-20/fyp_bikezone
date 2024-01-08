@@ -59,7 +59,7 @@ const Cart = () => {
     const calculateShipping = () => {
         const subtotal = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
         return subtotal > 5000 ? 0 : 499;
-      };
+    };
 
     return (
         <div className='bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600'>
@@ -71,7 +71,7 @@ const Cart = () => {
 
                         {cartItems.map((item) => (
                             <div key={item._id} className="justify-between mb-6 rounded-lg bg-[#e7e7e7ea] shadow-[inset_3px_0px_41px_22px_#00000024] shadow-gray-400  p-6 sm:flex sm:justify-start">
-                                <img src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="product-pic" className="w-full rounded-lg sm:w-40" />
+                                <img src={item.images[0]} alt="product-pic" className="w-24 h-24 rounded-lg sm:w-40" />
                                 <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                                     <div className="mt-5 sm:mt-0">
 

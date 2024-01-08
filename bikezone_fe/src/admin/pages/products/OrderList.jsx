@@ -48,7 +48,6 @@ const OrderList = () => {
             field: "itemsQty",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Items Qty",
-            type: "number",
             minWidth: 150,
             flex: 0.3,
         },
@@ -57,8 +56,14 @@ const OrderList = () => {
             field: "amount",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Amount",
-            type: "number",
-            minWidth: 270,
+            minWidth: 170,
+            flex: 0.5,
+        },
+        {
+            field: "date",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
+            headerName: "Created On",
+            minWidth: 150,
             flex: 0.5,
         },
 
@@ -91,12 +96,16 @@ const OrderList = () => {
 
     orders &&
         orders.forEach((item) => {
+            const datePart = item.createdAt.split('T')[0]; // Extracts the date part
+
             rows.push({
                 itemsQty: item?.orderItems.length,
                 id: item?._id,
                 name: item?.orderItems.map((orderItem) => orderItem.name),
                 status: item?.orderStatus,
                 amount: item?.totalPrice,
+                date: datePart
+
             });
         });
 
@@ -116,8 +125,8 @@ const OrderList = () => {
     return (
         <div className='flex w-[100%] '>
             <SideBar />
-            <div className="bg-gray-100 min-h-screen p-5 w-full">
-            <h1 className='text-2xl py-3' >All Orders</h1>
+            {!isLoading && <div className="bg-gray-100 min-h-screen p-5 overflow-x-hidden">
+                <h1 className='text-2xl py-3' >All Orders</h1>
 
                 <DataGrid
                     rows={rows}
@@ -128,6 +137,7 @@ const OrderList = () => {
                     autoHeight
                 />
             </div>
+            }
         </div>
     )
 }

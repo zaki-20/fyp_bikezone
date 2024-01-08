@@ -12,11 +12,17 @@ const RentalBikesList = () => {
 
     const { isLoading, isError, message, rentBikes } = useSelector((state) => state.rentBike)
 
+    // useEffect(() => {
+    //     if (!rentBikes.length) {
+    //         dispatch(getAllRentBikesAdmin());
+    //     }
+    // }, [dispatch, rentBikes]);
+
     useEffect(() => {
-        if (!rentBikes.length) {
-            dispatch(getAllRentBikesAdmin());
-        }
-    }, [dispatch, rentBikes]);
+        dispatch(getAllRentBikesAdmin());
+    }, []);
+
+
 
 
     const deleteRentBikeHandler = async (id) => {
@@ -80,6 +86,14 @@ const RentalBikesList = () => {
         },
 
         {
+            field: "date",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
+            headerName: "Created On",
+            minWidth: 150,
+            flex: 0.5,
+        },
+
+        {
             field: "actions",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             flex: 0.3,
@@ -104,33 +118,39 @@ const RentalBikesList = () => {
     ];
 
 
-    const rows = rentBikes?.map((rentBike) => {
+    const rows = [];
 
-        const today = new Date();
-        const publishDate = new Date(rentBike.availableFromDate);
 
-        let displayValue;
+    rentBikes &&
+        rentBikes.forEach((rentBike) => {
+            const datePart = rentBike.createdAt.split('T')[0]; // Extracts the date part
 
-        // Set hours, minutes, seconds, and milliseconds to 0 for accurate date comparison
-        today.setHours(0, 0, 0, 0);
-        publishDate.setHours(0, 0, 0, 0);
+            const today = new Date();
+            const publishDate = new Date(rentBike.availableFromDate);
 
-        if (today.getTime() === publishDate.getTime() || today.getTime() > publishDate.getTime()) {
-            displayValue = "Published";
-        } else {
-            displayValue = publishDate.toLocaleDateString();
-        }
+            let displayValue;
 
-        return {
-            id: rentBike._id,
-            owner_email: rentBike.email,
-            bike_title: rentBike.title,
-            available: rentBike.isAvailable ? "Available" : "Unavailable",
-            city: rentBike.city,
-            contact: rentBike.contact,
-            publish: displayValue
-        };
-    }) || [];
+            // Set hours, minutes, seconds, and milliseconds to 0 for accurate date comparison
+            today.setHours(0, 0, 0, 0);
+            publishDate.setHours(0, 0, 0, 0);
+
+            if (today.getTime() === publishDate.getTime() || today.getTime() > publishDate.getTime()) {
+                displayValue = "Published";
+            } else {
+                displayValue = publishDate.toLocaleDateString();
+            }
+
+            rows.push({
+                id: rentBike._id,
+                owner_email: rentBike.email,
+                bike_title: rentBike.title,
+                available: rentBike.isAvailable ? "Available" : "Unavailable",
+                city: rentBike.city,
+                contact: rentBike.contact,
+                publish: displayValue,
+                date: datePart
+            });
+        });
 
     return (
         <div className='flex'>

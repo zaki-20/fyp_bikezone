@@ -57,7 +57,6 @@ const ReviewList = () => {
             field: "rating",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Rating",
-            type: "number",
             minWidth: 50,
             flex: 0.2,
             cellClassName: (params) => {
@@ -65,6 +64,14 @@ const ReviewList = () => {
                     ? "text-green-600"
                     : "text-red-600";
             },
+        },
+
+        {
+            field: "date",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
+            headerName: "Created Date",
+            minWidth: 120,
+            flex: 0.3,
         },
 
         {
@@ -93,19 +100,21 @@ const ReviewList = () => {
 
     reviews &&
         reviews.forEach((item) => {
+            const datePart = item?.createdAt.split('T')[0]; // Extracts the date part
             rows.push({
                 id: item._id,
                 rating: item.rating,
                 comment: item.comment,
                 name: `${item.firstname} ${item.lastname}`,
+                date: datePart
+
             });
         });
-
     return (
         <div className='flex w-[100%] '>
             <SideBar />
             <div className="bg-gray-100 min-h-screen p-5 w-full">
-            <h1 className='text-2xl font-medium  py-3' >All Product Reviews</h1>
+                <h1 className='text-2xl font-medium  py-3' >All Product Reviews</h1>
                 <form
                     className="flex justify-center items-center gap-x-3 mb-10"
                     onSubmit={productReviewsSubmitHandler}

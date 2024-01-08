@@ -70,6 +70,13 @@ import WorkshopDetails from "./admin/pages/workshops/WorkshopDetails";
 import UsedBikeDetail from "./admin/pages/usedbike/UsedBikeDetail";
 import RentalBikeDetail from "./admin/pages/rentalbikes/RentalBikeDetail";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import BlogPostList from "./admin/pages/blogs/BlogPostList";
+import UserStats from "./admin/pages/stats/UserStats";
+import WorkshopStats from "./admin/pages/stats/WorkshopStats";
+import RentalBikeStats from "./admin/pages/stats/RentalBikeStats";
+import UsedBikeStats from "./admin/pages/stats/UsedBikeStats";
+import BlogStats from "./admin/pages/stats/BlogStats";
+// import WorkshopStats from "./admin/pages/stats/WorkshopStats";
 
 
 function App() {
@@ -186,6 +193,20 @@ function App() {
         {/* admin used bike routes */}
         <Route exact isAdmin={true} path="/admin/usedbikes" element={<ProtectedRoute Component={UsedBikesList} />} />
         <Route exact isAdmin={true} path="/admin/usedbikes/:id" element={<ProtectedRoute Component={UsedBikeDetail} />} />
+
+        {/* admin blog posts routes */}
+        <Route exact isAdmin={true} path="/admin/blogs" element={<ProtectedRoute Component={BlogPostList} />} />
+        <Route exact isAdmin={true} path="/admin/blogs/:id" element={<ProtectedRoute Component={UsedBikeDetail} />} />
+
+
+        {/* admin Stats routes */}
+        <Route exact isAdmin={true} path="/admin/users/stats" element={<ProtectedRoute Component={UserStats} />} />
+        <Route exact isAdmin={true} path="/admin/workshops/stats" element={<ProtectedRoute Component={WorkshopStats} />} />
+        <Route exact isAdmin={true} path="/admin/rentalbikes/stats" element={<ProtectedRoute Component={RentalBikeStats} />} />
+        <Route exact isAdmin={true} path="/admin/usedbikes/stats" element={<ProtectedRoute Component={UsedBikeStats} />} />
+        <Route exact isAdmin={true} path="/admin/blogs/stats" element={<ProtectedRoute Component={BlogStats} />} />
+
+
 
         {/* error page */}
         <Route path="/*" element={<ErrorPage />} />

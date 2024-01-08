@@ -76,6 +76,14 @@ const UserList = () => {
         },
 
         {
+            field: "date",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
+            headerName: "Created On",
+            minWidth: 150,
+            flex: 0.5,
+        },
+
+        {
             field: "actions",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             flex: 0.3,
@@ -104,14 +112,20 @@ const UserList = () => {
             cellClassName: "text-blue-500"
         },
     ];
+    const rows = [];
 
 
-    const rows = users?.map((user) => ({
-        id: user._id,
-        email: user.email,
-        name: `${user.firstname} ${user.lastname}`,
-        role: user.role,
-    })) || [];
+    users &&
+        users.forEach((user) => {
+            const datePart = user.createdAt.split('T')[0]; // Extracts the date part
+            rows.push({
+                id: user._id,
+                email: user.email,
+                name: `${user.firstname} ${user.lastname}`,
+                role: user.role,
+                date: datePart
+            });
+        });
 
 
     const handleRoleChange = (selectedOption) => {
@@ -132,10 +146,10 @@ const UserList = () => {
 
 
     return (
-        <div className='flex w-[100%] '>
+        <div className='flex  '>
             <SideBar />
-            {!isLoading && <div className="bg-gray-100 min-h-screen p-5 w-full">
-            <h1 className='text-2xl py-3' >All Users</h1>
+            {!isLoading && <div className="bg-gray-100 min-h-screen p-5 overflow-x-hidden">
+                <h1 className='text-2xl py-3' >All Users</h1>
 
                 <DataGrid
                     rows={rows}

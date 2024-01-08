@@ -5,79 +5,65 @@ import SideBar from '../../components/SideBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import { deleteUsedBikeAd, getAllUsedBikes } from '../../../features/usedbike/usedbike.thunk';
+import { deleteMyWorkshop, getAllWorkshops } from '../../../features/workshop/workshop.thunk';
+import { deleteBlog, getAllBlogPosts } from '../../../features/blog/blog.thunk';
 
-const UsedBikesList = () => {
+const BlogPostList = () => {
     const dispatch = useDispatch()
 
-    const { isLoading, isError, message, usedBikes } = useSelector((state) => state.usedBike)
-
-    // useEffect(() => {
-    //     if (!usedBikes.length) {
-    //         dispatch(getAllUsedBikes());
-    //     }
-    // }, [dispatch, usedBikes]);
+    const { isLoading, isError, message, blogPosts } = useSelector(
+        (state) => state.blog
+    );
 
     useEffect(() => {
-        dispatch(getAllUsedBikes());
+        dispatch(getAllBlogPosts());
+
     }, []);
 
 
-    const deleteRentBikeHandler = async (id) => {
-        await dispatch(deleteUsedBikeAd(id))
-        dispatch(getAllUsedBikes())
+    const deleteBlogHandler = async (id) => {
+        await dispatch(deleteBlog(id))
+        dispatch(getAllBlogPosts())
     }
 
     const columns = [
-        { field: "id", headerName: "Bike ID", headerClassName: "bg-gray-900 text-yellow-400 text-lg", minWidth: 300, flex: 0.8 },
+        { field: "id", headerName: "Blog ID", headerClassName: "bg-gray-900 text-yellow-400 text-lg", minWidth: 300, flex: 0.8 },
 
         {
-            field: "owner_email",
+            field: "email",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Owner Email",
+            headerName: "Author Email",
             minWidth: 200,
             flex: 0.5,
         },
         {
-            field: "bike_title",
+            field: "name",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Bike Name",
+            headerName: "Auther Name",
             minWidth: 200,
             flex: 0.5,
         },
 
         {
-            field: "city",
+            field: "title",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "City",
+            headerName: "Post Title",
             minWidth: 200,
             flex: 0.5,
         },
         {
-            field: "contact",
+            field: "category",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Contact",
+            headerName: "Category",
             minWidth: 200,
-            flex: 0.5,
-        },
-        {
-            field: "available",
-            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Available",
-            minWidth: 200,
-            flex: 0.5,
-            cellClassName: (params) => {
-                return params.row.available === "Available"
-                    ? "text-green-600"
-                    : "text-red-600";
-            },
+            flex: 0.7,
         },
         {
             field: "date",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             headerName: "Created On",
-            minWidth: 150,
-            flex: 0.5,
+            minWidth: 130,
+            flex: 0.4,
         },
         {
             field: "actions",
@@ -90,12 +76,11 @@ const UsedBikesList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={`/admin/usedbikes/${params.row.id}`}>
+                        <Link to={`/admin/blogs/${params.row.id}`}>
                             <FaRegEdit size={20} />
                         </Link>
-
                         <button >
-                            <MdDelete onClick={() => deleteRentBikeHandler(params.row.id)} className='text-red-600' size={22} />
+                            <MdDelete onClick={() => deleteBlogHandler(params.row.id)} className='text-red-600' size={22} />
                         </button>
                     </>
 
@@ -108,29 +93,26 @@ const UsedBikesList = () => {
 
     const rows = [];
 
+    blogPosts &&
+        blogPosts.forEach((post) => {
+            const datePart = post.createdAt.split('T')[0]; // Extracts the date part
 
-    usedBikes &&
-        usedBikes.forEach((usedBike) => {
-            const datePart = usedBike.createdAt.split('T')[0]; // Extracts the date part
             rows.push({
-                id: usedBike._id,
-                owner_email: usedBike.email,
-                bike_title: usedBike.title,
-                available: usedBike.isAvailable ? "Available" : "Unavailable",
-                city: usedBike.city,
-                contact: usedBike.contact,
+                id: post._id,
+                email: post.user?.email,
+                name: `${post.user?.firstname} ${post.user?.lastname}`,
+                title: post.title,
+                category: post.category,
                 date: datePart
 
             });
         });
 
-
     return (
         <div className='flex'>
             <SideBar />
             {!isLoading && <div className="bg-gray-100 min-h-screen p-5 overflow-x-hidden">
-                <h1 className='text-2xl font-medium  py-3' >All Used Bikes</h1>
-
+                <h1 className='text-2xl font-medium  py-3' >All Blog Posts</h1>
                 <DataGrid
                     className=" w-[100%]"
                     rows={rows}
@@ -144,4 +126,4 @@ const UsedBikesList = () => {
     )
 }
 
-export default UsedBikesList
+export default BlogPostList

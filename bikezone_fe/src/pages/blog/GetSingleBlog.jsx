@@ -63,7 +63,7 @@ const GetSingleBlog = () => {
                             </div>
 
                             {
-                                loggedInUser?._id === blogPost?.user._id && (
+                                loggedInUser?._id === blogPost?.user?._id && (
 
                                     <div>
                                         <Button onClick={handleOpen} variant="gradient" className='flex items-center gap-x-1 mb-2 hover:text-yellow-400'>

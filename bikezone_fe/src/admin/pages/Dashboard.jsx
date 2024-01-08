@@ -11,6 +11,7 @@ import { getAllUsers } from "../../features/auth/auth.thunk";
 import { getAllWorkshops } from "../../features/workshop/workshop.thunk";
 import { getAllRentBikesAdmin } from "../../features/rentbike/rentbike.thunk";
 import { getAllUsedBikes } from "../../features/usedbike/usedbike.thunk";
+import { getAllBlogPosts } from "../../features/blog/blog.thunk";
 
 
 
@@ -24,6 +25,7 @@ const Dashboard = () => {
   const { workshops } = useSelector((state) => state.workshop);
   const { rentBikes } = useSelector((state) => state.rentBike);
   const { usedBikes } = useSelector((state) => state.usedBike);
+  const { blogPosts } = useSelector((state) => state.blog);
 
   let outOfStock = 0;
 
@@ -46,6 +48,7 @@ const Dashboard = () => {
     dispatch(getAllWorkshops())
     dispatch(getAllRentBikesAdmin())
     dispatch(getAllUsedBikes())
+    dispatch(getAllBlogPosts())
   }, []);
 
 
@@ -77,6 +80,8 @@ const Dashboard = () => {
       },
     ],
   };
+
+ 
 
   return (
     <div className="flex w-[100%]">
@@ -140,6 +145,12 @@ const Dashboard = () => {
             </div>
           </Link>
 
+          <Link to={'/admin/blogs'}>
+            <div className="bg-gray-900 text-yellow-400 hover:text-[#02ed6c] hover:shadow-[0_10px_60px_rgba(2,237,_108,_0.7)] text-2xl font-semibold rounded-full w-52 h-52 flex flex-col justify-center items-center hover:scale-105 duration-500">
+              <span>Blog Posts</span>
+              <span>{blogPosts && blogPosts.length}</span>
+            </div>
+          </Link>
 
         </div>
 
@@ -149,6 +160,8 @@ const Dashboard = () => {
         <div className=" w-[40%] mx-auto">
           <Chart type='doughnut' data={doughnutState} />
         </div>
+
+      
 
       </div>
     </div >

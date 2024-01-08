@@ -9,7 +9,6 @@ const workshopSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "Please Enter Your Email"],
-    unique: true,
     validate: [validator.isEmail, "Please Enter a valid Email"],
   },
   brand: {
@@ -79,6 +78,11 @@ const workshopSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+
 });
 
 module.exports = mongoose.model("Workshop", workshopSchema);

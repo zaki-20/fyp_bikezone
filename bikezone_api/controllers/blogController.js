@@ -46,7 +46,7 @@ exports.getUserPosts = async (req, res, next) => {
 //get single blog post
 exports.getSingleBlog = async (req, res, next) => {
     const blogId = req.params.id;
-    const blog = await Blog.findById(blogId).populate("user", "firstname lastname email");;
+    const blog = await Blog.findById(blogId).populate("user", "firstname lastname email");
     if (!blog) {
         return next(new ErrorHandler("Blog post not found", 400));
     }

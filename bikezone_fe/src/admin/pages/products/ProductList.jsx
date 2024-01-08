@@ -15,11 +15,12 @@ const ProductList = () => {
     const [localProducts, setLocalProducts] = useState([]);
 
 
-    const {isLoading, products } = useSelector((state) => state.product)
+    const { isLoading, products } = useSelector((state) => state.product)
 
 
     const deleteProductHandler = async (id) => {
-        dispatch(deleteProduct(id))
+        await dispatch(deleteProduct(id))
+        dispatch(getAdminProducts())
     }
 
     useEffect(() => {
@@ -115,17 +116,17 @@ const ProductList = () => {
         <div className='flex '>
             <SideBar />
             {!isLoading &&
-             <div className="bg-gray-100 w-full min-h-screen p-5 overflow-x-hidden">
-                <h1 className='text-2xl py-3' >All Products</h1>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={10}
-                    disableSelectionOnClick
-                    className="w-[100%]"
-                    autoHeight
-                />
-            </div>
+                <div className="bg-gray-100 w-full min-h-screen p-5 overflow-x-hidden">
+                    <h1 className='text-2xl py-3' >All Products</h1>
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        pageSize={10}
+                        disableSelectionOnClick
+                        className="w-[100%]"
+                        autoHeight
+                    />
+                </div>
             }
         </div>
     )

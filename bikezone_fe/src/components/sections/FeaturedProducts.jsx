@@ -31,7 +31,7 @@ const FeaturedProducts = () => {
     if (isError) {
         return (
             <>
-                <div>Error happend</div>
+                <div>Something Went Wrong</div>
             </>
         )
     }
@@ -59,7 +59,11 @@ const FeaturedProducts = () => {
                             return <ProductCard key={product._id} product={product} />;
                         })
                     ) : (
-                        <div>No products available.</div>
+                        <div className='w-screen'>
+                            <h1 className='text-center text-2xl text-yellow-500 font-semibold'>
+                                No products available.
+                            </h1>
+                        </div>
                     )}
 
                 </div>

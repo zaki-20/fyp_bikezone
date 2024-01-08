@@ -12,11 +12,15 @@ const WorkshopList = () => {
 
     const { isLoading, isError, message, workshops } = useSelector((state) => state.workshop)
 
+    // useEffect(() => {
+    //     if (!workshops.length) {
+    //         dispatch(getAllWorkshops());
+    //     }
+    // }, [dispatch, workshops]);
+
     useEffect(() => {
-        if (!workshops.length) {
-            dispatch(getAllWorkshops());
-        }
-    }, [dispatch, workshops]);
+        dispatch(getAllWorkshops());
+    }, []);
 
 
     const deleteWorkshopHandler = async (id) => {
@@ -57,6 +61,13 @@ const WorkshopList = () => {
             flex: 0.5,
         },
         {
+            field: "date",
+            headerClassName: "bg-gray-900 text-yellow-400 text-lg",
+            headerName: "Registered On",
+            minWidth: 150,
+            flex: 0.5,
+        },
+        {
             field: "actions",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
             flex: 0.3,
@@ -82,16 +93,22 @@ const WorkshopList = () => {
     ];
 
 
-    const rows = workshops?.map((workshop) => ({
-        id: workshop._id,
-        owner_email: workshop.email,
-        owner_name: workshop.name,
-        workshop_name: workshop.name,
-        city: workshop.city,
-        contact: workshop.contact
+    const rows = [];
 
-    })) || [];
+    workshops &&
+        workshops.forEach((workshop) => {
+            const datePart = workshop.createdAt.split('T')[0]; // Extracts the date part
 
+            rows.push({
+                id: workshop._id,
+                owner_email: workshop.email,
+                owner_name: workshop.name,
+                workshop_name: workshop.name,
+                city: workshop.city,
+                contact: workshop.contact,
+                date: datePart
+            });
+        });
     return (
         <div className='flex'>
             <SideBar />

@@ -9,10 +9,7 @@ import {
     AccordionHeader,
     AccordionBody,
 } from "@material-tailwind/react";
-import {
 
-    PowerIcon,
-} from "@heroicons/react/24/solid";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
@@ -23,6 +20,8 @@ import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { FaUsers } from "react-icons/fa";
 import { GiAutoRepair } from "react-icons/gi";
 import { PiMotorcycleFill } from "react-icons/pi";
+import { BsPostcardHeart } from "react-icons/bs";
+
 
 
 const SideBar = () => {
@@ -33,7 +32,7 @@ const SideBar = () => {
     };
 
     return (
-        <Card className="h-screen  max-w-[14rem] p-4 shadow-xl shadow-blue-gray-900/5">
+        <Card className="h-full  max-w-[14rem] p-4 shadow-xl shadow-blue-gray-900/5">
             <div className="mb-2 p-4">
                 <Typography variant="h5" color="blue-gray">
                     Welcome Back!
@@ -150,12 +149,91 @@ const SideBar = () => {
                     </ListItem>
                 </Link>
 
+                <Link to={'/admin/blogs'}>
+                    <ListItem className="w-[85%]">
+                        <ListItemPrefix>
+                            <BsPostcardHeart className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Blogs
+                    </ListItem>
+                </Link>
 
+
+                <Accordion
+                    className="w-[85%]"
+                    open={open === 2}
+                    icon={
+                        <ChevronDownIcon
+                            strokeWidth={2.5}
+                            className={`mx-auto b h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`}
+                        />
+                    }
+                >
+                    <ListItem className="p-0" selected={open === 2}>
+                        <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
+                            <ListItemPrefix>
+                                <MdStorage className="h-5 w-5" />
+                            </ListItemPrefix>
+                            <Typography color="blue-gray" className="mr-auto font-normal">
+                                Statistics
+                            </Typography>
+                        </AccordionHeader>
+                    </ListItem>
+                    <AccordionBody className="py-1">
+                        <List className="p-0">
+                            <Link to={'/admin/users/stats'}>
+                                <ListItem>
+                                    <ListItemPrefix>
+                                        <AiOutlineStock strokeWidth={3} className="h-4 w-5" />
+                                    </ListItemPrefix>
+                                    Users
+                                </ListItem>
+                            </Link>
+
+                            <Link to={'/admin/workshops/stats'}>
+                                <ListItem>
+                                    <ListItemPrefix>
+                                        <AiOutlineStock strokeWidth={3} className="h-4 w-5" />
+                                    </ListItemPrefix>
+                                    Workshops
+                                </ListItem>
+                            </Link>
+
+                            <Link to={'/admin/rentalbikes/stats'}>
+                                <ListItem>
+                                    <ListItemPrefix>
+                                        <AiOutlineStock strokeWidth={3} className="h-4 w-5" />
+                                    </ListItemPrefix>
+                                    Rental-Bikes
+                                </ListItem>
+                            </Link>
+
+                            <Link to={'/admin/usedbikes/stats'}>
+                                <ListItem>
+                                    <ListItemPrefix>
+                                        <AiOutlineStock strokeWidth={3} className="h-4 w-5" />
+                                    </ListItemPrefix>
+                                    Used-Bikes
+                                </ListItem>
+                            </Link>
+
+                            <Link to={'/admin/blogs/stats'}>
+                                <ListItem>
+                                    <ListItemPrefix>
+                                        <AiOutlineStock strokeWidth={3} className="h-4 w-5" />
+                                    </ListItemPrefix>
+                                    Blogs
+                                </ListItem>
+                            </Link>
+                           
+                        </List>
+                    </AccordionBody>
+                </Accordion>
 
                 <Link to={'/'}>
                     <ListItem className="w-[85%] bg-red-200">
                         <ListItemPrefix>
-                            <IoHome className="h-5 w-5" />
+                            <IoHome className="h-5 w-5 text-red-800" />
                         </ListItemPrefix>
                         Go To Home
                     </ListItem>

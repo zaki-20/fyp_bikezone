@@ -133,7 +133,7 @@ const BlogPage = () => {
 
 
                                 <p
-                                    className="mb-5 h-[100px] ml-2 mt-4 text-gray-800 dark:text-gray-400 overflow-y-scroll"
+                                    className="mb-5 h-[120px] ml-2 mt-4 text-gray-800 dark:text-gray-400 "
                                     dangerouslySetInnerHTML={{ __html: item?.description.length > 300 ? `${item?.description.slice(0, 300)}...` : item?.description }}>
                                 </p>
 
