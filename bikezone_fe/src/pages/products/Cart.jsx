@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import EmptyCart from '../../components/cards/EmptyCart'
 import { useNavigate } from 'react-router-dom'
 
+
 const Cart = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
