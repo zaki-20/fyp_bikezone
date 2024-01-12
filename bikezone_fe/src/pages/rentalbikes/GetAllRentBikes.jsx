@@ -21,7 +21,6 @@ const GetAllRentBikes = () => {
     dispatch(getAllRentBikes())
   }, [])
 
-  console.log(rentBikes, "hshshbsb")
 
   const filteredRentBikes = rentBikes
     .filter(item =>
@@ -114,8 +113,10 @@ const GetAllRentBikes = () => {
               className="appearance-none bg-gray-200 border-2 pl-10 border-gray-300 hover:border-gray-400 transition-colors rounded-md w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:ring-purple-600 focus:border-purple-600 focus:shadow-outline"
             >
               <option value="">Default Condition</option>
-              <option value="new">New</option>
-              <option value="used">Used</option>
+              <option value="excellent">Excellent</option>
+              <option value="good">Good</option>
+              <option value="fair">Fair</option>
+              <option value="poor">Poor</option>
             </select>
           </div>
 

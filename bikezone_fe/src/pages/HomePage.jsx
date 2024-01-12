@@ -23,10 +23,11 @@ const HomePage = () => {
           animationData={bikeAnimation}
         />
       </div>
-      {/* <div className='bg-gray-700 h-1 mx-auto -mt-2 w-2/3 blur-lg animate-pulse roun'></div>
+      <div className='bg-gray-700 h-1 mx-auto -mt-2 w-2/3 blur-lg animate-pulse roun'></div>
 
 
-      <Services /> */}
+      <Services />
+
       <FeaturedProducts />
       <TopRatedProducts />
       <ReviewedProducts />

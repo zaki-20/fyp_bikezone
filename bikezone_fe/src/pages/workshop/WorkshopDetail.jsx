@@ -89,11 +89,12 @@ const WorkshopDetail = () => {
 
     };
 
-    const handleDeleteWorkshop = () => {
+    const handleDeleteWorkshop = async () => {
         // Check if the logged-in user's ID matches the owner's ID
         if (user && user._id === workshop.owner._id) {
 
-            dispatch(deleteMyWorkshop(id));
+            await dispatch(deleteMyWorkshop(id));  
+
             navigate('/workshops/me');
         } else {
             // Handle the case where the logged-in user is not the owner (show a message or take appropriate action)
@@ -101,7 +102,7 @@ const WorkshopDetail = () => {
         }
         setOpenDelete(!openDelete)
     };
-
+    console.log(workshop?.offerDate)
     return (
         <div className='font-poppins bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600'>
 
@@ -156,7 +157,7 @@ const WorkshopDetail = () => {
                                                                             <BsFillTelephoneFill size={20} className='text-gray-500' />
                                                                         </span>
                                                                         <p className=" text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                                            {workshop?.contact}
+                                                                            +{workshop?.contact}
                                                                         </p>
                                                                     </div>
                                                                 </div>

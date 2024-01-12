@@ -61,7 +61,6 @@ exports.createAppointment = catchAsyncErrors(async (req, res, next) => {
     existingWorkshop.appointments.push(appointment);
 
     await existingWorkshop.save();
-
     await sendEmail({
         email: user.email,
         subject: 'Appointment Confirmation',
@@ -74,6 +73,7 @@ exports.createAppointment = catchAsyncErrors(async (req, res, next) => {
         workshopContact: `${existingWorkshop.contact}`,
         workshopContactLink: `https://api.whatsapp.com/send?phone=+92${existingWorkshop.contact}`,
         bookingSlot: 'Your booking slot data',
+        discountAmount: `${discountAmount}% discount`,
     }, 'html');
 
 

@@ -40,7 +40,6 @@ const ProcessOrder = () => {
             id
         };
 
-        console.log(orderUpdateData)
 
         await dispatch(updateOrder(orderUpdateData))
         await dispatch(getOrderDetails(id))

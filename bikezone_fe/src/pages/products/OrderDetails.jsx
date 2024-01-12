@@ -22,7 +22,7 @@ const OrderDetails = () => {
         }
         dispatch(getOrderDetails(id))
     }, [isError, id, message, dispatch])
-
+    console.log("huhuhuffufuuuff", orderDetails)
     return (
         <>
             {
@@ -63,13 +63,14 @@ const OrderDetails = () => {
                                 <div className="mb-2">
                                     <div className="flex items-center">
                                         <img
-                                            src={pro}
+                                            src={item?.images[0]}
                                             alt="Product 1"
-                                            className="w-12 h-12 object-cover rounded-full mr-4"
+                                            className="w-16 h-16 object-cover rounded-md mr-4"
                                         />
                                         <div>
                                             <p><strong>Name: </strong>{item.name}</p>
                                             <p><strong>Price: </strong> Rs. {item.price} PKR</p>
+                                            <p><strong>Quantity: </strong> Rs. {item.quantity} PKR</p>
                                         </div>
                                     </div>
                                 </div>

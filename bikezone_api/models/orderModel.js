@@ -37,10 +37,10 @@ const orderSchema = new mongoose.Schema({
                 type: Number,
                 required: true,
             },
-            // image: {
-            //     type: String,
-            //     required: true,
-            // },
+            images: {
+                type: [String],
+                // required: true,
+              },
             _id: {
                 type: mongoose.Schema.ObjectId,
                 ref: "Product",

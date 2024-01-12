@@ -63,8 +63,6 @@ exports.getSingleBlog = async (req, res, next) => {
 exports.likeDislikePost = async (req, res, next) => {
     const post = await Blog.findById(req.params.id);
 
-
-    console.log(req.user)
     if (!post.likes.includes(req.user._id)) {
         await post.updateOne({ $push: { likes: req.user._id } });
         res.status(200).json({

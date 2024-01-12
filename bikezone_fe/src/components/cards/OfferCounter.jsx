@@ -21,7 +21,8 @@ const OfferCounter = ({ targetDate, discount }) => {
             const now = new Date().getTime();
 
             // Find the distance between now and the count down date
-            const distance = countDownDate - now;
+            const distance = (countDownDate - now) ;
+           
 
             // Time calculations for days, hours, minutes, and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));

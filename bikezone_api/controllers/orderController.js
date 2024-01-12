@@ -15,16 +15,6 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     totalPrice,
   } = req.body;
 
-  //  let { _id, name, price, quantity } = orderitem
-
-  // const orderItems = {
-  //     product: _id,
-  //     name,
-  //     price,
-  //     quantity
-  // }
-
-  // console.log(orderItems)
 
   const order = await Order.create({
     shippingInfo,
@@ -38,6 +28,8 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     user: req.user._id,
   });
 
+  console.log(orderItems)
+  
   res.status(201).json({
     statusCode: 201,
     status: true,

@@ -8,18 +8,6 @@ exports.createRentBike = catchAsyncErrors(async (req, res, next) => {
 
   const seller = req.user._id;
 
-  // Check if availableFromDate is greater than the current date
-  // const currentDate = new Date();
-  // const selectedDate = new Date(availableFromDate);
-
-  // if (selectedDate <= currentDate) {
-  //   return res.status(400).json({
-  //     statusCode: 400,
-  //     success: false,
-  //     message: "Available from date must be greater than the current date.",
-  //   });
-  // }
-
   const rentBike = await RentBike.create({
     title,
     description,
@@ -42,6 +30,7 @@ exports.createRentBike = catchAsyncErrors(async (req, res, next) => {
     payload: { rentBike },
   });
 });
+
 
 //get all rent bike ads for users
 exports.getAllRentBikes = catchAsyncErrors(async (req, res, next) => {

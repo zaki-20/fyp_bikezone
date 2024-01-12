@@ -26,7 +26,7 @@ const rentBikeSchema = new mongoose.Schema({
   condition: {
     type: String,
     required: true,
-    enum: ['new', 'used'], // You can customize the conditions based on your needs
+    enum: ['excellent', 'good', 'fair', 'poor'], // You can customize the conditions based on your needs
   },
   address: {
     type: String,

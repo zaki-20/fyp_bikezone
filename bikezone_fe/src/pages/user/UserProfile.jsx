@@ -57,6 +57,10 @@ const UserProfile = () => {
                                     <td className="font-bold text-gray-600 py-3 px-4">Email</td>
                                     <td className="font-light text-gray-600 py-3 px-4 text-right">{user?.email}</td>
                                 </tr>
+                                <tr className='hover:bg-gray-300'>
+                                    <td className="font-bold text-gray-600 py-3 px-4">Role</td>
+                                    <td className="font-light text-gray-600 py-3 px-4 text-right">{user?.role}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

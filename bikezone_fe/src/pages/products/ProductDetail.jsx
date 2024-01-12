@@ -26,6 +26,7 @@ import { reset } from '../../features/review/review.slice';
 import Lottie from 'lottie-react'
 import ratingAnimation from '../../assets/animated/ratingProduct.json'
 import checkDetailsAnimation from '../../assets/animated/checkDetails.jsx.json'
+import { getAllOrders, myOrders } from '../../features/order/order.thunk';
 
 
 
@@ -39,6 +40,8 @@ const ProductDetail = () => {
     const [open, setOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
+    const [hasOrderedProduct, setHasOrderedProduct] = useState(false);
+
 
     const dispatch = useDispatch()
 
@@ -60,7 +63,7 @@ const ProductDetail = () => {
         const reviewData = {
             rating, comment, productId: id
         }
-    
+
 
         dispatch(createReview(reviewData))
         setOpen(false);
@@ -71,12 +74,18 @@ const ProductDetail = () => {
     const { user } = useSelector((state) => state.auth)
     const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
     const { isError: reviewError, message: reviewMsg, isLoading: reviewLoad, isSuccess } = useSelector(state => state.review)
-    // const { isLoading, isError, message, orders } = useSelector((state) => state.order)
+    const { orders } = useSelector((state) => state.order)
 
 
     useEffect(() => {
         dispatch(getProductDetail(id))
     }, [dispatch, id, isSuccess]);
+
+    useEffect(() => {
+        // Fetch user orders
+        dispatch(myOrders());
+    }, [dispatch, id]);
+
 
     useEffect(() => {
         if (reviewError) {
@@ -102,6 +111,18 @@ const ProductDetail = () => {
     const showErrorToast = () => {
         toast.error(message);
     };
+    
+    useEffect(() => {
+        console.log("orders:", orders);
+        console.log("productDetails:", productDetails);
+    
+        if (orders && productDetails) {
+            const orderedProduct = orders.find(order => order?.orderItems.some(item => item._id === productDetails?._id));
+            setHasOrderedProduct(!!orderedProduct);
+            console.log("huhuuuhuh", orderedProduct);
+        }
+    }, [orders, productDetails]);
+
 
 
     //for star rating
@@ -221,9 +242,24 @@ const ProductDetail = () => {
                                             </button>
                                             {
                                                 user ? (
-                                                    <button onClick={handleClickOpen} className="flex mt-2 items-center justify-center w-full p-4 text-[#122222] border border-[#122222] duration-200 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-yellow-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
-                                                        Submit Review
-                                                    </button>
+                                                    <>
+                                                        {
+                                                            <button
+                                                                onClick={() => {
+                                                                    // Check if the user has ordered the product
+                                                                    if (hasOrderedProduct) {
+                                                                        // User has ordered, proceed with review submission logic
+                                                                        handleClickOpen();
+                                                                    } else {
+                                                                        // User hasn't ordered, show toast message
+                                                                        toast.error("Please order the product first.");
+                                                                    }
+                                                                }}
+                                                                className="flex mt-2 items-center justify-center w-full p-4 text-[#122222] border border-[#122222] duration-200 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-yellow-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                                                                Submit Review
+                                                            </button>
+                                                        }
+                                                    </>
                                                 ) : (
                                                     navigate('/login')
                                                 )
@@ -294,7 +330,7 @@ const ProductDetail = () => {
                                         productDetails.reviews && productDetails.reviews[0] ? (
                                             productDetails.reviews && productDetails.reviews.map((review) => {
                                                 return (<>
-                                                    <ReviewCard key={review._id} review={review} product={productDetails}/>
+                                                    <ReviewCard key={review._id} review={review} product={productDetails} />
                                                 </>
                                                 )
                                             })

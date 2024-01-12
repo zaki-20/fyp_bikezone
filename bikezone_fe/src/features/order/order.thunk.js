@@ -4,7 +4,6 @@ import orderService from "./order.service";
 //createOrder 
 export const createOrder = createAsyncThunk('order/createOrder', async (order, thunkAPI) => {
     try {
-        console.log(order.orderItems, "order id order service")
         return await orderService.createOrder(order)
     } catch (error) {
         const message =
