@@ -6,6 +6,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { verifyOtp } from "../../features/auth/auth.thunk";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import { reset } from "../../features/auth/auth.slice";
 
 const schema = yup.object({
     otp: yup.string().required('opt is required').matches(/^[0-9]{4}$/, 'OTP must be exactly 4 numeric digits'),
@@ -34,6 +37,16 @@ const OtpVerification = () => {
             navigate('/account');
         }
     }, [user])
+
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+            return () => {
+                dispatch(reset());
+            };
+        }
+    }, [isError, message, dispatch])
 
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
         useFormik({

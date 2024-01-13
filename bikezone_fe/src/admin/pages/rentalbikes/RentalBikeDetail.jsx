@@ -26,7 +26,6 @@ const RentalBikeDetail = () => {
             } else if (phoneNumberString.startsWith('+92')) {
                 return '0' + phoneNumberString.slice(3);
             }
-
             return phoneNumberString;
         }
 

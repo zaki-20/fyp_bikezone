@@ -103,7 +103,6 @@ exports.getSingleAppointment = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Appointment not found", 404));
     }
 
-
     res.status(200).json({
         statusCode: 200,
         success: true,
@@ -111,10 +110,4 @@ exports.getSingleAppointment = catchAsyncErrors(async (req, res, next) => {
         payload: { appointment },
     });
 });
-
-
-
-
-
-
 
