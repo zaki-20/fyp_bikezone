@@ -10,7 +10,6 @@ const ProductCard = ({ product, newArrive }) => {
     
     const navigate = useNavigate()
 
-    // const {  productDetails } = useSelector(state => state.product)
 
     //for star rating
     const options = {
@@ -22,9 +21,7 @@ const ProductCard = ({ product, newArrive }) => {
         emptyIcon: <BsStar size={18} color='gold' />
     }//end rating
 
-    // const clicker = () => {
-    //     navigate(`/product/${product._id}`)
-    // }
+  
 
     return (
 

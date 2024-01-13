@@ -38,6 +38,7 @@ const WorkshopDetails = () => {
     };
 
 
+
     return (
         <div className='flex bg-gray-100'>
             <SideBar />
@@ -46,7 +47,7 @@ const WorkshopDetails = () => {
                 isLoading ? (
                     <>
                         <div className='self-center w-full'>
-                        <Loader className=''/>
+                            <Loader className='' />
                         </div>
                     </>
                 ) : (
@@ -54,7 +55,7 @@ const WorkshopDetails = () => {
                     <div className='w-full py-10'>
                         <div className=" sm:px-10 lg:px-20 md:flex flex-none justify-between gap-8 xl:px-32">
                             <div className="px-4 py-8 w-full ">
-                            <h1 className="text-3xl text-center">Workshop detail</h1>
+                                <h1 className="text-3xl text-center">Workshop detail</h1>
 
                                 <div className='border-b py-6 border-black '>
                                     <div className=' flex justify-between items-center'>
@@ -78,7 +79,15 @@ const WorkshopDetails = () => {
                                             <span className="text-gray-600">{workshop?.owner?.email}</span>
                                         </div>
 
+                                        <div className="flex justify-between mx-4 ">
+                                            <span className="text-gray-700 text-sm font-bold">User Role:</span>
+                                            <span className="text-gray-600">{workshop?.owner?.role}</span>
+                                        </div>
 
+                                        <div className="flex justify-between mx-4 ">
+                                            <span className="text-gray-700 text-sm font-bold">Joined On:</span>
+                                            <span className="text-gray-600">{String(workshop?.owner?.createdAt).substr(0, 10)}</span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -90,9 +99,30 @@ const WorkshopDetails = () => {
                                     </div>
                                     <div className="mt-4 space-y-3 rounded-lg border border-gray-600 bg-[#e9e7e7ea] hover:shadow-[inset_3px_0px_41px_22px_#00000024] duration-300 hover:shadow-gray-400 px-2 py-2 sm:px-6">
                                         <div className="flex flex-col rounded-lg  sm:flex-row items-center ">
-                                            <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src={workshop?.imageURL} alt='true' />
+                                            <img className="m-2 h-24 w-28 rounded-md border object-cover self-start" src={workshop?.imageURL} alt='true' />
 
                                             <div className='w-full '>
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">Brand:</span>
+                                                    <span className="text-gray-600">{workshop?.brand}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">City:</span>
+                                                    <span className="text-gray-600">{workshop?.city}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold"> Address:</span>
+                                                    <span className="text-gray-600">{workshop?.address}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold"> Timing:</span>
+                                                    <span className="text-gray-600">{`${workshop?.startTime}:00 - ${workshop?.endTime}:00`}</span>
+                                                </div>
+
+
                                                 <div className="flex justify-between mx-4 py-2">
                                                     <span className="text-gray-700 text-sm font-bold">Workshop Name:</span>
                                                     <span className="text-gray-600">{workshop?.name}</span>
@@ -108,17 +138,6 @@ const WorkshopDetails = () => {
                                                     <span className="text-gray-600">{workshop?.email}</span>
                                                 </div>
 
-                                                <div className="flex justify-between mx-4 py-2">
-                                                    <span className="text-gray-700 text-sm font-bold">City:</span>
-                                                    <span className="text-gray-600">{workshop?.city}</span>
-                                                </div>
-
-                                                <div className="flex justify-between mx-4 py-2">
-                                                    <span className="text-gray-700 text-sm font-bold">Workshop Address:</span>
-                                                    <span className="text-gray-600">{workshop?.address}</span>
-                                                </div>
-
-                
 
                                             </div>
                                         </div>

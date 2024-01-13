@@ -90,7 +90,7 @@ function AddProduct() {
                     // Add the Cloudinary image URLs to the form data
                     values.images = imageUrls;
                     await dispatch(createProduct(values))
-                    navigate('/admin/products')
+                    // navigate('/admin/products')
 
                 } catch (error) {
                     console.log(error)

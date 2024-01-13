@@ -10,6 +10,7 @@ import { MdReplayCircleFilled } from 'react-icons/md'
 import Lottie from 'lottie-react'
 import mechanicAnimation from '../../assets/animated/mechanic.json'
 import maintainAnimation from '../../assets/animated/maintain.json'
+import { Link } from 'react-router-dom';
 
 
 const Workshops = () => {
@@ -28,9 +29,9 @@ const Workshops = () => {
     // }, [isSuccess])
 
     useLayoutEffect(() => {
-        
-            toast.success("All workshops data")
-       
+
+        toast.success("All workshops data")
+
     }, [])
 
     useLayoutEffect(() => {
@@ -94,7 +95,15 @@ const Workshops = () => {
 
 
                     </div>
+
                 </div>
+
+                <Link to={`/workshops/me`} className='self-end'>
+                    <button className="bg-[#122222]  mx-10 my-4 text-white hover:text-yellow-400 px-4 py-2 rounded-md mt-4">
+                        Go to My Workshops
+                    </button>
+                </Link>
+
             </div>
 
             {isLoading ? (<Loader />) : (

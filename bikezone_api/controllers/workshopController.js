@@ -128,7 +128,7 @@ exports.getWorkshopDetails = async (req, res, next) => {
     path: "appointments",
     populate: {
       path: "user",
-      select: "firstname lastname email", // Select the fields you want from the user object
+      select: "firstname lastname email imageURL createdAt role", // Select the fields you want from the user object
     },
   }).populate({
     path: "appointments",
@@ -138,7 +138,7 @@ exports.getWorkshopDetails = async (req, res, next) => {
     },
   }).populate({
     path: "owner", // Assuming "owner" is a reference field in the Workshop model
-    select: "firstname lastname email imageURL", // Select the fields you want from the owner user object
+    select: "firstname lastname email imageURL createdAt role", // Select the fields you want from the owner user object
   });
 
   // Filter out the slots for the upcoming days

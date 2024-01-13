@@ -75,7 +75,7 @@ exports.getUsedBikeDetail = catchAsyncErrors(async (req, res, next) => {
   const usedBikeId = req.params.id;
   const usedBike = await UsedBike.findById(usedBikeId).populate({
     path: 'seller',
-    select: 'firstname lastname email imageURL', // Select the fields you want from the seller object
+    select: 'firstname lastname email imageURL createdAt role', // Select the fields you want from the seller object
   });
 
   if (!usedBike) {

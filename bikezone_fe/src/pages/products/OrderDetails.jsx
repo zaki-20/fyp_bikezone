@@ -59,7 +59,7 @@ const OrderDetails = () => {
         <>
             {
                 isLoading ? (<Loader />) : (
-                    <div ref={contentRef} className="bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600 p-8 rounded-lg shadow-lg">
+                    <div ref={contentRef} className="bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600 p-8 shadow-lg">
 
                         <h1 className="text-3xl font-bold text-center  mb-4 text-gray-900">Order Details </h1>
                         <h1 className="text-2xl font-bold  mb-4 text-gray-900">Order #: {orderDetails && orderDetails._id} </h1>

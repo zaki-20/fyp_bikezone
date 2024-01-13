@@ -38,16 +38,6 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     // Save the user with the generated OTP
     await user.save();
 
-
-    // await sendEmail({
-    //     email: email,
-    //     subject: `Bikezone Registration`,
-    //     firstname,
-    //     lastname
-    // }, 'html');
-
-
-
     const message = `Your Bikezone registration OTP is: ${otp}`;
 
     await sendEmail({
@@ -56,9 +46,6 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         message,
     }, 'html');
 
-
-    // const msg = "Registered successfully. An OTP has been sent to your email for verification.";
-    // sendToken(user, 200, res, msg)
 
     res.status(200).json({
         statusCode: 200,
@@ -158,12 +145,6 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
     sendToken(user, 200, res, msg)
 
-    // const token = user.getJWTToken()
-
-    // res.status(200).json({
-    //     success: true,
-    //     token
-    // })
 
 })
 

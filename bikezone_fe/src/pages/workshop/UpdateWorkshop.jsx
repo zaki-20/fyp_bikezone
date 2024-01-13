@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createWorkshop, getSingleWorkshop, updateMyWorkshop } from '../../features/workshop/workshop.thunk';
 import { reset } from '../../features/workshop/workshop.slice';
 import { toast } from 'react-toastify';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import Lottie from 'lottie-react'
 import updateWorkshopAnimation from '../../assets/animated/updateWorkshopAnimation.json'
 import axios from 'axios';
@@ -521,6 +521,11 @@ const UpdateWorkshop = () => {
                     </div>
 
                 </div>
+                <Link to={`/workshop/${id}`}>
+                    <button className="bg-[#122222] m-4 text-white hover:text-yellow-400 px-4 py-2 rounded-md mt-4">
+                        Back
+                    </button>
+                </Link>
             </section>
 
         </>

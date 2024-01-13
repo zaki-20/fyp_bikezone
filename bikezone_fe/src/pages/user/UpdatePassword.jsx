@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { updatePassword } from '../../features/auth/auth.thunk';
 import { reset } from '../../features/auth/auth.slice';
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -16,8 +16,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const schema = yup.object({
-    oldPassword: yup.string().min(6, 'Password must be at least 6 characters').required('old Password is required'),
-    newPassword: yup.string().min(6, 'Password must be at least 6 characters').required('enter your new password'),
+    oldPassword: yup.string().min(8, 'Password must be at least 6 characters').required('old Password is required'),
+    newPassword: yup.string().min(8, 'Password must be at least 6 characters').required('enter your new password'),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
@@ -200,6 +200,13 @@ const UpdatePassword = () => {
                     </form>
                 </div>
             </div>
+
+            <Link to={`/account`}>
+                <button className="bg-[#122222] m-4 text-white hover:text-yellow-400 px-4 py-2 rounded-md mt-4">
+                    Back
+                </button>
+            </Link>
+
         </div>
     );
 };

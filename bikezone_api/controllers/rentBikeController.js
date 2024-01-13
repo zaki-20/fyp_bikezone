@@ -122,7 +122,7 @@ exports.getRentBikeDetails = catchAsyncErrors(async (req, res, next) => {
   const rentBikeId = req.params.id;
   const rentBike = await RentBike.findById(rentBikeId).populate({
     path: 'seller',
-    select: 'firstname lastname email imageURL', // Select the fields you want from the seller object
+    select: 'firstname lastname email imageURL createdAt role', // Select the fields you want from the seller object
   });
 
   if (!rentBike) {

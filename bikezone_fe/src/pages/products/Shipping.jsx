@@ -15,15 +15,17 @@ import { MdLocationCity } from "react-icons/md";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { TbMapPinCode } from "react-icons/tb";
 import { IoLocation } from "react-icons/io5";
+import Input from 'react-phone-number-input/input'
 
 
 
 const schema = yup.object({
-    phoneNo: yup
-        .string()
-        .matches(/^(03\d{9})$/, 'Phone number must start with "03" and be 11 digits')
-        .required('Phone number is required')
-        .typeError('Phone number must be a number'),
+    phoneNo: yup.string()
+        .required('Contact is required')
+        .test('is-pakistan-number', 'Invalid contact number', function (value) {
+            const pakistanNumberRegex = /^(\+92|92|0)?[3]\d{9}$/;
+            return pakistanNumberRegex.test(value);
+        }),
     address: yup.string().required('Address is required'),
     city: yup.string().required('City is required'),
     state: yup.string().required('State is required'),
@@ -84,19 +86,22 @@ const Shipping = () => {
                                         <div className="w-full px-3 mb-5">
                                             <label htmlFor="true" className="text-xs font-semibold px-1">Phone Number</label>
                                             <div className="flex">
-                                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <div className="w-10 z-10 m-[1px] rounded-ss  bg-gray-100 text-center pointer-events-none flex items-center justify-center">
                                                     <FaPhone />
                                                 </div>
-                                                <input
-                                                    name='phoneNo'
-                                                    type="text"
+
+                                                <Input
+                                                    country="PK"
+                                                    international
+                                                    withCountryCallingCode
                                                     id='phoneNo'
-                                                    value={values.phoneNo}
-                                                    onChange={handleChange}
+                                                    name='phoneNo'
+                                                    value={values.contact}
+                                                    onChange={(value) => setFieldValue('phoneNo', value)}
                                                     onBlur={handleBlur}
-                                                    className={`w-full caret-yellow-500 placeholder:text-gray-400  text-[#6e6e6e] -ml-10 pl-10 pr-3 py-2 rounded-lg bg-gray-100 outline-none focus:ring-yellow-500 focus:border-yellow-500  ${touched.phoneNo && errors.phoneNo ? 'border-red-500' : 'border-gray-200'} `}
-                                                    placeholder="xxxx xxxxxxx"
+                                                    className={`w-full caret-yellow-500 placeholder:text-gray-400  text-[#6e6e6e] -ml-10 pl-10 pr-3 py-2 rounded-ee bg-gray-100  outline-none focus:ring-yellow-500 focus:border-yellow-500  ${touched.phoneNo && errors.phoneNo ? 'border-red-500' : 'border-gray-200'} `}
                                                 />
+
                                             </div>
                                             {errors.phoneNo && touched.phoneNo ? (
                                                 <p className="text-red-600 animate-pulse">{errors.phoneNo}</p>

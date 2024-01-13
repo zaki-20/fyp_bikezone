@@ -76,8 +76,7 @@ import WorkshopStats from "./admin/pages/stats/WorkshopStats";
 import RentalBikeStats from "./admin/pages/stats/RentalBikeStats";
 import UsedBikeStats from "./admin/pages/stats/UsedBikeStats";
 import BlogStats from "./admin/pages/stats/BlogStats";
-// import WorkshopStats from "./admin/pages/stats/WorkshopStats";
-
+ 
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");

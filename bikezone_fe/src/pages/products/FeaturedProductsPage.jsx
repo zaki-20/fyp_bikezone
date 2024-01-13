@@ -47,11 +47,6 @@ const FeaturedProductsPage = () => {
 
 
   useEffect(() => {
-    if (loading)
-      console.log(newArrival)
-  }, [loading])
-
-  useEffect(() => {
     if (isError) {
       toast.error();
       dispatch(reset())
@@ -85,9 +80,10 @@ const FeaturedProductsPage = () => {
       <MetaData title={"PRODUCTS -- BIKEZONE"} />
 
 
-      <div className='flex md:mx-0 md:justify-start min-h-screen justify-center bg-[#d0d1d1] '>
+      <div className='flex md:mx-0 px-20 md:justify-start min-h-screen justify-center bg-[#d0d1d1] '>
 
-        <div className=' md:w-3/4 '>
+        <div className='  '>
+
           <div className="  px-2 py-8 ">
 
             <form onSubmit={searchSubmitHandler} className="mb-4 flex items-center gap-x-2">
@@ -109,7 +105,7 @@ const FeaturedProductsPage = () => {
                   <h1 className="text-3xl font-semibold mb-4">Featured Products</h1>
                   {/* Show error toast when isError is true */}
 
-                  <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                  <div className=" grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3  gap-5">
                     {products &&
                       products?.map((product) => {
 

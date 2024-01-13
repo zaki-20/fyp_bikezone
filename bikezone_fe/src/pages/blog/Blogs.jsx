@@ -39,9 +39,7 @@ const Blogs = () => {
     }, [])
 
 
-    // if (blogPosts.length <= 0) {
-    //     toast.error("no post");
-    // }
+
 
     const filteredAndSortedBlogPosts = blogPosts
         .filter((post) => {
@@ -178,8 +176,8 @@ const Blogs = () => {
                                 </div>
 
                                 <p
-                                    className="mb-5 h-[100px] ml-2 mt-4 text-gray-800 dark:text-gray-400"
-                                    dangerouslySetInnerHTML={{ __html: item?.description.length > 300 ? `${item?.description.slice(0, 300)}...` : item?.description }}>
+                                    className="mb-5 h-[100px] ml-2 mt-4 text-gray-800 dark:text-gray-400 overflow-hidden"
+                                    dangerouslySetInnerHTML={{ __html: item?.description.length > 200 ? `${item?.description.slice(0, 200)}...` : item?.description }}>
                                 </p>
                                 <div className=" flex justify-between items-center">
                                     {
@@ -226,6 +224,11 @@ const Blogs = () => {
                                         </svg>
                                     </Link>
                                 </div>
+                                <Link to={`/account`}>
+                                    <button className="bg-[#122222] m-4 text-white hover:text-yellow-400 px-4 py-2 rounded-md mt-4">
+                                        Back
+                                    </button>
+                                </Link>
                             </article>
                         ))}
                     </div>

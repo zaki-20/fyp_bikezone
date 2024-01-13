@@ -16,8 +16,7 @@ const ConfirmOrder = () => {
         (acc, item) => acc + item.quantity * item.price, 0
     )
     const shippingCharges = subtotal > 3000 ? 0 : 499;
-    const tax = subtotal * 0.18;
-    const totalPrice = subtotal + shippingCharges + tax;
+    const totalPrice = subtotal + shippingCharges;
     const address = `${shippingInfo?.address}, ${shippingInfo?.city}, ${shippingInfo?.state}, ${shippingInfo?.pinCode}`
 
 
@@ -25,7 +24,6 @@ const ConfirmOrder = () => {
         const data = {
             subtotal,
             shippingCharges,
-            tax,
             totalPrice
         }
         sessionStorage.setItem('orderInfo', JSON.stringify(data))
@@ -105,10 +103,7 @@ const ConfirmOrder = () => {
                                     <p className="text-sm font-medium text-gray-900">Shipping:</p>
                                     <p className="font-semibold text-gray-900">Rs. {shippingCharges} PKR</p>
                                 </div>
-                                <div className="flex items-center justify-between">
-                                    <p className="text-sm font-medium text-gray-900">GST:</p>
-                                    <p className="font-semibold text-gray-900">Rs. {tax} PKR</p>
-                                </div>
+                               
                             </div>
                             <div className="mt-6 flex items-center justify-between">
                                 <p className="text-sm font-medium text-gray-900">Total</p>

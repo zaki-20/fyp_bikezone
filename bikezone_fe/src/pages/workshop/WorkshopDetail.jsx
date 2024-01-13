@@ -93,7 +93,7 @@ const WorkshopDetail = () => {
         // Check if the logged-in user's ID matches the owner's ID
         if (user && user._id === workshop.owner._id) {
 
-            await dispatch(deleteMyWorkshop(id));  
+            await dispatch(deleteMyWorkshop(id));
 
             navigate('/workshops/me');
         } else {
@@ -370,6 +370,12 @@ const WorkshopDetail = () => {
                                 </div>
                             </div >
                         </div >
+
+                        <Link to={`/workshops`}>
+                            <button className="bg-[#122222] m-4 text-white hover:text-yellow-400 px-4 py-2 rounded-md mt-4">
+                                Back
+                            </button>
+                        </Link>
                     </section >
                 </>
             )

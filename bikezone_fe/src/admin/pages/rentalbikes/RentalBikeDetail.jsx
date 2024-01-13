@@ -71,6 +71,16 @@ const RentalBikeDetail = () => {
                                             <span className="text-gray-700 text-sm font-bold">Personal Email:</span>
                                             <span className="text-gray-600">{rentBike?.seller?.email}</span>
                                         </div>
+
+                                        <div className="flex justify-between mx-4 ">
+                                            <span className="text-gray-700 text-sm font-bold">User role:</span>
+                                            <span className="text-gray-600">{rentBike?.seller?.role}</span>
+                                        </div>
+
+                                        <div className="flex justify-between mx-4 ">
+                                            <span className="text-gray-700 text-sm font-bold">Joined On:</span>
+                                            <span className="text-gray-600">{rentBike?.seller?.createdAt.split('T')[0]}</span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -90,6 +100,28 @@ const RentalBikeDetail = () => {
                                                     <span className="text-gray-600">{rentBike?.title}</span>
                                                 </div>
 
+                                               
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">Bike Price:</span>
+                                                    <span className="text-gray-600">PKR {rentBike?.rent} per-day</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">Model:</span>
+                                                    <span className="text-gray-600">{rentBike?.model}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">City:</span>
+                                                    <span className="text-gray-600">{rentBike?.city}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">Address:</span>
+                                                    <span className="text-gray-600">{rentBike?.address}</span>
+                                                </div>
+
                                                 <div className="flex justify-between mx-4 py-2">
                                                     <span className="text-gray-700 text-sm font-bold">Owner Phone No:</span>
                                                     <span className="text-gray-600">{formatPhoneNumber(rentBike?.contact)}</span>
@@ -98,16 +130,6 @@ const RentalBikeDetail = () => {
                                                 <div className="flex justify-between mx-4 py-2">
                                                     <span className="text-gray-700 text-sm font-bold">Busniess Email:</span>
                                                     <span className="text-gray-600">{rentBike?.email}</span>
-                                                </div>
-
-                                                <div className="flex justify-between mx-4 py-2">
-                                                    <span className="text-gray-700 text-sm font-bold">Bike Price:</span>
-                                                    <span className="text-gray-600">PKR {rentBike?.rent} per-day</span>
-                                                </div>
-
-                                                <div className="flex justify-between mx-4 py-2">
-                                                    <span className="text-gray-700 text-sm font-bold">City:</span>
-                                                    <span className="text-gray-600">{rentBike?.city}</span>
                                                 </div>
 
                                             </div>

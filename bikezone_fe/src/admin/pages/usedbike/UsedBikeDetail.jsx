@@ -73,6 +73,17 @@ const UsedBikeDetail = () => {
                                             <span className="text-gray-600">{usedBike?.seller?.email}</span>
                                         </div>
 
+                                        <div className="flex justify-between mx-4 ">
+                                            <span className="text-gray-700 text-sm font-bold">User Role:</span>
+                                            <span className="text-gray-600">{usedBike?.seller?.role}</span>
+                                        </div>
+
+                                        <div className="flex justify-between mx-4 ">
+                                            <span className="text-gray-700 text-sm font-bold">Joined On:</span>
+                                            <span className="text-gray-600">{String(usedBike?.seller?.createdAt).substr(0, 10)}</span>
+                                        </div>
+
+
 
                                     </div>
                                 </div>
@@ -85,7 +96,7 @@ const UsedBikeDetail = () => {
                                     </div>
                                     <div className="mt-4 space-y-3 rounded-lg border border-gray-600 bg-[#e9e7e7ea] hover:shadow-[inset_3px_0px_41px_22px_#00000024] duration-300 hover:shadow-gray-400 px-2 py-2 sm:px-6">
                                         <div className="flex flex-col rounded-lg  sm:flex-row items-center ">
-                                            <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src={usedBike?.images[0]} alt='true' />
+                                            <img className="m-2 h-24 w-28 rounded-md border object-cover self-start" src={usedBike?.images[0]} alt='true' />
 
                                             <div className='w-full '>
                                                 <div className="flex justify-between mx-4 py-2">
@@ -94,13 +105,18 @@ const UsedBikeDetail = () => {
                                                 </div>
 
                                                 <div className="flex justify-between mx-4 py-2">
-                                                    <span className="text-gray-700 text-sm font-bold">Owner Phone No:</span>
-                                                    <span className="text-gray-600">{formatPhoneNumber(usedBike?.contact)}</span>
+                                                    <span className="text-gray-700 text-sm font-bold">Model:</span>
+                                                    <span className="text-gray-600">{usedBike?.model}</span>
                                                 </div>
 
                                                 <div className="flex justify-between mx-4 py-2">
-                                                    <span className="text-gray-700 text-sm font-bold">Busniess Email:</span>
-                                                    <span className="text-gray-600">{usedBike?.email}</span>
+                                                    <span className="text-gray-700 text-sm font-bold">Year:</span>
+                                                    <span className="text-gray-600">{usedBike?.year}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">mileage:</span>
+                                                    <span className="text-gray-600">{usedBike?.city}</span>
                                                 </div>
 
                                                 <div className="flex justify-between mx-4 py-2">
@@ -113,6 +129,31 @@ const UsedBikeDetail = () => {
                                                     <span className="text-gray-600">
                                                         {usedBike?.isAvailable ? 'Available' : 'Unavailable'}
                                                     </span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">Model:</span>
+                                                    <span className="text-gray-600">{usedBike?.model}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">Year:</span>
+                                                    <span className="text-gray-600">{usedBike?.year}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">mileage:</span>
+                                                    <span className="text-gray-600">{usedBike?.city}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">Owner Phone No:</span>
+                                                    <span className="text-gray-600">{formatPhoneNumber(usedBike?.contact)}</span>
+                                                </div>
+
+                                                <div className="flex justify-between mx-4 py-2">
+                                                    <span className="text-gray-700 text-sm font-bold">Busniess Email:</span>
+                                                    <span className="text-gray-600">{usedBike?.email}</span>
                                                 </div>
 
                                             </div>

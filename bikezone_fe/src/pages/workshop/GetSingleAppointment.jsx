@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getSingleAppointment } from '../../features/appointment/appointment.thunk'
 import Loader from '../shared/Loader'
+import { PiArrowsDownUpFill } from "react-icons/pi";
+
 
 
 const GetSingleAppointment = () => {
@@ -15,7 +17,7 @@ const GetSingleAppointment = () => {
     }, [])
 
     const { appointment, isLoading } = useSelector(state => state.appointment)
-
+    const { workshop, isLoading: loading } = useSelector(state => state.workshop)
 
 
     const formatPhoneNumber = (phoneNumber) => {
@@ -40,7 +42,7 @@ const GetSingleAppointment = () => {
     return (
         <>
             {
-                isLoading ? (<Loader />) : (
+                isLoading && loading ? (<Loader />) : (
 
                     <div className='bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600'>
                         <div className=" sm:px-10 lg:px-20 md:flex flex-none justify-between gap-8 xl:px-32">
@@ -122,27 +124,45 @@ const GetSingleAppointment = () => {
                             </div>
 
 
-                            <div className='h-[80%] px-4 md:w-1/3 w-full mt-2 py-8'>
-                                <h1 className='text-2xl text-center font-semibold py-4 '>Available Slots</h1>
-                                {appointment?.workshop?.weeklySlots.map(({ day, slots }) => (
-                                    <div key={day} className="mb-4">
-                                        <h3 className="text-lg font-semibold mb-2">{day}</h3>
-                                        <div className="flex space-x-2">
-                                            {slots.map(slot => (
-                                                <button
-                                                    key={slot}
-                                                    className="px-4 py-2 bg-[#122222] text-white hover:text-yellow-400 duration-200 rounded"
-                                                >
-                                                    {slot}:00
-                                                </button>
-                                            ))}
-                                        </div>
+                            <div className=' px-4 h-[600px] md:w-1/3 w-full mt-2 py-8 overflow-y-scroll  no-scrollbar shadow-xl'>
+                                <div className='flex justify-center items-center gap-x-2'>
+                                    <h1 className='text-2xl text-center font-semibold py-4 '>Available Slots</h1>
+                                    <div>
+                                        <PiArrowsDownUpFill size={30} className='animate-pulse' />
                                     </div>
-                                ))}
+                                </div>
+
+                                {
+                                    workshop?.weeklySlots?.map((daySlots, index) => (
+                                        <div key={index} className={` hover:shadow-yellow-400 shadow-md px-3 pb-4 w-full`}>
+                                            <h3 className="text-xl  font-semibold mt-4 mb-2 text-gray-700 dark:text-gray-300">
+                                                {daySlots.day}
+                                            </h3>
+                                            <div className="flex flex-wrap gap-3">
+                                                {
+                                                    daySlots.slots.map((slot, slotIndex) => (
+                                                        <>
+                                                            <button
+                                                                key={slotIndex}
+                                                                className="bg-[#1b2e2e] hover:bg-[#152d28] hover:scale-105 hover:text-yellow-400 duration-200 text-white px-4 py-2 rounded-lg"
+                                                            >
+                                                                {slot}:00
+                                                            </button>
+                                                        </>
+
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
+                                    ))
+                                }
                             </div>
-
-
                         </div>
+                        <Link to={`/workshop/appointments`}>
+                            <button className="bg-[#122222] m-4 text-white hover:text-yellow-400 px-4 py-2 rounded-md mt-4">
+                                Back
+                            </button>
+                        </Link>
                     </div >
                 )
             }
