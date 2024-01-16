@@ -50,7 +50,7 @@ const RentalBikeStats = () => {
                         <div className='flex justify-center bg-black '>
                             <p className='bg-slate-950 text-[15px] font-md  text-yellow-400 w-full m-3 p-6 text-lg text-center rounded-md'>
                                 Total Rental Bikes <br />
-                                {Object.keys(rentBikeCreatedDateCount).length}
+                                {rentBikes.length}
                             </p>
                         </div>
                     </div>

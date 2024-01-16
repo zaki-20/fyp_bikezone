@@ -182,9 +182,7 @@ const UpdateRentBike = () => {
                                 <h6 className="py-1 text-xl font-bold">
                                     Post Your Ad for Bike Rent
                                 </h6>
-                                {/* <button className=" text-yellow-400 active:bg-yellow-400  border border-b-2 border-yellow-400 hover:border font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                                    Settings
-                                </button> */}
+                               
                             </div>
                         </div>
                         <div className="flex-auto px-4 bg-[#e6e6e6] lg:px-10 py-10 pt-0">
@@ -312,15 +310,7 @@ const UpdateRentBike = () => {
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                                                 Phone #
                                             </label>
-                                            {/* <input
-                                                type='text'
-                                                id='contact'
-                                                name='contact'
-                                                value={values.contact}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                className="border-0 px-3 py-3 border-b border-black  bg-gray-100 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                            /> */}
+                                          
 
                                             <Input
                                                 country="PK"
@@ -442,14 +432,7 @@ const UpdateRentBike = () => {
                                             ) : null}
                                         </div>
                                     </div>
-                                    {/* <div className='flex justify-center w-full'>
-                                        <button
-                                            type="submit"
-                                            className="flex justify-center bg-gray-400 uppercase tracking-wider hover:tracking-[6px] font-bold rounded-md px-4 py-2 border-2 border-b-4 border-black  transition-all  hover:bg-[#122222] w-1/3 hover:w-1/2 hover:text-yellow-400 duration-500"
-                                        >
-                                            SUBMIT
-                                        </button>
-                                    </div> */}
+                                  
 
                                     <div className="flex justify-end w-full mt-4">
                                         <div className="w-1/2 px-3 mb-3">

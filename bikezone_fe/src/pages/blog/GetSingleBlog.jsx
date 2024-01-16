@@ -98,6 +98,20 @@ const GetSingleBlog = () => {
                                 )
                             }
 
+                            {
+                                loggedInUser?._id === blogPost?.user?._id &&
+                                (
+                                    <>
+                                        <Link to={`/blog/update/${id}`}>
+                                            <button className='flex items-center px-2 rounded-lg float-right py-1 text-xs gap-x-1 text-white mb-2 hover:text-yellow-400 bg-[#122222]'>
+                                                update
+                                            </button>
+
+                                        </Link>
+                                    </>
+                                )
+                            }
+
                             <div >
                                 <article article='true' className="p-6 bg-[#dddddd]  rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                                     <div className="flex justify-between items-center border-b border-gray-500  mb-5 text-gray-500">

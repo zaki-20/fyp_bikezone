@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createBlogPost, deleteBlog, getAllBlogPosts, getSingleBlogPosts, likeDisLikeBlogPost, myBlogPosts } from "./blog.thunk";
+import { createBlogPost, deleteBlog, getAllBlogPosts, getSingleBlogPosts, likeDisLikeBlogPost, myBlogPosts, updateBlog } from "./blog.thunk";
 import initialBlogState from './blog.initialstate'
 
 const blogSlice = createSlice({
     name: "blog",
-    initialState: initialBlogState, 
+    initialState: initialBlogState,
     reducers: {
         reset: (state) => {
             state.isLoading = false
@@ -72,7 +72,6 @@ const blogSlice = createSlice({
             .addCase(getSingleBlogPosts.pending, (state) => {
                 state.isLoading = true
                 state.isSuccess = false
-
             })
             .addCase(getSingleBlogPosts.fulfilled, (state, action) => {
                 state.isLoading = false
@@ -113,6 +112,22 @@ const blogSlice = createSlice({
                 state.message = action.payload.message
             })
             .addCase(deleteBlog.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+            })
+            .addCase(updateBlog.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(updateBlog.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.message = action.payload.message
+            })
+            .addCase(updateBlog.rejected, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = false
                 state.isError = true

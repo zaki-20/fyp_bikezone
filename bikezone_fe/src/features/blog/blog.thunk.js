@@ -71,5 +71,15 @@ export const deleteBlog = createAsyncThunk('blog/deleteBlog', async (id, thunkAP
 })
 
 
-
+//create blog ost 
+export const updateBlog = createAsyncThunk('blog/updateBlog', async ({id, trimmedValues}, thunkAPI) => {
+    try {
+        return await blogService.updateBlog(id, trimmedValues)
+    } catch (error) {
+        console.log("thunk error", error)
+        const message =
+            error.response.data.message
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 

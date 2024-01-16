@@ -250,14 +250,14 @@ const RentBikeDetail = () => {
                                                 <Link to={`/rental-bike/update/${rentBike?._id}`}>
                                                     <div className="flex gap-4 mb-6">
                                                         <button className="w-full flex px-4 py-3 justify-center gap-x-2 items-center text-center font-bold text-light-green-700 bg-[#1b2e2e] border border-transparent dark:border-gray-700  hover:font-bold duration-300 hover:scale-105 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 rounded-xl">
-                                                            Update Workshop
+                                                            Update Bike
                                                             <MdOutlineChangeCircle className='text-light-green-700' color='' size={25} />
                                                         </button>
                                                     </div>
                                                 </Link>
                                                 <div className="flex gap-4 mb-6">
                                                     <button onClick={handleOpenDelete} className="w-full px-4 flex py-3 text-center justify-center gap-x-2 items-center font-bold text-red-600 bg-[#1b2e2e] border border-transparent dark:border-gray-700  hover:font-bold  duration-300 hover:scale-105 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 rounded-xl">
-                                                        Delete Your Workshop
+                                                        Delete Your Bike 
                                                         <AiFillDelete className='text-red-600' size={25} />
 
                                                     </button>

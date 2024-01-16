@@ -25,7 +25,7 @@ const ProductCard = ({ product, newArrive }) => {
 
     return (
 
-        <div className="w-[250px] bg-[#e7e7e7ea] border-2 hover:border-2 hover:border-black duration-300  shadow-[inset_3px_0px_41px_22px_#00000024] shadow-gray-400  rounded-lg dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-[250px] bg-[#e7e7e7ea] border-2 hover:border-2 hover:border-black duration-300  shadow-[inset_3px_0px_41px_22px_#00000024] shadow-gray-400  rounded-lg dark:bg-gray-800 dark:border-gray-700 flex flex-col">
             <Link to={`/product/${product._id}`} >
                 <div className='relative'>
                     <img className="  rounded-t-lg p-8 object-cover w-full h-52" src={product?.images[0]} alt="productImage" />
@@ -34,7 +34,7 @@ const ProductCard = ({ product, newArrive }) => {
                     </span>)}
                 </div>
             </Link>
-            <div className="px-5 pb-5">
+            <div className="px-5 pb-5 flex flex-col justify-between ">
                 <Link to="#">
                     <h3 className="text-black font-semibold text-lg tracking-tight dark:text-white">{product.name}</h3>
                 </Link>

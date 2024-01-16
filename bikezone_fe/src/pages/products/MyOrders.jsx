@@ -37,7 +37,7 @@ const MyOrders = () => {
         {
             field: "itemsQty",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Items Qty",
+            headerName: "Items",
             type: "number",
             minWidth: 150,
             flex: 0.3,

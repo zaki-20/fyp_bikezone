@@ -1,12 +1,9 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { BsArrowRight } from "react-icons/bs"
-import { createBlogPost } from '../../features/blog/blog.thunk';
+import { createBlogPost, updateBlog } from '../../features/blog/blog.thunk';
 import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify';
 import { reset } from '../../features/blog/blog.slice';
-// import { Select, Option } from "@material-tailwind/react";
 import "./createBlog.css"
 
 import ReactQuill from 'react-quill';
@@ -15,7 +12,7 @@ import 'react-quill/dist/quill.snow.css';
 
 import Lottie from 'lottie-react'
 import createBlogAnimation from '../../assets/animated/createBlog.json'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
@@ -62,8 +59,9 @@ const CreateBlogPost = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { id } = useParams()
 
-    const { isError, isSuccess, message } = useSelector((state) => state.blog)
+    const { isError, isSuccess, message, blog } = useSelector((state) => state.blog)
     const initialValues = {
         title: "",
         description: "",
@@ -90,7 +88,7 @@ const CreateBlogPost = () => {
                     category: values.category,
                     description: values.description.trim(),
                 };
-                await dispatch(createBlogPost(trimmedValues))
+                await dispatch(updateBlog({id, trimmedValues}))
                 action.resetForm();
                 navigate('/blog/me')
             },

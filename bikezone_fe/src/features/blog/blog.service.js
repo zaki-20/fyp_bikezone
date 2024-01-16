@@ -54,12 +54,19 @@ const deleteBlog = async (id) => {
     return response.data
 }
 
+//update blog post 
+const updateBlog = async (id, trimmedValues) => {
+    const response = await axios.put(API_URL + `blog/${id}`,trimmedValues , { withCredentials: true })
+    return response.data
+}
+
 const blogService = {
     createBlogPost,
     myBlogPosts,
     likeDisLikeBlogPost,
     getAllBlogPosts,
     getSingleBlogPosts,
-    deleteBlog
+    deleteBlog,
+    updateBlog
 }
 export default blogService

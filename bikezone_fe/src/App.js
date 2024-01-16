@@ -35,6 +35,7 @@ import CreateBlogPost from "./pages/blog/CreateBlogPost";
 import MyBlogs from "./pages/blog/MyBlogs";
 import GetSingleBlog from "./pages/blog/GetSingleBlog";
 import Blogs from "./pages/blog/Blogs";
+import UpdateBlog from "./pages/blog/UpdateBlog";
 import Workshops from "./pages/workshop/Workshops";
 import CreateWorkshop from "./pages/workshop/CreateWorkshop";
 import WorkshopDetail from "./pages/workshop/WorkshopDetail";
@@ -133,6 +134,7 @@ function App() {
         <Route exact path="/blog/new" element={<ProtectedRoute Component={CreateBlogPost} />} />
         <Route exact path="/blog/me" element={<ProtectedRoute Component={MyBlogs} />} />
         <Route exact path="/blog/:id" element={<ProtectedRoute Component={GetSingleBlog} />} />
+        <Route exact path="/blog/update/:id" element={<ProtectedRoute Component={UpdateBlog} />} />
 
         {/* Payment */}
         <Route exact path="/process/payment" element={

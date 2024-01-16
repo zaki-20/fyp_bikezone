@@ -187,10 +187,7 @@ const ProductDetail = () => {
                     <div className="overflow-hidden bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600 py-11 font-poppins dark:bg-gray-800">
                         <h1 className='text-center text-2xl font-semibold'>Product Detail</h1>
                         <div className="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
-                            <Lottie
-                                className="absolute top-10 left-48 h-56"
-                                animationData={checkDetailsAnimation}
-                            />
+
                             <div className="flex flex-wrap -mx-4">
                                 <div className="w-full px-4 py-24 md:w-1/2 ">
                                     <div className="z-50 overflow-hidden ">
