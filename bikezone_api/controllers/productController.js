@@ -9,14 +9,17 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user.id
   const product = await Product.create(req.body);
   res.status(201).json({
-    success: true,
-    product,
+    statusCode: 201,
+    status: true,
+    message: "product has been created!",
+    payload: {}
   });
+
 });
 
 // Get All Product
 exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
-  const resultPerPage = 8;
+  const resultPerPage = 9;
   const productsCount = await Product.countDocuments();
 
   const apiFeature = new ApiFeatres(Product.find(), req.query)
@@ -50,11 +53,8 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 
 })
 
-
 //get product details
 exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
-
-
   const product = await Product.findById(req.params.id);
 
   if (!product) {
@@ -67,7 +67,6 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
     payload: {
       product
     }
-
   });
 });
 
@@ -84,11 +83,12 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   });
 
   res.status(200).json({
-    success: true,
-    product,
+    statusCode: 200,
+    status: true,
+    message: "Product updated successfully!",
+    payload: {}
   });
 });
-
 
 //delete product
 exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
@@ -98,17 +98,19 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   }
   await product.deleteOne();
   res.status(200).json({
-    success: true,
-    message: "product has been deleted ",
+    statusCode: 200,
+    status: true,
+    message: "Product has been deleted!",
+    payload: {}
   });
 });
 
 // Create New Review or Update the review
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { rating, comment, productId } = req.body;
-
   const review = {
     user: req.user._id,
+    imageURL: req.user.imageURL,
     firstname: req.user.firstname,
     lastname: req.user.lastname,
     rating: Number(rating),
@@ -157,9 +159,15 @@ exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
   }
 
   res.status(200).json({
-    success: true,
-    reviews: product.reviews,
+    statusCode: 200,
+    status: true,
+    message: "product reviews have been fetched!",
+    payload: {
+      reviews: product.reviews,
+    }
   });
+
+
 });
 
 // Delete Review
@@ -171,7 +179,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   }
 
   const reviews = product.reviews.filter(
-    (rev) => rev._id.toString() !== req.query.id.toString()
+    (rev) => rev._id.toString() !== req.query.reviewId.toString()
   );
 
   let avg = 0;
@@ -205,8 +213,14 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   );
 
   res.status(200).json({
-    success: true,
+    statusCode: 200,
+    status: true,
+    message: "product Review deleted!",
+    payload: {}
   });
+
+
+
 });
 
 exports.getRatingProducts = async (req, res, next) => {
@@ -226,7 +240,6 @@ exports.getRatingProducts = async (req, res, next) => {
   });
 
 };
-
 
 // get reviewd products
 exports.getProductsWithReviews = async (req, res, next) => {
@@ -269,5 +282,14 @@ exports.getNewArrivalProducts = catchAsyncErrors(async (req, res, next) => {
 
 });
 
+// Get All Product (Admin)
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
 
-
+  res.status(200).json({
+    statusCode: 200,
+    status: true,
+    message: "All products fetched!",
+    payload: { products }
+  });
+});

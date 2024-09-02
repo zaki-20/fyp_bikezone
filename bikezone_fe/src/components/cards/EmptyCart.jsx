@@ -8,11 +8,18 @@ const EmptyCart = () => {
       <MdRemoveShoppingCart className="text-5xl text-gray-500" />
       <h2 className="text-2xl mt-4">Your Cart is Empty</h2>
       <p className="text-gray-600 mt-2">Add some items to your cart before checking out.</p>
-      <Link to={'/'}>
-        <button className="bg-gray-900 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full mt-4">
-          Back to Home
-        </button>
-      </Link>
+      <div className='w-full flex justify-center gap-x-3'>
+        <Link to={'/'}>
+          <button className="bg-gray-900 hover:bg-gray-900 text-white hover:text-yellow-400 py-2 px-4 rounded-full mt-4">
+            Back to Home
+          </button>
+        </Link>
+        <Link to={'/featuredproducts'}>
+          <button className="bg-gray-900 hover:bg-gray-900 text-white hover:text-yellow-400 py-2 px-4 rounded-full mt-4">
+            Find Products
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

@@ -1,38 +1,66 @@
 const Workshop = require("../models/workshopModel");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const moment = require('moment-timezone');
+
 
 exports.createWorkshop = catchAsyncErrors(async (req, res, next) => {
+  const owner = req.user._id;
 
-    const { name, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, appointment, maxAppointments } = req.body;
-    const owner = req.user._id;
-    let workingHours = endTime - startTime;
-    let slots = workingHours;
+  const existingWorkshops = await Workshop.find({ owner });
 
-    const workshop = await Workshop.create({
-        name,
-        brand,
-        city,
-        contact,
-        address,
-        owner,
-        service1,
-        service2,
-        service3,
-        service4,
-        appointment,
-        slots,
-        maxAppointments
-    });
-    let totalAppointments = (maxAppointments*slots); // maxAppointments is maximun for 1 hour. e.g 3 & slots= 7 so, 21 appointments, 3 in each hour. The max count of slot will be 3.
-    res.status(201).json({
-        statusCode: 201,
-        success: true,
-        message: "Workshop created successfully",
-        payload: { workshop },
-    });
+  if (existingWorkshops.length >= 3) {
+    return next(new ErrorHandler("Workshop limit reached", 404));
+  }
 
+  const { name, email, brand, city, contact, address, startTime, endTime, service1, service2, service3, service4, description, imageURL, offerDate, discount } = req.body;
+
+  const karachiTimezone = 'Asia/Karachi';
+
+  // Create an array to store time slots for each day of the week
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  let slotsArray = [];
+
+  // Generate time slots for each day of the week
+  for (const day of daysOfWeek) {
+    let daySlots = [];
+    for (let i = startTime; i < endTime; i++) {
+      daySlots.push(i);
+    }
+    slotsArray.push({ day, slots: daySlots });
+  }
+
+  const offerDateInKarachi = moment.tz(offerDate, karachiTimezone);
+
+  const workshop = await Workshop.create({
+    name,
+    email,
+    brand,
+    city,
+    contact,
+    address,
+    owner,
+    service1,
+    service2,
+    service3,
+    service4,
+    weeklySlots: slotsArray, // Store the time slots for each day of the week
+    startTime,
+    endTime,
+    description,
+    imageURL,
+    discount,
+    offerDate: offerDateInKarachi.toISOString(), // Store the date in ISO format
+  });
+
+  return res.status(201).json({
+    statusCode: 201,
+    success: true,
+    message: "Workshop created successfully",
+    payload: { workshop },
+  });
 });
+
 
 exports.updateWorkshop = catchAsyncErrors(async (req, res, next) => {
   let workshop = await Workshop.findById(req.params.id);
@@ -57,6 +85,7 @@ exports.updateWorkshop = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+
 exports.deleteWorkshop = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
 
@@ -72,6 +101,7 @@ exports.deleteWorkshop = catchAsyncErrors(async (req, res, next) => {
     message: "Workshop deleted successfully",
   });
 });
+
 
 exports.getAllWorkshops = catchAsyncErrors(async (req, res, next) => {
   const workshopCount = await Workshop.countDocuments();
@@ -91,19 +121,72 @@ exports.getAllWorkshops = catchAsyncErrors(async (req, res, next) => {
 
 exports.getWorkshopDetails = async (req, res, next) => {
 
-    const { id } = req.params;
+  const { id } = req.params;
 
-    const workshop = await Workshop.findById(id);
+  const workshop = await Workshop.findById(id).populate({
+    path: "appointments",
+    populate: {
+      path: "user",
+      select: "firstname lastname email imageURL createdAt role", // Select the fields you want from the user object
+    },
+  }).populate({
+    path: "appointments",
+    populate: {
+      path: "workshop",
+      select: "name brand contact owner", // Select the fields you want from the workshop object
+    },
+  }).populate({
+    path: "owner", // Assuming "owner" is a reference field in the Workshop model
+    select: "firstname lastname email imageURL createdAt role", // Select the fields you want from the owner user object
+  });
 
-    if (!workshop) {
-        return next(new ErrorHandler("Workshop not found", 404));
-    }
+  // Filter out the slots for the upcoming days
+  const today = moment().tz('Asia/Karachi').day(); // Get the current day in Karachi timezone
+  const upcomingDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const upcomingDaysSlots = upcomingDays.slice(today).map(day => {
+    const daySlots = workshop.weeklySlots.find(slot => slot.day === day);
+    return { day, slots: daySlots ? daySlots.slots : [] };
+  });
 
-    res.status(200).json({
-        statusCode: 200,
-        success: true,
-        message: "Workshop retrieved successfully",
-        payload: { workshop },
-    });
+  workshop.weeklySlots = upcomingDaysSlots;
+
+
+  if (!workshop) {
+    return next(new ErrorHandler("Workshop not found", 404));
+  }
+
+
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "Workshop retrieved successfully",
+    payload: { workshop },
+  });
 
 };
+
+exports.getMyWorkshopDetails = catchAsyncErrors(async (req, res, next) => {
+  const ownerId = req.user._id;
+
+  const workshop = await Workshop.findOne({ owner: ownerId })
+    .populate('owner', 'firstname lastname email') // Populate the owner field
+    .populate({
+      path: 'appointments',
+      populate: {
+        path: 'user',
+        select: 'firstname lastname email', // Select the fields you want from the user object
+      },
+    });
+
+
+  if (!workshop) {
+    return next(new ErrorHandler("Workshop not found", 404));
+  }
+
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "My Workshop details retrieved successfully",
+    payload: { workshop },
+  });
+});

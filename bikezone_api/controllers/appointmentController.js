@@ -1,41 +1,113 @@
 const ErrorHandler = require("../utils/errorHandler")
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const Appointment = require("../models/appointmentModel.js");
+const workshopModel = require("../models/workshopModel");
+const sendEmail = require("../utils/sendEmail");
 
-//create appointment
+
 exports.createAppointment = catchAsyncErrors(async (req, res, next) => {
-
-    const { workshop, bike } = req.body;
+    const { workshop, day, slot } = req.body;
     const user = req.user;
 
-    const request = await Appointment.create({
-        workshop,
-        bike,
-        user: user._id,
+    const existingWorkshop = await workshopModel.findById(workshop);
+
+    if (!existingWorkshop) {
+        return next(new ErrorHandler("Workshop not found", 404));
+    }
+
+    // Check if the requested day and slot are available
+    const daySlots = existingWorkshop.weeklySlots.find(daySlots => daySlots.day === day);
+    if (!daySlots || !daySlots.slots.includes(slot)) {
+        return next(new ErrorHandler("Requested slot is not available for the specified day", 400));
+    }
+
+    // Check if the user already has an appointment at this slot
+    const existingAppointment = await Appointment.findOne({ workshop, day, slot, user: user._id });
+    if (existingAppointment) {
+        return next(new ErrorHandler("You already have an appointment at this slot", 400));
+    }
+
+    // Check if the workshop has an active offer
+    const currentDateTime = new Date();
+    let discountAmount = 0;
+
+    if (existingWorkshop.offerDate && currentDateTime <= new Date(existingWorkshop.offerDate)) {
+        discountAmount = existingWorkshop.discount;
+    }
+
+    // Remove the slot from the specified day in weeklySlots
+    const updatedWeeklySlots = existingWorkshop.weeklySlots.map(daySlots => {
+        if (daySlots.day === day) {
+            return {
+                day: day,
+                slots: daySlots.slots.filter(s => s !== slot),
+            };
+        }
+        return daySlots;
     });
+
+    existingWorkshop.weeklySlots = updatedWeeklySlots;
+
+    const appointment = await Appointment.create({
+        workshop,
+        day,
+        slot,
+        user: user._id,
+        discountAmount, // Include discount amount in the appointment
+
+    });
+
+    // Update the workshop's appointment array with the new appointment
+    existingWorkshop.appointments.push(appointment);
+
+    await existingWorkshop.save();
+    await sendEmail({
+        email: user.email,
+        subject: 'Appointment Confirmation',
+        firstname: user.firstname,
+        lastname: user.lastname,
+        slot: slot,
+        timing: `${slot}:00 - ${slot + 1}:00`,
+        day: `${day}`,
+        workshopName: `${existingWorkshop.name}`,
+        workshopContact: `${existingWorkshop.contact}`,
+        workshopContactLink: `https://api.whatsapp.com/send?phone=+92${existingWorkshop.contact}`,
+        bookingSlot: 'Your booking slot data',
+        discountAmount: `${discountAmount}% discount`,
+    }, 'html');
+
 
     res.status(201).json({
         statusCode: 201,
         success: true,
-        message: "The appointment has been sent",
-        payload: { request },
+        message: "The appointment has been created successfully",
+        payload: { appointment },
     });
 });
 
-//zruri ni
-exports.updateAppointment = catchAsyncErrors(async (req, res, next) => {
-    let updAppointment = await Appointment.findById(req.params.id);
-    if (!updAppointment) {
-      return next(new ErrorHandler("Can't find any appointment", 404));
+
+
+exports.getSingleAppointment = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+
+    const appointment = await Appointment.findById(id)
+        .populate('user')
+        .populate({
+            path: 'workshop',
+            populate: {
+                path: 'owner'
+            },
+        })
+
+    if (!appointment) {
+        return next(new ErrorHandler("Appointment not found", 404));
     }
-    updAppointment = await Appointment.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    });
 
     res.status(200).json({
-      success: true,
-      updAppointment,
+        statusCode: 200,
+        success: true,
+        message: "Appointment retrieved successfully",
+        payload: { appointment },
     });
-  });
+});
+

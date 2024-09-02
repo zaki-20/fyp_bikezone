@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, login, loadUser, logout, updateProfile, updatePassword, forgotPassword, resetPassword } from "./auth.thunk";
+import { register, login, loadUser, logout, updateProfile, updatePassword, forgotPassword, resetPassword, getAllUsers, getUserDetail, deleteUser, verifyOtp, updateUserRole } from "./auth.thunk";
 import initialAuthState from "./auth.initialstate";
 
 const authSlice = createSlice({
@@ -24,14 +24,14 @@ const authSlice = createSlice({
             .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.user = action.payload.payload.user
+                // state.user = action.payload.payload.user
                 state.message = action.payload.message
             })
             .addCase(register.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload.error
-                state.user = null
+                // state.user = null
             })
             .addCase(login.pending, (state) => {
                 state.isLoading = true
@@ -64,9 +64,9 @@ const authSlice = createSlice({
             })
             .addCase(loadUser.rejected, (state, action) => {
                 state.isLoading = false
-                state.isError = true
+                // state.isError = true
                 state.isSuccess = false
-                state.message = action.payload.error //need checking
+                // state.message = action.payload.error //need checking
                 state.user = null
             })
             .addCase(updateProfile.pending, (state) => {
@@ -87,7 +87,6 @@ const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload.error
                 state.isUpdate = false
-                console.log(action.payload.error)
             })
             .addCase(updatePassword.pending, (state) => {
                 state.isLoading = true
@@ -143,6 +142,87 @@ const authSlice = createSlice({
 
                 state.message = action.payload.message
                 state.logoutSuccess = true
+            })
+            .addCase(getAllUsers.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllUsers.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.users = action.payload.payload.users
+                state.message = action.payload.message
+            })
+            .addCase(getAllUsers.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.isSuccess = false
+                state.message = action.payload.error //need checking
+                state.users = []
+            })
+            .addCase(getUserDetail.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getUserDetail.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.user = action.payload.payload.users
+                state.message = action.payload.message
+            })
+            .addCase(getUserDetail.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.isSuccess = false
+                state.message = action.payload.error //need checking
+                state.user = null
+            })
+            .addCase(deleteUser.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(deleteUser.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(deleteUser.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+            })
+            .addCase(verifyOtp.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(verifyOtp.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+                state.user = action.payload.payload.user
+            })
+            .addCase(verifyOtp.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+                state.user = null
+            })
+            .addCase(updateUserRole.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(updateUserRole.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(updateUserRole.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
             })
 
     }

@@ -23,24 +23,16 @@ const productSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  images: [
-    {
-      public_id: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
   category: {
     type: String,
     required: [true, "Please Enter Product Category"],
-    required: true,
-
   },
+  images: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   Stock: {
     type: Number,
     required: [true, "Please Enter product Stock"],
@@ -62,6 +54,10 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true,
       },
+      imageURL: {
+        type: String,
+        required: true,
+      },
       lastname: {
         type: String,
         required: true,
@@ -73,8 +69,10 @@ const productSchema = mongoose.Schema({
       comment: {
         type: String,
         required: true,
-        minLength: [500, "review should be less than 500 characters"],
-
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
       },
     },
   ],

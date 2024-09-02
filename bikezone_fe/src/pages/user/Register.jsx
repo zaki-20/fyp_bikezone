@@ -3,13 +3,18 @@ import * as yup from "yup";
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// Import  image
+
 import shadowBikeImage from '../../assets/shadow-bike.png';
+
 import { register } from '../../features/auth/auth.thunk';
 import { reset } from '../../features/auth/auth.slice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-
+import axios from 'axios';
+import { FaUser } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 
 const schema = yup.object({
@@ -23,11 +28,12 @@ const schema = yup.object({
         .required('Confirm Password is required'),
 }).required();
 
-
 const Register = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const initialValues = {
         firstname: "",
@@ -37,6 +43,13 @@ const Register = () => {
         confirmPassword: "",
     };
 
+    const [image, setImage] = useState(null);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
     const { values, handleBlur, handleChange, handleSubmit, setFieldValue, errors, touched } =
         useFormik({
             initialValues,
@@ -44,29 +57,42 @@ const Register = () => {
             validateOnChange: true,
             validateOnBlur: false,
             onSubmit: async (values) => {
-
-                dispatch(register(values));
-
+                try {
+                    // Upload the image to Cloudinary
+                    const formData = new FormData();
+                    formData.append('file', image);
+                    formData.append('upload_preset', 'preset_images'); // Replace with your Cloudinary upload preset
+                    const cloudinaryResponse = await axios.post(
+                        'https://api.cloudinary.com/v1_1/dqe7trput/image/upload',
+                        formData
+                    );
+                    const imageUrl = cloudinaryResponse.data.secure_url;
+                    // Add the Cloudinary image URL to the form data
+                    values.imageURL = imageUrl;
+                    // // Register the user with the updated form data
+                    dispatch(register(values));
+                } catch (error) {
+                    toast.error('Image upload failed.');
+                }
             },
         });
 
-
     const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
-
 
     useEffect(() => {
         if (isError) {
             toast.error(message);
             dispatch(reset())
         }
-        if (isSuccess) {
+        if (isSuccess && !isError) {
             toast.success(message);
-            navigate('/')
+            navigate('/otp-verification', { state: { fromRegister: true } });
         }
-
     }, [isError, isSuccess])
 
-
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
 
     return (
         <div>
@@ -82,11 +108,14 @@ const Register = () => {
                                 <p>Enter your information to register</p>
                             </div>
                             <form onSubmit={handleSubmit} encType="multipart/form-data">
+
                                 <div className="flex -mx-3">
                                     <div className="w-1/2 px-3 mb-5">
                                         <label htmlFor="true" className="text-xs font-semibold px-1">First name</label>
                                         <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-account-outline text-gray-400 text-lg" /></div>
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <FaUser />
+                                            </div>
                                             <input
                                                 type="text"
                                                 id='firstname'
@@ -94,7 +123,8 @@ const Register = () => {
                                                 value={values.firstname}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="John" />
+                                                className={`w-full text-[#6e6e6e] caret-yellow-500 placeholder:text-gray-400 -ml-10 pl-10 pr-3 py-2 rounded-lg border-1 border-gray-200 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.firstname && errors.firstname ? 'border-red-500' : 'border-gray-200'}`}
+                                                placeholder="John" />
                                         </div>
                                         {errors.firstname && touched.firstname ? (
                                             <p className="text-red-600 animate-pulse">{errors.firstname}</p>
@@ -103,7 +133,9 @@ const Register = () => {
                                     <div className="w-1/2 px-3 mb-5">
                                         <label htmlFor="true" className="text-xs font-semibold px-1">Last name</label>
                                         <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-account-outline text-gray-400 text-lg" /></div>
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <FaUser />
+                                            </div>
                                             <input
                                                 type="text"
                                                 id='lastname'
@@ -111,18 +143,23 @@ const Register = () => {
                                                 value={values.lastname}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Smith" />
+                                                className={`w-full text-[#6e6e6e] caret-yellow-500 placeholder:text-gray-400  -ml-10 pl-10 pr-3 py-2 rounded-lg border-1 border-gray-200 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.lastname && errors.lastname ? 'border-red-500' : 'border-gray-200'
+                                                    }`}
+                                                placeholder="Smith" />
                                         </div>
                                         {errors.lastname && touched.lastname ? (
                                             <p className="text-red-600 animate-pulse">{errors.lastname}</p>
                                         ) : null}
                                     </div>
                                 </div>
+
                                 <div className="flex -mx-3 ">
                                     <div className="w-full px-3 mb-5">
                                         <label htmlFor="true" className="text-xs font-semibold px-1">Email</label>
                                         <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg" /></div>
+                                            <div className="w-10  z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <MdEmail />
+                                            </div>
                                             <input
                                                 name='email'
                                                 type="email"
@@ -130,7 +167,10 @@ const Register = () => {
                                                 value={values.email}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com" />
+                                                className={`w-full -ml-10 pl-10 pr-3 py-2 text-[#6e6e6e] caret-yellow-500 placeholder:text-gray-400  rounded-lg border-1 border-gray-200 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.email && errors.email ? 'border-red-500' : 'border-gray-200'
+                                                    }`}
+                                                placeholder="johnsmith@example.com" />
+
                                         </div>
                                         {errors.email && touched.email ? (
                                             <p className="text-red-600 animate-pulse">{errors.email}</p>
@@ -138,58 +178,66 @@ const Register = () => {
                                     </div>
 
                                 </div>
+
                                 <div className="flex -mx-3">
-                                    <div className="w-full px-3 mb-5">
-                                        <label htmlFor="true" className="text-xs font-semibold px-1">Password</label>
-                                        <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg" /></div>
+                                    <div className="w-full px-3 mb-5 relative">
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">
+                                            Password
+                                        </label>
+                                        <div className="flex items-center">
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <RiLockPasswordFill />
+                                            </div>
                                             <input
-                                                id='password'
-                                                type="password"
-                                                name='password'
+                                                name="password"
                                                 value={values.password}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************" />
+                                                id="password"
+                                                type={showPassword ? 'text' : 'password'} // Toggle visibility based on showPassword state
+                                                className={`w-full caret-yellow-500 placeholder:text-gray-400  text-[#6e6e6e] -ml-10 pl-10 pr-3 py-2 rounded-lg border-1 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.password && errors.password ? 'border-red-500' : 'border-gray-200'
+                                                    }`}
+                                                placeholder="xxxxxxxxx"
+                                            />
+                                            <div
+                                                className="absolute right-5 cursor-pointer"
+                                                onClick={handleTogglePasswordVisibility}
+                                            >
+                                                {showPassword ? <FaEye className='hover:text-yellow-400 duration-300' /> : <FaEyeSlash className='hover:text-yellow-400 duration-300' />}
+                                            </div>
                                         </div>
                                         {errors.password && touched.password ? (
                                             <p className="text-red-600 animate-pulse">{errors.password}</p>
                                         ) : null}
                                     </div>
                                 </div>
-                                {/* 
-                                <div className="flex -mx-3 items-center">
-                                    <div className="w-full px-3 mb-5">
-                                        <label htmlFor="true" className="text-xs font-semibold px-1">
-                                            Profile Image
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="avatar"
-                                            name="avatar"
-                                            onChange={(e) => setFieldValue('avatar', e.currentTarget.files[0])}
-                                            className="w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                        />
-                                        {errors.avatar && touched.avatar ? (
-                                            <p className="text-red-600 animate-pulse">{errors.avatar}</p>
-                                        ) : null}
-                                    </div>
-                                    {values.avatar && (
-                                        <img className="w-10 h-10 rounded-full" src="/helmet.jpg" alt="Rounded avatar" />
-                                    )}
-                                </div> */}
 
                                 <div className="flex -mx-3">
-                                    <div className="w-full px-3 mb-12">
-                                        <label htmlFor="true" className="text-xs font-semibold px-1">Confirm Password</label>
-                                        <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg" /></div>
+                                    <div className="w-full px-3 mb-5 relative">
+                                        <label htmlFor="true" className="text-xs font-semibold px-1">
+                                            Confirm Password
+                                        </label>
+                                        <div className="flex items-center">
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <RiLockPasswordFill />
+                                            </div>
                                             <input
-                                                name='confirmPassword'
+                                                name="confirmPassword"
                                                 value={values.confirmPassword}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                type="password" id='confirmPassword' className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************" />
+                                                id="confirmPassword"
+                                                type={showPassword ? 'text' : 'password'} // Toggle visibility based on showPassword state
+                                                className={`w-full caret-yellow-500 placeholder:text-gray-400 text-[#6e6e6e] -ml-10 pl-10 pr-3 py-2 rounded-lg border-1 outline-none focus:ring-yellow-500 focus:border-yellow-500 ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : 'border-gray-200'
+                                                    }`}
+                                                placeholder="xxxxxxxxx"
+                                            />
+                                            <div
+                                                className="absolute right-5 cursor-pointer"
+                                                onClick={handleTogglePasswordVisibility}
+                                            >
+                                                {showPassword ? <FaEye className='hover:text-yellow-400 duration-300'/> : <FaEyeSlash className='hover:text-yellow-400 duration-300' />}
+                                            </div>
                                         </div>
                                         {errors.confirmPassword && touched.confirmPassword ? (
                                             <p className="text-red-600 animate-pulse">{errors.confirmPassword}</p>
@@ -197,16 +245,55 @@ const Register = () => {
                                     </div>
                                 </div>
 
+                                <div className="flex -mx-3 items-center">
+                                    <div className="w-full px-3 mb-12">
+                                        <label htmlFor="avatar" className="text-xs font-semibold px-1">
+                                            Profile Image
+                                        </label>
+                                        <input
+                                            type='file'
+                                            id='avatar'
+                                            name='avatar'
+                                            onChange={handleImageChange}
+                                            className="w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus-border-indigo-500"
+                                        />
+                                    </div>
+                                    {image && (
+                                        <img className="w-10 h-10 rounded-full" src={URL.createObjectURL(image)} alt="Rounded avatar" />
+                                    )}
+                                </div>
+
                                 <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-5">
-                                        <button type='submit' className="block w-full max-w-xs mx-auto bg-[#122222]  text-white rounded-lg px-3 py-3 font-semibold">REGISTER NOW</button>
+                                        <button
+                                            type="submit"
+                                            className="flex relative items-center justify-center w-full hover:text-yellow-400 bg-[#122222] text-white rounded-lg h-12 font-semibold "
+                                            disabled={isLoading}
+                                        >
+                                            {isLoading ? (
+                                                <div role="status" className=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                    <svg aria-hidden="true" className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                                                    </svg>
+                                                    <span className="sr-only">Loading...</span>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <span className=''>REGISTER NOW</span>
+                                                </>
+                                            )
+                                            }
+
+                                        </button>
                                     </div>
                                 </div>
+
                             </form>
                             {/* Already have an account? Sign in */}
                             <div className="text-center mt-3">
                                 <p>
-                                    Already have an account? <Link to="/login" className='text-[#122222] underline'>Sign in</Link>
+                                    Already have an account? <Link to="/login" className='text-[#122222] underline hover:text-blue-800 duration-200'>Sign in</Link>
                                 </p>
                             </div>
                         </div>

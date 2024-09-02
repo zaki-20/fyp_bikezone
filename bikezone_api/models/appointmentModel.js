@@ -8,13 +8,26 @@ const appointmentSchema = new mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Workshop",
+        ref: "User",
         required: true,
     },
-    bike:{
-        type:String,
+    slot: {
+        type: Number,
         required: true,
-    }
+    },
+    day: {
+        type: String,
+        required: true,
+    },
+    discountAmount: {
+        type: Number,
+        default: 0,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+
 });
 
 module.exports = mongoose.model("Appointment", appointmentSchema);

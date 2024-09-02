@@ -1,4 +1,5 @@
-const mongoose = require("mongoose") ;
+const mongoose = require("mongoose");
+const validator = require("validator");
 
 const rentBikeSchema = new mongoose.Schema({
   title: {
@@ -9,31 +10,55 @@ const rentBikeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  price: {
+  email: {
+    type: String,
+    required: [true, "Please Enter Your Email"],
+    validate: [validator.isEmail, "Please Enter a valid Email"],
+  },
+  rent: {
     type: Number,
     required: true,
   },
   model: {
-    type: Number,
+    type: String,
     required: true,
   },
   condition: {
     type: String,
     required: true,
+    enum: ['excellent', 'good', 'fair', 'poor'], // You can customize the conditions based on your needs
   },
-  location: {
+  address: {
     type: String,
     required: true,
   },
-//   seller: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "User", // Reference to the User model for seller details
-//     required: true,
-//   },
+  city: {
+    type: String,
+    required: true
+  },
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   contact: {
     type: String,
     required: true,
   },
+  images: {
+    type: [String],
+    // required: true,
+  },
+  availableFromDate: {
+    type: Date,
+    required: true,
+  },
+  isAvailable: {
+    type: Boolean,
+    default: true,
+  },
+}, {
+  timestamps: true,
 });
 
 module.exports = mongoose.model("RentBike", rentBikeSchema);

@@ -46,7 +46,7 @@ exports.getUserPosts = async (req, res, next) => {
 //get single blog post
 exports.getSingleBlog = async (req, res, next) => {
     const blogId = req.params.id;
-    const blog = await Blog.findById(blogId).populate("user", "firstname lastname email");;
+    const blog = await Blog.findById(blogId).populate("user", "firstname lastname email");
     if (!blog) {
         return next(new ErrorHandler("Blog post not found", 400));
     }
@@ -63,8 +63,6 @@ exports.getSingleBlog = async (req, res, next) => {
 exports.likeDislikePost = async (req, res, next) => {
     const post = await Blog.findById(req.params.id);
 
-
-    console.log(req.user)
     if (!post.likes.includes(req.user._id)) {
         await post.updateOne({ $push: { likes: req.user._id } });
         res.status(200).json({
@@ -117,6 +115,33 @@ exports.deleteBlog = catchAsyncErrors(async (req, res) => {
         success: true,
         message: "Blog Deleted Successfully",
         payload: {}
+    });
+});
+
+// Update blog post
+exports.updateBlog = catchAsyncErrors(async (req, res, next) => {
+    const blogId = req.params.id;
+    const { title, description, category } = req.body;
+
+    // Find the blog post by ID
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+        return next(new ErrorHandler("Blog post not found", 404));
+    }
+
+    // Update the blog post
+    blog.title = title;
+    blog.description = description;
+    blog.category = category;
+
+    await blog.save();
+
+    res.status(200).json({
+        statusCode: 200,
+        success: true,
+        message: "Blog Updated Successfully",
+        payload: { blog },
     });
 });
 

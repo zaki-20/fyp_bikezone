@@ -24,7 +24,7 @@ const sendEmail = async (options, contentType = 'html') => {
 
     if (contentType === 'text') {
         mailOptions.text = options.message;
-    } else if (contentType === 'html') {
+    } else if (contentType === 'html' && options.subject === 'Bikezone Registration') {
         // Load the HTML template and replace placeholders
         const templatePath = path.join(__dirname, 'templates', 'registrationEmail.html');
         const htmlTemplate = fs.readFileSync(templatePath, 'utf-8');
@@ -33,8 +33,33 @@ const sendEmail = async (options, contentType = 'html') => {
             .replace('{{lastname}}', options.lastname);
 
         mailOptions.html = replacedHtml;
+    } else if (contentType === 'html' && options.subject === 'Appointment Confirmation') {
+        // Load the HTML template and replace placeholders
+        const templatePath = path.join(__dirname, 'templates', 'slotConfirmation.html');
+        const htmlTemplate = fs.readFileSync(templatePath, 'utf-8');
+        const replacedHtml = htmlTemplate
+            .replace('{{firstname}}', options.firstname)
+            .replace('{{lastname}}', options.lastname)
+            .replace('{{slot}}', options.slot)
+            .replace('{{timing}}', options.timing)
+            .replace('{{day}}', options.day)
+            .replace('{{workshopName}}', options.workshopName)
+            .replace('{{workshopContact}}', options.workshopContact)
+            .replace('{{workshopContactLink}}', options.workshopContactLink)
+            .replace('{{bookingSlot}}', options.bookingSlot)
+            .replace('{{discountAmount}}', options.discountAmount)
+        mailOptions.html = replacedHtml;
+    } else if (contentType === 'html' && options.subject === 'OTP Verification') {
+        // Load the HTML template and replace placeholders
+        const templatePath = path.join(__dirname, 'templates', 'otpVerificarion.html');
+        const htmlTemplate = fs.readFileSync(templatePath, 'utf-8');
+        const replacedHtml = htmlTemplate
+            .replace('{{message}}', options.message)
+
+
+        mailOptions.html = replacedHtml;
     }
-   
+
 
     await transporter.sendMail(mailOptions);
 };

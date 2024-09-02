@@ -4,32 +4,124 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
-const cloudinary = require("cloudinary");
+const workshopModel = require("../models/workshopModel");
+const productModel = require("../models/productModel");
+const orderModel = require("../models/orderModel");
+const appointmentModel = require("../models/appointmentModel");
+const blogModel = require("../models/blogModel");
+const rentBikeModel = require("../models/rentBikeModel");
+const usedBikeModel = require("../models/usedBikeModel");
 
+const cloudinary = require('cloudinary').v2;
 
-
+// Configure your Cloudinary credentials
+cloudinary.config({
+    cloud_name: 'dqe7trput',
+    api_key: '546311599476462',
+    api_secret: 'EhR3ESfDUKlQaHt-ZzJIK4n3ANU',
+});
 
 //create user  with jwt
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-
-    const { firstname, lastname, email, password } = req.body
-
-
+    const { firstname, lastname, email, password, imageURL } = req.body
     const user = await User.create({
-        firstname, lastname, email, password,
-
+        firstname,
+        lastname,
+        email,
+        password,
+        imageURL
     })
-    // const message = `Thank you ${firstname} ${lastname} for joining BIKEZONE `
+
+    // Generate email verification OTP
+    const otp = user.generateEmailVerificationOTP();
+
+    // Save the user with the generated OTP
+    await user.save();
+
+    const message = `Your Bikezone registration OTP is: ${otp}`;
+
     await sendEmail({
         email: email,
-        subject: `Bikezone Registration`,
-        firstname,
-        lastname
+        subject: `OTP Verification`,
+        message,
     }, 'html');
 
-    const msg = "registered successfully"
-    sendToken(user, 200, res, msg)
+
+    res.status(200).json({
+        statusCode: 200,
+        status: true,
+        message: "Registration successful. Check your email for the verification OTP.",
+        payload: {},
+    });
 })
+
+
+// verify OTP during registration
+exports.verifyEmailOTP = catchAsyncErrors(async (req, res, next) => {
+    const { email, otp } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+    }
+
+
+    // Check if OTP matches and it's not expired
+    if (user.emailVerificationOTP === otp && user.emailVerificationExpiry > Date.now()) {
+        user.isVerified = true;
+        user.emailVerificationOTP = undefined; // Clear OTP after verification
+        user.emailVerificationExpiry = undefined;
+        await user.save();
+
+        // Send the token now that email is verified
+        sendToken(user, 200, res, "Email verification successful. You are now logged in.");
+    } else {
+        console.log("Verification failed");
+        console.log("Difference in time: ", user.emailVerificationExpiry - Date.now());
+        return next(new ErrorHandler("Invalid OTP or OTP has expired", 400));
+    }
+});
+
+
+// Resend OTP during registration
+exports.resendEmailVerificationOTP = catchAsyncErrors(async (req, res, next) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+    }
+
+    // Check if the user is already verified
+    if (user.isVerified) {
+        return next(new ErrorHandler("User is already verified", 400));
+    }
+
+    // Check if the previous OTP has expired
+    if (user.emailVerificationExpiry > Date.now()) {
+        return next(new ErrorHandler("Previous OTP is still valid", 400));
+    }
+
+    // Resend OTP
+    const otp = user.resendEmailVerificationOTP();
+
+    const message = `Your Bikezone registration OTP is: ${otp}`;
+
+    await sendEmail({
+        email: email,
+        subject: `OTP Verification`,
+        message,
+    }, 'html');
+
+    res.status(200).json({
+        statusCode: 200,
+        status: true,
+        message: "OTP has been resent to your email for verification.",
+        payload: {},
+    });
+});
+
+
 
 //login user 
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
@@ -53,12 +145,6 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
     sendToken(user, 200, res, msg)
 
-    // const token = user.getJWTToken()
-
-    // res.status(200).json({
-    //     success: true,
-    //     token
-    // })
 
 })
 
@@ -172,7 +258,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         statusCode: 200,
         status: true,
-        message: null,
+        message: "user detail retrieved",
         payload: {
             user
         }
@@ -199,14 +285,6 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     user.password = req.body.newPassword;
     await user.save()
 
-    // res.status(200).json({
-    //     statusCode: 200,
-    //     status: true,
-    //     message: "password has been updated",
-    //     payload: {
-    //         user
-    //     }
-    // });
     const msg = "password updated successfully"
 
     sendToken(user, 200, res, msg);
@@ -216,11 +294,15 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 // update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
+
+    console.log(req.body)
     const newUserData = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
+        imageURL: req.body.imageURL
     };
+
 
     //we will add cloudinary later
 
@@ -229,6 +311,8 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         runValidators: true,
         useFindAndModify: false,
     });
+
+
 
     res.status(200).json({
         statusCode: 200,
@@ -247,9 +331,14 @@ exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
     const users = await User.find();
 
     res.status(200).json({
-        success: true,
-        users,
+        statusCode: 200,
+        status: true,
+        message: "all users fetched!",
+        payload: {
+            users
+        }
     });
+
 });
 
 // Get single user (admin)
@@ -269,10 +358,8 @@ exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 // update User role --admin
-exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
+exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
     const newUserData = {
-        name: req.body.name,
-        email: req.body.email,
         role: req.body.role
     };
 
@@ -282,14 +369,21 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
         useFindAndModify: false,
     });
 
+    await user.save()
+    console.log(user)
     res.status(200).json({
-        success: true,
+        statusCode: 200,
+        status: true,
+        message: "user role is updated!",
+        payload: { user }
     });
 
 })
 
 // Delete User --Admin
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
+    const userId = req.params.id;
+
     const user = await User.findById(req.params.id);
 
     if (!user) {
@@ -298,14 +392,37 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
         );
     }
 
+
+    // Delete associated products (modify this according to your product model)
+    await productModel.deleteMany({ user: userId });
+
+    // Delete associated orders (modify this according to your order model)
+    await orderModel.deleteMany({ user: userId });
+
+    // Delete associated orders (modify this according to your order model)
+    await appointmentModel.deleteMany({ user: userId });
+
+    // Delete associated workshops
+    await workshopModel.deleteMany({ owner: userId });
+
+    // Delete associated orders (modify this according to your order model)
+    await rentBikeModel.deleteMany({ seller: userId });
+
+    // Delete associated orders (modify this according to your order model)
+    await usedBikeModel.deleteMany({ seller: userId });
+
+
+
     await user.deleteOne();
 
     res.status(200).json({
-        success: true,
-        message: "User Deleted Successfully",
+        statusCode: 200,
+        status: true,
+        message: "user deleted successfully!",
+        payload: {}
     });
-});
 
+});
 
 
 // Delete All Users (except admin)

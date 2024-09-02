@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../shared/Loader';
 import { MdLaunch } from 'react-icons/md'
 
-
+  
 const MyOrders = () => {
     const dispatch = useDispatch()
 
@@ -37,7 +37,7 @@ const MyOrders = () => {
         {
             field: "itemsQty",
             headerClassName: "bg-gray-900 text-yellow-400 text-lg",
-            headerName: "Items Qty",
+            headerName: "Items",
             type: "number",
             minWidth: 150,
             flex: 0.3,
@@ -71,6 +71,7 @@ const MyOrders = () => {
             cellClassName: "text-blue-500"
         },
     ];
+    
     const rows = []
     orders &&
         orders.forEach((item, index) => {

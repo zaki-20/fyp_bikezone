@@ -2,8 +2,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// Import  image
-import paymentPic from '../../assets/payment.jpg';
 
 import { toast } from 'react-toastify';
 import MetaData from '../../components/MetaData';
@@ -16,9 +14,13 @@ import {
     useStripe,
     useElements,
 } from "@stripe/react-stripe-js";
+
 import axios from 'axios';
 import { reset } from '../../features/order/order.slice';
 import { createOrder } from '../../features/order/order.thunk';
+import Lottie from 'lottie-react'
+import paymentCardAnimation from '../../assets/animated/payment.json'
+import { resetCart } from '../../features/product/product.slice';
 
 
 const Payment = () => {
@@ -91,6 +93,7 @@ const Payment = () => {
                     };
 
                     dispatch(createOrder(order));
+                    dispatch(resetCart())
                     navigate('/success')
                 } else {
                     toast.error("There's some issue while processing payment ");
@@ -99,13 +102,17 @@ const Payment = () => {
 
         } catch (error) {
             payBtn.current.disabled = false
-            toast.error = error.response.data.message
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("An unexpected error occurred");
+            }
         }
     }
 
     useEffect(() => {
         if (isError) {
-            toast.error(message)
+            // toast.error(message)
             dispatch(reset())
         }
     }, [isError])
@@ -120,7 +127,10 @@ const Payment = () => {
                 <div className=" text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: 1000 }}>
                     <div className="md:flex w-full">
                         <div className="hidden md:block w-1/2 bg-gray-200 px-6 py-10 ">
-                            <img src={paymentPic} alt="loginbike" className='w-full  rounded-3xl ' />
+                            <Lottie
+                                className=""
+                                animationData={paymentCardAnimation}
+                            />
                         </div>
                         <div className="w-full md:w-1/2 py-10 bg-[#e4e4e4]  px-5 md:px-10">
                             <div className="text-center mb-10">

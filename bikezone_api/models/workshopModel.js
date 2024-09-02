@@ -1,9 +1,15 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const workshopSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+  },
+  email: {
+    type: String,
+    required: [true, "Please Enter Your Email"],
+    validate: [validator.isEmail, "Please Enter a valid Email"],
   },
   brand: {
     type: String,
@@ -21,28 +27,17 @@ const workshopSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  appointment: {
-    type: Array,
-    default:[],
-    required: true,
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-
-  startTime: {
-    type: Number,
+  weeklySlots: {
+    type: Array,
+    default: [],
     required: true,
-    maxLength:[24],
-    minLenght:[1]
-  },
-  endTime: {
-    type: Number,
-    required: true,
-    maxLength:[24],
-    minLength:[1]
+    maxLength: [24],
+    minLength: [1]
   },
   service1: {
     type: String,
@@ -56,24 +51,38 @@ const workshopSchema = new mongoose.Schema({
   service4: {
     type: String,
   },
-  appointments:[
+  appointments: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Appointment",
     }
   ],
-  maxAppointments:{
-    type:Number,
+  description: {
+    type: String,
+    required: [true, "Please Enter workshop Description"],
+  },
+  imageURL: String,
+  startTime: {
+    type: Number,
     required: true
-  }
-  // requests:[{
-  //   name: String,
-  //   time: Date,
-  //   appointment: [{
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Appointment",
-  //   }]
-  // }]
+  },
+  endTime: {
+    type: Number,
+    required: true
+  },
+  offerDate: {
+    type: Date,
+    default: null,
+  },
+  discount: {
+    type: Number,
+    default: 0,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+
 });
 
 module.exports = mongoose.model("Workshop", workshopSchema);

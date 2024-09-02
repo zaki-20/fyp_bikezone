@@ -51,6 +51,38 @@ const resetPassword = async (newPassword, confirmPassword, token) => {
     return response.data
 }
 
+//get all users  --admin
+const getAllUsers = async () => {
+    const response = await axios.get(API_URL + 'admin/users', { withCredentials: true })
+    return response.data
+}
+
+//get user detail
+const getUserDetail = async (id) => {
+    const response = await axios.get(API_URL + `admin/user${id}`, { withCredentials: true })
+    return response.data
+}
+
+//delete user  --admin
+const deleteUser = async (id) => {
+    const response = await axios.delete(API_URL + `admin/user/${id}`, { withCredentials: true })
+    return response.data
+}
+
+
+//verify user otp 
+const verifyOtp = async (userData) => {
+    const response = await axios.post(API_URL + `verify-email-otp`, userData, { withCredentials: true })
+    return response.data
+}
+
+//update user role
+const updateUserRole = async (role, id) => {
+    const response = await axios.put(API_URL + `/admin/user/${id}`, {role}, { withCredentials: true })
+    return response.data
+}
+
+
 const authService = {
     register,
     login,
@@ -59,6 +91,11 @@ const authService = {
     updateProfile,
     updatePassword,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    getAllUsers,
+    getUserDetail,
+    deleteUser,
+    verifyOtp,
+    updateUserRole
 }
 export default authService

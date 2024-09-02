@@ -12,12 +12,13 @@ import MetaData from '../../components/MetaData'
 
 
 const categories = [
-  "bikeparts",
-  "gears",
-  "brakes",
-  "engine",
-  "lights",
-  "tyres",
+  "Motorbike Parts",
+  "Motorbike Accessories",
+  "Maintenance and Care",
+  "Performance Upgrades",
+  "Riding Apparel",
+  "OEM Parts",
+  "Specialty and Customization"
 ];
 
 const FeaturedProductsPage = () => {
@@ -44,11 +45,6 @@ const FeaturedProductsPage = () => {
     dispatch(getAllProducts({ keyword, currentPage, price, category, ratings }))
   }, [keyword, currentPage, price, category, ratings])
 
-
-  useEffect(() => {
-    if (loading)
-      console.log(newArrival)
-  }, [loading])
 
   useEffect(() => {
     if (isError) {
@@ -84,21 +80,22 @@ const FeaturedProductsPage = () => {
       <MetaData title={"PRODUCTS -- BIKEZONE"} />
 
 
-      <div className='flex md:mx-0 md:justify-start min-h-screen justify-center bg-[#d0d1d1] '>
+      <div className='flex md:mx-0 px-20 md:justify-start min-h-screen justify-center bg-[#d0d1d1] '>
 
-        <div className=' md:w-3/4 '>
+        <div className='  '>
+
           <div className="  px-2 py-8 ">
 
-            <form onSubmit={searchSubmitHandler} className="mb-4">
+            <form onSubmit={searchSubmitHandler} className="mb-4 flex items-center gap-x-2">
               <input
                 value={keyword}
                 type="text"
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Search products..."
-                className="w-full px-3 py-2 rounded-md border-2 bg-yellow-50 border-black focus:outline-none focus:border-blue-500"
+                className="w-full px-3 py-2 rounded-md border-2 bg-[#ececec] border-black focus:outline-none "
               />
 
-              <button type="submit" className='px-3 py-2 border-yellow-400 border-2 my-2 hover:text-yellow-400 hover:bg-[#122222] hover:rounded-md duration-200'>Submit</button>
+              <button type="submit" className='px-3 py-2 border-[#122222] border border-b-2 my-2 hover:text-yellow-400 hover:bg-[#122222] hover:rounded-md duration-200'>Submit</button>
 
             </form>
 
@@ -108,7 +105,7 @@ const FeaturedProductsPage = () => {
                   <h1 className="text-3xl font-semibold mb-4">Featured Products</h1>
                   {/* Show error toast when isError is true */}
 
-                  <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                  <div className=" grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3  gap-5">
                     {products &&
                       products?.map((product) => {
 
@@ -140,7 +137,7 @@ const FeaturedProductsPage = () => {
                 valueLabelDisplay="auto"
                 disableSwap
                 min={0}
-                max={25000}
+                max={50000}
               />
             </div>
             <div className=' border border-black p-2 my-2'>

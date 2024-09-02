@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllProducts, getNewArrivalProducts, getProductDetail, getRatedProducts, getReviewedProducts } from "./product.thunk";
+import { createProduct, deleteProduct, getAdminProducts, getAllProducts, getNewArrivalProducts, getProductDetail, getRatedProducts, getReviewedProducts, updateProduct } from "./product.thunk";
 import initialProductState from "./product.initialstate";
 
 const productSlice = createSlice({
@@ -85,6 +85,22 @@ const productSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(createProduct.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+
+            })
+            .addCase(createProduct.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(createProduct.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.isSuccess = false
+                state.message = action.payload.error
+            })
             .addCase(getAllProducts.pending, (state) => {
                 state.isLoading = true
             })
@@ -165,6 +181,51 @@ const productSlice = createSlice({
                 state.isError = true
                 state.message = action.payload.error
                 state.newArrival = null
+            })
+            .addCase(getAdminProducts.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload.error
+            })
+            .addCase(getAdminProducts.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(getAdminProducts.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.products = action.payload.payload.products
+                state.message = action.payload.message
+            })
+            .addCase(deleteProduct.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(deleteProduct.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(deleteProduct.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
+            })
+            .addCase(updateProduct.pending, (state) => {
+                state.isLoading = true
+                state.isSuccess = false
+            })
+            .addCase(updateProduct.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload.message
+            })
+            .addCase(updateProduct.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload.error
             })
 
     }

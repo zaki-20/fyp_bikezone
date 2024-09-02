@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItemsToCart, getProductDetail } from '../../features/product/product.thunk';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Carousal from '../../components/Carousal';
 import Loader from '../shared/Loader';
 import ReviewCard from '../../components/cards/ReviewCard';
@@ -23,10 +23,15 @@ import { useTheme } from '@mui/material/styles';
 import { Rating } from '@mui/material';
 import { createReview } from '../../features/review/review.thunk';
 import { reset } from '../../features/review/review.slice';
+import Lottie from 'lottie-react'
+import ratingAnimation from '../../assets/animated/ratingProduct.json'
+import checkDetailsAnimation from '../../assets/animated/checkDetails.jsx.json'
+import { getAllOrders, myOrders } from '../../features/order/order.thunk';
+
 
 
 const ProductDetail = () => {
-
+    const navigate = useNavigate()
     const { id } = useParams();
 
     const theme = useTheme();
@@ -35,11 +40,14 @@ const ProductDetail = () => {
     const [open, setOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
+    const [hasOrderedProduct, setHasOrderedProduct] = useState(false);
 
+
+    const dispatch = useDispatch()
 
 
     const [quantity, setQuantity] = useState(1)
-    const dispatch = useDispatch()
+
 
     //===================================================================
     const handleClickOpen = () => {
@@ -52,15 +60,10 @@ const ProductDetail = () => {
 
     const reviewSubmitHandler = () => {
 
-
         const reviewData = {
             rating, comment, productId: id
         }
-        // const myForm = new FormData();
 
-        // myForm.set("rating", rating);
-        // myForm.set("comment", comment);
-        // myForm.set("productId", id);
 
         dispatch(createReview(reviewData))
         setOpen(false);
@@ -68,13 +71,21 @@ const ProductDetail = () => {
 
 
     //=====================================================================
-
+    const { user } = useSelector((state) => state.auth)
     const { isError, message, isLoading, productDetails } = useSelector(state => state.product)
     const { isError: reviewError, message: reviewMsg, isLoading: reviewLoad, isSuccess } = useSelector(state => state.review)
+    const { orders } = useSelector((state) => state.order)
+
 
     useEffect(() => {
         dispatch(getProductDetail(id))
     }, [dispatch, id, isSuccess]);
+
+    useEffect(() => {
+        // Fetch user orders
+        dispatch(myOrders());
+    }, [dispatch, id]);
+
 
     useEffect(() => {
         if (reviewError) {
@@ -100,6 +111,18 @@ const ProductDetail = () => {
     const showErrorToast = () => {
         toast.error(message);
     };
+    
+    useEffect(() => {
+        console.log("orders:", orders);
+        console.log("productDetails:", productDetails);
+    
+        if (orders && productDetails) {
+            const orderedProduct = orders.find(order => order?.orderItems.some(item => item._id === productDetails?._id));
+            setHasOrderedProduct(!!orderedProduct);
+            console.log("huhuuuhuh", orderedProduct);
+        }
+    }, [orders, productDetails]);
+
 
 
     //for star rating
@@ -146,10 +169,10 @@ const ProductDetail = () => {
                 dispatch(addToCart(item));
                 toast.success("Item added to the cart");
             } else {
-                toast.error("Not available in stock huhu");
+                toast.error("Not available in stock");
             }
         } else {
-            toast.error("not available in stock haha")
+            toast.error("not available in stock ")
         }
     };
 
@@ -158,31 +181,22 @@ const ProductDetail = () => {
     return (
         <div>
             <MetaData title={`${productDetails?.name} -- BIKEZONE`} />
+
             {
                 !isLoading && productDetails && (
-                    <div className="overflow-hidden bg-[#d0d1d1] py-11 font-poppins dark:bg-gray-800">
+                    <div className="overflow-hidden bg-gradient-to-bl from-gray-200 via-gray-400 to-gray-600 py-11 font-poppins dark:bg-gray-800">
+                        <h1 className='text-center text-2xl font-semibold'>Product Detail</h1>
                         <div className="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
+
                             <div className="flex flex-wrap -mx-4">
-                                <div className="w-full px-4 md:w-1/2 ">
-                                    <div className="sticky top-0 z-50 overflow-hidden ">
-                                        <div className="z-50 mb-6 lg:mb-10 lg:h-2/4 ">
-                                            <div className=" mb-6 lg:mb-10 ">
-
-                                                <div className='h-[400px]'>
-                                                    <Carousal />
-                                                </div>
-
-                                                {/* <Carousel>
-                                                    <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" className='z-50' alt="" />
-                                                    <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="" />
-                                                    <img src={shadowBikeImage} className='z-50' alt="" />
-                                                </Carousel> */}
-
-                                            </div>
+                                <div className="w-full px-4 py-24 md:w-1/2 ">
+                                    <div className="z-50 overflow-hidden ">
+                                        <div className='z-50 h-[400px] '>
+                                            <Carousal images={productDetails?.images} />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="w-full px-4 md:w-1/2 bg-[#b6b6b6] shadow-md ">
+                                <div className="w-full px-4 md:w-1/2 rounded-md shadow-[inset_3px_0px_41px_22px_#00000024] shadow-gray-400 p-4 bg-[#e4e4e4]  ">
                                     <div className="p-2">
                                         <div className="mb-5 ">
                                             <p className='text-xs text-gray-700'>product #: {productDetails._id}</p>
@@ -191,9 +205,7 @@ const ProductDetail = () => {
                                                 {productDetails.name}</h2>
 
                                             <div className="flex items-center mb-6 gap-4">
-
                                                 <ReactStars  {...options} />
-
                                                 <p className="text-xs dark:text-gray-400 ">({productDetails.numOfReviews} customer reviews)</p>
                                             </div>
 
@@ -202,7 +214,7 @@ const ProductDetail = () => {
                                                 <span> {productDetails.price} </span>
                                                 <span className='text-xl'>PKR</span>
                                             </p>
-                                            <p className={productDetails.Stock < 0 ? `text-red-500 font-bold` : `font-bold text-green-600`}>{productDetails.Stock < 0 ? "Out Of Stock" : "In Stock"} </p>
+                                            <p className={productDetails.Stock <= 0 ? `text-red-500 font-bold` : `font-bold text-green-600`}>{productDetails.Stock <= 0 ? "Out Of Stock" : "In Stock"} </p>
                                         </div>
 
 
@@ -225,9 +237,31 @@ const ProductDetail = () => {
                                             <button onClick={cartHandler} className="flex items-center justify-center w-full p-4  border border-white rounded-md dark:text-gray-200 duration-200 dark:border-blue-600 bg-[#122222] hover:border-[#122222] hover:text-yellow-400 text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
                                                 Add to Cart
                                             </button>
-                                            <button onClick={handleClickOpen} className="flex mt-2 items-center justify-center w-full p-4 text-[#122222] border border-[#122222] duration-200 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-yellow-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
-                                                Submit Review
-                                            </button>
+                                            {
+                                                user ? (
+                                                    <>
+                                                        {
+                                                            <button
+                                                                onClick={() => {
+                                                                    // Check if the user has ordered the product
+                                                                    if (hasOrderedProduct) {
+                                                                        // User has ordered, proceed with review submission logic
+                                                                        handleClickOpen();
+                                                                    } else {
+                                                                        // User hasn't ordered, show toast message
+                                                                        toast.error("Please order the product first.");
+                                                                    }
+                                                                }}
+                                                                className="flex mt-2 items-center justify-center w-full p-4 text-[#122222] border border-[#122222] duration-200 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-[#122222] hover:border-[#122222] hover:text-yellow-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                                                                Submit Review
+                                                            </button>
+                                                        }
+                                                    </>
+                                                ) : (
+                                                    navigate('/login')
+                                                )
+                                            }
+
                                         </div>
 
                                     </div>
@@ -276,25 +310,32 @@ const ProductDetail = () => {
                                 </DialogActions>
                             </Dialog>
                         </div>
-                        <div className=''>
+                        <div className='relative'>
                             <div className='font-bold  border-black border-t border-l border-r shadow-2xl  flex bg-[#b6b6b6] justify-center mx-6 py-6 '>
                                 <div className='border-b-2 border-[#122222]  w-[15%] text-2xl py-2 text-center'>Reviews</div>
+                                <Lottie
+                                    className="absolute w-36 right-6 top-0"
+                                    animationData={ratingAnimation}
+                                />
                             </div>
+
+
                             <div className="flex overflow-x-scroll border-black border-b border-l border-r  shadow-xl bg-[#b6b6b6] no-scrollbar mx-6  pb-10 px-4">
-                                <div className="flex ml-10 gap-10 ">
+                                <div className="flex ml-10 mt-4 gap-10 ">
 
                                     {
                                         productDetails.reviews && productDetails.reviews[0] ? (
                                             productDetails.reviews && productDetails.reviews.map((review) => {
                                                 return (<>
-                                                    <ReviewCard key={review._id} review={review} />
+                                                    <ReviewCard key={review._id} review={review} product={productDetails} />
                                                 </>
                                                 )
                                             })
                                         ) : (
                                             <div className="flex items-center justify-center text-lg text-red-700 font-bold">
                                                 No reviews yet
-                                            </div>)
+                                            </div>
+                                        )
                                     }
 
                                 </div>

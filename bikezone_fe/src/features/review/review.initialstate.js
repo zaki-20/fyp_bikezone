@@ -3,8 +3,9 @@ const initialReviewState = {
     review: null,
     isLoading: false,
     isError: false,
-    isSuccess: false,
+    isDeleted: false,
     message: '',
+    reviews: []
 };
 
 export default initialReviewState;
